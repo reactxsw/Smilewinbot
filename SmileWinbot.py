@@ -8,21 +8,20 @@ from itertools import cycle
 from bs4 import BeautifulSoup,element
 from bs4 import BeautifulSoup as bs4
 
-
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '__________________________________'
+TOKEN = '___________________'
 COMMAND_PREFIX = "/r "
 
-WELCOME_ID = __________________________________
-LEAVE_ID = __________________________________
-PERSONAL_GUILD_ID = __________________________________
-CLIENTID = __________________________________
+WELCOME_ID = ___________________
+LEAVE_ID = ___________________
+PERSONAL_GUILD_ID = ___________________
+CLIENTID = ___________________
 
-reddit = praw.Reddit(client_id="__________________________________",
-                     client_secret="__________________________________",
-                     username="__________________________________",
-                     password="__________________________________",
-                     user_agent="__________________________________")
+reddit = praw.Reddit(client_id="___________________",
+                     client_secret="___________________",
+                     username="___________________",
+                     password="___________________",
+                     user_agent="___________________")
 
 status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
 
@@ -403,8 +402,10 @@ async def csgonow(ctx):
             player = humanize.intcomma(online)
             embed = discord.Embed(
                 color=0x75ff9f,
-                title = "จํานวนคนที่เล่น CS:GO ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                title = "จํานวนคนที่เล่น CS:GO",
+                description = 
+                f"จํานวนคนที่เล่น CS:GO ในตอนนี้ : ``{player}``"
+
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/730/header.jpg?t=1607046958")
@@ -829,6 +830,7 @@ async def helpbot(ctx):
     embed.add_field(name='``/r uptime``', value ='ส่ง เวลาทำงานของบอท', inline=False)
     embed.add_field(name='``/r botinvite``', value = 'ส่งลิงค์เชิญบอท',inline=False )
     embed.add_field(name='``/r credit``',value='เครดิตคนทําบอท',inline=False)
+    embed.add_field(name='``/r botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline=False)
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
@@ -841,7 +843,6 @@ async def helpgame(ctx):
         color=0x00FFFF   
         )
     embed.add_field(name='``/r coinflip``', value='ทอยเหรียญ', inline=False)
-    embed.add_field(name='``/r uptime``', value ='ส่ง เวลาทำงานของบอท', inline=False)
     embed.add_field(name='``/r rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline=False )
     embed.add_field(name='``/r csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline=False )
     embed.add_field(name='``/r apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline=False )
@@ -861,7 +862,6 @@ async def helpinfo(ctx):
         )
     embed.add_field(name='``/r serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline=False)
     embed.add_field(name='``/r userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline=False)
-    embed.add_field(name='``/r botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline=False)
     embed.add_field(name='``/r covid19``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
     embed.add_field(name='``/r btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name='``/r eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
@@ -904,7 +904,6 @@ Github : https://github.com/reactxsw
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
     
-
 @client.command()
 @commands.has_permissions(administrator=True)
 async def dm(ctx, member: discord.Member, message):
@@ -974,6 +973,135 @@ async def dm_error(ctx, error):
         await message.add_reaction('⚠️') 
 
         print(f"{ctx.author} try to dm member but is missing permission")
+
+@client.command()
+async def rps(ctx):
+    embed = discord.Embed(
+        colour =0x00FFFF,
+        title = "เกมเป่ายิ้งฉุบ"
+    )
+
+    embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
+    embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✊')
+    await message.add_reaction('✋')
+    await message.add_reaction('✌️')
+
+    try:
+        reaction, user = await client.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
+
+        if str(reaction.emoji) == "✊":
+            #rock , paper , scissor
+            answer = "rock"
+        if str(reaction.emoji) == "✋":
+            #rock , paper , scissor
+            answer = "paper"
+        if str(reaction.emoji) == "✌️":
+            #rock , paper , scissor
+            answer = "scissor"
+
+        responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+        botresponse = random.choice(responses)
+
+        if botresponse == "https://i.imgur.com/hdG222Q.jpg":
+            if answer == "rock":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😮 คุณเสมอ"
+                )
+                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+
+                await message.edit(embed=embed)
+
+            elif answer == "paper":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😄 คุณชนะ"
+                )
+                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                await message.edit(embed=embed)
+            
+            else:
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😭 คุณเเพ้"
+                )
+                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                await message.edit(embed=embed)
+
+        elif botresponse == "https://i.imgur.com/O3ZLDRr.jpg":
+            if answer == "rock":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😄 คุณชนะ"
+                )
+                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+
+                await message.edit(embed=embed)
+
+            elif answer == "paper":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😮 คุณเสมอ"
+                )
+                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                await message.edit(embed=embed)
+            
+            else:
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😭 คุณเเพ้"
+                )
+                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                await message.edit(embed=embed)
+        
+        else:
+            if answer == "rock":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😄 คุณชนะ"
+                )
+                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+
+                await message.edit(embed=embed)
+
+            elif answer == "paper":
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😭 คุณเเพ้"
+                )
+                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                await message.edit(embed=embed)
+            
+            else:
+                embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ",
+                description = "😮 คุณเสมอ"
+                )
+                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                await message.edit(embed=embed)
+
+    except asyncio.TimeoutError:
+        
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "🕑 หมดเวลา" ,
+        )
+
+        embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+
+        await message.edit(embed=embed)
+
 
 #Bot login using token
 client.run(TOKEN, bot = True)
