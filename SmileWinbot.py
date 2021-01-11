@@ -7,24 +7,26 @@ from datetime import date, timedelta
 from itertools import cycle
 from bs4 import BeautifulSoup,element
 from bs4 import BeautifulSoup as bs4
+from urllib.parse import urlencode
+
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '___________________________'
+TOKEN = '____________________________'
 COMMAND_PREFIX = "/r "
 
-developer = "REACT#1120"
-WELCOME_ID = ___________________________
-LEAVE_ID = ___________________________
-PERSONAL_GUILD_ID = ___________________________
-CLIENTID = ___________________________
+developer = "____________________________"
+WELCOME_ID = ____________________________
+LEAVE_ID = ____________________________
+PERSONAL_GUILD_ID = ____________________________
+CLIENTID = ____________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-reddit = praw.Reddit(client_id="___________________________",
-                     client_secret="___________________________8",
-                     username="___________________________",
-                     password="___________________________",
-                     user_agent="___________________________")
+reddit = praw.Reddit(client_id="____________________________",
+                     client_secret="____________________________",
+                     username="____________________________",
+                     password="____________________________",
+                     user_agent="____________________________")
 
 status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
 
@@ -318,11 +320,18 @@ async def rule(ctx):
 
 @client.command()
 async def ping(ctx):
+    latency = requests.get("https://discord.com/").elapsed.total_seconds()
+  
 
     embed = discord.Embed(
         color = 0xffff00,
         title = 'Smilewin bot ping',
-        description = f'``⌛ Ping`` : ``{round(client.latency * 1000)}ms``', 
+        description = f"""
+```⌛ Ping : {round(client.latency * 1000)}ms
+⌛ Discord Latency : {latency}ms```
+        
+        """, 
+
     )
 
     embed.set_thumbnail(url="https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024")
@@ -506,7 +515,17 @@ async def gtanow(ctx):
 @client.command()
 async def botinvite(ctx):
 
-    await ctx.send(f"https://discord.com/api/oauth2/authorize?client_id={CLIENTID}&permissions=8&scope=bot")
+    invitelink = str(f"https://discord.com/api/oauth2/authorize?client_id={CLIENTID}&permissions=8&scope=bot")
+    embed = discord.Embed(  
+        colour = 0x00FFFF,
+        title = f"ลิงค์เชิญบอท SmileWin : ",
+        description = f"[คลิกที่นี้]({invitelink})"
+
+    )
+    
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('💖')
+
 
 
 @client.command(aliases=['bitcoin'])
@@ -548,7 +567,16 @@ async def ascii(ctx, *, text):
     r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
     if len('```'+r+'```') > 2000:
         return
-    await ctx.send(f"```{r}```")
+    
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "🎨 ASCII ",
+        description = (f"```{r}```")
+
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('🎨')
 
 @client.command(aliases=['coin'])
 async def coinflip(ctx):
@@ -834,7 +862,7 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
-    embed.set_image(url='https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024')
+    embed.set_thumbnail(url='https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -925,8 +953,8 @@ async def helpfun(ctx):
         color=0x00FFFF   
         )
     embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
@@ -936,7 +964,32 @@ async def helpfun(ctx):
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
 
+@client.command()
+async def helpgeneral(ctx):
+    embed=discord.Embed(
+        title='คําสั่งทั่วไป',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ hastebin โดยมีข้อความข้อใน', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline=False)
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+@client.command()
+async def lmgtfy(ctx, *, message): 
+    r = urlencode({"q": message})
+    url = (f'<https://lmgtfy.com/?{r}>')
+    embed= discord.Embed(
+        colour =0x00FFFF,
+        title= f"ลิงค์ lmgtfy ของคุณ {ctx.author}",
+        description = f"{url}"
+    )
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+    
 @client.command()
 async def tweet(ctx, username: str, *, message: str): 
     async with aiohttp.ClientSession() as session:
@@ -1104,7 +1157,7 @@ async def rps(ctx):
                 embed = discord.Embed(
                 colour = 0x00FFFF,
                 title = "เกมเป่ายิ้งฉุบ",
-                description = "😄 คุณชนะ"
+                description = "😭 คุณเเพ้"
                 )
                 embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
 
@@ -1123,7 +1176,7 @@ async def rps(ctx):
                 embed = discord.Embed(
                 colour = 0x00FFFF,
                 title = "เกมเป่ายิ้งฉุบ",
-                description = "😭 คุณเเพ้"
+                description = "😄 คุณชนะ"
                 )
                 embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
                 await message.edit(embed=embed)
@@ -1332,7 +1385,7 @@ async def wasted(ctx, member: discord.Member=None):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     embed.set_image(url=f"https://some-random-api.ml/canvas/wasted/?avatar={avatar_url})")
     message =await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+    await message.add_reaction('💀')
 
 @client.command()
 async def gay(ctx, member: discord.Member=None): 
@@ -1350,7 +1403,7 @@ async def gay(ctx, member: discord.Member=None):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     embed.set_image(url=f"https://some-random-api.ml/canvas/gay/?avatar={avatar_url}")
     message =await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+    await message.add_reaction('🏳️‍🌈')
 
 @client.command()
 async def trigger(ctx, member: discord.Member=None): 
@@ -1368,7 +1421,7 @@ async def trigger(ctx, member: discord.Member=None):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     embed.set_image(url=f"https://some-random-api.ml/canvas/triggered/?avatar={avatar_url}")
     message =await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+    await message.add_reaction('😠')
 
 #Bot login using token
 client.run(TOKEN, bot = True)
