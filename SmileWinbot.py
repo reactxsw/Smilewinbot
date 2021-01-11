@@ -1,5 +1,5 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform
 #from
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -9,19 +9,22 @@ from bs4 import BeautifulSoup,element
 from bs4 import BeautifulSoup as bs4
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '___________________'
+TOKEN = '________________'
 COMMAND_PREFIX = "/r "
 
-WELCOME_ID = ___________________
-LEAVE_ID = ___________________
-PERSONAL_GUILD_ID = ___________________
-CLIENTID = ___________________
+developer = "REACT#1120"
+WELCOME_ID = ________________
+LEAVE_ID = ________________
+PERSONAL_GUILD_ID = ________________
+CLIENTID = ________________
+PYTHON_VERSION = platform.python_version()
+OS = platform.system()
 
-reddit = praw.Reddit(client_id="___________________",
-                     client_secret="___________________",
-                     username="___________________",
-                     password="___________________",
-                     user_agent="___________________")
+reddit = praw.Reddit(client_id="________________",
+                     client_secret="________________",
+                     username="________________",
+                     password="________________",
+                     user_agent="________________")
 
 status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
 
@@ -34,6 +37,14 @@ ASCII_ART = """
 |____/|_| |_| |_|_|_|\___| \_/\_/ |_|_| |_|
                                  REACT#1120
 """ 
+
+def clearcmd():
+    if platform.system() == ("Windows"):
+        os.system("cls")
+    
+    else:
+        os.system("clear")
+
 #I don't even know what is this but if it work it work
 intents = discord.Intents.default()
 intents.members = True
@@ -48,7 +59,7 @@ print("BOT STATUS : OFFLINE")
 @client.event
 async def on_ready():
     change_status.start()
-    os.system("cls")
+    clearcmd()
     print(ASCII_ART)
     print(f"BOT NAME : {client.user}")
     print("BOT STATUS : ONLINE")
@@ -129,17 +140,6 @@ async def on_member_join(member):
     print(f"{member.name} have joined the server {member.guild.name}")
     if member.guild.id == PERSONAL_GUILD_ID:
         await channel.send(embed=embed)
-    
-async def get_data_url(url) :
-	async with aiohttp.ClientSession() as session :
-		html = await fetch(session, url)
-
-		return html
-
-async def fetch(session, url) :
-	async with session.get(url) as respones :
-		return await respones.text()
-
     
 @client.event
 async def on_member_remove(member):
@@ -234,19 +234,24 @@ async def botinfo(ctx):
     embed = discord.Embed(
         colour = 0xffff00,
         title='Smilewin bot',
-        description = "ข้อมูลของบอท Smilewin"
+        description = "ข้อมูลของบอ"
     )
 
     embed.timestamp = datetime.datetime.utcnow()
-    embed.add_field(name='เซิฟเวอร์', value=f'{len(client.guilds)}')
-    embed.add_field(name='คําสั่ง', value=f'{len(client.commands)}')
-    embed.add_field(name='ผู้ใช้ทั้งหมด', value=f'{len(client.users)}')
-    embed.add_field(name='เครื่องหมายหน้าคำสั่ง', value=f'{client.command_prefix}')
-    embed.add_field(name='คําสั่งทั้งหมด', value=f'{len(client.all_commands)}')
-    embed.add_field(name='คําสั่งช่วยเหลือ', value=f'/r help')
-    embed.add_field(name='Ping ของบอท', value=f'{round(client.latency * 1000)}ms')
-    embed.add_field(name='เวลาทำงาน', value=f'{uptime}')
+    embed.add_field(name='🤖 ``ชื่อของบอท``', value=f'{client.user}',inline =False)
+    embed.add_field(name='🏆 ``ผู้พัฒนาบอท``', value=f'{developer}',inline =False)
+    embed.add_field(name='📁 ``จํานวนเซิฟเวอร์``', value=f'{len(client.guilds)}',inline =True)
+    embed.add_field(name='📁 ``จํานวนคําสั่ง``', value=f'{len(client.commands)}',inline =True)
+    embed.add_field(name='📁 ``สมาชิกทั้งหมด``', value=f'{len(client.users)}',inline =True)
+    embed.add_field(name='🤖 ``เครื่องหมายหน้าคำสั่ง``', value=f'{client.command_prefix}',inline =True)
+    embed.add_field(name='📁 ``คําสั่งทั้งหมด``', value=f'{len(client.all_commands)}',inline =True)
+    embed.add_field(name='🤖 ``คําสั่งช่วยเหลือ``', value=f'/r help',inline =True)
+    embed.add_field(name='🤖 ``เวลาทำงาน``', value=f'{uptime}',inline =True)
+    embed.add_field(name='🤖 ``Ping ของบอท``', value=f'{round(client.latency * 1000)}ms',inline =True)
+    embed.add_field(name='💻 ``ระบบปฏิบัติการ``', value=f'{OS}',inline =True)
+    embed.add_field(name='🤖 ``ภาษาที่ใช้เขียนบอท``', value=f'Python {PYTHON_VERSION}',inline =True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.set_thumbnail(url="https://i.imgur.com/rPfYXGs.png")
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('🤖')
@@ -781,23 +786,38 @@ async def dmall_error(ctx, error):
         print(f"{ctx.author} try to dmall member but is missing permission")
 
 @client.command()
-async def covid19(ctx) :
-	thai = await get_data_url('https://covid19.th-stat.com/api/open/today')
-	thai = json.loads(thai)
+async def covid19(ctx):
+    r = requests.get('https://covid19.th-stat.com/api/open/today')
+    r = r.json()
 
-	embed = discord.Embed(
+    newconfirm = r['NewConfirmed']
+    newdeath = r['NewDeaths']
+    recover = r['Recovered']
+    death = r['Deaths']
+    source = r['Source']
+    update = r['UpdateDate']
+    confirm = r['Confirmed']
+    hospital = r['Hospitalized']
+    hospitalnew = r['NewHospitalized']
+
+
+    embed = discord.Embed(
 		title="💊 ข้อมูล COVID-19",
-		description=f"อัพเดตล่าลุดเมื่อ {thai['UpdateDate']}",
+		description=f"อัพเดตล่าลุดเมื่อ {update}",
 		color=0x00FFFF
 	)
 
-	embed.add_field(name=':thermometer_face: ผู้ป่วยสะสม',value=f"{thai['Confirmed']} คน")
-	embed.add_field(name=':mask: ผู้ป่วยรายใหม่',value=f"{thai['NewConfirmed']} คน")
-	embed.add_field(name=':homes:  ผู้ป่วยรักษาหายแล้ว',value=f"{thai['Recovered']} คน")
-	embed.add_field(name=':skull_crossbones: ผู้ป่วยเสียชีวิต',value=f"{thai['Deaths']} คน")
-	embed.set_footer(text=f'''ข้อมูลจาก {thai["Source"]}''')
+    embed.add_field(name='🤒 ผู้ป่วยสะสม',value=f"{confirm} คน")
+    embed.add_field(name='😷 ผู้ป่วยรายใหม่',value=f"{newconfirm} คน")
+    embed.add_field(name='🏠 ผู้ป่วยรักษาหายแล้ว',value=f"{recover} คน")
+    embed.add_field(name='🏠 ผู้ป่วยที่เข้าโรงพยาบาลทั้งหมด',value=f"{hospital} คน")
+    embed.add_field(name='🏠 ผู้ป่วยที่อยู่เข้าโรงพยาบาลใหม่',value=f"{hospitalnew} คน")
+    embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตทั้งหมด',value=f"{death} คน")
+    embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตใหม่',value=f"{newdeath} คน")
+    embed.set_footer(text=f'''ข้อมูลจาก {source}''')
 
-	await ctx.send(embed=embed)
+    message= await ctx.send(embed=embed)
+    await message.add_reaction('💊')
 
 @client.command()
 async def help(ctx):
@@ -808,11 +828,12 @@ async def help(ctx):
         )
 
     embed.add_field(name='``/r helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline=True)
-    embed.add_field(name='``/r helpgame``',value='คําสั่งเกม' , inline=True)
     embed.add_field(name='``/r helpfun``',value='คําสั่งบรรเทิง' , inline=True)
+    embed.add_field(name='``/r helpgeneral``',value='คําสั่งทั่วไป' , inline=True)
+    embed.add_field(name='``/r helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline=True)
     embed.add_field(name='``/r helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
     embed.add_field(name='``/r helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
-    embed.add_field(name='``/r helpcommon``',value='คําสั่งทั่วไป',inline=True)
+    embed.add_field(name='``/r helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
     embed.set_image(url='https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -831,6 +852,7 @@ async def helpbot(ctx):
     embed.add_field(name='``/r botinvite``', value = 'ส่งลิงค์เชิญบอท',inline=False )
     embed.add_field(name='``/r credit``',value='เครดิตคนทําบอท',inline=False)
     embed.add_field(name='``/r botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline=False)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
@@ -849,6 +871,7 @@ async def helpgame(ctx):
     embed.add_field(name='``/r rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False )
     embed.add_field(name='``/r pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False )
     embed.add_field(name='``/r gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
@@ -861,12 +884,17 @@ async def helpinfo(ctx):
         color=0x00FFFF   
         )
     embed.add_field(name='``/r serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline=False)
+    embed.add_field(name='``/r membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline=False)
     embed.add_field(name='``/r userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline=False)
     embed.add_field(name='``/r covid19``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
     embed.add_field(name='``/r btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name='``/r eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
     embed.add_field(name='``/r rule``',value='กฎของเซิฟ smilewin',inline=False)
-
+    embed.add_field(name='``/r avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
+    embed.add_field(name='``/r searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
+    embed.add_field(name='``/r guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline=False)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
 
@@ -883,9 +911,47 @@ async def helpadmin(ctx):
     embed.add_field(name='``/r dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline=False)
     embed.add_field(name='``/r dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline=False)
     embed.add_field(name='``/r disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline=False)
+    embed.add_field(name='``/r movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline=False)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
+
+@client.command()
+async def helpfun(ctx):
+    embed=discord.Embed(
+        title='คําสั่งบรรเทิง',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``/r``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name='``/r sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline=False)
+    embed.add_field(name='``/r qr (message)``', value='สร้าง qr code', inline=False)
+    embed.add_field(name='``/r meme``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
+    embed.add_field(name='``/r tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
+    embed.add_field(name='``/r wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
+    embed.add_field(name='``/r gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
+    embed.add_field(name='``/r trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+
+@client.command()
+async def tweet(ctx, username: str, *, message: str): 
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://nekobot.xyz/api/imagegen?type=tweet&username={username}&text={message}") as r:
+            response = await r.json()
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "🕊️ Twitter generator"
+
+
+            )
+            embed.set_image(url=response["message"])
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def credit(ctx):
@@ -1102,6 +1168,207 @@ async def rps(ctx):
 
         await message.edit(embed=embed)
 
+@client.command()
+@commands.has_permissions(administrator=True)
+
+async def movetome(ctx, member : discord.Member):
+    await member.move_to(channel=ctx.author.voice.channel)
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f"{member}ได้ถูกย้ายไปที่ห้องของ {ctx.author}"
+
+    )
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@client.command()
+async def guildicon(ctx): 
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title=f"เซิฟเวอร์: {ctx.guild.name}")
+    embed.set_image(url=ctx.guild.icon_url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.reaction("✅")
+
+@client.command()
+async def avatar(ctx , member : discord.Member=None): 
+
+    if member is None:
+        member = ctx.author
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title=f"รูปของสมาชิก: {member}",
+        description = f"ลิงค์ : [คลิกที่นี้]({member.avatar_url})")
+    embed.set_image(url=member.avatar_url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction("✅")
+
+@client.command()
+async def searchavatar(ctx, member: discord.Member=None): 
+    if member is None:
+        member = ctx.author
+
+    try:
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"หารูปของสมาชิก: {member}",
+            description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+           
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction("✅")
+    
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = f"ไม่สามารถหาภาพของสมาชิก{member}ได้"
+
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction("⚠️")
+    
+@client.command()
+async def qr(ctx , data):
+    url = f"https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data}"
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "💻 QR CODE GENERATOR",
+        description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data}link)"
+    )
+    embed.set_image(url=url)
+    await ctx.send(embed=embed)
+
+@client.command()
+async def meme(ctx): 
+    r = requests.get('https://some-random-api.ml/meme')
+    r = r.json()
+    url  = r['image']
+    cap = r['caption']
+
+    embed=  discord.Embed(
+        colour = 0x00FFFF,
+        title = f"{cap}"
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('😂')
+
+
+
+@qr.error
+async def qr(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุสิ่งที่จะเขียนใน QR code",
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``/r qr [message]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+
+@tweet.error
+async def tweet(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุสิ่งชื่อเเละสิ่งที่จะเขียนในโพส twitter",
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``/r tweet [username] [message]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+@movetome.error
+async def movetome(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุสิ่งชื่อของสมาชิกที่ต้องการจะย้ายมาหา",
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``/r movetome @member``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณไม่มีสิทธิ์เเอดมิน",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+        
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️') 
+
+
+@client.command()
+async def wasted(ctx, member: discord.Member=None): 
+    if member is None:
+        member = ctx.author
+
+    avatar_url = member.avatar_url_as(format="png")
+
+    embed = discord.Embed(
+        colour=0x00FFFF,
+        title= "💀 Wasted!",
+        description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/wasted/?avatar={avatar_url})"
+        )
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.set_image(url=f"https://some-random-api.ml/canvas/wasted/?avatar={avatar_url})")
+    message =await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@client.command()
+async def gay(ctx, member: discord.Member=None): 
+    if member is None:
+        member = ctx.author
+
+    avatar_url = member.avatar_url_as(format="png")
+
+    embed = discord.Embed(
+        colour=0x00FFFF,
+        title= "🏳️‍🌈 Gay!" , 
+        description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/gay/?avatar={avatar_url})"
+        )
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.set_image(url=f"https://some-random-api.ml/canvas/gay/?avatar={avatar_url}")
+    message =await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@client.command()
+async def trigger(ctx, member: discord.Member=None): 
+    if member is None:
+        member = ctx.author
+
+    avatar_url = member.avatar_url_as(format="png")
+
+    embed = discord.Embed(
+        colour=0x00FFFF,
+        title= "😠 Triggered",
+        description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/triggered/?avatar={avatar_url})"
+        )
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.set_image(url=f"https://some-random-api.ml/canvas/triggered/?avatar={avatar_url}")
+    message =await ctx.send(embed=embed)
+    await message.add_reaction('✅')
 
 #Bot login using token
 client.run(TOKEN, bot = True)
