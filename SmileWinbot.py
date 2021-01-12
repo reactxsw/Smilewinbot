@@ -10,23 +10,24 @@ from bs4 import BeautifulSoup as bs4
 from urllib.parse import urlencode
 
 
+
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '____________________________'
+TOKEN = '________________'
 COMMAND_PREFIX = "/r "
 
-developer = "____________________________"
-WELCOME_ID = ____________________________
-LEAVE_ID = ____________________________
-PERSONAL_GUILD_ID = ____________________________
-CLIENTID = ____________________________
+developer = "REACT#1120"
+WELCOME_ID = ________________
+LEAVE_ID = ________________
+PERSONAL_GUILD_ID = ________________
+CLIENTID = ________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-reddit = praw.Reddit(client_id="____________________________",
-                     client_secret="____________________________",
-                     username="____________________________",
-                     password="____________________________",
-                     user_agent="____________________________")
+reddit = praw.Reddit(client_id="________________",
+                     client_secret="________________",
+                     username="________________",
+                     password="________________",
+                     user_agent="________________")
 
 status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
 
@@ -187,6 +188,18 @@ async def on_guild_join(guild):
 
         break
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+
 @client.command()
 async def membercount(ctx):
     totalmember =ctx.guild.member_count
@@ -221,7 +234,7 @@ async def uptime(ctx):
         description = "```🕒 " + uptime +"```",
     )
 
-    embed.set_thumbnail(url="https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024")
+    embed.set_thumbnail(url="https://i.imgur.com/rPfYXGs.png")
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     embed.timestamp = datetime.datetime.utcnow()
 
@@ -236,7 +249,7 @@ async def botinfo(ctx):
     embed = discord.Embed(
         colour = 0xffff00,
         title='Smilewin bot',
-        description = "ข้อมูลของบอ"
+        description = "ข้อมูลของบอท"
     )
 
     embed.timestamp = datetime.datetime.utcnow()
@@ -334,7 +347,7 @@ async def ping(ctx):
 
     )
 
-    embed.set_thumbnail(url="https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024")
+    embed.set_thumbnail(url="https://i.imgur.com/rPfYXGs.png")
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     embed.timestamp = datetime.datetime.utcnow()
     
@@ -391,12 +404,23 @@ async def dota2now(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น dota2 ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/570/header.jpg?t=1608587587")
@@ -412,14 +436,23 @@ async def csgonow(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น CS:GO",
-                description = 
-                f"จํานวนคนที่เล่น CS:GO ในตอนนี้ : ``{player}``"
-
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/730/header.jpg?t=1607046958")
@@ -435,12 +468,23 @@ async def pubgnow(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น PUBG ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/578080/header.jpg?t=1608093288")
@@ -456,12 +500,23 @@ async def rb6now(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น RB6 ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/359550/header.jpg?t=1606776740")
@@ -477,12 +532,23 @@ async def apexnow(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น APEX LEGEND ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/1172470/header.jpg?t=1609705061")
@@ -498,12 +564,23 @@ async def gtanow(ctx):
         async with session.get(url) as response:
             soupObject = BeautifulSoup(await response.text(), "html.parser")
             div = soupObject.find_all('div', class_='app-stat')[0]
+            div1 = soupObject.find_all('div', class_='app-stat')[1]
+            div2 = soupObject.find_all('div', class_='app-stat')[2]
+
             online = div.contents[1].string
+            online24 = div1.contents[1].string
+            onlineall = div2.contents[1].string
             player = humanize.intcomma(online)
+            player24 = humanize.intcomma(online24)
+            playerall = humanize.intcomma(onlineall)
+
             embed = discord.Embed(
                 color=0x75ff9f,
                 title = "จํานวนคนที่เล่น GTAV ในตอนนี้",
-                description = f"Online player : ``{player}`` "
+                description = f"""```
+ผู้เล่นออนไลน์ขณะนี้ : {player}
+ผู้เล่นออนไลน์สูงสุดใน 24 ชั่วโมง : {player24}
+ผู้เล่นออนไลน์สูงสุดตลอดกาล {playerall}``` """
             )
 
             embed.set_image(url="https://steamcdn-a.akamaihd.net/steam/apps/271590/header.jpg?t=1592866696")
@@ -566,7 +643,12 @@ async def eth(ctx):
 async def ascii(ctx, *, text): 
     r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
     if len('```'+r+'```') > 2000:
-        return
+        embed = discord.Embed(
+           colour = 0x983925,
+           description = f" ⚠️``{ctx.author}`` ตัวอักษรมากเกินไป ``"
+        )
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
     
     embed = discord.Embed(
         colour = 0x00FFFF,
@@ -577,6 +659,18 @@ async def ascii(ctx, *, text):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
     await message.add_reaction('🎨')
+
+@ascii.error
+async def ascii_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุลิงค์ที่ต้องการสร้าง ascii art ``{COMMAND_PREFIX}ascii [@user]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command(aliases=['coin'])
 async def coinflip(ctx):
@@ -757,7 +851,7 @@ async def disconnect_error(ctx, error):
 
 @client.command(name="dmall")
 @commands.has_permissions(administrator=True)
-async def dmall(ctx, message):
+async def dmall(ctx, *, message):
     fail = 0
     sent = 0 
 
@@ -785,11 +879,10 @@ async def dmall(ctx, message):
     print(f"Message has been sent to {sent} users and failed to sent to {fail} users")
 
 @dmall.error
-async def dmall_error(ctx, error):
+async def dmall_error(ctx ,error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุสิ่งที่จะส่ง",
             description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}dmall [message]``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -814,7 +907,7 @@ async def dmall_error(ctx, error):
         print(f"{ctx.author} try to dmall member but is missing permission")
 
 @client.command()
-async def covid19(ctx):
+async def covid19th(ctx):
     r = requests.get('https://covid19.th-stat.com/api/open/today')
     r = r.json()
 
@@ -862,7 +955,7 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
-    embed.set_thumbnail(url='https://cdn.discordapp.com/icons/394451338140057610/4061ac5c08f6fa045dca6b3d2ba5cb63.webp?size=1024')
+    embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -914,7 +1007,9 @@ async def helpinfo(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วไป',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline=False)
@@ -978,6 +1073,48 @@ async def helpgeneral(ctx):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
 @client.command()
+async def covid19(ctx):
+    r = requests.get(f'https://disease.sh/v3/covid-19/all')
+    r = r.json()
+
+    case = r['cases']
+    todaycase = r['todayCases']
+    totaldeath = r['deaths']
+    todaydeath = r['todayDeaths']
+    recover = r['recovered']
+    todayRecover = r['todayRecovered']      
+    activecase = r['active']
+
+    case = humanize.intcomma(case)
+    todaycase = humanize.intcomma(todaycase)
+    totaldeath = humanize.intcomma(totaldeath)
+    todaydeath = humanize.intcomma(todaydeath)
+    recover = humanize.intcomma(recover)
+    todayRecover = humanize.intcomma(todayRecover)
+    activecase = humanize.intcomma(activecase)
+
+    embed = discord.Embed(
+        colour =0x00FFFF,
+        title = "💊สถานะไวรัสโควิด-19 ทั่วโลก",
+        description = "เเหล่งที่มา : https://disease.sh/v3/covid-19/all"
+
+    )
+    embed.set_thumbnail(url="https://i.imgur.com/kmabvi8.png")
+
+    embed.add_field(name="📊 ยืนยันเเล้ว : ", value=f"{case}")
+    embed.add_field(name="💀 เสียชีวิตแล้ว : ", value=f"{totaldeath}")
+    embed.add_field(name="✅ รักษาหายแล้ว : ", value=f"{recover}")
+    embed.add_field(name="📈 ผู้ติดเชื่อวันนี้ : ", value=f"{case}")
+    embed.add_field(name="💀 จำนวนเสียชีวิตวันนี้ : ", value=f"{todaydeath}")
+    embed.add_field(name="✅ รักษาหายวันนี้ : ", value=f"{todayRecover}")
+    embed.add_field(name="⚠️ ผู้ติดเชื้อ : ", value=f"{activecase}")
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('💊')
+
+@client.command()
 async def lmgtfy(ctx, *, message): 
     r = urlencode({"q": message})
     url = (f'<https://lmgtfy.com/?{r}>')
@@ -989,6 +1126,18 @@ async def lmgtfy(ctx, *, message):
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('👍')
+    
+@lmgtfy.error
+async def lmgtfy_error(ctx, error):
+    embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
+        )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed ) 
+    await message.add_reaction('⚠️')
+
     
 @client.command()
 async def tweet(ctx, username: str, *, message: str): 
@@ -1025,7 +1174,7 @@ Github : https://github.com/reactxsw
     
 @client.command()
 @commands.has_permissions(administrator=True)
-async def dm(ctx, member: discord.Member, message):
+async def dm(ctx, member: discord.Member, *, message):
 
     embed = discord.Embed(
         color = 0x00FFFF,
@@ -1069,7 +1218,6 @@ async def dm_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุสิ่งที่จะส่ง",
             description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}dm [message]``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -1294,7 +1442,7 @@ async def qr(ctx , data):
     embed = discord.Embed(
         colour = 0x00FFFF,
         title = "💻 QR CODE GENERATOR",
-        description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data}link)"
+        description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data})"
     )
     embed.set_image(url=url)
     await ctx.send(embed=embed)
@@ -1314,15 +1462,53 @@ async def meme(ctx):
     message = await ctx.send(embed=embed)
     await message.add_reaction('😂')
 
+@client.command()
+async def geoip(ctx, *, ip): 
+    ip = str(ip)
+    r = requests.get(f'http://extreme-ip-lookup.com/json/{ip}')
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title =f"💻 IP {ip}"
+    )
+    embed.add_field(name="IP",value=f":{r['query']}")
+    embed.add_field(name="ประเภทของ IP",value=f":{r['ipType']}")
+    embed.add_field(name="ประเทศ",value=f":{r['country']}")
+    embed.add_field(name="code ประเทศ",value=f":{r['countryCode']}")
+    embed.add_field(name="จังหวัด",value=f":{r['city']}")
+    embed.add_field(name="ทวีป",value=f":{r['continent']}")
+    embed.add_field(name="ค่ายเน็ท",value=f":{r['isp']}")
+    embed.add_field(name="ภูมิภาค",value=f":{r['region']}")
+    embed.add_field(name="ชื่อองค์กร",value=f":{r['org']}")
+    embed.add_field(name="ชื่อบริษัท",value=f":{r['businessName']}")
+    embed.add_field(name="เว็บไซต์บริษัท",value=f":{r['businessWebsite']}")
+    embed.add_field(name="ค่า logitude",value=f":{r['lon']}")
+    embed.add_field(name="ค่า latitude",value=f":{r['lat']}")
 
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-@qr.error
-async def qr(ctx, error):
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('💻')
+
+@geoip.error
+async def geoip_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุสิ่งที่จะเขียนใน QR code",
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}qr [message]``"
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุ IP ที่ต้องการที่จะค้นหา ``{COMMAND_PREFIX}geoip [IP]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+        
+
+@qr.error
+async def qr_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งที่จะเขียนใน QR code ``{COMMAND_PREFIX}qr [message]``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1335,8 +1521,7 @@ async def tweet(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุสิ่งชื่อเเละสิ่งที่จะเขียนในโพส twitter",
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}tweet [username] [message]``"
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งชื่อเเละสิ่งที่จะเขียนในโพส twitter ``{COMMAND_PREFIX}tweet [username] [message]``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
