@@ -12,24 +12,30 @@ from urllib.parse import urlencode
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '___________________________'
+TOKEN = '____________________________'
 COMMAND_PREFIX = "/r "
 
-developer = "___________________________"
-WELCOME_ID = ___________________________
-LEAVE_ID = ___________________________
-PERSONAL_GUILD_ID = ______________________________________________________
-CLIENTID = ___________________________
+developer = "REACT#1120"
+WELCOME_ID = ____________________________
+LEAVE_ID = ____________________________
+PERSONAL_GUILD_ID = ____________________________
+CLIENTID = ____________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-reddit = praw.Reddit(client_id="___________________________",
-                     client_secret="___________________________",
-                     username="___________________________",
-                     password="___________________________",
-                     user_agent="___________________________")
+reddit = praw.Reddit(client_id="____________________________",
+                     client_secret="____________________________",
+                     username="____________________________",
+                     password="____________________________",
+                     user_agent="____________________________")
 
-status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
+status = cycle([' REACT  | /r help' 
+              , ' R      | /r help' 
+              , ' RE     | /r help '
+              , ' REA    | /r help '
+              , ' REAC   | /r help '
+              , ' REACT  | /r help' 
+              , ' REACT! | /r help '])
 
 #not needed delete if want
 ASCII_ART = """
@@ -1008,7 +1014,7 @@ async def helpinfo(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วไป',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
@@ -1624,7 +1630,7 @@ async def timer(ctx, second : int):
         embed = discord.Embed(
             colour = 0x00FFFF,
             title = f"⏱️ นับถอยหลัง {second} วินาที",
-            description = f"{number}"
+            description = f"```{number}```"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         number = number - 1 
@@ -1651,7 +1657,39 @@ async def timer_error(ctx, error):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-    
+
+@client.command()
+async def count(ctx, second : int):
+
+    number = 0
+    embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นับเลขถึง {second} วินาที",
+            description = f"{number}"
+        )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+
+    while number <= second:
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นับเลขถึง {second} วินาที",
+            description = f"```{number}```"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        number = number + 1 
+        time.sleep(1)
+        await message.edit(embed=embed)
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f"⏱️ นับเลขถึง {second} วินาที",
+        description = "เสร็จ"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    await message.edit(embed=embed)
 
 #Bot login using token
 client.run(TOKEN, bot = True)
