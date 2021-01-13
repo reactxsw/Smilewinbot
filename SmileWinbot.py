@@ -12,22 +12,22 @@ from urllib.parse import urlencode
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '________________'
+TOKEN = '___________________________'
 COMMAND_PREFIX = "/r "
 
-developer = "REACT#1120"
-WELCOME_ID = ________________
-LEAVE_ID = ________________
-PERSONAL_GUILD_ID = ________________
-CLIENTID = ________________
+developer = "___________________________"
+WELCOME_ID = ___________________________
+LEAVE_ID = ___________________________
+PERSONAL_GUILD_ID = ______________________________________________________
+CLIENTID = ___________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-reddit = praw.Reddit(client_id="________________",
-                     client_secret="________________",
-                     username="________________",
-                     password="________________",
-                     user_agent="________________")
+reddit = praw.Reddit(client_id="___________________________",
+                     client_secret="___________________________",
+                     username="___________________________",
+                     password="___________________________",
+                     user_agent="___________________________")
 
 status = cycle([' REACT' , ' R ' , ' RE ', ' REA ', ' REAC ', ' REACT ' , ' REACT ! '])
 
@@ -1069,7 +1069,8 @@ async def helpgeneral(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ hastebin โดยมีข้อความข้อใน', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline=False)
-    
+    embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline=False)
+
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
 @client.command()
@@ -1529,11 +1530,10 @@ async def tweet(ctx, error):
         await message.add_reaction('⚠️')
     
 @movetome.error
-async def movetome(ctx, error):
+async def movetome_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุสิ่งชื่อของสมาชิกที่ต้องการจะย้ายมาหา",
             description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}movetome @member``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -1607,6 +1607,51 @@ async def trigger(ctx, member: discord.Member=None):
     embed.set_image(url=f"https://some-random-api.ml/canvas/triggered/?avatar={avatar_url}")
     message =await ctx.send(embed=embed)
     await message.add_reaction('😠')
+
+@client.command()
+async def timer(ctx, second : int):
+
+    number = second
+    embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นับถอยหลัง {second} วินาที",
+            description = f"{number}"
+        )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+
+    while number >= 0:
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นับถอยหลัง {second} วินาที",
+            description = f"{number}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        number = number - 1 
+        time.sleep(1)
+        await message.edit(embed=embed)
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f"⏱️ นับถอยหลัง {second} วินาที",
+        description = "เสร็จ"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    await message.edit(embed=embed)
+
+@timer.error
+async def timer_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับถอยหลัง ``{COMMAND_PREFIX}timer (second)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
 
 #Bot login using token
 client.run(TOKEN, bot = True)
