@@ -12,28 +12,28 @@ from captcha.image import ImageCaptcha
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '__________________________'
+TOKEN = '______________________________'
 COMMAND_PREFIX = "!r "
 
 developer = "REACT#1120"
-WELCOME_ID = __________________________
-LEAVE_ID = __________________________
-PERSONAL_GUILD_ID = __________________________
-CLIENTID = __________________________
+WELCOME_ID = ______________________________
+LEAVE_ID = ______________________________
+PERSONAL_GUILD_ID = ______________________________
+CLIENTID = ______________________________216126
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '__________________________'
+        'TRN-Api-Key': '______________________________'
     }
 
-openweathermapAPI = "__________________________"
+openweathermapAPI = "______________________________"
 
-reddit = praw.Reddit(client_id="__________________________",
-                     client_secret="__________________________",
-                     username="__________________________",
-                     password="__________________________3",
-                     user_agent="__________________________")
+reddit = praw.Reddit(client_id="______________________________",
+                     client_secret="______________________________",
+                     username="______________________________",
+                     password="______________________________",
+                     user_agent="Smilewin")
 
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
@@ -2174,5 +2174,48 @@ async def botcode(ctx):
     message = await ctx.send(embed=embed)
     await message.add_reaction('❤️')
 
+@client.command()
+async def weather(ctx, *, city):
+    try:
+        r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
+        r = r.json()
+        temperature = (float(r['main']['temp']) -273.15)
+        feellike = (float(r['main']['feels_like']) -273.15)
+        highesttemp = (float(r['main']['temp_max']) -273.15)
+        lowesttemp = (float(r['main']['temp_min']) -273.15)
+        humidity = float(r['main']['humidity'])
+        windspeed = float(r['wind']['speed'])
+        
+        day = r['weather'][0]['description']
+
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"สภาพอากาศในจังหวัด {city}",
+            description = f"""```
+อุณหภูมิตอนนี้ : {temperature}°C
+อุณหภูมิสูงสุดของวัน : {highesttemp}°C
+อุณหภูมิตํ่าสุดของวัน : {highesttemp}°C
+อุณหภูมิรู้สึกเหมือน : {feellike}
+ความชื้น : {humidity}%
+ความเร็วลม : {windspeed}mph
+สภาพอากาศ : {day}```
+            """
+            
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
+
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{COMMAND_PREFIX}weather (city)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+	
+	
+	
 #Bot login using token
 client.run(TOKEN, bot = True)
