@@ -8,34 +8,40 @@ from itertools import cycle
 from bs4 import BeautifulSoup,element
 from bs4 import BeautifulSoup as bs4
 from urllib.parse import urlencode
+from captcha.image import ImageCaptcha
 
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '____________________________'
-COMMAND_PREFIX = "/r "
+TOKEN = '__________________________'
+COMMAND_PREFIX = "!r "
 
 developer = "REACT#1120"
-WELCOME_ID = ____________________________
-LEAVE_ID = ____________________________
-PERSONAL_GUILD_ID = ____________________________
-CLIENTID = ____________________________
+WELCOME_ID = __________________________
+LEAVE_ID = __________________________
+PERSONAL_GUILD_ID = __________________________
+CLIENTID = __________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-reddit = praw.Reddit(client_id="____________________________",
-                     client_secret="____________________________",
-                     username="____________________________",
-                     password="____________________________",
-                     user_agent="____________________________")
 
-status = cycle([' REACT  | /r help' 
-              , ' R      | /r help' 
-              , ' RE     | /r help '
-              , ' REA    | /r help '
-              , ' REAC   | /r help '
-              , ' REACT  | /r help' 
-              , ' REACT! | /r help '])
+reddit = praw.Reddit(client_id="__________________________",
+                     client_secret="__________________________",
+                     username="__________________________",
+                     password="__________________________",
+                     user_agent="__________________________")
+#tracker.gg api key
+headers = {
+        'TRN-Api-Key': '__________________________'
+    }
+
+status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
+              , f' R      | {COMMAND_PREFIX}help ' 
+              , f' RE     | {COMMAND_PREFIX}help '
+              , f' REA    | {COMMAND_PREFIX}help '
+              , f' REAC   | {COMMAND_PREFIX}help '
+              , f' REACT  | {COMMAND_PREFIX}help ' 
+              , f' REACT! | {COMMAND_PREFIX}help '])
 
 #not needed delete if want
 ASCII_ART = """
@@ -609,8 +615,6 @@ async def botinvite(ctx):
     message = await ctx.send(embed=embed)
     await message.add_reaction('💖')
 
-
-
 @client.command(aliases=['bitcoin'])
 async def btc(ctx): 
     r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR,THB')
@@ -979,6 +983,7 @@ async def helpbot(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline=False )
     embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}botcode``', value = 'ดูโค้ดที่ผมใช้ในการเขียนบอทตัวนี้',inline=False)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -998,6 +1003,7 @@ async def helpgame(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False )
     embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False )
     embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False )
+    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline=False )
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1060,6 +1066,7 @@ async def helpfun(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline=False)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1076,8 +1083,13 @@ async def helpgeneral(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ hastebin โดยมีข้อความข้อใน', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline=False)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
 
 @client.command()
 async def covid19(ctx):
@@ -1690,6 +1702,417 @@ async def count(ctx, second : int):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     await message.edit(embed=embed)
+
+@client.command()
+async def upper(ctx, *, message): 
+    big = message.upper()
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "UPPERCASE GENERATOR",
+        description = f"""```
+ข้อความปกติ : {message}
+ข้อความตัวพิมพ์ใหญ่ : {big}```"""
+
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    await ctx.send(embed=embed)
+
+@upper.error
+async def upper_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมใหญ่ ``{COMMAND_PREFIX}upper (message)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def reverse(ctx, *, message): 
+
+    reverse = message[::-1]
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "REVERSE GENERATOR",
+        description = f"""```
+ข้อความปกติ : {message}
+ข้อความกลับหลัง : {reverse}```"""
+
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    await ctx.send(embed=embed)
+
+@reverse.error
+async def reverse_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะกลับด้าน ``{COMMAND_PREFIX}reverse (message)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@count.error
+async def count_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับ ``{COMMAND_PREFIX}count (second)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def apexstat(ctx, username):
+
+    url = f"https://public-api.tracker.gg/v2/apex/standard/profile/origin/{username}"
+    try:
+        r = requests.get(url, headers=headers)
+    
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}``API มีปัญหา ``{COMMAND_PREFIX}apexstat (username)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    r = r.json()
+
+    platform = r["data"]["platformInfo"]["platformSlug"]
+    username = r["data"]["platformInfo"]["platformUserId"]
+    avatar = r["data"]["platformInfo"]["avatarUrl"]
+    level = r["data"]["segments"][0]["stats"]["level"]["value"]
+    kills = r["data"]["segments"][0]["stats"]["kills"]["value"]
+
+    level = int(level)
+    kills = int(kills)
+    kills = humanize.intcomma(kills)
+
+    embed= discord.Embed(
+        colour = 0x00FFFF,
+        title = f"🎮 Stat เกม apex legend ของ {username}",
+        description =f"""```
+💻 เพลตฟอร์ม : {platform}
+👀 ชื่อในเกม : {username}
+📁 เลเวลในเกม : {level}
+🔫 ฆ่าทั้งหมด : {kills}```
+    """)
+
+    embed.set_thumbnail(url=avatar)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('🎮')
+
+@apexstat.error
+async def apexstat_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมใส่ชื่อของผู้เล่น ``{COMMAND_PREFIX}apexstat (username)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def captcha(ctx, *, text):
+    image = ImageCaptcha()
+    data = image.generate(text)
+    image.write(text, 'captcha.png')
+    file = discord.File("captcha.png", filename="captcha.png")
+
+    embed = discord.Embed(
+        colour  = 0x00FFFF,
+        title = "Captcha"
+    )
+    embed.set_image(url = "attachment://captcha.png")
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    await ctx.send(embed=embed , file=file)
+
+@captcha.error
+async def captcha_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมคําที่จะทําเป็น captcha ``{COMMAND_PREFIX}captcha (word)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+ 
+@client.command()
+async def anal(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/anal")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "Anal"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def erofeet(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/erofeet")
+    res = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "erofeet"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+    
+@client.command()
+async def feet(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/feetg")
+    res = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "feet"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def hentai(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "hentai"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def boobs(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/boobs")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "boobs"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def tits(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/tits")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "tits"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def blowjob(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/blowjob")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "blowjob"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def lewd(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "lewd"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}") 
+
+    message = await ctx.send(embed=embed)  
+    await message.add_reaction('❤️') 
+
+@client.command()
+async def lesbian(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/les")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "lesbian"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')   
+
+@client.command()  
+async def feed(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/feed")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "feed"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def tickle(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/tickle")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "tickle"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def slap(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/slap")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "slap"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def hug(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/hug")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "hug"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def smug(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/smug")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "smug"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def pat(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/pat")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "pat"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
+
+@client.command()
+async def kiss(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/kiss")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "kiss"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)  
+    await message.add_reaction('❤️')
+
+
+
 
 #Bot login using token
 client.run(TOKEN, bot = True)
