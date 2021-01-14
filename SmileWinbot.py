@@ -11,7 +11,6 @@ from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
 
 
-
 #INFORMATION THAT CAN TO BE CHANGE
 TOKEN = '__________________________'
 COMMAND_PREFIX = "!r "
@@ -23,17 +22,19 @@ PERSONAL_GUILD_ID = __________________________
 CLIENTID = __________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
-
-
-reddit = praw.Reddit(client_id="__________________________",
-                     client_secret="__________________________",
-                     username="__________________________",
-                     password="__________________________",
-                     user_agent="__________________________")
 #tracker.gg api key
 headers = {
         'TRN-Api-Key': '__________________________'
     }
+
+openweathermapAPI = "__________________________"
+
+reddit = praw.Reddit(client_id="__________________________",
+                     client_secret="__________________________",
+                     username="__________________________",
+                     password="__________________________3",
+                     user_agent="__________________________")
+
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
               , f' R      | {COMMAND_PREFIX}help ' 
@@ -211,6 +212,9 @@ async def on_command_error(ctx, error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
+    else:
+        raise error
+
 
 @client.command()
 async def membercount(ctx):
@@ -260,8 +264,7 @@ async def botinfo(ctx):
 
     embed = discord.Embed(
         colour = 0xffff00,
-        title='Smilewin bot',
-        description = "ข้อมูลของบอท"
+        title='ข้อมูลของบอท Smilewin bot'
     )
 
     embed.timestamp = datetime.datetime.utcnow()
@@ -390,15 +393,17 @@ https://hastebin.com/{r['key']}```"""
 async def sreddit(ctx, subreddit):
     subreddit=reddit.subreddit(subreddit)
     all_subs = []
-    top = subreddit.top(limit = 100)
-    for submission in top:
+    hot = subreddit.hot(limit = 10)
+
+    for submission in hot:
         all_subs.append(submission) 
+        
     random_sub = random.choice(all_subs)
-    name=random_sub.title
+    title =random_sub.title
     url = random_sub.url
     embed = discord.Embed(
         colour = 0x00FFFF,
-        title = name,
+        title =f"{title}",
         description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
         )
 
@@ -408,6 +413,18 @@ async def sreddit(ctx, subreddit):
 
     message= await ctx.send(embed=embed)
     await message.add_reaction('✨')
+
+@sreddit.error
+async def sreddit_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุsubreddit ที่ต้องการ ``{COMMAND_PREFIX}sreddit (subreddit)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 async def dota2now(ctx):
@@ -675,7 +692,7 @@ async def ascii_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` กรุณาระบุลิงค์ที่ต้องการสร้าง ascii art ``{COMMAND_PREFIX}ascii [@user]``"
+            description = f" ⚠️``{ctx.author}`` กรุณาระบุลิงค์ที่ต้องการสร้าง ascii art ``{COMMAND_PREFIX}ascii (word)``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1086,6 +1103,40 @@ async def helpgeneral(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline=False)
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+@client.command()
+async def helpnsfw(ctx):
+    embed=discord.Embed(
+        title='คําสั่งทั่วไป',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f"""
+
+ส่งรูปตาม catergory 
+
+{COMMAND_PREFIX}anal
+{COMMAND_PREFIX}erofeet
+{COMMAND_PREFIX}feet
+{COMMAND_PREFIX}hentai
+{COMMAND_PREFIX}boobs
+{COMMAND_PREFIX}tits
+{COMMAND_PREFIX}blowjob
+{COMMAND_PREFIX}lewd
+{COMMAND_PREFIX}lesbian
+{COMMAND_PREFIX}feed
+{COMMAND_PREFIX}tickle 
+{COMMAND_PREFIX}slap
+{COMMAND_PREFIX}hug
+{COMMAND_PREFIX}smug
+{COMMAND_PREFIX}pat
+{COMMAND_PREFIX}kiss
+
+""", value= "บางคําสั่ง18+")
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
@@ -1874,7 +1925,7 @@ async def anal(ctx):
 @client.command()
 async def erofeet(ctx): 
     r = requests.get("https://nekos.life/api/v2/img/erofeet")
-    res = r.json()
+    r = r.json()
     embed = discord.Embed(
         colour = 0xFC7EF5,
         title = "erofeet"
@@ -1890,7 +1941,7 @@ async def erofeet(ctx):
 @client.command()
 async def feet(ctx): 
     r = requests.get("https://nekos.life/api/v2/img/feetg")
-    res = r.json()
+    r = r.json()
     embed = discord.Embed(
         colour = 0xFC7EF5,
         title = "feet"
@@ -2111,8 +2162,17 @@ async def kiss(ctx):
     message = await ctx.send(embed=embed)  
     await message.add_reaction('❤️')
 
+@client.command()
+async def botcode(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "โค้ดของบอท SmileWin",
+        description = f"[คลิกที่นี้](https://github.com/reactxsw/Smilewinbot)"
 
-
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('❤️')
 
 #Bot login using token
 client.run(TOKEN, bot = True)
