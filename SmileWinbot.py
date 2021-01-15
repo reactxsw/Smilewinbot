@@ -12,28 +12,28 @@ from captcha.image import ImageCaptcha
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '______________________________'
-COMMAND_PREFIX = "!r "
+TOKEN = '________________________________________'
+COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = ______________________________
-LEAVE_ID = ______________________________
-PERSONAL_GUILD_ID = ______________________________
-CLIENTID = ______________________________216126
+WELCOME_ID = ________________________________________
+LEAVE_ID = ________________________________________
+PERSONAL_GUILD_ID = ________________________________________
+CLIENTID = ________________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '______________________________'
+        'TRN-Api-Key': '________________________________________'
     }
 
-openweathermapAPI = "______________________________"
+openweathermapAPI = "________________________________________"
 
-reddit = praw.Reddit(client_id="______________________________",
-                     client_secret="______________________________",
-                     username="______________________________",
-                     password="______________________________",
-                     user_agent="Smilewin")
+reddit = praw.Reddit(client_id="________________________________________",
+                     client_secret="________________________________________",
+                     username="________________________________________",
+                     password="________________________________________",
+                     user_agent="________________________________________")
 
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
@@ -981,6 +981,7 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
     embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -1039,6 +1040,7 @@ async def helpinfo(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline=False)
@@ -1103,6 +1105,24 @@ async def helpgeneral(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline=False)
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+@client.command()
+async def helpimage(ctx):
+    embed=discord.Embed(
+        title='คําสั่งเกี่ยวกับรูป',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ภาพสุนัขจิ้งจอก', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ภาพหมีโคอาล่า', inline=False)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
@@ -2194,7 +2214,7 @@ async def weather(ctx, *, city):
             description = f"""```
 อุณหภูมิตอนนี้ : {temperature}°C
 อุณหภูมิสูงสุดของวัน : {highesttemp}°C
-อุณหภูมิตํ่าสุดของวัน : {highesttemp}°C
+อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
 อุณหภูมิรู้สึกเหมือน : {feellike}
 ความชื้น : {humidity}%
 ความเร็วลม : {windspeed}mph
@@ -2214,8 +2234,108 @@ async def weather(ctx, *, city):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-	
-	
-	
+
+@weather.error
+async def weather_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def bird(ctx):
+    r = requests.get("https://some-random-api.ml/img/birb")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพนก"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🐦')
+
+@client.command()
+async def panda(ctx):
+    r = requests.get("https://some-random-api.ml/img/panda")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพเเพนด้า"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🐼')
+
+@client.command()
+async def cat(ctx):
+    r = requests.get("https://some-random-api.ml/img/cat")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพเเมว"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🐱')
+
+@client.command()
+async def dog(ctx):
+    r = requests.get("https://some-random-api.ml/img/dog")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพหมา"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🐶')
+
+@client.command()
+async def fox(ctx):
+    r = requests.get("https://some-random-api.ml/img/fox")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพสุนัขจิ้งจอก"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🦊')
+
+@client.command()
+async def koala(ctx):
+    r = requests.get("https://some-random-api.ml/img/koala")
+    r = r.json()
+    url = r['link']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title="ภาพหมีโคอาล่า"
+
+    )
+    embed.set_image(url=url)
+    message = await ctx.send(embed= embed)
+    await message.add_reacion('🐨')
+
 #Bot login using token
 client.run(TOKEN, bot = True)
