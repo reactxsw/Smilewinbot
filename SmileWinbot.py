@@ -12,28 +12,28 @@ from captcha.image import ImageCaptcha
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '________________________________________'
+TOKEN = '_____________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = ________________________________________
-LEAVE_ID = ________________________________________
-PERSONAL_GUILD_ID = ________________________________________
-CLIENTID = ________________________________________
+WELCOME_ID = _____________________________________
+LEAVE_ID = _____________________________________
+PERSONAL_GUILD_ID = _____________________________________
+CLIENTID = _____________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '________________________________________'
+        'TRN-Api-Key': '_____________________________________'
     }
 
-openweathermapAPI = "________________________________________"
+openweathermapAPI = "_____________________________________"
 
-reddit = praw.Reddit(client_id="________________________________________",
-                     client_secret="________________________________________",
-                     username="________________________________________",
-                     password="________________________________________",
-                     user_agent="________________________________________")
+reddit = praw.Reddit(client_id="_____________________________________",
+                     client_secret="_____________________________________",
+                     username="_____________________________________",
+                     password="_____________________________________",
+                     user_agent="Smilewin")
 
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
@@ -1041,6 +1041,7 @@ async def helpinfo(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline=False)
@@ -1121,8 +1122,8 @@ async def helpimage(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ภาพสุนัขจิ้งจอก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ภาพหมีโคอาล่า', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline=False)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
@@ -2336,6 +2337,196 @@ async def koala(ctx):
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
     await message.add_reacion('🐨')
+
+@client.command()
+async def country(ctx, *, country):
+    r = requests.get(f"https://restcountries.eu/rest/v2/name/{country}?fullText=true")
+    r = r.json()
+
+    name = r[0]['name']
+    population = r[0]['population']
+    area = r[0]['area']
+    capital = r[0]['capital']
+    subregion = r[0]['subregion']
+    nativename = r[0]['nativeName']
+    timezone = r[0]['timezones'][0]
+    currency = r[0]['currencies'][0]['name']
+    symbol = r[0]['currencies'][0]['symbol']
+    language = r[0]['languages'][0]['name']
+    code = r[0]['alpha2Code']
+    codephone = r[0]['callingCodes'][0]
+
+    population = humanize.intcomma(population)
+    area =humanize.intcomma(area)
+
+    codelower = code.lower()
+
+    flag = (f"https://flagcdn.com/256x192/{codelower}.png")
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f"{name}",
+        description = f"""```
+
+ชื่อพื้นเมือง : {nativename}
+โค้ดประเทศ : {code}
+รหัสโทร : {codephone}
+ภูมิภาค : {subregion}
+ประชากร : {population} คน
+เมืองหลวง : {capital}
+พื้นที่ : {area} km²
+เขตเวลา : {timezone}
+สกุลเงิน : {currency} สัญลักษณ์ : ({symbol})
+ภาษา : {language}```""")
+
+    embed.set_thumbnail(url=flag)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+
+    await message.add_reacion('😊')
+
+@country.error
+async def country_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{COMMAND_PREFIX}country (country)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def pingweb(ctx, website = None): 
+
+    if website is None: 
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมเว็บที่จะดู ``{COMMAND_PREFIX}pingweb (website)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    else:
+        try:
+            r = requests.get(website).status_code
+        except:
+            embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{COMMAND_PREFIX}pingweb (website)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+            
+        if r == 404:
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = f"สถานะของเว็บไซต์ {website}",
+                description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️') 
+
+        else:
+            embed = discord.Embed(
+                colour = 0x75ff9f,
+                title = f"สถานะของเว็บไซต์ {website}",
+                description = f"```เว็บไซต์ออนไลน์ปกติ```"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed )
+
+@client.command()
+async def rb6rank(ctx , username):
+    url = f"https://r6.tracker.network/profile/pc/{username}"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            soupObject = BeautifulSoup(await response.text(), "html.parser")
+            try:
+                div = soupObject.find_all('div', class_='trn-defstat__value')[0]
+                div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
+                div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
+                div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
+                div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
+                platform = "PC"
+            
+            except:
+                try:
+                    url = f"https://r6.tracker.network/profile/xbox/{username}"
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(url) as response:
+                            soupObject = BeautifulSoup(await response.text(), "html.parser")
+                            div = soupObject.find_all('div', class_='trn-defstat__value')[0]
+                            div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
+                            div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
+                            div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
+                            div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
+                            platform = "XBOX"
+                except:
+                    try:
+                        url = f"https://r6.tracker.network/profile/psn/{username}"
+                        async with aiohttp.ClientSession() as session:
+                            async with session.get(url) as response:
+                                soupObject = BeautifulSoup(await response.text(), "html.parser")
+                                div = soupObject.find_all('div', class_='trn-defstat__value')[0]
+                                div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
+                                div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
+                                div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
+                                div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
+                                platform = "PSN"
+                    
+                    except:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``ไม่สามารถค้นหาชื่อของตัวละครได้โปรดเช็คตัวสะกด```")
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+
+            level = div.contents
+            highestmmr = div1.contents
+            rank = div2.contents
+            avgmmr = div3.contents
+            mmr = div4.contents
+            
+            space = " "
+
+            level = space.join(level)
+            highestmmr = space.join(highestmmr)
+            rank = space.join(rank)  
+            avgmmr =space.join(avgmmr)
+            mmr = space.join(mmr)
+
+            mmr = mmr[:-3]
+            mmrnew = mmr.replace(',','')
+            mmrnew = int(mmrnew)
+            
+            embed = discord.Embed(
+                colour = 0x1e1e1f,
+                title = f"{username}",
+                description = f"ข้อมูลเเรงค์ของ {username} ใน {platform}"
+            )
+            
+            imageurl = "https://i.imgur.com/vhZydxi.png"
+
+            embed.add_field(name='**'+"Rank"+'**',value=f"{rank}")
+            embed.add_field(name='**'+"MMR"+'**',value=f"{mmr}")
+            embed.add_field(name='**'+"MMR เฉลี่ย"+'**',value=f"{avgmmr}")
+            embed.add_field(name='**'+"MMR สูงสุด"+'**',value=f"{highestmmr}")
+            embed.add_field(name='**'+"Level"+'**',value=f"{level}")
+            embed.set_thumbnail(url=imageurl)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('🎮')
+
 
 #Bot login using token
 client.run(TOKEN, bot = True)
