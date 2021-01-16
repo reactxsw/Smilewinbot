@@ -1,5 +1,5 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re 
 #from
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -9,30 +9,31 @@ from bs4 import BeautifulSoup,element
 from bs4 import BeautifulSoup as bs4
 from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
+from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_____________________________________'
+TOKEN = '_________________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = _____________________________________
-LEAVE_ID = _____________________________________
-PERSONAL_GUILD_ID = _____________________________________
-CLIENTID = _____________________________________
+WELCOME_ID = _________________________________________ 
+LEAVE_ID = _________________________________________
+PERSONAL_GUILD_ID = _________________________________________
+CLIENTID = _________________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_____________________________________'
+        'TRN-Api-Key': '_________________________________________'
     }
 
-openweathermapAPI = "_____________________________________"
+openweathermapAPI = "_________________________________________"
 
-reddit = praw.Reddit(client_id="_____________________________________",
-                     client_secret="_____________________________________",
-                     username="_____________________________________",
-                     password="_____________________________________",
+reddit = praw.Reddit(client_id="_________________________________________",
+                     client_secret="_________________________________________",
+                     username="_________________________________________",
+                     password="_________________________________________",
                      user_agent="Smilewin")
 
 
@@ -53,6 +54,9 @@ ASCII_ART = """
 |____/|_| |_| |_|_|_|\___| \_/\_/ |_|_| |_|
                                  REACT#1120
 """ 
+
+def lavarun():
+	os.system("java -jar Lavalink.jar")
 
 def clearcmd():
     if platform.system() == ("Windows"):
@@ -76,6 +80,7 @@ print("BOT STATUS : OFFLINE")
 async def on_ready():
     change_status.start()
     clearcmd()
+    clearcmd()
     print(ASCII_ART)
     print(f"BOT NAME : {client.user}")
     print("BOT STATUS : ONLINE")
@@ -83,6 +88,7 @@ async def on_ready():
     print("")
     print("CONSOLE : ")
     print("")
+    
 
 @tasks.loop(seconds=1)
 async def change_status():
@@ -1022,6 +1028,7 @@ async def helpgame(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False )
     embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False )
     embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline=False )
+    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline=False )
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1083,6 +1090,7 @@ async def helpfun(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
@@ -2455,6 +2463,11 @@ async def rb6rank(ctx , username):
                 div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
                 div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
                 platform = "PC"
+                try:
+                    div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
+                                
+                except:
+                    ranking = None
             
             except:
                 try:
@@ -2468,6 +2481,12 @@ async def rb6rank(ctx , username):
                             div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
                             div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
                             platform = "XBOX"
+                            try:
+                                div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
+                                
+                            except:
+                                ranking = None
+                            
                 except:
                     try:
                         url = f"https://r6.tracker.network/profile/psn/{username}"
@@ -2480,11 +2499,16 @@ async def rb6rank(ctx , username):
                                 div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
                                 div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
                                 platform = "PSN"
-                    
+                                try:
+                                    div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
+                                
+                                except:
+                                    ranking = None
+                                
                     except:
                         embed = discord.Embed(
                             colour = 0x983925,
-                            description = f" ⚠️``ไม่สามารถค้นหาชื่อของตัวละครได้โปรดเช็คตัวสะกด```")
+                            description = f" ⚠️ไม่สามารถค้นหาชื่อของตัวละครได้โปรดเช็คตัวสะกด")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                         message = await ctx.send(embed=embed ) 
@@ -2495,6 +2519,10 @@ async def rb6rank(ctx , username):
             rank = div2.contents
             avgmmr = div3.contents
             mmr = div4.contents
+            try:
+                ranking = div5.contents
+            except:
+                ranking = None
             
             space = " "
 
@@ -2503,29 +2531,215 @@ async def rb6rank(ctx , username):
             rank = space.join(rank)  
             avgmmr =space.join(avgmmr)
             mmr = space.join(mmr)
+            try:
+                ranking = space.join(ranking)
+            except:
+                ranking = None
 
-            mmr = mmr[:-3]
-            mmrnew = mmr.replace(',','')
-            mmrnew = int(mmrnew)
-            
             embed = discord.Embed(
                 colour = 0x1e1e1f,
                 title = f"{username}",
                 description = f"ข้อมูลเเรงค์ของ {username} ใน {platform}"
-            )
+            )     
+
+            try:
+                if "," in mmr:
+                    mmr = mmr[:-3]
+                    mmrint = mmr.replace(',', '')
+                    mmrint = int(mmrint)
+
+                if mmrint <= 1100:
+
+                    imageurl = "https://i.imgur.com/wSCcUKn.png"
             
-            imageurl = "https://i.imgur.com/vhZydxi.png"
+                elif mmrint >= 1200 and mmrint < 1300: # bronze 4
+
+                    imageurl = "https://i.imgur.com/FwXHG5a.png"
+
+                elif mmrint >= 1300 and mmrint < 1400: # bronze 3
+
+                    imageurl = "https://i.imgur.com/HSaFvGT.png"
+            
+                elif mmrint >= 1400 and mmrint < 1500: # bronze 2
+
+                    imageurl = "https://i.imgur.com/UQfxmme.png"
+
+                elif mmrint >= 1500 and mmrint < 1600: # bronze 1
+
+                    imageurl = "https://i.imgur.com/FC4eexb.png"
+
+                elif mmrint >= 1600 and mmrint < 1700: # copper 5
+
+                    imageurl = "https://i.imgur.com/KaFUckV.png"
+            
+                elif mmrint >= 1700 and mmrint < 1800: # copper 4
+
+                    imageurl = "https://i.imgur.com/Ae1TVw1.png"
+            
+                elif mmrint >= 1800 and mmrint < 1900: # copper 3
+
+                    imageurl = "https://i.imgur.com/wUyjfJU.png"
+            
+                elif mmrint >= 1900 and mmrint < 2000: # copper 2
+
+                    imageurl = "https://i.imgur.com/Wuh4Yyh.png"
+
+                elif mmrint >= 2000 and mmrint < 2100: # copper 1
+
+                    imageurl = "https://i.imgur.com/8EwVqaf.png"
+
+                elif mmrint >= 2100 and mmrint < 2200: # silver 5
+
+                    imageurl = "https://i.imgur.com/papk0fC.png"
+            
+                elif mmrint >= 2200 and mmrint < 2300: # silver 4
+
+                    imageurl = "https://i.imgur.com/dA1fkCP.png"
+            
+                elif mmrint >= 2300 and mmrint < 2400: # silver 3
+
+                    imageurl = "https://i.imgur.com/ECXMkOM.png"
+            
+                elif mmrint >= 2400 and mmrint < 2500: # silver 2
+
+                    imageurl = "https://i.imgur.com/wXsdvT2.png"
+
+                elif mmrint >= 2500 and mmrint < 2600: # silver 1
+
+                    imageurl = "https://i.imgur.com/iGPlsPP.png"
+            
+                elif mmrint >= 2600 and mmrint < 2800: # gold 3
+
+                    imageurl = "https://i.imgur.com/aZKtpwt.png"
+            
+                elif mmrint >= 2800 and mmrint < 3000: # gold 2
+
+                    imageurl = "https://i.imgur.com/3q4UzA0.png"
+            
+                elif mmrint >= 3000 and mmrint < 3200: # gold 1
+
+                    imageurl = "https://i.imgur.com/ysYFyJN.png"
+            
+                elif mmrint >= 3200 and mmrint < 3600: # platinum 3
+
+                    imageurl = "https://i.imgur.com/qOTqbzM.png"
+
+                elif mmrint >= 3600 and mmrint < 4000: # platinum 2
+
+                    imageurl = "https://i.imgur.com/8x83kyv.png"
+            
+                elif mmrint >= 4000 and mmrint < 4400: # platinum 1
+
+                    imageurl = "https://i.imgur.com/HFOlYzY.png"
+
+                elif mmrint >= 4000 and mmrint < 4400: # diamond
+
+                    imageurl = "https://i.imgur.com/ZRq9KjK.png"
+
+                elif mmrint >= 5000:
+
+                    imageurl = "https://i.imgur.com/d36RkX2.png"
+                
+            except:
+
+                imageurl = "https://i.imgur.com/yzkK5um.png"
 
             embed.add_field(name='**'+"Rank"+'**',value=f"{rank}")
             embed.add_field(name='**'+"MMR"+'**',value=f"{mmr}")
             embed.add_field(name='**'+"MMR เฉลี่ย"+'**',value=f"{avgmmr}")
             embed.add_field(name='**'+"MMR สูงสุด"+'**',value=f"{highestmmr}")
+            embed.add_field(name='**'+"อันดับ"+'**',value=f"{ranking}")
             embed.add_field(name='**'+"Level"+'**',value=f"{level}")
             embed.set_thumbnail(url=imageurl)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
             await message.add_reaction('🎮')
+
+@rb6rank.error
+async def rb6rank_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของผู้เล่นที่จะดู ``{COMMAND_PREFIX}rb6rank (username)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def iphonex(ctx , image=None):
+
+    if image is None:
+        image = ctx.author.avatar_url
+
+    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}")
+    r = r.json()
+
+    url = r['message']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "Iphone X"
+
+    )
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed ) 
+    await message.add_reaction('📱')
+
+@client.command()
+async def phcomment(ctx , * ,text, username = None , image=None):
+
+    if image is None:
+        image = ctx.author.avatar_url
+
+    if username is None:
+        username = ctx.author
+
+    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=phcomment&image={image}&text={text}&username={username}")
+    r = r.json()
+
+    url = r['message']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "Pornhub"
+
+    )
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed ) 
+    await message.add_reaction('📱')
+
+@phcomment.error
+async def phcomment_error(ctx,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{COMMAND_PREFIX}phcomment (text)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+
+
+        
+
+###############
+#####REACT#####
+##############################      ##      ##      ##      
+#####REACT#####
+##############################      ##      ##      ##
+#####REACT#####
+##############################      ##      ##      ##
+#####REACT#####
+###############
 
 
 #Bot login using token
