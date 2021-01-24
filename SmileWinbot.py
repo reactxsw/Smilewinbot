@@ -13,27 +13,27 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_______________________________________'
+TOKEN = '_________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = _______________________________________
-LEAVE_ID = _______________________________________
-PERSONAL_GUILD_ID = _______________________________________
-CLIENTID = _______________________________________
+WELCOME_ID = _________________________________
+LEAVE_ID = _________________________________
+PERSONAL_GUILD_ID = _________________________________
+CLIENTID = _________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_______________________________________'
+        'TRN-Api-Key': '_________________________________'
     }
 
-openweathermapAPI = "_______________________________________"
+openweathermapAPI = "_________________________________"
 
-reddit = praw.Reddit(client_id="_______________________________________",
-                     client_secret="_______________________________________",
-                     username="_______________________________________",
-                     password="_______________________________________",
+reddit = praw.Reddit(client_id="_________________________________",
+                     client_secret="_________________________________",
+                     username="_________________________________",
+                     password="_________________________________",
                      user_agent="Smilewin")
 
 
@@ -1018,14 +1018,15 @@ async def helpgame(ctx):
         color=0x00FFFF   
         )
     embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline=False )
+    embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}roll ``', value='ทอยลูกเต๋า', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline=False)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1048,6 +1049,7 @@ async def helpinfo(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
@@ -1091,6 +1093,7 @@ async def helpfun(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline=False)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1110,6 +1113,10 @@ async def helpgeneral(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}calculator a (symbol) b``', value= 'คํานวน + - * / ^ ', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline=False)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -1808,6 +1815,33 @@ async def upper_error(ctx, error):
         await message.add_reaction('⚠️')
 
 @client.command()
+async def lower(ctx, *, message): 
+    lower = message.lower()
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "LOWERCASE GENERATOR",
+        description = f"""```
+ข้อความปกติ : {message}
+ข้อความตัวพิมพ์ใหญ่ : {lower}```"""
+
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    await ctx.send(embed=embed)
+
+@lower.error
+async def lower_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมเล็ก ``{COMMAND_PREFIX}lower (message)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
 async def reverse(ctx, *, message): 
 
     reverse = message[::-1]
@@ -2266,7 +2300,7 @@ async def bird(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🐦')
+    await message.add_reaction('🐦')
 
 @client.command()
 async def panda(ctx):
@@ -2281,7 +2315,7 @@ async def panda(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🐼')
+    await message.add_reaction('🐼')
 
 @client.command()
 async def cat(ctx):
@@ -2296,7 +2330,7 @@ async def cat(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🐱')
+    await message.add_reaction('🐱')
 
 @client.command()
 async def dog(ctx):
@@ -2311,7 +2345,7 @@ async def dog(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🐶')
+    await message.add_reaction('🐶')
 
 @client.command()
 async def fox(ctx):
@@ -2326,7 +2360,7 @@ async def fox(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🦊')
+    await message.add_reaction('🦊')
 
 @client.command()
 async def koala(ctx):
@@ -2341,7 +2375,7 @@ async def koala(ctx):
     )
     embed.set_image(url=url)
     message = await ctx.send(embed= embed)
-    await message.add_reacion('🐨')
+    await message.add_reaction('🐨')
 
 @client.command()
 async def country(ctx, *, country):
@@ -2388,7 +2422,7 @@ async def country(ctx, *, country):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
 
-    await message.add_reacion('😊')
+    await message.add_reaction('😊')
 
 @country.error
 async def country_error(ctx, error):
@@ -2510,7 +2544,7 @@ async def rb6rank(ctx , username):
 
                         message = await ctx.send(embed=embed ) 
                         await message.add_reaction('⚠️')
-
+            
             level = div.contents
             highestmmr = div1.contents
             rank = div2.contents
@@ -2523,15 +2557,21 @@ async def rb6rank(ctx , username):
             
             space = " "
 
-            level = space.join(level)
-            highestmmr = space.join(highestmmr)
-            rank = space.join(rank)  
-            avgmmr =space.join(avgmmr)
-            mmr = space.join(mmr)
             try:
                 ranking = space.join(ranking)
-            except:
+                level = space.join(level)
+                highestmmr = space.join(highestmmr)
+                rank = space.join(rank)  
+                avgmmr =space.join(avgmmr)
+                mmr = space.join(mmr)
                 ranking = None
+
+            except:
+                level = None
+                highestmmr = None
+                rank = None
+                avgmmr = None
+                mmr = None
 
             embed = discord.Embed(
                 colour = 0x1e1e1f,
@@ -2922,7 +2962,240 @@ async def slim(ctx):
 
     message = await ctx.send(embed=embed)
     await message.add_reaction("🐃")
+
+@client.command()
+async def calculator(ctx , right:int ,symbol , left:int):
+
+    if "+" in symbol:
+        product = (right+left)
+        a = str(right)
+        b = str(symbol)
+        c = str(left)
+        equation = (a + b + c)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "เครื่องคิดเลข",
+            description = f"""```
+โจทย์ : {equation}
+คําตอบ : {product}
+```""")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
+
+    elif "*" in symbol:
+        product = (right*left)
+        a = str(right)
+        b = str(symbol)
+        c = str(left)
+        equation = (a + b + c)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "📚เครื่องคิดเลข",
+            description = f"""```
+โจทย์ : {equation}
+คําตอบ : {product}
+```""")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
     
+    elif "/" in symbol:
+        product = (right/left)
+        a = str(right)
+        b = str(symbol)
+        c = str(left)
+        equation = (a + b + c)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "📚เครื่องคิดเลข",
+            description = f"""```
+โจทย์ : {equation}
+คําตอบ : {product}
+```""")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
+    
+    elif "-" in symbol:
+        product = (right-left)
+        a = str(right)
+        b = str(symbol)
+        c = str(left)
+        equation = (a + b + c)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "📚เครื่องคิดเลข",
+            description = f"""```
+โจทย์ : {equation}
+คําตอบ : {product}
+```""")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
+
+    elif "^" in symbol:
+        product = (right**left)
+        a = str(right)
+        b = str(symbol)
+        c = str(left)
+        equation = (a + b + c)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "📚เครื่องคิดเลข",
+            description = f"""```
+โจทย์ : {equation}
+คําตอบ : {product}
+```""")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
+
+@calculator.error
+async def calculator_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ข้อผิดพลาดในการคํานวน",
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่เว้นวรรคหลังจากตัวเลขเเละไม่สามารถคํานวนนอกเหนือจาก + - * / ^ ``{COMMAND_PREFIX}calculator a (symbol) b``"
+            )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def length(ctx, *, text):
+    num = len(text)
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "LENGTH COUNTER",
+        description = f"""```
+ข้อความ : {text}
+ความยาว : {num}```"""
+
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    await ctx.send(embed=embed)
+
+@length.error
+async def length_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def github(ctx, *, user=None):    
+    url = f"https://api.github.com/users/{user}"
+    if user is None:
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของGithubที่จะดู ``{COMMAND_PREFIX}github (user)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+    try:
+        r = requests.get(url)
+        r = r.json()
+
+        username = r['login']
+        avatar =  r['avatar_url']
+        githuburl = r['html_url']
+        name = r['name']
+        location = r['location']
+        email = r['email']
+        company = r['company']
+        bio = r['bio']
+        repo = r['public_repos']
+
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f"💻 ข้อมูล Github ของ {username}",
+        description = f"""```
+ชื่อ Github : {username}
+ลิงค์ Github : {githuburl}
+ชื่อ : {name}
+ที่อยู่ : {location}
+อีเมล : {email}
+บริษัท : {company}
+Bio : {bio}
+จํานวนงานที่ลง : {repo}
+```"""
+    )
+    embed.set_thumbnail(url = avatar)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    
+    await message.add_reaction("💻")
+
+@client.command()
+async def roll(ctx):
+    num = ["1","2","3","4 ","5","6","1","2","3","4","5","6","1","2","3","4","5","6"]
+    x = random.choice(num)
+    url = (f"https://www.calculator.net/img/dice{x}.png")
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "🎲 ทอยลูกเต่า"
+    )
+    embed.set_image(url = url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    message.add_reaction("🎲")
+
+@client.command(aliases=['8ball'])
+async def _8ball(ctx, *,question):
+
+    r = requests.get(f"https://8ball.delegator.com/magic/JSON/{question}")
+    r = r.json()
+
+    answer = r['magic']['answer']
+    ask = r['magic']['question']
+    percent = r['magic']['type']
+
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = "🎱 8ball",
+        description = f"""```
+คําถาม : {ask}
+คําตอบ : {answer}
+ความน่าจะเป็น : {percent}```"""
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction("🎱")
+
+@client.command()
+async def embed(ctx ,title=None, *,message):
+
+    if "//" in message:
+        message = message.replace('//', '\n')
+        #somehow make it go to the next line
+        #if // is in the message it will move to the next line and continue the message which is after the //
+    
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title= f"{message}"
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    await ctx.send(embed=embed)
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
 #`^^^^^^^^^^^^ /====================================="
