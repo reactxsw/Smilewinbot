@@ -1,5 +1,5 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re 
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3
 #from
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -13,27 +13,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '___________________________________'
+TOKEN = '______________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = ___________________________________
-LEAVE_ID = ___________________________________
-PERSONAL_GUILD_ID = ___________________________________
-CLIENTID = ___________________________________
+CLIENTID = ______________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '___________________________________'
+        'TRN-Api-Key': '______________________'
     }
 
-openweathermapAPI = "___________________________________"
+openweathermapAPI = "______________________"
 
-reddit = praw.Reddit(client_id="___________________________________",
-                     client_secret="___________________________________",
-                     username="___________________________________",
-                     password="___________________________________",
+reddit = praw.Reddit(client_id="______________________",
+                     client_secret="______________________",
+                     username="______________________",
+                     password="______________________",
                      user_agent="Smilewin")
 
 
@@ -75,6 +72,15 @@ print("BOT STATUS : OFFLINE")
 
 @client.event
 async def on_ready():
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Smilewin(
+        guild_id TEXT,
+        welcome_id TEXT,
+        leave_id TEXT
+        )
+        ''')
     change_status.start()
     clearcmd()
     clearcmd()
@@ -86,7 +92,51 @@ async def on_ready():
     print("CONSOLE : ")
     print("")
     
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setwelcome(ctx , channel:discord.TextChannel):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT welcome_id FROM Smilewin Where guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Smilewin(guild_id, welcome_id) VALUES(?,?)")
+        val = (ctx.guild.id , channel.id)
+        await ctx.send(f"Channel has been set to {channel.mention}")
 
+    elif result is not None:
+        sql = ("UPDATE Smilewin SET welcome_id = ? WHERE guild_id = ?")
+        val = (channel.id , ctx.guild.id)
+        await ctx.send(f"Channel has been updated to {channel.mention}")
+
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+    db.close()
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setleave(ctx , channel:discord.TextChannel):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT leave_id FROM Smilewin Where guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Smilewin(guild_id, leave_id) VALUES(?,?)")
+        val = (ctx.guild.id , channel.id)
+        await ctx.send(f"Channel has been set to {channel.mention}")
+
+    elif result is not None:
+        sql = ("UPDATE Smilewin SET leave_id = ? WHERE guild_id = ?")
+        val = (channel.id , ctx.guild.id)
+        await ctx.send(f"Channel has been updated to {channel.mention}")
+
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+    db.close()
+
+    
 @tasks.loop(seconds=1)
 async def change_status():
     await client.change_presence(status = discord.Status.idle, activity=discord.Game(next(status)))
@@ -140,8 +190,12 @@ async def clear_error(ctx, error):
 
 @client.event
 async def on_member_join(member):
-
-    channel = client.get_channel(WELCOME_ID)
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT welcome_id FROM Smilewin WHERE guild_id = {member.guild.id}")
+    result =cursor.fetchone()
+    if result is None:
+        return
 
     embed = discord.Embed(
         colour = 0x99e68b,
@@ -157,13 +211,18 @@ async def on_member_join(member):
     embed.set_footer(text='┗Powered by REACT')
 
     print(f"{member.name} have joined the server {member.guild.name}")
-    if member.guild.id == PERSONAL_GUILD_ID:
-        await channel.send(embed=embed)
+    channel = client.get_channel(id=int(result[0]))
+
+    await channel.send(embed=embed)
     
 @client.event
 async def on_member_remove(member):
-
-    channel = client.get_channel(LEAVE_ID)
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT welcome_id FROM Smilewin WHERE guild_id = {member.guild.id}")
+    result =cursor.fetchone()
+    if result is None:
+        return
 
     embed = discord.Embed(
         colour=0x983925, 
@@ -179,8 +238,9 @@ async def on_member_remove(member):
     embed.set_footer(text='┗Powered by REACT')
 
     print(f"{member.name} have left the server {member.guild.name}")
-    if member.guild.id == PERSONAL_GUILD_ID:
-        await channel.send(embed=embed)
+    channel = client.get_channel(id=int(result[0]))
+
+    await channel.send(embed=embed)
 
 @client.event
 async def on_guild_join(guild):
@@ -217,7 +277,6 @@ async def on_command_error(ctx, error):
 
     else:
         raise error
-
 
 @client.command()
 async def membercount(ctx):
@@ -3249,7 +3308,83 @@ async def unban_error(ctx, error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
-            
+@client.command()
+async def stopwatch(ctx):
+    embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นาฬิกาจับเวลา",
+            description = f"""```
+กด 🕑 เพื่อเริ่มจับเวลา
+กด ❌ เพื่อหยุดจับเวลา```"""
+        )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction("🕑")
+    await message.add_reaction("❌")
+
+
+    try:
+        reaction, user = await client.wait_for('reaction_add', timeout=None, check=lambda reaction, user: user.id == ctx.author.id)
+
+        if str(reaction.emoji) == "🕑":
+            timer = True
+
+        if str(reaction.emoji) == "❌":
+            timer = False
+
+
+    except asyncio.TimeoutError:
+        
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "🕑 หมดเวลา" ,
+        )
+
+        await message.edit(embed=embed)
+        
+    hour = 0
+    minute = 0 
+    second = 0
+    
+    if timer:
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นาฬิกาจับเวลา",
+            description = f"""```
+เวลา :             
+{hour} : {minute} : {second}
+
+        ```"""
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await message.edit(embed=embed)
+        while timer:
+            second = second + 1
+            time.sleep(1)
+
+            if second == 60:
+                second = 0
+                minute = minute + 1
+        
+            if minute == 60:
+                second = 0
+                minute = 0
+                hour = hour + 1
+                
+            embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = f"⏱️ นาฬิกาจับเวลา",
+            description = f"""```
+เวลา :             
+{hour} : {minute} : {second}
+
+        ```"""
+        )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await message.edit(embed=embed)
+    else:
+        print("why type command when u don't use them ? ")
+    
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
 #`^^^^^^^^^^^^ /====================================="
