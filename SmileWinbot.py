@@ -13,24 +13,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '______________________'
+TOKEN = '_______________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = ______________________
+CLIENTID = _______________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '______________________'
+        'TRN-Api-Key': '_______________________'
     }
 
-openweathermapAPI = "______________________"
+openweathermapAPI = "_______________________"
 
-reddit = praw.Reddit(client_id="______________________",
-                     client_secret="______________________",
-                     username="______________________",
-                     password="______________________",
+reddit = praw.Reddit(client_id="_______________________",
+                     client_secret="_______________________",
+                     username="_______________________",
+                     password="_______________________",
                      user_agent="Smilewin")
 
 
@@ -63,7 +63,7 @@ def clearcmd():
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client()
-client = commands.Bot(command_prefix = COMMAND_PREFIX, intents=intents)
+client = commands.Bot(command_prefix = COMMAND_PREFIX,  case_insensitive=True ,intents=intents)
 start_time = datetime.datetime.utcnow()
 client.remove_command('help')
 
@@ -102,12 +102,28 @@ async def setwelcome(ctx , channel:discord.TextChannel):
     if result is None:
         sql = ("INSERT INTO Smilewin(guild_id, welcome_id) VALUES(?,?)")
         val = (ctx.guild.id , channel.id)
-        await ctx.send(f"Channel has been set to {channel.mention}")
+
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+        )
+        
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     elif result is not None:
         sql = ("UPDATE Smilewin SET welcome_id = ? WHERE guild_id = ?")
         val = (channel.id , ctx.guild.id)
-        await ctx.send(f"Channel has been updated to {channel.mention}")
+        
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+        )
+        
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     cursor.execute(sql, val)
     db.commit()
@@ -124,12 +140,26 @@ async def setleave(ctx , channel:discord.TextChannel):
     if result is None:
         sql = ("INSERT INTO Smilewin(guild_id, leave_id) VALUES(?,?)")
         val = (ctx.guild.id , channel.id)
-        await ctx.send(f"Channel has been set to {channel.mention}")
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     elif result is not None:
         sql = ("UPDATE Smilewin SET leave_id = ? WHERE guild_id = ?")
         val = (channel.id , ctx.guild.id)
-        await ctx.send(f"Channel has been updated to {channel.mention}")
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     cursor.execute(sql, val)
     db.commit()
@@ -219,7 +249,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Smilewin WHERE guild_id = {member.guild.id}")
+    cursor.execute(f"SELECT leave_id FROM Smilewin WHERE guild_id = {member.guild.id}")
     result =cursor.fetchone()
     if result is None:
         return
@@ -1042,6 +1072,7 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline=True)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
@@ -1070,6 +1101,20 @@ async def helpbot(ctx):
     await message.add_reaction('👍')
 
 @client.command()
+async def helpsetup(ctx):
+    embed=discord.Embed(
+        title='คําสั่งเกี่ยวกับตั้งค่า',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline=False)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+@client.command()
 async def helpgame(ctx):
     embed=discord.Embed(
         title='คําสั่งเกี่ยวกับเกม',
@@ -1079,6 +1124,7 @@ async def helpgame(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}roll ``', value='ทอยลูกเต๋า', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False)
@@ -3384,7 +3430,7 @@ async def stopwatch(ctx):
             await message.edit(embed=embed)
     else:
         print("why type command when u don't use them ? ")
-    
+
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
 #`^^^^^^^^^^^^ /====================================="
