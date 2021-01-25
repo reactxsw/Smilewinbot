@@ -13,27 +13,27 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_________________________________'
+TOKEN = '___________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-WELCOME_ID = _________________________________
-LEAVE_ID = _________________________________
-PERSONAL_GUILD_ID = _________________________________
-CLIENTID = _________________________________
+WELCOME_ID = ___________________________________
+LEAVE_ID = ___________________________________
+PERSONAL_GUILD_ID = ___________________________________
+CLIENTID = ___________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_________________________________'
+        'TRN-Api-Key': '___________________________________'
     }
 
-openweathermapAPI = "_________________________________"
+openweathermapAPI = "___________________________________"
 
-reddit = praw.Reddit(client_id="_________________________________",
-                     client_secret="_________________________________",
-                     username="_________________________________",
-                     password="_________________________________",
+reddit = praw.Reddit(client_id="___________________________________",
+                     client_secret="___________________________________",
+                     username="___________________________________",
+                     password="___________________________________",
                      user_agent="Smilewin")
 
 
@@ -1068,6 +1068,7 @@ async def helpadmin(ctx):
         )
     embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline=False)
     embed.add_field(name=f'``{COMMAND_PREFIX}dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline=False)
@@ -3182,7 +3183,7 @@ async def _8ball(ctx, *,question):
     await message.add_reaction("🎱")
 
 @client.command()
-async def embed(ctx ,title=None, *,message):
+async def embed(ctx,*,message):
 
     if "//" in message:
         message = message.replace('//', '\n')
@@ -3196,6 +3197,59 @@ async def embed(ctx ,title=None, *,message):
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     await ctx.send(embed=embed)
+
+@embed.error
+async def embed_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+@client.command()
+@commands.has_permissions(administrator=True)
+async def unban(ctx, *, member):
+    banned_users = await ctx.guild.bans()
+    member_name, member_discriminator = member.split('#')
+    for ban_entry in banned_users:
+        user = ban_entry.user
+        if (user.name, user.discriminator)==(member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = f"ปลดเเบน {member}",
+                description = f"{member} ได้ถูกปลนเเบน"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
+
+        else:
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = f"ไม่พบชื่อ {member}",
+                description = "ไม่มีชื่อนี้ในรายชื่อคนที่ถูกเเบนโปรดเช็คชื่อเเละเลขข้างหลัง"
+
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
+
+@unban.error
+async def unban_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะปลดเเบน ``{COMMAND_PREFIX}unban (member#1111)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+            
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
 #`^^^^^^^^^^^^ /====================================="
