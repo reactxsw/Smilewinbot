@@ -1,6 +1,7 @@
 #import
 import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3
 #from
+from discord import Webhook, RequestsWebhookAdapter
 from discord.ext import commands, tasks
 from discord.utils import get
 from datetime import date, timedelta
@@ -13,24 +14,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_______________________'
+TOKEN = '______________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = _______________________
+CLIENTID = ______________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_______________________'
+        'TRN-Api-Key': '______________________________________'
     }
 
-openweathermapAPI = "_______________________"
+openweathermapAPI = "______________________________________"
 
-reddit = praw.Reddit(client_id="_______________________",
-                     client_secret="_______________________",
-                     username="_______________________",
-                     password="_______________________",
+reddit = praw.Reddit(client_id="______________________________________",
+                     client_secret="______________________________________",
+                     username="______________________________________",
+                     password="______________________________________",
                      user_agent="Smilewin")
 
 
@@ -75,10 +76,17 @@ async def on_ready():
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Smilewin(
+        CREATE TABLE IF NOT EXISTS Main(
         guild_id TEXT,
         welcome_id TEXT,
         leave_id TEXT
+        )
+        ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS webhook(
+        guild_id TEXT,
+        webhook_url TEXT,
+        status TEXT
         )
         ''')
     change_status.start()
@@ -91,16 +99,81 @@ async def on_ready():
     print("")
     print("CONSOLE : ")
     print("")
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setwebhook(ctx , channel:discord.TextChannel):
+    webhook = await ctx.channel.create_webhook(name='Smilewin')
+    webhook = webhook.url
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT webhook_url FROM webhook where guild_id = {ctx.guild.id} ")
+    result = cursor.fetchone()
+    if result is None:
+        status = "yes"
+        sql = ("INSERT INTO webhook(guild_id, webhook_url ,status) VALUES(?,?,?)")
+        val = (ctx.guild.id , webhook , status)  
+
+    elif result is not None:
+        sql = ("UPDATE webhook SET webhook_url = ? WHERE guild_id = ?")
+        val = (webhook , ctx.guild.id)
+
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def chaton(ctx):
+    status = "yes"
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT status FROM webhook where guild_id = {ctx.guild.id} ")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
+        val = (ctx.guild.id , status)  
+
+    elif result is not None:
+        sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
+        val = (status , ctx.guild.id)
     
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def chatoff(ctx):
+    status = "no"
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT status FROM webhook where guild_id = {ctx.guild.id} ")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
+        val = (ctx.guild.id , status)  
+
+    elif result is not None:
+        sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
+        val = (status , ctx.guild.id)
+    
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
+
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwelcome(ctx , channel:discord.TextChannel):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Smilewin Where guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT welcome_id FROM Main Where guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
-        sql = ("INSERT INTO Smilewin(guild_id, welcome_id) VALUES(?,?)")
+        sql = ("INSERT INTO Main(guild_id, welcome_id) VALUES(?,?)")
         val = (ctx.guild.id , channel.id)
 
         embed = discord.Embed(
@@ -108,12 +181,12 @@ async def setwelcome(ctx , channel:discord.TextChannel):
             title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
         )
-        
+
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
 
     elif result is not None:
-        sql = ("UPDATE Smilewin SET welcome_id = ? WHERE guild_id = ?")
+        sql = ("UPDATE Main SET welcome_id = ? WHERE guild_id = ?")
         val = (channel.id , ctx.guild.id)
         
         embed = discord.Embed(
@@ -130,15 +203,41 @@ async def setwelcome(ctx , channel:discord.TextChannel):
     cursor.close()
     db.close()
 
+@setwelcome.error
+async def setwelcome_error(ctx, error):
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุห้องที่จะตั้งเเจ้งเตือนคนเข้า",
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือน ``{COMMAND_PREFIX}setwelcome #text-channel``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setleave(ctx , channel:discord.TextChannel):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT leave_id FROM Smilewin Where guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT leave_id FROM Main Where guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
-        sql = ("INSERT INTO Smilewin(guild_id, leave_id) VALUES(?,?)")
+        sql = ("INSERT INTO Main(guild_id, leave_id) VALUES(?,?)")
         val = (ctx.guild.id , channel.id)
         embed = discord.Embed(
             colour= 0x00FFFF,
@@ -150,7 +249,7 @@ async def setleave(ctx , channel:discord.TextChannel):
         await message.add_reaction('✅')
 
     elif result is not None:
-        sql = ("UPDATE Smilewin SET leave_id = ? WHERE guild_id = ?")
+        sql = ("UPDATE Main SET leave_id = ? WHERE guild_id = ?")
         val = (channel.id , ctx.guild.id)
         embed = discord.Embed(
             colour= 0x00FFFF,
@@ -166,7 +265,32 @@ async def setleave(ctx , channel:discord.TextChannel):
     cursor.close()
     db.close()
 
-    
+@setleave.error
+async def setleave_error(ctx, error):
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุห้องที่จะตั้งเเจ้งเตือนคนออก",
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือน ``{COMMAND_PREFIX}setleave #text-channel``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @tasks.loop(seconds=1)
 async def change_status():
     await client.change_presence(status = discord.Status.idle, activity=discord.Game(next(status)))
@@ -222,7 +346,7 @@ async def clear_error(ctx, error):
 async def on_member_join(member):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Smilewin WHERE guild_id = {member.guild.id}")
+    cursor.execute(f"SELECT welcome_id FROM Main WHERE guild_id = {member.guild.id}")
     result =cursor.fetchone()
     if result is None:
         return
@@ -249,7 +373,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT leave_id FROM Smilewin WHERE guild_id = {member.guild.id}")
+    cursor.execute(f"SELECT leave_id FROM Main WHERE guild_id = {member.guild.id}")
     result =cursor.fetchone()
     if result is None:
         return
@@ -988,6 +1112,7 @@ async def dmall(ctx, *, message):
     for member in ctx.guild.members:
         try:
             await member.create_dm()
+            time.sleep(1.01)
             await member.dm_channel.send(message)
             print(f"Message from {ctx.author} has been sent to "+ member.name)
             sent = sent + 1
@@ -3074,6 +3199,7 @@ async def calculator(ctx , right:int ,symbol , left:int):
 
     if "+" in symbol:
         product = (right+left)
+        product = humanize.intcomma(product)
         a = str(right)
         b = str(symbol)
         c = str(left)
@@ -3090,6 +3216,7 @@ async def calculator(ctx , right:int ,symbol , left:int):
 
     elif "*" in symbol:
         product = (right*left)
+        product = humanize.intcomma(product)
         a = str(right)
         b = str(symbol)
         c = str(left)
@@ -3106,6 +3233,7 @@ async def calculator(ctx , right:int ,symbol , left:int):
     
     elif "/" in symbol:
         product = (right/left)
+        product = humanize.intcomma(product)
         a = str(right)
         b = str(symbol)
         c = str(left)
@@ -3122,6 +3250,7 @@ async def calculator(ctx , right:int ,symbol , left:int):
     
     elif "-" in symbol:
         product = (right-left)
+        product = humanize.intcomma(product)
         a = str(right)
         b = str(symbol)
         c = str(left)
@@ -3138,6 +3267,7 @@ async def calculator(ctx , right:int ,symbol , left:int):
 
     elif "^" in symbol:
         product = (right**left)
+        product = humanize.intcomma(product)
         a = str(right)
         b = str(symbol)
         c = str(left)
@@ -3353,14 +3483,62 @@ async def unban_error(ctx, error):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
+    
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ปลดเเบน",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
 
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def webhook(ctx , webhook ,* , message):
+    WEBHOOK_URL = webhook
+    WEBHOOK_USERNAME = "Smilewinbot"
+    WEBHOOK_AVATAR = "https://i.imgur.com/rPfYXGs.png"
+    WEBHOOK_CONTENT = message
+    try:
+        payload = {"content":WEBHOOK_CONTENT,"username":WEBHOOK_USERNAME,"avatar_url":WEBHOOK_AVATAR}
+        requests.post(WEBHOOK_URL,data=payload)
+
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "ส่งข้อความไปยังwebhook",
+            description = f"""```
+ข้อความ :
+{message}```"""
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+        
+    except Exception as e:
+        print(e)
+
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            title= "ไม่สามารถส่งข้อความไปยังwebhook",
+            description= "Webhook อาจจะผิดโปรดตรวจสอบ"
+
+        )
+        
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+        
 @client.command()
 async def stopwatch(ctx):
     embed = discord.Embed(
             colour = 0x00FFFF,
             title = f"⏱️ นาฬิกาจับเวลา",
             description = f"""```
-กด 🕑 เพื่อเริ่มจับเวลา
+กด 🕑 เพื่อเริ่มจับเวลา  
 กด ❌ เพื่อหยุดจับเวลา```"""
         )
     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -3430,6 +3608,48 @@ async def stopwatch(ctx):
             await message.edit(embed=embed)
     else:
         print("why type command when u don't use them ? ")
+
+@client.command()
+async def anon(ctx, *,message):
+    webhook = await ctx.channel.create_webhook(name='Smilewin')
+    webhook = webhook.url
+    username = "Smilewin"
+    space = " "
+    avatar = "https://i.imgur.com/rPfYXGs.png"
+    author = ctx.author.name
+    author = author[::-1]
+    message = f"[{author}] : {message}"
+    payload = {"content":message,"username":username,"avatar_url":avatar}
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute("SELECT webhook_url FROM webhook Where status = ?", ('yes',))
+    result = cursor.fetchall()
+    if webhook.url in result:
+        for webhook in result:
+            webhook = space.join(webhook)
+            requests.post(webhook,data=payload)
+            time.sleep(0.005)
+    
+    else:
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ไม่พบ webhook ของคุณ",
+            description = "คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+@anon.error
+async def anon_error(ctx,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่จะส่ง ``{COMMAND_PREFIX}anon (message)``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
