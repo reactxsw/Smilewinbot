@@ -3993,8 +3993,7 @@ Binary : {text}
 
 @client.command()
 async def support(ctx, support):
-    print(support + "https://discord.com/api/webhooks/804562716412215317/bXZD02gK_hGdRjhUvVS5s_0_IEmiLgTVrJQql8gSHJQwWPFIQSxVkJXj5dOnAOTmbECC")
-    #https://discord.com/api/webhooks/804562716412215317/bXZD02gK_hGdRjhUvVS5s_0_IEmiLgTVrJQql8gSHJQwWPFIQSxVkJXj5dOnAOTmbECC
+    
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
