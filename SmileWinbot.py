@@ -12,26 +12,25 @@ from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
 from threading import Thread
 
-
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '______________________________________'
+TOKEN = '__________________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = ______________________________________
+CLIENTID = __________________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '______________________________________'
+        'TRN-Api-Key': '__________________________________'
     }
 
-openweathermapAPI = "______________________________________"
+openweathermapAPI = "__________________________________"
 
-reddit = praw.Reddit(client_id="______________________________________",
-                     client_secret="______________________________________",
-                     username="______________________________________",
-                     password="______________________________________",
+reddit = praw.Reddit(client_id="__________________________________",
+                     client_secret="__________________________________",
+                     username="__________________________________",
+                     password="__________________________________",
                      user_agent="Smilewin")
 
 
@@ -86,6 +85,15 @@ async def on_ready():
         CREATE TABLE IF NOT EXISTS webhook(
         guild_id TEXT,
         webhook_url TEXT,
+        channel_id TEXT,
+        status TEXT
+        )
+        ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Introduce(
+        guild_id TEXT,
+        channel_id TEXT,
+        boarder TEXT,
         status TEXT
         )
         ''')
@@ -102,26 +110,142 @@ async def on_ready():
 
 @client.command()
 @commands.has_permissions(administrator=True)
+async def setintroduce(ctx, channel:discord.TextChannel):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, channel_id) VALUES(?,?)")
+        val = (ctx.guild.id , channel.id)
+
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    elif result is not None:
+        sql = ("UPDATE Main SET channel_id = ? WHERE guild_id = ?")
+        val = (channel.id , ctx.guild.id)
+        
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+        )
+        
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+    db.close()
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setboarder(ctx, *,boarder):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, boarder) VALUES(?,?)")
+        val = (ctx.guild.id , boarder)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่ากรอบเเนะนําตัว",
+            description= f"กรอบได้ถูกตั้งเป็น {boarder}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+    
+    elif result is not None:
+        sql = ("UPDATE Introduce boarder = ? WHERE guild_id = ?")
+        val = (boarder , ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่ากรอบเเนะนําตัว",
+            description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+        
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
+
+
+@client.command()
+@commands.has_permissions(administrator=True)
 async def setwebhook(ctx , channel:discord.TextChannel):
     webhook = await ctx.channel.create_webhook(name='Smilewin')
     webhook = webhook.url
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT webhook_url FROM webhook where guild_id = {ctx.guild.id} ")
+    cursor.execute(f"SELECT webhook_url FROM webhook WHERE guild_id = {ctx.guild.id} ")
     result = cursor.fetchone()
     if result is None:
         status = "yes"
-        sql = ("INSERT INTO webhook(guild_id, webhook_url ,status) VALUES(?,?,?)")
-        val = (ctx.guild.id , webhook , status)  
+        sql = ("INSERT INTO webhook(guild_id, webhook_url , channel_id , status) VALUES(?,?,?,?)")
+        val = (ctx.guild.id , webhook ,channel.id, status)  
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     elif result is not None:
-        sql = ("UPDATE webhook SET webhook_url = ? WHERE guild_id = ?")
-        val = (webhook , ctx.guild.id)
+        sql = ("UPDATE webhook SET webhook_url = ? , channel_id = ? WHERE guild_id = ?")
+        val = (webhook , channel.id ,ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+        )
 
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+        
     cursor.execute(sql, val)
     db.commit() 
     cursor.close()
     db.close()
+
+@setwebhook.error
+async def setwebhook_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุห้องที่จะตั้ง",
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{COMMAND_PREFIX}setwebhook #text-channel``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้ง",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -129,20 +253,50 @@ async def chaton(ctx):
     status = "yes"
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM webhook where guild_id = {ctx.guild.id} ")
+    cursor.execute(f"SELECT status FROM webhook Where guild_id = {ctx.guild.id} ")
     result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
-        val = (ctx.guild.id , status)  
+        val = (ctx.guild.id , status)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     elif result is not None:
         sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
         val = (status , ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
     
     cursor.execute(sql, val)
     db.commit() 
     cursor.close()
     db.close()
+
+@chaton.error
+async def chanon_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -150,27 +304,58 @@ async def chatoff(ctx):
     status = "no"
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM webhook where guild_id = {ctx.guild.id} ")
+    cursor.execute(f"SELECT status FROM webhook WHERE guild_id = {ctx.guild.id} ")
     result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
         val = (ctx.guild.id , status)  
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     elif result is not None:
         sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
         val = (status , ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+        )
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
     
     cursor.execute(sql, val)
     db.commit() 
     cursor.close()
     db.close()
 
+@chatoff.error
+async def chanoff_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwelcome(ctx , channel:discord.TextChannel):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Main Where guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT welcome_id FROM Main WHERE guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO Main(guild_id, welcome_id) VALUES(?,?)")
@@ -234,7 +419,7 @@ async def setwelcome_error(ctx, error):
 async def setleave(ctx , channel:discord.TextChannel):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT leave_id FROM Main Where guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT leave_id FROM Main WHERE guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO Main(guild_id, leave_id) VALUES(?,?)")
@@ -548,9 +733,9 @@ async def rule(ctx):
 
     embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
     embed.set_footer(text='┗Powered by REACT')
-    embed.add_field(name='``rule 1 :``',value='```ห้ามเป็นสลิ่ม```' , inline=False)
-    embed.add_field(name='``rule 2 :``',value='```เคารพคนที่มีอายุมากกว่า```' , inline=False)
-    embed.add_field(name='``rule 3 :``',value='```ห้ามทำการสแปมข้อความ```' , inline=False)
+    embed.add_field(name='``rule 1 :``',value='```ห้ามเป็นสลิ่ม```' , inline = False)
+    embed.add_field(name='``rule 2 :``',value='```เคารพคนที่มีอายุมากกว่า```' , inline = False)
+    embed.add_field(name='``rule 3 :``',value='```ห้ามทำการสแปมข้อความ```' , inline = False)
     embed.add_field(name='``rule 4 :``',value='```ไม่ก่อกวนผู้อื่นขณะกำลังเล่นเกม```' , inline=False)
     embed.add_field(name='``rule 5 :``',value='```ห้ามเเบ่งปันhack ต่างๆสําหรับเกม```' , inline=False)
     embed.add_field(name='``rule 6 :``',value='```เเบ่งกันใช้ bot```' , inline=False)
@@ -559,8 +744,6 @@ async def rule(ctx):
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('✅')
-
-
 
 @client.command()
 async def ping(ctx):
@@ -604,6 +787,35 @@ https://hastebin.com/{r['key']}```"""
     message = await ctx.send(embed = embed)
     await message.add_reaction('📒')
     print(f"{ctx.author} have made a hastebinlink : https://hastebin.com/{r['key']}")
+
+@client.command()
+async def pastebin(ctx, *,message):
+    data = {
+    'api_option': 'paste',
+    'api_dev_key':"COIhrBM2YSIba0PWpq4RGdqEH0KUkhHw",
+    'api_paste_code':message,
+    'api_paste_name':"Smilewinbot",
+    'api_paste_expire_date': 'N',
+    'api_user_key': None,
+    'api_paste_format': 'python'
+    }
+    r = requests.post("https://pastebin.com/api/api_post.php", data=data)
+    r = r.text
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        title = f'Pastebin link ของ {ctx.author}',
+        description = f"""
+```📒 นี้คือลิงค์ Pastebin ของคุณ : 
+
+{r.text}```"""
+    )
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.timestamp = datetime.datetime.utcnow()
+
+    message = await ctx.send(embed = embed)
+    await message.add_reaction('📒')
+    print(f"{ctx.author} have made a Pastebinlink : {r.text}")
 
 @client.command()
 async def sreddit(ctx, subreddit):
@@ -1192,15 +1404,15 @@ async def help(ctx):
         color=0x00FFFF   
         )
 
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpfun``',value='คําสั่งบรรเทิง' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline=True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline=True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpfun``',value='คําสั่งบรรเทิง' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = False)
     embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1214,12 +1426,12 @@ async def helpbot(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline=False )
-    embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botcode``', value = 'ดูโค้ดที่ผมใช้ในการเขียนบอทตัวนี้',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
+    embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}botcode``', value = 'ดูโค้ดที่ผมใช้ในการเขียนบอทตัวนี้',inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1232,8 +1444,11 @@ async def helpsetup(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value ='ตั้งค่าห้องที่จะใช้คําสั่ง /r anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}chaton``', value ='เปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}chatoff``', value ='ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1246,17 +1461,17 @@ async def helpgame(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}roll ``', value='ทอยลูกเต๋า', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}roll ``', value='ทอยลูกเต๋า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1269,21 +1484,21 @@ async def helpinfo(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     
     message = await ctx.send(embed=embed)
@@ -1296,14 +1511,17 @@ async def helpadmin(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1316,16 +1534,17 @@ async def helpfun(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value='พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน /r helpsetup', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1338,17 +1557,20 @@ async def helpgeneral(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ hastebin โดยมีข้อความข้อใน', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}calculator a (symbol) b``', value= 'คํานวน + - * / ^ ', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}calculator a (symbol) b``', value= 'คํานวน + - * / ^ ', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
@@ -1361,12 +1583,12 @@ async def helpimage(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline=False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline=False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
     message = await ctx.send(embed=embed)
@@ -3531,112 +3753,191 @@ async def webhook(ctx , webhook ,* , message):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
-        
 @client.command()
-async def stopwatch(ctx):
-    embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f"⏱️ นาฬิกาจับเวลา",
-            description = f"""```
-กด 🕑 เพื่อเริ่มจับเวลา  
-กด ❌ เพื่อหยุดจับเวลา```"""
-        )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("🕑")
-    await message.add_reaction("❌")
-
-
+@commands.has_permissions(administrator=True)
+async def giverole(ctx, user: discord.Member, role: discord.Role):
     try:
-        reaction, user = await client.wait_for('reaction_add', timeout=None, check=lambda reaction, user: user.id == ctx.author.id)
+        await user.add_roles(role)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            description = f"ได้ทําการเพิ่มยศ{role}ให้กับ{user}"
+        )
 
-        if str(reaction.emoji) == "🕑":
-            timer = True
+        message = await ctx.send(embed = embed)
+        await message.add_reaction('✅')
 
-        if str(reaction.emoji) == "❌":
-            timer = False
-
-
-    except asyncio.TimeoutError:
-        
+    except:
         embed = discord.Embed(
             colour = 0x983925,
-            title = "🕑 หมดเวลา" ,
+            description = f"ไม่มียศ{role}"
         )
+        message = await ctx.send(embed = embed)
+        await message.add_reaction('⚠️')
 
-        await message.edit(embed=embed)
-        
-    hour = 0
-    minute = 0 
-    second = 0
-    
-    if timer:
+@giverole.error
+async def giverole_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f"⏱️ นาฬิกาจับเวลา",
-            description = f"""```
-เวลา :             
-{hour} : {minute} : {second}
-
-        ```"""
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะให้ยศเเละยศที่จะให้ ``{COMMAND_PREFIX}giverole @role``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
-        await message.edit(embed=embed)
-        while timer:
-            second = second + 1
-            time.sleep(1)
 
-            if second == 60:
-                second = 0
-                minute = minute + 1
-        
-            if minute == 60:
-                second = 0
-                minute = 0
-                hour = hour + 1
-                
-            embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f"⏱️ นาฬิกาจับเวลา",
-            description = f"""```
-เวลา :             
-{hour} : {minute} : {second}
-
-        ```"""
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ให้ยศ",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            await message.edit(embed=embed)
-    else:
-        print("why type command when u don't use them ? ")
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def removerole(ctx, user: discord.Member, role: discord.Role):
+    try:
+        await user.remove_roles(role)
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            description = f"ได้ทําการเอายศ{role}ออกให้กับ{user}"
+        )
+
+        message = await ctx.send(embed = embed)
+        await message.add_reaction('✅')
+
+    except:
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f"{user}ไม่มียศ{role}"
+        )
+        message = await ctx.send(embed = embed)
+        await message.add_reaction('⚠️')
+
+@giverole.error
+async def removerole_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะให้ยศเเละยศที่เอาออก ``{COMMAND_PREFIX}removerole @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์เอายศออก",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+async def changenick(ctx, user: discord.Member, Change):
+    await user.edit(nick=Change)
+    embed = discord.Embed(
+            colour = 0x00FFFF,
+            description = f"ได้ทําการเปลี่ยนชื่อ {user.mention}เป็น {Change}"
+        )
+
+    message = await ctx.send(embed = embed)
+    await message.add_reaction('✅')
+
+@changenick.error
+async def changenick_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องที่จะเปลี่ยนชื่อเเละชื่อใหม่ ``{COMMAND_PREFIX}changenick @member newnick``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+    
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์เปลี่ยนชื่อ",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 async def anon(ctx, *,message):
-    webhook = await ctx.channel.create_webhook(name='Smilewin')
-    webhook = webhook.url
     username = "Smilewin"
     space = " "
     avatar = "https://i.imgur.com/rPfYXGs.png"
+
     author = ctx.author.name
     author = author[::-1]
+    letter = len(author)
+
+    while letter < 5:
+        author = author + ("X")
+        letter = letter+1
+
+    author = author[:5]
+    author = author[0] + author[4] + author[1] + author[3] + author[2]
+
     message = f"[{author}] : {message}"
     payload = {"content":message,"username":username,"avatar_url":avatar}
+
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute("SELECT webhook_url FROM webhook Where status = ?", ('yes',))
+    cursor.execute("SELECT webhook_url FROM webhook WHERE status = ?", ('yes',))
+    cursor2 = db.cursor()
+    cursor2.execute(f"SELECT status FROM webhook WHERE guild_id = {ctx.guild.id}")
+    cursor3 = db.cursor()
+    cursor3.execute(f"SELECT webhook_url FROM webhook WHERE guild_id = {ctx.guild.id}")
+
     result = cursor.fetchall()
-    if webhook.url in result:
-        for webhook in result:
-            webhook = space.join(webhook)
-            requests.post(webhook,data=payload)
-            time.sleep(0.005)
+    result2 = cursor2.fetchone()
+    result3 = cursor3.fetchone()
+    result2 = space.join(result2)
+    result3 = space.join(result3)
+    
+    if result2 == "yes":
+        if result3 is not None:
+            for webhook in result:
+                webhook = space.join(webhook)
+                requests.post(webhook,data=payload)
+                time.sleep(0.005)
+    
+        else:
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ไม่พบ webhook ของคุณ",
+                description = "คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed = embed)
+            await message.add_reaction('⚠️')
     
     else:
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ไม่พบ webhook ของคุณ",
-            description = "คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
-        )
+            title = "คุณได้ปิดคําสั่งนี้ไว้",
+            description = "คุณต้องเปิดคําสั่ง /r chaton เพื่อใช้คําสั่งนี้ , พิม /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+            )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed = embed)
+        await message.add_reaction('⚠️')
 
 @anon.error
 async def anon_error(ctx,error):
@@ -3650,12 +3951,59 @@ async def anon_error(ctx,error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
+@client.command()
+async def enbinary(ctx, *, text): 
+
+    r = requests.get(f"https://some-random-api.ml/binary?text={text}")
+    r = r.json()
+
+    binary = r['binary']
+
+    embed = discord.Embed(
+        colour=0x00FFFF,
+        title= "Encode Binary",
+        description = f"""```
+คําปกติ : {text}
+Binary : {binary}```"""
+        )
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message =await ctx.send(embed=embed)
+    await message.add_reaction('💻')
+
+@client.command()
+async def debinary(ctx, *,text): 
+
+    r = requests.get(f"https://some-random-api.ml/binary?decode={text}")
+    r = r.json()
+
+    binary = r['text']
+
+    embed = discord.Embed(
+        colour=0x00FFFF,
+        title= "Encode Binary",
+        description = f"""```
+Binary : {text}
+คําปกติ : {binary}```"""
+        )
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message =await ctx.send(embed=embed)
+    await message.add_reaction('💻')
+
+@client.command()
+async def support(ctx, support):
+    print(support + "https://discord.com/api/webhooks/804562716412215317/bXZD02gK_hGdRjhUvVS5s_0_IEmiLgTVrJQql8gSHJQwWPFIQSxVkJXj5dOnAOTmbECC")
+    #https://discord.com/api/webhooks/804562716412215317/bXZD02gK_hGdRjhUvVS5s_0_IEmiLgTVrJQql8gSHJQwWPFIQSxVkJXj5dOnAOTmbECC
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
-#`^^^^^^^^^^^^ /====================================="
+#`^^^^^^^^^^^^ /====================================="a
 #            \/
 #REACT#1120 - Thailand
     
 #Bot login using token
 client.run(TOKEN, bot = True)
+
+
+
