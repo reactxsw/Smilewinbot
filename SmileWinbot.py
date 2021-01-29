@@ -12,25 +12,26 @@ from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
 from threading import Thread
 
+
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '__________________________________'
+TOKEN = '____________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = __________________________________
+CLIENTID = ____________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '__________________________________'
+        'TRN-Api-Key': '____________________'
     }
 
-openweathermapAPI = "__________________________________"
+openweathermapAPI = "____________________"
 
-reddit = praw.Reddit(client_id="__________________________________",
-                     client_secret="__________________________________",
-                     username="__________________________________",
-                     password="__________________________________",
+reddit = praw.Reddit(client_id="____________________",
+                     client_secret="____________________",
+                     username="____________________",
+                     password="____________________",
                      user_agent="Smilewin")
 
 
@@ -116,20 +117,22 @@ async def setintroduce(ctx, channel:discord.TextChannel):
     cursor.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, channel_id) VALUES(?,?)")
-        val = (ctx.guild.id , channel.id)
+        status = "yes"
+        sql = ("INSERT INTO Introduce(guild_id, channel_id , status) VALUES(?,?,?)")
+        val = (ctx.guild.id , channel.id , status)
 
         embed = discord.Embed(
             colour= 0x00FFFF,
             title = "ตั้งค่าห้องเเนะนําตัว",
             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
 
     elif result is not None:
-        sql = ("UPDATE Main SET channel_id = ? WHERE guild_id = ?")
+        sql = ("UPDATE Introduce SET channel_id = ? WHERE guild_id = ?")
         val = (channel.id , ctx.guild.id)
         
         embed = discord.Embed(
@@ -137,6 +140,7 @@ async def setintroduce(ctx, channel:discord.TextChannel):
             title= "ตั้งค่าห้องเเนะนําตัว",
             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
         
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -152,7 +156,7 @@ async def setboarder(ctx, *,boarder):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
     cursor.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone
+    result = cursor.fetchone()
     if result is None:
         sql = ("INSERT INTO Introduce(guild_id, boarder) VALUES(?,?)")
         val = (ctx.guild.id , boarder)
@@ -161,18 +165,20 @@ async def setboarder(ctx, *,boarder):
             title = "ตั้งค่ากรอบเเนะนําตัว",
             description= f"กรอบได้ถูกตั้งเป็น {boarder}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
     
     elif result is not None:
-        sql = ("UPDATE Introduce boarder = ? WHERE guild_id = ?")
+        sql = ("UPDATE Introduce SET boarder = ? WHERE guild_id = ?")
         val = (boarder , ctx.guild.id)
         embed = discord.Embed(
             colour= 0x00FFFF,
             title = "ตั้งค่ากรอบเเนะนําตัว",
             description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -182,6 +188,94 @@ async def setboarder(ctx, *,boarder):
     cursor.close()
     db.close()
 
+@client.group(invoke_without_command=True)
+async def introduce(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        description = "ต้องระบุ ON / OFF"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@introduce.command()
+@commands.has_permissions(administrator=True)
+async def on(ctx):
+    status = "yes"
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT status FROM Introduce Where guild_id = {ctx.guild.id} ")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, status) VALUES(?,?)")
+        val = (ctx.guild.id , status)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    elif result is not None:
+        sql = ("UPDATE Introduce SET status = ? WHERE guild_id = ?")
+        val = (status , ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+    
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
+    
+@introduce.command()
+@commands.has_permissions(administrator=True)
+async def off(ctx):
+    status = "no"
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT status FROM Introduce WHERE guild_id = {ctx.guild.id} ")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, status) VALUES(?,?)")
+        val = (ctx.guild.id , status)  
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    elif result is not None:
+        sql = ("UPDATE Introduce SET status = ? WHERE guild_id = ?")
+        val = (status , ctx.guild.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องเเนะนําตัว",
+            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+    
+    cursor.execute(sql, val)
+    db.commit() 
+    cursor.close()
+    db.close()
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -201,6 +295,7 @@ async def setwebhook(ctx , channel:discord.TextChannel):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -213,6 +308,7 @@ async def setwebhook(ctx , channel:discord.TextChannel):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -263,6 +359,7 @@ async def chaton(ctx):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -275,6 +372,7 @@ async def chaton(ctx):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -285,7 +383,7 @@ async def chaton(ctx):
     db.close()
 
 @chaton.error
-async def chanon_error(ctx, error):
+async def chaton_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
@@ -314,6 +412,7 @@ async def chatoff(ctx):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -326,6 +425,7 @@ async def chatoff(ctx):
             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -429,6 +529,7 @@ async def setleave(ctx , channel:discord.TextChannel):
             title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -441,6 +542,7 @@ async def setleave(ctx , channel:discord.TextChannel):
             title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
@@ -3875,7 +3977,7 @@ async def changenick_error(ctx, error):
 
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
+        message = await ctx.send(embed=embed) 
         await message.add_reaction('⚠️')
 
 @client.command()
@@ -3908,9 +4010,9 @@ async def anon(ctx, *,message):
 
     result = cursor.fetchall()
     result2 = cursor2.fetchone()
+    result2 = result2[0]
     result3 = cursor3.fetchone()
-    result2 = space.join(result2)
-    result3 = space.join(result3)
+    result3 = result3[0]
     
     if result2 == "yes":
         if result3 is not None:
@@ -3991,9 +4093,111 @@ Binary : {text}
     message =await ctx.send(embed=embed)
     await message.add_reaction('💻')
 
-@client.command()
-async def support(ctx, support):
-    
+@client.command(aliases=['ind'])
+async def introduction(ctx):
+
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT status FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is not None:
+        result = result[0]
+
+    if result != "no":
+        cursor = db.cursor()
+        cursor.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result = cursor.fetchone()
+
+        if result is None:
+            boarder = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+        
+        else:
+            boarder = result[0]
+
+        try:
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                description = "┗[1] ชื่อ")
+            
+            embed.set_footer(text="คำถามที่ [1/3]")
+            message = await ctx.send(embed=embed)
+
+            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+            name = username.content
+            await username.delete()
+
+        except asyncio.TimeoutError:
+            await message.delete()
+
+        try:
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                description = "┗[2] อายุ")
+            
+            embed.set_footer(text="คำถามที่ [2/3]")
+            await message.edit(embed=embed)
+
+            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+            age = userage.content
+            await userage.delete()
+
+        except asyncio.TimeoutError:
+            await message.delete()
+            
+        try:
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                description = "┗[3] เพศ")
+            
+            embed.set_footer(text="คำถามที่ [3/3]")
+            await message.edit(embed=embed)
+
+            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+            sex = usersex.content
+            await usersex.delete()
+
+        except asyncio.TimeoutError:
+            await message.delete()
+
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            description = (f"""```
+{boarder}
+
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+
+{boarder}```""")
+            )
+
+        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}") 
+        cursor1 = db.cursor()
+        cursor1.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result1 = cursor1.fetchone()
+
+        try:
+            channel = client.get_channel(id=int(result1[0]))
+            await message.delete()
+            await channel.send(embed=embed)
+
+        except:
+            await message.delete()
+            await ctx.send(embed=embed)
+
+    else:
+        embed =discord.Embed(
+           colour = 0x983925,
+           description = ""
+            )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
