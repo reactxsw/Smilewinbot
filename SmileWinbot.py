@@ -14,24 +14,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '____________________'
+TOKEN = '_______________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = ____________________
+CLIENTID = _______________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '____________________'
+        'TRN-Api-Key': '_______________________'
     }
 
-openweathermapAPI = "____________________"
+openweathermapAPI = "_______________________"
 
-reddit = praw.Reddit(client_id="____________________",
-                     client_secret="____________________",
-                     username="____________________",
-                     password="____________________",
+reddit = praw.Reddit(client_id="_______________________",
+                     client_secret="_______________________",
+                     username="_______________________",
+                     password="_______________________",
                      user_agent="Smilewin")
 
 
@@ -343,9 +343,20 @@ async def setwebhook_error(ctx, error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
-@client.command()
+@client.group(invoke_without_command=True)
+async def chat(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        description = "ต้องระบุ ON / OFF"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@chat.command(aliases=['on'])
 @commands.has_permissions(administrator=True)
-async def chaton(ctx):
+async def _on(ctx):
     status = "yes"
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
@@ -382,23 +393,9 @@ async def chaton(ctx):
     cursor.close()
     db.close()
 
-@chaton.error
-async def chaton_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
-
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-@client.command()
+@chat.command(aliases=['off'])
 @commands.has_permissions(administrator=True)
-async def chatoff(ctx):
+async def _off(ctx):
     status = "no"
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
@@ -434,21 +431,6 @@ async def chatoff(ctx):
     db.commit() 
     cursor.close()
     db.close()
-
-@chatoff.error
-async def chanoff_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
-
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -1548,9 +1530,11 @@ async def helpsetup(ctx):
         )
     embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value ='ตั้งค่าห้องที่จะใช้คําสั่ง /r anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}chaton``', value ='เปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}chatoff``', value ='ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setboarder``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -1586,6 +1570,7 @@ async def helpinfo(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
+    embed.add_field(name=f'``{COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
@@ -1636,7 +1621,7 @@ async def helpfun(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value='พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน /r helpsetup', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
@@ -4025,7 +4010,7 @@ async def anon(ctx, *,message):
             embed = discord.Embed(
                 colour = 0x983925,
                 title = "ไม่พบ webhook ของคุณ",
-                description = "คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+                description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed = embed)
@@ -4035,7 +4020,7 @@ async def anon(ctx, *,message):
         embed = discord.Embed(
             colour = 0x983925,
             title = "คุณได้ปิดคําสั่งนี้ไว้",
-            description = "คุณต้องเปิดคําสั่ง /r chaton เพื่อใช้คําสั่งนี้ , พิม /r helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+            description = f"คุณต้องเปิดคําสั่ง {COMMAND_PREFIX}chaton เพื่อใช้คําสั่งนี้ , พิม {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
             )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed = embed)
@@ -4175,7 +4160,9 @@ async def introduction(ctx):
             )
 
         embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}") 
+        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+        embed.timestamp = datetime.datetime.utcnow()
+        embed.set_footer(text = ctx.author.id)
         cursor1 = db.cursor()
         cursor1.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
         result1 = cursor1.fetchone()
@@ -4192,21 +4179,19 @@ async def introduction(ctx):
     else:
         embed =discord.Embed(
            colour = 0x983925,
-           description = ""
+           description = "หมดเวลา"
             )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-
+        await asyncio.sleep(3) 
+        await message.delete()
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
-#`^^^^^^^^^^^^ /====================================="a
+#`^^^^^^^^^^^^ /====================================="
 #            \/
 #REACT#1120 - Thailand
     
 #Bot login using token
 client.run(TOKEN, bot = True)
-
-
-
