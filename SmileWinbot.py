@@ -14,24 +14,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_______________________'
+TOKEN = '___________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = _______________________
+CLIENTID = ___________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_______________________'
+        'TRN-Api-Key': '___________________________'
     }
 
-openweathermapAPI = "_______________________"
+openweathermapAPI = "___________________________"
 
-reddit = praw.Reddit(client_id="_______________________",
-                     client_secret="_______________________",
-                     username="_______________________",
-                     password="_______________________",
+reddit = praw.Reddit(client_id="___________________________",
+                     client_secret="___________________________",
+                     username="___________________________",
+                     password="___________________________",
                      user_agent="Smilewin")
 
 
@@ -95,6 +95,7 @@ async def on_ready():
         guild_id TEXT,
         channel_id TEXT,
         boarder TEXT,
+        role_id,
         status TEXT
         )
         ''')
@@ -108,6 +109,45 @@ async def on_ready():
     print("")
     print("CONSOLE : ")
     print("")
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setrole(ctx, role: discord.Role):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT role_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, role_id) VALUES(?,?)")
+        val = (ctx.guild.id , role.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    elif result is not None:
+        sql = ("UPDATE Introduce SET role_id = ? WHERE guild_id = ?")
+        val = (role.id , ctx.guild.id)
+        
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+            description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+    db.close()
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -4110,6 +4150,7 @@ async def introduction(ctx):
 
             username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
             name = username.content
+            await asyncio.sleep(1) 
             await username.delete()
 
         except asyncio.TimeoutError:
@@ -4126,6 +4167,7 @@ async def introduction(ctx):
 
             userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
             age = userage.content
+            await asyncio.sleep(1) 
             await userage.delete()
 
         except asyncio.TimeoutError:
@@ -4142,6 +4184,7 @@ async def introduction(ctx):
 
             usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
             sex = usersex.content
+            await asyncio.sleep(1) 
             await usersex.delete()
 
         except asyncio.TimeoutError:
@@ -4167,6 +4210,10 @@ async def introduction(ctx):
         cursor1.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
         result1 = cursor1.fetchone()
 
+        cursor2 = db.cursor()
+        cursor2.execute(f"SELECT role_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result2 = cursor2.fetchone()
+
         try:
             channel = client.get_channel(id=int(result1[0]))
             await message.delete()
@@ -4175,6 +4222,11 @@ async def introduction(ctx):
         except:
             await message.delete()
             await ctx.send(embed=embed)
+
+        if result2 is not None:
+            role = result2[0]
+            role = discord.utils.get(ctx.guild.roles,id = role)
+            await ctx.author.add_roles(role)
 
     else:
         embed =discord.Embed(
@@ -4195,3 +4247,6 @@ async def introduction(ctx):
     
 #Bot login using token
 client.run(TOKEN, bot = True)
+
+
+
