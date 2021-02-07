@@ -14,24 +14,24 @@ from threading import Thread
 
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '___________________________'
+TOKEN = '______________________________'
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = ___________________________
+CLIENTID = ______________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '___________________________'
+        'TRN-Api-Key': '______________________________'
     }
 
-openweathermapAPI = "___________________________"
+openweathermapAPI = "______________________________"
 
-reddit = praw.Reddit(client_id="___________________________",
-                     client_secret="___________________________",
-                     username="___________________________",
-                     password="___________________________",
+reddit = praw.Reddit(client_id="______________________________",
+                     client_secret="______________________________",
+                     username="______________________________",
+                     password="______________________________",
                      user_agent="Smilewin")
 
 
@@ -95,7 +95,8 @@ async def on_ready():
         guild_id TEXT,
         channel_id TEXT,
         boarder TEXT,
-        role_id,
+        giverole_id TEXT,
+        removerole_id TEXT,
         status TEXT
         )
         ''')
@@ -110,15 +111,26 @@ async def on_ready():
     print("CONSOLE : ")
     print("")
 
-@client.command()
+@client.group(invoke_without_command=True)
+async def setrole(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        description = "ต้องระบุ give / remove"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@setrole.command()
 @commands.has_permissions(administrator=True)
-async def setrole(ctx, role: discord.Role):
+async def give(ctx, role: discord.Role):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
-    cursor.execute(f"SELECT role_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    cursor.execute(f"SELECT giverole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
     result = cursor.fetchone()
     if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, role_id) VALUES(?,?)")
+        sql = ("INSERT INTO Introduce(guild_id, giverole_id) VALUES(?,?)")
         val = (ctx.guild.id , role.id)
         embed = discord.Embed(
             colour= 0x00FFFF,
@@ -131,7 +143,7 @@ async def setrole(ctx, role: discord.Role):
         await message.add_reaction('✅')
 
     elif result is not None:
-        sql = ("UPDATE Introduce SET role_id = ? WHERE guild_id = ?")
+        sql = ("UPDATE Introduce SET giverole_id = ? WHERE guild_id = ?")
         val = (role.id , ctx.guild.id)
         
         embed = discord.Embed(
@@ -148,6 +160,95 @@ async def setrole(ctx, role: discord.Role):
     db.commit()
     cursor.close()
     db.close()
+
+@give.error
+async def give_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@setrole.command()
+@commands.has_permissions(administrator=True)
+async def remove(ctx, role: discord.Role):
+    db = sqlite3.connect('Smilewin.sqlite')
+    cursor = db.cursor()
+    cursor.execute(f"SELECT removerole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+    result = cursor.fetchone()
+    if result is None:
+        sql = ("INSERT INTO Introduce(guild_id, removerole_id) VALUES(?,?)")
+        val = (ctx.guild.id , role.id)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    elif result is not None:
+        sql = ("UPDATE Introduce SET removerole_id = ? WHERE guild_id = ?")
+        val = (role.id , ctx.guild.id)
+        
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+            description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    cursor.execute(sql, val)
+    db.commit()
+    cursor.close()
+    db.close()
+
+@remove.error
+async def remove_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -190,6 +291,20 @@ async def setintroduce(ctx, channel:discord.TextChannel):
     cursor.close()
     db.close()
 
+@setintroduce.error
+async def setintroduce_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setboarder(ctx, *,boarder):
@@ -227,6 +342,20 @@ async def setboarder(ctx, *,boarder):
     db.commit() 
     cursor.close()
     db.close()
+
+@setboarder.error
+async def setboarder_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.group(invoke_without_command=True)
 async def introduce(ctx):
@@ -277,6 +406,20 @@ async def on(ctx):
     db.commit() 
     cursor.close()
     db.close()
+
+@on.error
+async def on_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
     
 @introduce.command()
 @commands.has_permissions(administrator=True)
@@ -316,6 +459,20 @@ async def off(ctx):
     db.commit() 
     cursor.close()
     db.close()
+
+@off.error
+async def off_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -384,6 +541,7 @@ async def setwebhook_error(ctx, error):
         await message.add_reaction('⚠️')
 
 @client.group(invoke_without_command=True)
+@commands.has_permissions(administrator=True)
 async def chat(ctx):
     embed = discord.Embed(
         colour = 0x00FFFF,
@@ -393,6 +551,20 @@ async def chat(ctx):
 
     message = await ctx.send(embed=embed)
     await message.add_reaction('✅')
+
+@chat.error
+async def chat_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @chat.command(aliases=['on'])
 @commands.has_permissions(administrator=True)
@@ -433,6 +605,20 @@ async def _on(ctx):
     cursor.close()
     db.close()
 
+@_on.error
+async def _on_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @chat.command(aliases=['off'])
 @commands.has_permissions(administrator=True)
 async def _off(ctx):
@@ -471,6 +657,20 @@ async def _off(ctx):
     db.commit() 
     cursor.close()
     db.close()
+
+@_off.error
+async def _off_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -1550,6 +1750,7 @@ async def helpbot(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
+    embed.add_field(name=f'``{COMMAND_PREFIX}test``', value = 'ดูว่าบอทonline ไหม',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
@@ -1572,6 +1773,7 @@ async def helpsetup(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setboarder``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
@@ -1724,7 +1926,7 @@ async def helpimage(ctx):
 @client.command()
 async def helpnsfw(ctx):
     embed=discord.Embed(
-        title='คําสั่งทั่วไป',
+        title='คําสั่งnsfw',
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
@@ -1732,6 +1934,13 @@ async def helpnsfw(ctx):
 
 ส่งรูปตาม catergory 
 
+{COMMAND_PREFIX}gsolo
+{COMMAND_PREFIX}smallboob
+{COMMAND_PREFIX}classic
+{COMMAND_PREFIX}pussy
+{COMMAND_PREFIX}eroyuri
+{COMMAND_PREFIX}yuri
+{COMMAND_PREFIX}solo
 {COMMAND_PREFIX}anal
 {COMMAND_PREFIX}erofeet
 {COMMAND_PREFIX}feet
@@ -2563,6 +2772,38 @@ async def anal(ctx):
     await message.add_reaction('❤️')
 
 @client.command()
+async def smallboob(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/smallboobs")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "smallboobs"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def gsolo(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/solog")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "Girl solo"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
 async def erofeet(ctx): 
     r = requests.get("https://nekos.life/api/v2/img/erofeet")
     r = r.json()
@@ -2595,12 +2836,92 @@ async def feet(ctx):
     await message.add_reaction('❤️')
 
 @client.command()
+async def pussy(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "pussy"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
 async def hentai(ctx): 
     r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
     r = r.json()
     embed = discord.Embed(
         colour = 0xFC7EF5,
         title = "hentai"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def eroyuri(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/eroyuri")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "eroyuri"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def yuri(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/yuri")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "yuri"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def solo(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/solo")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "solo"
+
+    )   
+    url = r['url']
+    embed.set_image(url=url)
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)   
+    await message.add_reaction('❤️')
+
+@client.command()
+async def classic(ctx): 
+    r = requests.get("https://nekos.life/api/v2/img/classic")
+    r = r.json()
+    embed = discord.Embed(
+        colour = 0xFC7EF5,
+        title = "classic"
 
     )   
     url = r['url']
@@ -3946,7 +4267,7 @@ async def removerole(ctx, user: discord.Member, role: discord.Role):
         message = await ctx.send(embed = embed)
         await message.add_reaction('⚠️')
 
-@giverole.error
+@removerole.error
 async def removerole_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
@@ -4028,8 +4349,10 @@ async def anon(ctx, *,message):
     db = sqlite3.connect('Smilewin.sqlite')
     cursor = db.cursor()
     cursor.execute("SELECT webhook_url FROM webhook WHERE status = ?", ('yes',))
+
     cursor2 = db.cursor()
     cursor2.execute(f"SELECT status FROM webhook WHERE guild_id = {ctx.guild.id}")
+
     cursor3 = db.cursor()
     cursor3.execute(f"SELECT webhook_url FROM webhook WHERE guild_id = {ctx.guild.id}")
 
@@ -4060,7 +4383,7 @@ async def anon(ctx, *,message):
         embed = discord.Embed(
             colour = 0x983925,
             title = "คุณได้ปิดคําสั่งนี้ไว้",
-            description = f"คุณต้องเปิดคําสั่ง {COMMAND_PREFIX}chaton เพื่อใช้คําสั่งนี้ , พิม {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+            description = f"คุณต้องเปิดคําสั่ง {COMMAND_PREFIX}chat on เพื่อใช้คําสั่งนี้ , พิม {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
             )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed = embed)
@@ -4129,15 +4452,24 @@ async def introduction(ctx):
         result = result[0]
 
     if result != "no":
-        cursor = db.cursor()
-        cursor.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result = cursor.fetchone()
-
-        if result is None:
-            boarder = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+        cursor1 = db.cursor()
+        cursor1.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result1 = cursor1.fetchone()
         
-        else:
-            boarder = result[0]
+        try:
+            board = result1[0]
+
+            if board is None:
+                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+            
+            if board == "None":
+                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+
+            if board == "none":
+                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+
+        except:
+            board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
 
         try:
             embed = discord.Embed(
@@ -4193,51 +4525,81 @@ async def introduction(ctx):
         embed = discord.Embed(
             colour = 0x00FFFF,
             description = (f"""```
-{boarder}
-
+{board}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-
-{boarder}```""")
+{board}```""")
             )
 
         embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
         embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
         embed.timestamp = datetime.datetime.utcnow()
         embed.set_footer(text = ctx.author.id)
-        cursor1 = db.cursor()
-        cursor1.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result1 = cursor1.fetchone()
-
         cursor2 = db.cursor()
-        cursor2.execute(f"SELECT role_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        cursor2.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
         result2 = cursor2.fetchone()
 
+        cursor3 = db.cursor()
+        cursor3.execute(f"SELECT giverole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result3 = cursor3.fetchone()
+
+        cursor4 = db.cursor()
+        cursor4.execute(f"SELECT removerole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
+        result4 = cursor4.fetchone()
+
         try:
-            channel = client.get_channel(id=int(result1[0]))
+            channel = client.get_channel(id=int(result2[0]))
             await message.delete()
+            await ctx.send(ctx.author.mention)
             await channel.send(embed=embed)
 
         except:
             await message.delete()
+            await ctx.send(ctx.author.mention)
             await ctx.send(embed=embed)
 
-        if result2 is not None:
-            role = result2[0]
-            role = discord.utils.get(ctx.guild.roles,id = role)
-            await ctx.author.add_roles(role)
+        if result3 is not None:
+
+            try:
+                role = result3[0]
+                role = int(role)
+                role = ctx.guild.get_role(role)
+                await ctx.author.add_roles(role)
+            except Exception:
+                pass
+                
+        if result4 is not None:
+            try:
+                role = result4[0]
+                role = int(role)
+                role = ctx.guild.get_role(role)
+                await ctx.author.remove_roles(role)         
+            except Exception:
+                pass
 
     else:
         embed =discord.Embed(
            colour = 0x983925,
-           description = "หมดเวลา"
+           description = f"คําสั่งน้ีได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX} เพื่อเปิดใช้งาน"
             )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
         await asyncio.sleep(3) 
         await message.delete()
+
+@client.listen()
+async def on_message(message):
+    channel = message.channel
+    if message.author == client.user:
+        return
+    if'ด่าบอท' in message.content:
+        await channel.send("ใครด่ากูวะลูกพี่กูฟ้องละ")
+
+@client.command()
+async def test(ctx):
+    await ctx.send("Bot online เเล้ว")
 
 #            /\
 #/vvvvvvvvvvvv \--------------------------------------,
