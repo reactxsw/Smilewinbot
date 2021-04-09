@@ -1,6 +1,7 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3 , pymongo
 #from
+from discord.channel import StoreChannel
 from discord import Webhook, RequestsWebhookAdapter
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -11,28 +12,27 @@ from bs4 import BeautifulSoup as bs4
 from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
 from threading import Thread
-
+from pymongo import MongoClient
 
 #INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '______________________________'
+TOKEN = '_______________________'   
 COMMAND_PREFIX = "/r "
 
 developer = "REACT#1120"
-CLIENTID = ______________________________
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '______________________________'
+        'TRN-Api-Key': '_______________________'
     }
 
-openweathermapAPI = "______________________________"
+openweathermapAPI = "_______________________"
 
-reddit = praw.Reddit(client_id="______________________________",
-                     client_secret="______________________________",
-                     username="______________________________",
-                     password="______________________________",
-                     user_agent="Smilewin")
+reddit = praw.Reddit(client_id="_______________________",
+                     client_secret="_______________________",
+                     username="_______________________",
+                     password="_______________________",
+                     user_agent="_______________________")
 
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
@@ -71,35 +71,15 @@ client.remove_command('help')
 print(ASCII_ART)
 print("BOT STATUS : OFFLINE")
 
+
+def connectmongodb():
+    cluster = MongoClient("_______________________")
+    db = cluster["Smilewin"]
+    collectionindb = db["Data"]
+    return collectionindb
+
 @client.event
 async def on_ready():
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Main(
-        guild_id TEXT,
-        welcome_id TEXT,
-        leave_id TEXT
-        )
-        ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS webhook(
-        guild_id TEXT,
-        webhook_url TEXT,
-        channel_id TEXT,
-        status TEXT
-        )
-        ''')
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS Introduce(
-        guild_id TEXT,
-        channel_id TEXT,
-        boarder TEXT,
-        giverole_id TEXT,
-        removerole_id TEXT,
-        status TEXT
-        )
-        ''')
     change_status.start()
     clearcmd()
     clearcmd()
@@ -125,41 +105,74 @@ async def setrole(ctx):
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def give(ctx, role: discord.Role):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT giverole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, giverole_id) VALUES(?,?)")
-        val = (ctx.guild.id , role.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_role_give_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-
-    elif result is not None:
-        sql = ("UPDATE Introduce SET giverole_id = ? WHERE guild_id = ?")
-        val = (role.id , ctx.guild.id)
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
         
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-            description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
         
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    
+    else:
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_role_give_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    cursor.execute(sql, val)
-    db.commit()
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @give.error
 async def give_error(ctx, error):
@@ -189,41 +202,75 @@ async def give_error(ctx, error):
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def remove(ctx, role: discord.Role):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT removerole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, removerole_id) VALUES(?,?)")
-        val = (ctx.guild.id , role.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-
-    elif result is not None:
-        sql = ("UPDATE Introduce SET removerole_id = ? WHERE guild_id = ?")
-        val = (role.id , ctx.guild.id)
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        print(results)
+        for data in results:
+            if data["introduce_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
         
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
-            description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
         
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-
-    cursor.execute(sql, val)
-    db.commit()
-    cursor.close()
-    db.close()
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @remove.error
 async def remove_error(ctx, error):
@@ -253,43 +300,73 @@ async def remove_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setintroduce(ctx, channel:discord.TextChannel):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        status = "yes"
-        sql = ("INSERT INTO Introduce(guild_id, channel_id , status) VALUES(?,?,?)")
-        val = (ctx.guild.id , channel.id , status)
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-
-    elif result is not None:
-        sql = ("UPDATE Introduce SET channel_id = ? WHERE guild_id = ?")
-        val = (channel.id , ctx.guild.id)
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
         
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title= "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    cursor.execute(sql, val)
-    db.commit()
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @setintroduce.error
 async def setintroduce_error(ctx, error):
@@ -308,40 +385,75 @@ async def setintroduce_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setboarder(ctx, *,boarder):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, boarder) VALUES(?,?)")
-        val = (ctx.guild.id , boarder)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่ากรอบเเนะนําตัว",
-            description= f"กรอบได้ถูกตั้งเป็น {boarder}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-    
-    elif result is not None:
-        sql = ("UPDATE Introduce SET boarder = ? WHERE guild_id = ?")
-        val = (boarder , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่ากรอบเเนะนําตัว",
-            description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_boarder"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ากรอบเเนะนําตัว",
+                    description= f"กรอบได้ถูกตั้งเป็น {boarder}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
         
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ากรอบเเนะนําตัว",
+                    description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_boarder"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title = "ตั้งค่ากรอบเเนะนําตัว",
+                description= f"กรอบได้ถูกตั้งเป็น {boarder}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title = "ตั้งค่ากรอบเเนะนําตัว",
+                description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @setboarder.error
 async def setboarder_error(ctx, error):
@@ -371,41 +483,75 @@ async def introduce(ctx):
 @introduce.command()
 @commands.has_permissions(administrator=True)
 async def on(ctx):
-    status = "yes"
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM Introduce Where guild_id = {ctx.guild.id} ")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, status) VALUES(?,?)")
-        val = (ctx.guild.id , status)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    status = "YES"
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    elif result is not None:
-        sql = ("UPDATE Introduce SET status = ? WHERE guild_id = ?")
-        val = (status , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "YES"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-    
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @on.error
 async def on_error(ctx, error):
@@ -424,41 +570,75 @@ async def on_error(ctx, error):
 @introduce.command()
 @commands.has_permissions(administrator=True)
 async def off(ctx):
-    status = "no"
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM Introduce WHERE guild_id = {ctx.guild.id} ")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Introduce(guild_id, status) VALUES(?,?)")
-        val = (ctx.guild.id , status)  
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    status = "NO"
+    collection = connectmongodb()
+    server = collection.find({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    elif result is not None:
-        sql = ("UPDATE Introduce SET status = ? WHERE guild_id = ?")
-        val = (status , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องเเนะนําตัว",
-            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "NO"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-    
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเนะนําตัว",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @off.error
 async def off_error(ctx, error):
@@ -477,43 +657,76 @@ async def off_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwebhook(ctx , channel:discord.TextChannel):
-    webhook = await ctx.channel.create_webhook(name='Smilewin')
+    webhook = await channel.create_webhook(name='Smilewinbot')
     webhook = webhook.url
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT webhook_url FROM webhook WHERE guild_id = {ctx.guild.id} ")
-    result = cursor.fetchone()
-    if result is None:
-        status = "yes"
-        sql = ("INSERT INTO webhook(guild_id, webhook_url , channel_id , status) VALUES(?,?,?,?)")
-        val = (ctx.guild.id , webhook ,channel.id, status)  
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["webhook_url"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-
-    elif result is not None:
-        sql = ("UPDATE webhook SET webhook_url = ? , channel_id = ? WHERE guild_id = ?")
-        val = (webhook , channel.id ,ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
         
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @setwebhook.error
 async def setwebhook_error(ctx, error):
@@ -569,41 +782,75 @@ async def chat_error(ctx, error):
 @chat.command(aliases=['on'])
 @commands.has_permissions(administrator=True)
 async def _on(ctx):
-    status = "yes"
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM webhook Where guild_id = {ctx.guild.id} ")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
-        val = (ctx.guild.id , status)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    status = "YES"
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["webhook_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    elif result is not None:
-        sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
-        val = (status , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "YES"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["webhook_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-    
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @_on.error
 async def _on_error(ctx, error):
@@ -622,41 +869,75 @@ async def _on_error(ctx, error):
 @chat.command(aliases=['off'])
 @commands.has_permissions(administrator=True)
 async def _off(ctx):
-    status = "no"
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM webhook WHERE guild_id = {ctx.guild.id} ")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO webhook(guild_id, status) VALUES(?,?)")
-        val = (ctx.guild.id , status)  
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    status = "NO"
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["webhook_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    elif result is not None:
-        sql = ("UPDATE webhook SET status = ? WHERE guild_id = ?")
-        val = (status , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "NO"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["webhook_status"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
-    
-    cursor.execute(sql, val)
-    db.commit() 
-    cursor.close()
-    db.close()
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @_off.error
 async def _off_error(ctx, error):
@@ -675,40 +956,74 @@ async def _off_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwelcome(ctx , channel:discord.TextChannel):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Main WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Main(guild_id, welcome_id) VALUES(?,?)")
-        val = (ctx.guild.id , channel.id)
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+    results = collection.find({"guild_id":ctx.guild.id})
+    for data in results:
+        if data["welcome_id"] == "None":
+            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-        embed = discord.Embed(
+            embed = discord.Embed(
             colour= 0x00FFFF,
             title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
         )
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
 
-    elif result is not None:
-        sql = ("UPDATE Main SET welcome_id = ? WHERE guild_id = ?")
-        val = (channel.id , ctx.guild.id)
-        
-        embed = discord.Embed(
+        else:
+            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+
+            embed = discord.Embed(
             colour= 0x00FFFF,
             title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
         )
         
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
 
-    cursor.execute(sql, val)
-    db.commit()
-    cursor.close()
-    db.close()
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["welcome_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+            )
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+            )
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')         
 
 @setwelcome.error
 async def setwelcome_error(ctx, error):
@@ -739,40 +1054,74 @@ async def setwelcome_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setleave(ctx , channel:discord.TextChannel):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT leave_id FROM Main WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is None:
-        sql = ("INSERT INTO Main(guild_id, leave_id) VALUES(?,?)")
-        val = (ctx.guild.id , channel.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["leave_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
 
-    elif result is not None:
-        sql = ("UPDATE Main SET leave_id = ? WHERE guild_id = ?")
-        val = (channel.id , ctx.guild.id)
-        embed = discord.Embed(
-            colour= 0x00FFFF,
-            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('✅')
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-    cursor.execute(sql, val)
-    db.commit()
-    cursor.close()
-    db.close()
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["leave_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+            )
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+            )
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
 
 @setleave.error
 async def setleave_error(ctx, error):
@@ -853,57 +1202,71 @@ async def clear_error(ctx, error):
 
 @client.event
 async def on_member_join(member):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT welcome_id FROM Main WHERE guild_id = {member.guild.id}")
-    result =cursor.fetchone()
-    if result is None:
-        return
+    collection = connectmongodb()
+    try:
+        results = collection.find({"guild_id":member.guild.id})
+        for data in results:
+            if not data["welcome_id"] == "None":
+                try:
+                    embed = discord.Embed(
+                    colour = 0x99e68b,
+                    title ='ยินดีต้อนรับเข้าสู่ smilewin !',
+                    description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
+                    )
 
-    embed = discord.Embed(
-        colour = 0x99e68b,
-        title ='ยินดีต้อนรับเข้าสู่ smilewin !',
-        description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
-        )
+                    embed.set_thumbnail(url=f"{member.avatar_url}")
+                    embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                    embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                    embed.timestamp = datetime.datetime.utcnow()
 
-    embed.set_thumbnail(url=f"{member.avatar_url}")
-    embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-    embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text='┗Powered by REACT')
 
-    embed.set_footer(text='┗Powered by REACT')
+                    print(f"{member.name} have joined the server {member.guild.name}")      
+                    channel = client.get_channel(id = int(data["welcome_id"]))
+                    await channel.send(embed=embed)
 
-    print(f"{member.name} have joined the server {member.guild.name}")
-    channel = client.get_channel(id=int(result[0]))
-
-    await channel.send(embed=embed)
+                except Exception:
+                    pass
+                
+            else:
+                return
     
+    except Exception:
+        pass
+
 @client.event
 async def on_member_remove(member):
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT leave_id FROM Main WHERE guild_id = {member.guild.id}")
-    result =cursor.fetchone()
-    if result is None:
-        return
+    collection = connectmongodb()
+    try:
+        results = collection.find({"guild_id":member.guild.id})
+        for data in results:
+            if not data["leave_id"] == "None":
+                try:
+                    embed = discord.Embed(
+                    colour=0x983925, 
+                    title = "Member leave",
+                    description= f"{member.name}ได้ออกจากเซิฟเวอร์"
+                    )
 
-    embed = discord.Embed(
-        colour=0x983925, 
-        title = "Member leave",
-        description= f"{member.name}ได้ออกจากเซิฟเวอร์"
-        )
+                    embed.set_thumbnail(url=f"{member.avatar_url}")
+                    embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                    embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                    embed.timestamp = datetime.datetime.utcnow()
 
-    embed.set_thumbnail(url=f"{member.avatar_url}")
-    embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-    embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text='┗Powered by REACT')
 
-    embed.set_footer(text='┗Powered by REACT')
+                    print(f"{member.name} have joined the server {member.guild.name}")      
+                    channel = client.get_channel(id = int(data["leave_id"]))
+                    await channel.send(embed=embed)
 
-    print(f"{member.name} have left the server {member.guild.name}")
-    channel = client.get_channel(id=int(result[0]))
-
-    await channel.send(embed=embed)
+                except Exception:
+                    pass
+                
+            else:
+                return
+    
+    except Exception:
+        pass
 
 @client.event
 async def on_guild_join(guild):
@@ -1116,7 +1479,7 @@ https://hastebin.com/{r['key']}```"""
 async def pastebin(ctx, *,message):
     data = {
     'api_option': 'paste',
-    'api_dev_key':"COIhrBM2YSIba0PWpq4RGdqEH0KUkhHw",
+    'api_dev_key':"_______________________",
     'api_paste_code':message,
     'api_paste_name':"Smilewinbot",
     'api_paste_expire_date': 'N',
@@ -1373,7 +1736,7 @@ async def gtanow(ctx):
 @client.command()
 async def botinvite(ctx):
 
-    invitelink = str(f"https://discord.com/api/oauth2/authorize?client_id={CLIENTID}&permissions=8&scope=bot")
+    invitelink = str(f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=8&scope=bot")
     embed = discord.Embed(  
         colour = 0x00FFFF,
         title = f"ลิงค์เชิญบอท SmileWin : ",
@@ -1648,10 +2011,10 @@ async def dmall(ctx, *, message):
     for member in ctx.guild.members:
         try:
             await member.create_dm()
-            time.sleep(1.01)
             await member.dm_channel.send(message)
             print(f"Message from {ctx.author} has been sent to "+ member.name)
             sent = sent + 1
+            time.sleep(2)
         except:
             print(f"Message from {ctx.author} failed to sent to "+ member.name)
             fail = fail + 1
@@ -3849,7 +4212,21 @@ async def slim(ctx):
                  "ถ้าเป็นรัฐบาลอื่น มาเจอวิกฤติโควิด สถานการณ์แม่งเละกว่านี้อีก",
                  "ไม่ได้เชียร์ลุง แต่ลุงเค้าทำตามกฏหมาย",
                  "แล้วคนด่ารับผิดชอบอะไร เกิดมาทำอะไรให้กับบ้านนี้เมืองนี้",
-                 "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย"]
+                 "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย",
+                 "อีเด็กพวกนี้มันจะไปรู้อะไร",
+                 "การซื้อตำแหน่งมันเรื่องปกติ ถ้าคุณขยันหาเงินนั่นคือคุณก็มีสิทธิ์ คนละเรื่องกับคอรัปชั่นเลย",
+                 "ห้ามวิจารณ์ 112",
+                 "พูดแต่เรื่องซ้ำซาก ไม่มีหลักฐาน",
+                 "ไม่เอาสถาบันกษัตริย์ แต่พวกตัวเองก็ไม่เคยทำประโยชน์กับประชาชนเลยสักอย่าง เพราะฉะนั้นอยู่กับสถาบันกษัตริย์นี่แหละมีประโยชน์ที่สุดแล้ว",
+                 "ติดอยู่ตรงกลาง ม๊อบก็ไม่ใช้ สลิ่มก็ไม่เชิง งงม่ะ?",
+                 "ไม่อยากให้เพจนี้แสดงออกทางการเมืองเลยค่ะ",
+                 "วันที่ออกมาไม่เจออากาศแย่ก็มี ถนนหน้าบ้านเราก็ไม่ได้พัง สวยด้วย น้ำก็ไม่ได้กร่อยอ่ะ คนที่จนแถวบ้าน เมื่อเช้าก็เห็นเค้านั่งโขกหมากรุก หัวเราะเอิ๊กอ๊ากอยู่นะ​",
+                 "คือเราอยากให้ประเทศพัฒนา และในช่วงปีหลังๆ ตั้งแต่ 58 เป็นต้นมามันมีหลายอย่างที่พัฒนาแบบจับต้องได้มากๆ และรัฐบาลก็ผ่านการเลือกตั้งมาแล้ว เพราะงั้นเราไม่เห็นว่ามีความจำเป็นอะไรต้องล้มรัฐบาลในตอนนี้ที่วิกฤติ Covid ยังดำเนินอยู่ เว้นแต่ว่ามีคอรัปชันอะไรที่รับไม่ได้ถึงจะเห็นสมควรค่ะ",
+                 "เป็นเพจการเมืองไปเสียแล้วคงต้องเลิกติดตาม ไปกิน MK ดีกว่า 555",
+                 "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
+                 "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
+                 "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
+                 "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน"]
     
     slimrandom = random.choice(quoteslim)
     embed = discord.Embed(
@@ -4329,7 +4706,6 @@ async def changenick_error(ctx, error):
 @client.command()
 async def anon(ctx, *,message):
     username = "Smilewin"
-    space = " "
     avatar = "https://i.imgur.com/rPfYXGs.png"
 
     author = ctx.author.name
@@ -4345,49 +4721,38 @@ async def anon(ctx, *,message):
 
     message = f"[{author}] : {message}"
     payload = {"content":message,"username":username,"avatar_url":avatar}
-
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute("SELECT webhook_url FROM webhook WHERE status = ?", ('yes',))
-
-    cursor2 = db.cursor()
-    cursor2.execute(f"SELECT status FROM webhook WHERE guild_id = {ctx.guild.id}")
-
-    cursor3 = db.cursor()
-    cursor3.execute(f"SELECT webhook_url FROM webhook WHERE guild_id = {ctx.guild.id}")
-
-    result = cursor.fetchall()
-    result2 = cursor2.fetchone()
-    result2 = result2[0]
-    result3 = cursor3.fetchone()
-    result3 = result3[0]
-    
-    if result2 == "yes":
-        if result3 is not None:
-            for webhook in result:
-                webhook = space.join(webhook)
+    collection = connectmongodb()
+    anonresults = collection.find({"webhook_status":"YES"})
+    results = collection.find({"guild_id":ctx.guild.id})
+    for data in results:
+        if data["webhook_status"] == "YES":
+            for anondata in anonresults:
+                webhook = anondata["webhook_url"]
                 requests.post(webhook,data=payload)
                 time.sleep(0.005)
     
         else:
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ไม่พบ webhook ของคุณ",
-                description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed = embed)
-            await message.add_reaction('⚠️')
-    
-    else:
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณได้ปิดคําสั่งนี้ไว้",
-            description = f"คุณต้องเปิดคําสั่ง {COMMAND_PREFIX}chat on เพื่อใช้คําสั่งนี้ , พิม {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed = embed)
-        await message.add_reaction('⚠️')
+            results = collection.find({"guild_id":ctx.guild.id})
+            for data in results:
+                if data["webhook_status"] != "YES" and data["webhook_url"] == "None":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "ไม่พบ webhook ของคุณ",
+                        description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
+
+                elif data["webhook_url"] != "None" and data["webhook_status"] == "NO":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "คุณได้ปิดคําสั่งนี้ไว้",
+                        description = f"คุณต้องเปิดคําสั่ง {COMMAND_PREFIX}chat on เพื่อใช้คําสั่งนี้ , พิม {COMMAND_PREFIX}helpsetup เพื่อดูข้อมูลเพิ่มเติม"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
 
 @anon.error
 async def anon_error(ctx,error):
@@ -4443,151 +4808,407 @@ Binary : {text}
 
 @client.command(aliases=['ind'])
 async def introduction(ctx):
+    collection = connectmongodb()
+    results = collection.find({"guild_id":ctx.guild.id})
+    for data in results:
+        if data["introduce_status"] == "YES":
+            if data["introduce_boarder"] == "None":
+                boarder = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
 
-    db = sqlite3.connect('Smilewin.sqlite')
-    cursor = db.cursor()
-    cursor.execute(f"SELECT status FROM Introduce WHERE guild_id = {ctx.guild.id}")
-    result = cursor.fetchone()
-    if result is not None:
-        result = result[0]
-
-    if result != "no":
-        cursor1 = db.cursor()
-        cursor1.execute(f"SELECT boarder FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result1 = cursor1.fetchone()
-        
-        try:
-            board = result1[0]
-
-            if board is None:
-                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+                if data["introduce_channel_id"] == "None":
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[1] ชื่อ")
             
-            if board == "None":
-                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+                        embed.set_footer(text="คำถามที่ [1/3]")
+                        message = await ctx.send(embed=embed)
 
-            if board == "none":
-                board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+                        username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        name = username.content
+                        await asyncio.sleep(1) 
+                        await username.delete()
 
-        except:
-            board = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+                    except asyncio.TimeoutError:
+                        await message.delete()
 
-        try:
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                description = "┗[1] ชื่อ")
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[2] อายุ")
             
-            embed.set_footer(text="คำถามที่ [1/3]")
-            message = await ctx.send(embed=embed)
+                        embed.set_footer(text="คำถามที่ [2/3]")
+                        await message.edit(embed=embed)
 
-            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-            name = username.content
-            await asyncio.sleep(1) 
-            await username.delete()
+                        userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        age = userage.content
+                        await asyncio.sleep(1) 
+                        await userage.delete()  
 
-        except asyncio.TimeoutError:
-            await message.delete()
-
-        try:
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                description = "┗[2] อายุ")
+                    except asyncio.TimeoutError:
+                        await message.delete()
             
-            embed.set_footer(text="คำถามที่ [2/3]")
-            await message.edit(embed=embed)
-
-            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-            age = userage.content
-            await asyncio.sleep(1) 
-            await userage.delete()
-
-        except asyncio.TimeoutError:
-            await message.delete()
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[3] เพศ")
             
-        try:
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                description = "┗[3] เพศ")
-            
-            embed.set_footer(text="คำถามที่ [3/3]")
-            await message.edit(embed=embed)
+                        embed.set_footer(text="คำถามที่ [3/3]")
+                        await message.edit(embed=embed)
 
-            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-            sex = usersex.content
-            await asyncio.sleep(1) 
-            await usersex.delete()
+                        usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        sex = usersex.content
+                        await asyncio.sleep(1) 
+                        await usersex.delete()
 
-        except asyncio.TimeoutError:
-            await message.delete()
+                    except asyncio.TimeoutError:
+                        await message.delete()
 
-        embed = discord.Embed(
-            colour = 0x00FFFF,
-            description = (f"""```
-{board}
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        description = (f"""```
+{boarder}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-{board}```""")
+{boarder}```""")
             )
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text = ctx.author.id)
+                    await message.delete()
+                    await ctx.send(ctx.author.mention)
+                    await ctx.send(embed=embed)
+                    
+                    if not data["introduce_role_give_id"] == "None":
+                        try:
+                            role = data["introduce_role_give_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.add_roles(role)
 
-        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-        embed.timestamp = datetime.datetime.utcnow()
-        embed.set_footer(text = ctx.author.id)
-        cursor2 = db.cursor()
-        cursor2.execute(f"SELECT channel_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result2 = cursor2.fetchone()
+                        except Exception:
+                            pass
+            
+                    if not data["introduce_role_remove_id"] == "None":
+                        try:
+                            role = data["introduce_role_remove_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.remove_roles(role)
 
-        cursor3 = db.cursor()
-        cursor3.execute(f"SELECT giverole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result3 = cursor3.fetchone()
-
-        cursor4 = db.cursor()
-        cursor4.execute(f"SELECT removerole_id FROM Introduce WHERE guild_id = {ctx.guild.id}")
-        result4 = cursor4.fetchone()
-
-        try:
-            channel = client.get_channel(id=int(result2[0]))
-            await message.delete()
-            await ctx.send(ctx.author.mention)
-            await channel.send(embed=embed)
-
-        except:
-            await message.delete()
-            await ctx.send(ctx.author.mention)
-            await ctx.send(embed=embed)
-
-        if result3 is not None:
-
-            try:
-                role = result3[0]
-                role = int(role)
-                role = ctx.guild.get_role(role)
-                await ctx.author.add_roles(role)
-            except Exception:
-                pass
+                        except Exception:
+                            pass
                 
-        if result4 is not None:
-            try:
-                role = result4[0]
-                role = int(role)
-                role = ctx.guild.get_role(role)
-                await ctx.author.remove_roles(role)         
-            except Exception:
-                pass
+                else:
+    
+                    channel = data["introduce_channel_id"]
+                    channel = client.get_channel(id=int(channel))
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[1] ชื่อ")
+            
+                        embed.set_footer(text="คำถามที่ [1/3]")
+                        message = await ctx.send(embed=embed)
+
+                        username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        name = username.content
+                        await asyncio.sleep(1) 
+                        await username.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[2] อายุ")
+            
+                        embed.set_footer(text="คำถามที่ [2/3]")
+                        await message.edit(embed=embed)
+
+                        userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        age = userage.content
+                        await asyncio.sleep(1) 
+                        await userage.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+            
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[3] เพศ")
+            
+                        embed.set_footer(text="คำถามที่ [3/3]")
+                        await message.edit(embed=embed)
+
+                        usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        sex = usersex.content
+                        await asyncio.sleep(1) 
+                        await usersex.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        description = (f"""```
+{boarder}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{boarder}```""")
+            )
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text = ctx.author.id)
+                    await message.delete()
+                    await channel.send(ctx.author.mention)
+                    await channel.send(embed=embed)
+
+                
+            
+            else:
+                boarder = data["introduce_boarder"]
+
+                if data["introduce_channel_id"] == "None":
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[1] ชื่อ")
+            
+                        embed.set_footer(text="คำถามที่ [1/3]")
+                        message = await ctx.send(embed=embed)
+
+                        username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        name = username.content
+                        await asyncio.sleep(1) 
+                        await username.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[2] อายุ")
+            
+                        embed.set_footer(text="คำถามที่ [2/3]")
+                        await message.edit(embed=embed)
+
+                        userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        age = userage.content
+                        await asyncio.sleep(1) 
+                        await userage.delete()  
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+            
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[3] เพศ")
+            
+                        embed.set_footer(text="คำถามที่ [3/3]")
+                        await message.edit(embed=embed)
+
+                        usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        sex = usersex.content
+                        await asyncio.sleep(1) 
+                        await usersex.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        description = (f"""```
+{boarder}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{boarder}```""")
+            )
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text = ctx.author.id)
+                    await message.delete()
+                    await ctx.send(ctx.author.mention)
+                    await ctx.send(embed=embed)
+                    
+                    if not data["introduce_role_give_id"] == "None":
+                        try:
+                            role = data["introduce_role_give_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.add_roles(role)
+
+                        except Exception:
+                            pass
+            
+                    if not data["introduce_role_remove_id"] == "None":
+                        try:
+                            role = data["introduce_role_remove_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.remove_roles(role)
+
+                        except Exception:
+                            pass
+                
+                else:
+    
+                    channel = data["introduce_channel_id"]
+                    channel = client.get_channel(id=int(channel))
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[1] ชื่อ")
+            
+                        embed.set_footer(text="คำถามที่ [1/3]")
+                        message = await ctx.send(embed=embed)
+
+                        username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        name = username.content
+                        await asyncio.sleep(1) 
+                        await username.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[2] อายุ")
+            
+                        embed.set_footer(text="คำถามที่ [2/3]")
+                        await message.edit(embed=embed)
+
+                        userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        age = userage.content
+                        await asyncio.sleep(1) 
+                        await userage.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+            
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                            description = "┗[3] เพศ")
+            
+                        embed.set_footer(text="คำถามที่ [3/3]")
+                        await message.edit(embed=embed)
+
+                        usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                        sex = usersex.content
+                        await asyncio.sleep(1) 
+                        await usersex.delete()
+
+                    except asyncio.TimeoutError:
+                        await message.delete()
+
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        description = (f"""```
+{boarder}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{boarder}```""")
+            )
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.timestamp = datetime.datetime.utcnow()
+                    embed.set_footer(text = ctx.author.id)
+                    await message.delete()
+                    await channel.send(ctx.author.mention)
+                    await channel.send(embed=embed)
+                    if not data["introduce_role_give_id"] == "None":
+                        try:
+                            role = data["introduce_role_give_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.add_roles(role)
+
+                        except Exception:
+                            pass
+            
+                    if not data["introduce_role_remove_id"] == "None":
+                        try:
+                            role = data["introduce_role_remove_id"]
+                            role = int(role)
+                            role = ctx.guild.get_role(role)
+                            await ctx.author.remove_roles(role)
+
+                        except Exception:
+                            pass              
+
+        else:
+            embed =discord.Embed(
+                colour = 0x983925,
+                description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX} เพื่อเปิดใช้งาน"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+            await asyncio.sleep(3) 
+            await message.delete()  
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setup(ctx):
+    collection = connectmongodb()
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        }
+        collection.insert_one(newserver)
+        embed = discord.Embed(
+            title = "ตั้งค่าสําเร็จ",
+            colour= 0x00FFFF,
+            description = f"ลงทะเบือนเซิฟเวอร์ในฐานข้อมูลสําเร็จ"
+        )
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
 
     else:
-        embed =discord.Embed(
-           colour = 0x983925,
-           description = f"คําสั่งน้ีได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX} เพื่อเปิดใช้งาน"
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-        await asyncio.sleep(3) 
-        await message.delete()
+        id = server["_id"]
+        embed = discord.Embed(
+            title = "มีข้อมูลของเซิฟเวอร์ในฐานข้อมูลเเล้ว",
+            colour= 0x00FFFF,
+            description = f"ไอดีของเซิฟเวอร์ในฐานข้อมูลคือ {id}"
+        )
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
 
 @client.listen()
 async def on_message(message):
@@ -4600,12 +5221,18 @@ async def on_message(message):
 @client.command()
 async def test(ctx):
     await ctx.send("Bot online เเล้ว")
+    collection = connectmongodb()
+    post = {"name":"test"}
+    collection.insert_one(post)
 
-#            /\
-#/vvvvvvvvvvvv \--------------------------------------,
-#`^^^^^^^^^^^^ /====================================="
-#            \/
-#REACT#1120 - Thailand
+###########################################################
+#            /\                                           #
+#/vvvvvvvvvvvv \--------------------------------------,   #
+#`^^^^^^^^^^^^ /====================================="    #
+#            \/                                           #
+#REACT#1120 - Thailand                                    #
+###########################################################
+#https://github.com/reactxsw
     
 #Bot login using token
 client.run(TOKEN, bot = True)
