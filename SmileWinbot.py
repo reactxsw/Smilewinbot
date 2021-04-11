@@ -1,5 +1,5 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3 , pymongo
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3 , pymongo , json
 #from
 from discord.channel import StoreChannel
 from discord import Webhook, RequestsWebhookAdapter
@@ -14,25 +14,32 @@ from captcha.image import ImageCaptcha
 from threading import Thread
 from pymongo import MongoClient
 
-#INFORMATION THAT CAN TO BE CHANGE
-TOKEN = '_______________________'   
-COMMAND_PREFIX = "/r "
+with open('config.json') as setting:
+    config = json.load(setting)
+
+TOKEN = config.get("bot_token")
+COMMAND_PREFIX = config.get("bot_prefix")
+openweathermapAPI = config.get("openweathermap_api")
+reddit = praw.Reddit(
+    client_id=config.get("reddit_client_id"),
+    client_secret=config.get("reddit_client_secret"),
+    username=config.get("reddit_username"),
+    password=config.get("reddit_password"),
+    user_agent=config.get("reddit_user_agent")
+)
+mongodb = config.get("connect_mongodb")
+trackerapi = config.get("tracker.gg_api")
+pastebinapi = config.get("pastebin_api_dev_key")
 
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 #tracker.gg api key
 headers = {
-        'TRN-Api-Key': '_______________________'
+        'TRN-Api-Key': trackerapi
     }
 
-openweathermapAPI = "_______________________"
 
-reddit = praw.Reddit(client_id="_______________________",
-                     client_secret="_______________________",
-                     username="_______________________",
-                     password="_______________________",
-                     user_agent="_______________________")
 
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
@@ -73,7 +80,7 @@ print("BOT STATUS : OFFLINE")
 
 
 def connectmongodb():
-    cluster = MongoClient("_______________________")
+    cluster = MongoClient(mongodb)
     db = cluster["Smilewin"]
     collectionindb = db["Data"]
     return collectionindb
@@ -1479,7 +1486,7 @@ https://hastebin.com/{r['key']}```"""
 async def pastebin(ctx, *,message):
     data = {
     'api_option': 'paste',
-    'api_dev_key':"_______________________",
+    'api_dev_key':pastebinapi,
     'api_paste_code':message,
     'api_paste_name':"Smilewinbot",
     'api_paste_expire_date': 'N',
@@ -2384,14 +2391,15 @@ async def lmgtfy(ctx, *, message):
     
 @lmgtfy.error
 async def lmgtfy_error(ctx, error):
-    embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
-        )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
+            )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    message = await ctx.send(embed=embed ) 
-    await message.add_reaction('⚠️')
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
     
 @client.command()
@@ -4440,7 +4448,7 @@ async def roll(ctx):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
-    message.add_reaction("🎲")
+    await message.add_reaction("🎲")
 
 @client.command(aliases=['8ball'])
 async def _8ball(ctx, *,question):
@@ -5209,7 +5217,6 @@ async def setup(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
 
-
 @client.listen()
 async def on_message(message):
     channel = message.channel
@@ -5236,6 +5243,3 @@ async def test(ctx):
     
 #Bot login using token
 client.run(TOKEN, bot = True)
-
-
-
