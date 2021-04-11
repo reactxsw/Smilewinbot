@@ -13,23 +13,60 @@ from urllib.parse import urlencode
 from captcha.image import ImageCaptcha
 from threading import Thread
 from pymongo import MongoClient
+from pathlib import Path
 
-with open('config.json') as setting:
-    config = json.load(setting)
+if Path("config.json").exists():
+    with open('config.json') as setting:
+        config = json.load(setting)
 
-TOKEN = config.get("bot_token")
-COMMAND_PREFIX = config.get("bot_prefix")
-openweathermapAPI = config.get("openweathermap_api")
-reddit = praw.Reddit(
-    client_id=config.get("reddit_client_id"),
-    client_secret=config.get("reddit_client_secret"),
-    username=config.get("reddit_username"),
-    password=config.get("reddit_password"),
-    user_agent=config.get("reddit_user_agent")
-)
-mongodb = config.get("connect_mongodb")
-trackerapi = config.get("tracker.gg_api")
-pastebinapi = config.get("pastebin_api_dev_key")
+    TOKEN = config.get("bot_token")
+    COMMAND_PREFIX = config.get("bot_prefix")
+    openweathermapAPI = config.get("openweathermap_api")
+    reddit = praw.Reddit(
+        client_id=config.get("reddit_client_id"),
+        client_secret=config.get("reddit_client_secret"),
+        username=config.get("reddit_username"),
+        password=config.get("reddit_password"),
+        user_agent=config.get("reddit_user_agent")
+    )
+    mongodb = config.get("connect_mongodb")
+    trackerapi = config.get("tracker.gg_api")
+    pastebinapi = config.get("pastebin_api_dev_key")
+
+else: 
+    with open("config.json", "w") as setting:
+        setting.writelines(
+            [
+                "{",
+                    "\n",
+                    "    "+'"bot_token": "_____________________________________",',
+                    "\n",
+                    "    "+'"bot_prefix": "_____________________________________",',
+                    "\n",
+                    "    "+'"connect_mongodb": "_____________________________________",',
+                    "\n",
+                    "\n",
+                    "    "+'"openweathermap_api": "_____________________________________",',
+                    "\n",
+                    "    "+'"tracker.gg_api": "_____________________________________",',
+                    "\n",
+                    "\n",
+                    "    "+'"reddit_client_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"reddit_client_secret": "_____________________________________",',
+                    "\n",
+                    "    "+'"reddit_username": "_____________________________________",',
+                    "\n",
+                    "    "+'"reddit_password":"_____________________________________",',
+                    "\n",
+                    "    "+'"reddit_user_agent": "_____________________________________",',
+                    "\n",
+                    "\n",
+                    "    "+'"pastebin_api_dev_key": "_____________________________________"',
+                    "\n",
+                "}"
+            ]
+        )
 
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
@@ -38,9 +75,6 @@ OS = platform.system()
 headers = {
         'TRN-Api-Key': trackerapi
     }
-
-
-
 
 status = cycle([f' REACT  | {COMMAND_PREFIX}help ' 
               , f' R      | {COMMAND_PREFIX}help ' 
@@ -77,7 +111,6 @@ client.remove_command('help')
 
 print(ASCII_ART)
 print("BOT STATUS : OFFLINE")
-
 
 def connectmongodb():
     cluster = MongoClient(mongodb)
