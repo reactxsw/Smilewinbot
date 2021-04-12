@@ -32,6 +32,7 @@ if Path("config.json").exists():
     mongodb = config.get("connect_mongodb")
     trackerapi = config.get("tracker.gg_api")
     pastebinapi = config.get("pastebin_api_dev_key")
+    supportchannel = config.get("support_channel")
 
 else: 
     with open("config.json", "w") as setting:
@@ -44,6 +45,8 @@ else:
                     "    "+'"bot_prefix": "_____________________________________",',
                     "\n",
                     "    "+'"connect_mongodb": "_____________________________________",',
+                    "\n",
+                    "    "+'"support_channel": "_____________________________________",',
                     "\n",
                     "\n",
                     "    "+'"openweathermap_api": "_____________________________________",',
@@ -2172,6 +2175,7 @@ async def helpsetup(ctx):
         description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
         color=0x00FFFF   
         )
+    embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
@@ -2194,7 +2198,7 @@ async def helpgame(ctx):
         )
     embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}roll ``', value='ทอยลูกเต๋า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}roll``', value='ทอยลูกเต๋า', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline = True)
@@ -2248,6 +2252,8 @@ async def helpadmin(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline = True)
@@ -5249,6 +5255,125 @@ async def setup(ctx):
         )
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def roleall(ctx, role: discord.Role):
+    i = 0
+    embed = discord.Embed(
+        title = "ให้ยศสมาชิกทุกคน",
+        colour = 0x00FFFF,
+        description = f"กําลังดําเนินการให้ยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
+    )
+    message = await ctx.send(embed=embed)
+
+    for user in ctx.guild.members:
+
+        try:
+            await user.add_roles(role)
+            time.sleep(0.5)
+            i +=1
+
+        except:
+            pass
+    embed = discord.Embed(
+        title = "ให้ยศสมาชิกทุกคน",
+        colour = 0x00FFFF,
+        description = f"ให้ยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
+    )
+    await message.edit(embed=embed)
+
+@roleall.error
+async def roleall_error(ctx ,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}roleall @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณไม่มีสิทธิ์เเอดมิน",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+        
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️') 
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def removeroleall(ctx, role: discord.Role):
+    i = 0
+    embed = discord.Embed(
+        title = "ลบยศสมาชิกทุกคน",
+        colour = 0x00FFFF,
+        description = f"กําลังดําเนินการลบยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
+    )
+    message = await ctx.send(embed=embed)
+
+    for user in ctx.guild.members:
+
+        try:
+            await user.remove_roles(role)
+            time.sleep(0.5)
+            i +=1
+
+        except:
+            pass
+    embed = discord.Embed(
+        title = "ลบยศสมาชิกทุกคน",
+        colour = 0x00FFFF,
+        description = f"ลบยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
+    )
+    await message.edit(embed=embed)
+
+@roleall.error
+async def reomveroleall_error(ctx ,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}removeroleall @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณไม่มีสิทธิ์เเอดมิน",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+        
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️') 
+
+@client.command()
+async def support(ctx, * , message):
+    channel = client.get_channel(id = int(supportchannel))
+    embed = discord.Embed(
+        title = f"ปัญหาบอทโดย {ctx.author}",
+        description = message,
+        colour = 0x00FFFF,
+    )
+    await channel.send(embed=embed)
+
+    embed = discord.Embed(
+        title = f"ขอบคุณครับ",
+        description = "ปัญหาได้ถูกเเจ้งเรียบร้อย",
+        colour = 0x00FFFF,
+    )
+    await ctx.send(embed=embed)
 
 @client.listen()
 async def on_message(message):
