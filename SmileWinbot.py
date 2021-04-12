@@ -121,6 +121,12 @@ def connectmongodb():
     collectionindb = db["Data"]
     return collectionindb
 
+def connectmongodblevel():
+    cluster = MongoClient(mongodb)
+    db = cluster["Smilewin"]
+    collectionindb = db["Level"]
+    return collectionindb
+
 @client.event
 async def on_ready():
     change_status.start()
@@ -162,6 +168,7 @@ async def give(ctx, role: discord.Role):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find_one({"guild_id":ctx.guild.id})
@@ -259,6 +266,7 @@ async def remove(ctx, role: discord.Role):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find_one({"guild_id":ctx.guild.id})
@@ -357,6 +365,7 @@ async def setintroduce(ctx, channel:discord.TextChannel):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -442,6 +451,7 @@ async def setboarder(ctx, *,boarder):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
 
@@ -541,6 +551,7 @@ async def on(ctx):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -628,6 +639,7 @@ async def off(ctx):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -716,6 +728,7 @@ async def setwebhook(ctx , channel:discord.TextChannel):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -840,6 +853,7 @@ async def _on(ctx):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -927,6 +941,7 @@ async def _off(ctx):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -1013,6 +1028,7 @@ async def setwelcome(ctx , channel:discord.TextChannel):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
     results = collection.find({"guild_id":ctx.guild.id})
@@ -1111,6 +1127,7 @@ async def setleave(ctx , channel:discord.TextChannel):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         results = collection.find({"guild_id":ctx.guild.id})
@@ -5236,6 +5253,7 @@ async def setup(ctx):
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
+        "level_system":"NO",
         }
         collection.insert_one(newserver)
         embed = discord.Embed(
@@ -5377,11 +5395,131 @@ async def support(ctx, * , message):
 
 @client.listen()
 async def on_message(message):
-    channel = message.channel
-    if message.author == client.user:
-        return
-    if'ด่าบอท' in message.content:
-        await channel.send("ใครด่ากูวะลูกพี่กูฟ้องละ")
+    collection = connectmongodb()
+    collectionlevel = connectmongodblevel()
+    server = collection.find({"guild_id":message.guild.id})
+    if not message.author.bot:
+        for data in server:
+            if data["levelsystem"] != "NO":
+                user = collectionlevel.find_one({"user_id":message.author.id})
+                if user is None:
+                    newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
+                    collectionlevel.insert_one(newuser)
+                else:
+                    userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
+                    for data in userlevel:
+
+                        userxp = data["xp"] + 5
+                        collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
+                        currentxp = data["xp"]
+                        currentlvl = data["level"]
+                        if currentxp > 200:
+                            currentlvl += 1
+                            currentxp = 0
+                            collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
+                            await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
+                        else:
+                            pass
+            else:
+                pass
+    else:
+        pass
+            
+
+@client.command()
+async def rank(ctx , member : discord.Member=None):
+    if member is None:
+        collection = connectmongodb()
+        collectionlevel = connectmongodblevel()
+        server = collection.find({"guild_id":ctx.guild.id})
+        for data in server:
+            if data["levelsystem"] != "NO":
+                user = collectionlevel.find_one({"user_id":ctx.author.id})
+                if user is None:
+                    ctx.send("เลเวลของคุณคือ 0")
+            
+                else:
+                    userlevel = collectionlevel.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    for data in userlevel:
+                        currentxp = data["xp"]
+                        currentlvl = data["level"]
+                        stringcurrentlvl = str(currentxp)
+                        liststringcurrentlvl = (list(stringcurrentlvl))
+                    if int(liststringcurrentlvl[1]) == 5:
+                        boxxp = int(currentxp - 5)
+                        bluebox = int(boxxp/10)
+                        whitebox = int(20 - bluebox)
+                    else:
+                        bluebox = int(currentxp/10)
+                        whitebox = int(20 - bluebox)
+
+                    ranking = collectionlevel.find().sort("xp",-1)
+                    rank = 0
+                    for level in ranking:
+                        rank += 1
+                        if data["user_id"] == level["user_id"]:
+                            break
+                
+                    embed = discord.Embed(
+                        title = f"เลเวลของ {ctx.author.name}"
+                        )
+                    embed.add_field(name = "ชื่อ",value= f"{ctx.author.name}",inline=True)
+                    embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
+                    embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
+                    embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
+                    embed.add_field(name = "ความก้าวหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    await ctx.send(embed=embed)
+
+            else:
+                pass
+    
+    else:
+        collection = connectmongodb()
+        collectionlevel = connectmongodblevel()
+        server = collection.find({"guild_id":ctx.guild.id})
+        for data in server:
+            if data["levelsystem"] != "NO":
+                user = collectionlevel.find_one({"user_id":member.id})
+                if user is None:
+                    ctx.send("เลเวลของคุณคือ 0")
+            
+                else:
+                    userlevel = collectionlevel.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                    for data in userlevel:
+                        currentxp = data["xp"]
+                        currentlvl = data["level"]
+                        stringcurrentlvl = str(currentxp)
+                        liststringcurrentlvl = (list(stringcurrentlvl))
+                    if int(liststringcurrentlvl[1]) == 5:
+                        boxxp = int(currentxp - 5)
+                        bluebox = int(boxxp/10)
+                        whitebox = int(20 - bluebox)
+                    else:
+                        bluebox = int(currentxp/10)
+                        whitebox = int(20 - bluebox)
+
+                    ranking = collectionlevel.find().sort("xp",-1)
+                    rank = 0
+                    for level in ranking:
+                        rank += 1
+                        if data["user_id"] == level["user_id"]:
+                            break
+                
+                    embed = discord.Embed(
+                        title = f"เลเวลของ {ctx.author.name}"
+                        )
+                    embed.add_field(name = "ชื่อ",value= f"{member.id}",inline=True)
+                    embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
+                    embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
+                    embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
+                    embed.add_field(name = "ความก้าวหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
+                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                    await ctx.send(embed=embed)
+
+            else:
+                pass
+
 
 @client.command()
 async def test(ctx):
