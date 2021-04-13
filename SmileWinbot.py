@@ -111,6 +111,10 @@ client = discord.Client()
 client = commands.Bot(command_prefix = COMMAND_PREFIX,  case_insensitive=True ,intents=intents)
 start_time = datetime.datetime.utcnow()
 client.remove_command('help')
+cluster = MongoClient(mongodb)
+db = cluster["Smilewin"]
+collection = db["Data"]
+collectionlevel = db["Level"]
 
 print(ASCII_ART)
 print("BOT STATUS : OFFLINE")
@@ -2712,7 +2716,7 @@ async def guildicon(ctx):
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
-    await message.reaction("✅")
+    await message.add_reaction("✅")
 
 @client.command()
 async def avatar(ctx , member : discord.Member=None): 
@@ -5397,10 +5401,6 @@ async def support(ctx, * , message):
 @client.listen()
 async def on_message(message):
     if not message.content.startswith(COMMAND_PREFIX):
-        cluster = MongoClient(mongodb)
-        db = cluster["Smilewin"]
-        collection = db["Data"]
-        collectionlevel = db["Level"]
         server = collection.find({"guild_id":message.guild.id})
         if not message.author.bot:
             for data in server:
@@ -5434,10 +5434,6 @@ async def on_message(message):
             
 @client.command()
 async def rank(ctx , member : discord.Member=None):
-    cluster = MongoClient(mongodb)
-    db = cluster["Smilewin"]
-    collection = db["Data"]
-    collectionlevel = db["Level"]
     if member is None:
 
         server = collection.find({"guild_id":ctx.guild.id})
@@ -5462,7 +5458,7 @@ async def rank(ctx , member : discord.Member=None):
                         bluebox = int(currentxp/10)
                         whitebox = int(20 - bluebox)
 
-                    ranking = collectionlevel.find().sort("xp",-1)
+                    ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
                     rank = 0
                     for level in ranking:
                         rank += 1
@@ -5478,7 +5474,9 @@ async def rank(ctx , member : discord.Member=None):
                     embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
                     embed.add_field(name = "ความก้าวหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
                     embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                    await ctx.send(embed=embed)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction("✅")
 
             else:
                 pass
@@ -5507,7 +5505,7 @@ async def rank(ctx , member : discord.Member=None):
                         bluebox = int(currentxp/10)
                         whitebox = int(20 - bluebox)
 
-                    ranking = collectionlevel.find().sort("xp",-1)
+                    ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
                     rank = 0
                     for level in ranking:
                         rank += 1
@@ -5521,14 +5519,22 @@ async def rank(ctx , member : discord.Member=None):
                     embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
                     embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
                     embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
-                    embed.add_field(name = "ความก้าวหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
-                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                    await ctx.send(embed=embed)
+                    embed.add_field(name = "ความคืบ",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
+                    embed.set_thumbnail(url=f"{member.avatar_url}")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction("✅")
 
             else:
                 pass
 
-
+#@client.command()
+#async def leaderboard(ctx):
+#   cluster = MongoClient(mongodb)
+#    db = cluster["Smilewin"]
+#    collection = db["Data"]
+#    collectionlevel = db["Level"]
+#    rankings = 
 @client.command()
 async def test(ctx):
     await ctx.send("Bot online เเล้ว")
