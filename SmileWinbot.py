@@ -2159,6 +2159,7 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpuser``',value='คําสั่งข้อมูลของสมาชิกเช่น เลเวล' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = False)
     embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -5395,48 +5396,56 @@ async def support(ctx, * , message):
 
 @client.listen()
 async def on_message(message):
-    collection = connectmongodb()
-    collectionlevel = connectmongodblevel()
-    server = collection.find({"guild_id":message.guild.id})
-    if not message.author.bot:
-        for data in server:
-            if data["levelsystem"] != "NO":
-                user = collectionlevel.find_one({"user_id":message.author.id})
-                if user is None:
-                    newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
-                    collectionlevel.insert_one(newuser)
-                else:
-                    userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
-                    for data in userlevel:
+    if not message.content.startswith(COMMAND_PREFIX):
+        cluster = MongoClient(mongodb)
+        db = cluster["Smilewin"]
+        collection = db["Data"]
+        collectionlevel = db["Level"]
+        server = collection.find({"guild_id":message.guild.id})
+        if not message.author.bot:
+            for data in server:
+                if data["levelsystem"] != "NO":
+                    user = collectionlevel.find_one({"user_id":message.author.id})
+                    if user is None:
+                        newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
+                        collectionlevel.insert_one(newuser)
+                    else:
+                        userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
+                        for data in userlevel:
 
-                        userxp = data["xp"] + 5
-                        collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
-                        currentxp = data["xp"]
-                        currentlvl = data["level"]
-                        if currentxp > 200:
-                            currentlvl += 1
-                            currentxp = 0
-                            collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
-                            await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
-                        else:
-                            pass
-            else:
-                pass
+                            userxp = data["xp"] + 5
+                            collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
+                            currentxp = data["xp"]
+                            currentlvl = data["level"]
+                            if currentxp > 200:
+                                currentlvl += 1
+                                currentxp = 0
+                                collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
+                                await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
+                            else:
+                                pass
+                else:
+                    pass
+        else:
+            pass
+    
     else:
         pass
             
-
 @client.command()
 async def rank(ctx , member : discord.Member=None):
+    cluster = MongoClient(mongodb)
+    db = cluster["Smilewin"]
+    collection = db["Data"]
+    collectionlevel = db["Level"]
     if member is None:
-        collection = connectmongodb()
-        collectionlevel = connectmongodblevel()
+
         server = collection.find({"guild_id":ctx.guild.id})
         for data in server:
             if data["levelsystem"] != "NO":
                 user = collectionlevel.find_one({"user_id":ctx.author.id})
                 if user is None:
-                    ctx.send("เลเวลของคุณคือ 0")
+                    await ctx.send(f"เลเวลของ {ctx.author.id} คือ 0")
             
                 else:
                     userlevel = collectionlevel.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
@@ -5475,14 +5484,13 @@ async def rank(ctx , member : discord.Member=None):
                 pass
     
     else:
-        collection = connectmongodb()
-        collectionlevel = connectmongodblevel()
+        
         server = collection.find({"guild_id":ctx.guild.id})
         for data in server:
             if data["levelsystem"] != "NO":
                 user = collectionlevel.find_one({"user_id":member.id})
                 if user is None:
-                    ctx.send("เลเวลของคุณคือ 0")
+                    await ctx.send(f"เลเวลของ {member.name} คือ 0")
             
                 else:
                     userlevel = collectionlevel.find({"guild_id":ctx.guild.id , "user_id":member.id})
@@ -5509,7 +5517,7 @@ async def rank(ctx , member : discord.Member=None):
                     embed = discord.Embed(
                         title = f"เลเวลของ {ctx.author.name}"
                         )
-                    embed.add_field(name = "ชื่อ",value= f"{member.id}",inline=True)
+                    embed.add_field(name = "ชื่อ",value= f"{member.name}",inline=True)
                     embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
                     embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
                     embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
