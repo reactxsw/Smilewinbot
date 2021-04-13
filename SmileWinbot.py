@@ -119,18 +119,6 @@ collectionlevel = db["Level"]
 print(ASCII_ART)
 print("BOT STATUS : OFFLINE")
 
-def connectmongodb():
-    cluster = MongoClient(mongodb)
-    db = cluster["Smilewin"]
-    collectionindb = db["Data"]
-    return collectionindb
-
-def connectmongodblevel():
-    cluster = MongoClient(mongodb)
-    db = cluster["Smilewin"]
-    collectionindb = db["Level"]
-    return collectionindb
-
 @client.event
 async def on_ready():
     change_status.start()
@@ -158,7 +146,6 @@ async def setrole(ctx):
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def give(ctx, role: discord.Role):
-    collection = connectmongodb()
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -256,7 +243,6 @@ async def give_error(ctx, error):
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def remove(ctx, role: discord.Role):
-    collection = connectmongodb()
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -355,7 +341,6 @@ async def remove_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setintroduce(ctx, channel:discord.TextChannel):
-    collection = connectmongodb()
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -441,7 +426,6 @@ async def setintroduce_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setboarder(ctx, *,boarder):
-    collection = connectmongodb()
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -541,7 +525,7 @@ async def introduce(ctx):
 @commands.has_permissions(administrator=True)
 async def on(ctx):
     status = "YES"
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -629,7 +613,7 @@ async def on_error(ctx, error):
 @commands.has_permissions(administrator=True)
 async def off(ctx):
     status = "NO"
-    collection = connectmongodb()
+     
     server = collection.find({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -718,7 +702,7 @@ async def off_error(ctx, error):
 async def setwebhook(ctx , channel:discord.TextChannel):
     webhook = await channel.create_webhook(name='Smilewinbot')
     webhook = webhook.url
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -843,7 +827,7 @@ async def chat_error(ctx, error):
 @commands.has_permissions(administrator=True)
 async def _on(ctx):
     status = "YES"
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -931,7 +915,7 @@ async def _on_error(ctx, error):
 @commands.has_permissions(administrator=True)
 async def _off(ctx):
     status = "NO"
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -1018,7 +1002,7 @@ async def _off_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwelcome(ctx , channel:discord.TextChannel):
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -1117,7 +1101,7 @@ async def setwelcome_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setleave(ctx , channel:discord.TextChannel):
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -1266,7 +1250,7 @@ async def clear_error(ctx, error):
 
 @client.event
 async def on_member_join(member):
-    collection = connectmongodb()
+     
     try:
         results = collection.find({"guild_id":member.guild.id})
         for data in results:
@@ -1300,7 +1284,7 @@ async def on_member_join(member):
 
 @client.event
 async def on_member_remove(member):
-    collection = connectmongodb()
+     
     try:
         results = collection.find({"guild_id":member.guild.id})
         for data in results:
@@ -4790,7 +4774,7 @@ async def anon(ctx, *,message):
 
     message = f"[{author}] : {message}"
     payload = {"content":message,"username":username,"avatar_url":avatar}
-    collection = connectmongodb()
+     
     anonresults = collection.find({"webhook_status":"YES"})
     results = collection.find({"guild_id":ctx.guild.id})
     for data in results:
@@ -4877,7 +4861,7 @@ Binary : {text}
 
 @client.command(aliases=['ind'])
 async def introduction(ctx):
-    collection = connectmongodb()
+     
     results = collection.find({"guild_id":ctx.guild.id})
     for data in results:
         if data["introduce_status"] == "YES":
@@ -5244,7 +5228,7 @@ async def introduction(ctx):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setup(ctx):
-    collection = connectmongodb()
+     
     server = collection.find_one({"guild_id":ctx.guild.id})
     if server is None:
         newserver = {"guild_id":ctx.guild.id,
@@ -5404,7 +5388,7 @@ async def on_message(message):
         server = collection.find({"guild_id":message.guild.id})
         if not message.author.bot:
             for data in server:
-                if data["levelsystem"] != "NO":
+                if data["level_system"] == "YES":
                     user = collectionlevel.find_one({"user_id":message.author.id})
                     if user is None:
                         newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
@@ -5438,7 +5422,7 @@ async def rank(ctx , member : discord.Member=None):
 
         server = collection.find({"guild_id":ctx.guild.id})
         for data in server:
-            if data["levelsystem"] != "NO":
+            if data["level_system"] != "NO":
                 user = collectionlevel.find_one({"user_id":ctx.author.id})
                 if user is None:
                     await ctx.send(f"เลเวลของ {ctx.author.id} คือ 0")
@@ -5485,7 +5469,7 @@ async def rank(ctx , member : discord.Member=None):
         
         server = collection.find({"guild_id":ctx.guild.id})
         for data in server:
-            if data["levelsystem"] != "NO":
+            if data["level_system"] != "NO":
                 user = collectionlevel.find_one({"user_id":member.id})
                 if user is None:
                     await ctx.send(f"เลเวลของ {member.name} คือ 0")
@@ -5528,17 +5512,271 @@ async def rank(ctx , member : discord.Member=None):
             else:
                 pass
 
-#@client.command()
-#async def leaderboard(ctx):
-#   cluster = MongoClient(mongodb)
-#    db = cluster["Smilewin"]
-#    collection = db["Data"]
-#    collectionlevel = db["Level"]
-#    rankings = 
+@client.command()
+async def a78JR8hAqR7wuQBaF(ctx):
+     
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        }
+        collection.insert_one(newserver)
+        embed = discord.Embed(
+            title = "ตั้งค่าสําเร็จ",
+            colour= 0x00FFFF,
+            description = f"ลงทะเบือนเซิฟเวอร์ในฐานข้อมูลสําเร็จ"
+        )
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+    else:
+        id = server["_id"]
+        embed = discord.Embed(
+            title = "มีข้อมูลของเซิฟเวอร์ในฐานข้อมูลเเล้ว",
+            colour= 0x00FFFF,
+            description = f"ไอดีของเซิฟเวอร์ในฐานข้อมูลคือ {id}"
+        )
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+@client.command()
+async def leaderboard(ctx):
+    ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
+    i = 1
+    embed = discord.Embed(
+        title="เเรงค์เลเวลในเซิฟเวอร์",
+        colour=0x00FFFF
+    )
+    for data in ranking:
+        try:
+            member =ctx.guild.get_member(data["user_id"])
+            memberlvl = data["level"]
+            embed.add_field(name=f"อันดับ{i}: {member.name}",value=f"เลเวล: {memberlvl}", inline=False)
+            i += 1
+        except:
+            pass
+        if i == 11:
+            break
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@client.group(invoke_without_command=True)
+@commands.has_permissions(administrator=True)
+async def level(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        description = "ต้องระบุ ON / OFF"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@level.error
+async def level_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@level.command(aliases=['on'])
+@commands.has_permissions(administrator=True)
+async def __on(ctx):
+    status = "YES"
+     
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["level_system"] == "NO":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_systems":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "YES"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["level_system"] == "NO":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+@__on.error
+async def levelon_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@level.command(aliases=['off'])
+@commands.has_permissions(administrator=True)
+async def __off(ctx):
+    status = "NO"
+     
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        }
+        collection.insert_one(newserver)
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["level_system"] == "NO":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    else:
+        status = "NO"
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["level_system"] == "NO":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าเลเวล",
+                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+@__off.error
+async def leveloff_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @client.command()
 async def test(ctx):
     await ctx.send("Bot online เเล้ว")
-    collection = connectmongodb()
+     
     post = {"name":"test"}
     collection.insert_one(post)
 
