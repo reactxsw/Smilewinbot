@@ -2179,6 +2179,21 @@ async def helpbot(ctx):
     await message.add_reaction('👍')
 
 @client.command()
+async def helpuser(ctx):
+    embed=discord.Embed(
+        title='คําสั่งข้อมูลของสมาชิก',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f'``{COMMAND_PREFIX}rank @member``', value = 'เช็คเเรงค์ของคุณหรือสมาชิก',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+@client.command()
 async def helpsetup(ctx):
     embed=discord.Embed(
         title='คําสั่งเกี่ยวกับตั้งค่า',
@@ -2188,7 +2203,7 @@ async def helpsetup(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยทมี่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยที่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setboarder``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
@@ -2293,6 +2308,7 @@ async def helpfun(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -5833,6 +5849,40 @@ async def youtube_error(ctx, error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
 
+@client.command()
+async def ytsearch(ctx, *, keywords):
+    apikey = youtubeapi
+    youtube = build('youtube', 'v3', developerKey=apikey)
+    snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
+    i = 1
+    embed = discord.Embed(
+            title = "ค้นหาวิดีโอจาก YouTube",
+            colour = 0x00FFFF , 
+            description = f"ค้นหา: {keywords}"
+        )
+    while i != 6:
+        req = (snippet["items"][i])
+        video_title = req["snippet"]["title"]
+        video_id = req["id"]["videoId"]
+        clip_url = "http://www.youtube.com/watch?v="+ video_id
+        embed.add_field(name=f"{i}. {video_title}",value=f"{clip_url}", inline=False)
+        i = i+1
+
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message= await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+                              
+@ytsearch.error
+async def ytsearch_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}ytsearch [keywords]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 @client.command()
 async def test(ctx):
     await ctx.send("Bot online เเล้ว")
