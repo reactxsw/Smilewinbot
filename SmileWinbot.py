@@ -1,5 +1,5 @@
 #import
-import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3 , pymongo , json
+import discord , asyncio , datetime , itertools , os , praw , requests , random , urllib , aiohttp , bs4 ,json ,humanize , time , platform , re ,sqlite3 , pymongo , json , httplib2
 #from
 from discord.channel import StoreChannel
 from discord import Webhook, RequestsWebhookAdapter
@@ -14,6 +14,7 @@ from captcha.image import ImageCaptcha
 from threading import Thread
 from pymongo import MongoClient
 from pathlib import Path
+from googleapiclient.discovery import build
 
 if Path("config.json").exists():
     with open('config.json') as setting:
@@ -33,6 +34,7 @@ if Path("config.json").exists():
     trackerapi = config.get("tracker.gg_api")
     pastebinapi = config.get("pastebin_api_dev_key")
     supportchannel = config.get("support_channel")
+    youtubeapi = config.get("youtube_api")
 
 else: 
     with open("config.json", "w") as setting:
@@ -67,6 +69,7 @@ else:
                     "\n",
                     "    "+'"pastebin_api_dev_key": "_____________________________________"',
                     "\n",
+                    "    "+'"youtube_api": "_____________________________________"',
                 "}"
             ]
         )
@@ -2166,9 +2169,10 @@ async def helpbot(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
+    embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
     embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botcode``', value = 'ดูโค้ดที่ผมใช้ในการเขียนบอทตัวนี้',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}support (text)``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -2189,6 +2193,7 @@ async def helpsetup(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}setboarder``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -5386,30 +5391,32 @@ async def support(ctx, * , message):
 async def on_message(message):
     if not message.content.startswith(COMMAND_PREFIX):
         server = collection.find({"guild_id":message.guild.id})
-        if not message.author.bot:
-            for data in server:
-                if data["level_system"] == "YES":
-                    user = collectionlevel.find_one({"user_id":message.author.id})
-                    if user is None:
-                        newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
-                        collectionlevel.insert_one(newuser)
-                    else:
-                        userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
-                        for data in userlevel:
+        guild = collection.find_one({"guild_id":message.guild.id})
+        if not guild is None:
+            if not message.author.bot:
+                for data in server:
+                    if data["level_system"] == "YES":
+                        user = collectionlevel.find_one({"user_id":message.author.id})
+                        if user is None:
+                            newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":"0"}
+                            collectionlevel.insert_one(newuser)
+                        else:
+                            userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
+                            for data in userlevel:
 
-                            userxp = data["xp"] + 5
-                            collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
-                            currentxp = data["xp"]
-                            currentlvl = data["level"]
-                            if currentxp > 200:
-                                currentlvl += 1
-                                currentxp = 0
-                                collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
-                                await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
-                            else:
-                                pass
-                else:
-                    pass
+                                userxp = data["xp"] + 5
+                                collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
+                                currentxp = data["xp"]
+                                currentlvl = data["level"]
+                                if currentxp > 200:
+                                    currentlvl += 1
+                                    currentxp = 0
+                                    collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
+                                    await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
+                                else:
+                                    pass
+                    else:
+                        pass
         else:
             pass
     
@@ -5774,11 +5781,61 @@ async def leveloff_error(ctx, error):
         await message.add_reaction('⚠️')
 
 @client.command()
+async def youtube(ctx, *, keywords):
+    apikey = youtubeapi
+    youtube = build('youtube', 'v3', developerKey=apikey)
+    snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
+    
+    req = (snippet["items"][0])
+
+    video_title = req["snippet"]["title"]
+    video_id = req["id"]["videoId"]
+    thumbnail = req["snippet"]["thumbnails"]["high"]["url"]
+    channel_title = req["snippet"]["channelTitle"]
+    description = req["snippet"]["description"]
+
+    clip_url = "http://www.youtube.com/watch?v="+ video_id
+
+    r = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={apikey}")
+    r = r.json()
+    stat = r["items"][0]
+    view = stat["statistics"]["viewCount"]
+    like = stat["statistics"]["likeCount"]
+    dislike = stat["statistics"]["dislikeCount"]
+    comment = stat["statistics"]["dislikeCount"]
+  
+    embed = discord.Embed(
+        title = video_title,
+        colour = 0x00FFFF , 
+        description = f"[ดูคลิปนี้]({clip_url})"
+    )
+    embed.add_field(name ="ชื่อช่อง" , value = f"{channel_title}", inline = True)
+    embed.add_field(name ="วิวทั้งหมด" , value = f"{view}", inline = True)
+    embed.add_field(name ="คอมเม้นทั้งหมด" , value = f"{comment}", inline = True)
+    embed.add_field(name ="ไลค์" , value = f"{like}", inline = True)
+    embed.add_field(name ="ดิสไลค์" , value = f"{dislike}", inline = True)
+    embed.add_field(name ="คำอธิบาย" , value = f"{description}", inline = True)
+    
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed.set_image(url=thumbnail)
+    message= await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+                              
+@youtube.error
+async def youtube_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}youtube [ชื่อคลิป]``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
 async def test(ctx):
     await ctx.send("Bot online เเล้ว")
-     
-    post = {"name":"test"}
-    collection.insert_one(post)
 
 ###########################################################
 #            /\                                           #
