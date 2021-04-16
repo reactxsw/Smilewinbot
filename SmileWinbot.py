@@ -2175,9 +2175,26 @@ async def help(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = False)
+    embed.add_field(name=f'``{COMMAND_PREFIX}helpeconomy``',value='คําสั่งเกี่ยวกับระบบเศรษฐกิจ' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpuser``',value='คําสั่งข้อมูลของสมาชิกเช่น เลเวล' , inline = False)
     embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = False)
     embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+
+@client.command()
+async def helpeconomy(ctx):
+    embed=discord.Embed(
+        title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
+        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+        color=0x00FFFF   
+        )
+    embed.add_field(name=f'``{COMMAND_PREFIX}openbal``', value = 'เปิดบัญชีธนาคาร',inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}bal (@member)``', value='ดูเงินของคุณหรือของสมาชิก', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}deposit``', value ='ฝากเงินเข้าธนาคาร', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}withdraw``', value = 'ถอนเงินจากธนาคาร',inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -2235,6 +2252,7 @@ async def helpsetup(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}economy on/off``', value ='เปิด / ปิดการใช้งานระบบเศรษฐกิจ', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
     message = await ctx.send(embed=embed)
@@ -2334,6 +2352,7 @@ async def helpfun(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -4262,7 +4281,7 @@ async def slim(ctx):
                  "ก่อนจะสานต่ออุดมการณ์เพื่อชาติ วันนี้ช่วยแม่ทำงานบ้าน กรอกน้ำใส่ตู้เย็นหรือยัง",
                  "ขยันอ่านหนังสือสอบให้เหมือนอ่านเบิกเนตรหรือยัง",
                  "คุณภาพชีวิตจะดีขึ้น ถ้าคนเป็นคนดี ถ้าตัวเราดี",
-                 "แล้วที่หลานทำไม่เรียกว่าคุกคามสถาบันหรือ",
+                 "แล้วที่หลานทำไม่เรียกว่าคุกคาม��ถาบันหรือ",
                  "เป็น IO ดีกว่าเป็นควายให้ไอ้แม้วไอ้ทอนจูงจมูก",
                  "ทำร้ายตำรวจ ด้วยคีมเหล็กขนาดใหญ่",
                  "พวกเนตรนารีคุกคามเราก่อน",
@@ -5492,7 +5511,7 @@ async def rank(ctx , member : discord.Member=None):
                         bluebox = int(currentxp/10)
                         whitebox = int(20 - bluebox)
 
-                    ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
+                    ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
                     rank = 0
                     for level in ranking:
                         rank += 1
@@ -5581,7 +5600,7 @@ async def leaderboard(ctx):
     server = collection.find({"guild_id":ctx.guild.id})
     for data in server:
         if data["level_system"] != "NO":
-            ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
+            ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
             i = 1
             embed = discord.Embed(
                 title="เเรงค์เลเวลในเซิฟเวอร์",
@@ -6148,18 +6167,20 @@ async def openbalance(ctx):
         await message.add_reaction('💸')
 
 @client.command(aliases=['bal'])
-async def balance(ctx):
+async def balance(ctx, member: discord.Member = None):
+    if member is None:
+        member = ctx.author
     guild = collection.find_one({"guild_id":ctx.guild.id})
     if not guild is None:
         status = collection.find({"guild_id":ctx.guild.id})
         for data in status:
             currency = data["currency"]
             if data["economy_system"] == "YES":
-                user = collectionmoney.find_one({"user_id":ctx.author.id})
+                user = collectionmoney.find_one({"user_id":member.id})
                 if user is None:
                     embed = discord.Embed(
-                        title = "คุณยังไม่มีบัญชี",
-                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                        title = f"{member.name} ยังไม่มีบัญชี",
+                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                         colour = 0x983925
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -6167,7 +6188,7 @@ async def balance(ctx):
                     await message.add_reaction('💸')
                 
                 else:
-                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
                     for data in usermoney:
                         bank = data["bank"]
                         wallet = data["wallet"]
@@ -6176,7 +6197,7 @@ async def balance(ctx):
                     embed = discord.Embed(
                         colour = 0xB9E7A5
                     )
-                    embed.set_author(name=f"จำนวนเงินของ {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.set_author(name=f"จำนวนเงินของ {member.name}", icon_url=f"{member.avatar_url}") 
                     
                     embed.add_field(name=f'เงินในธนาคาร', value=f'{bank} {currency}', inline = False)
                     embed.add_field(name=f'เงินในกระเป๋าตัง', value=f'{wallet} {currency}', inline = False)
@@ -6193,9 +6214,9 @@ async def balance(ctx):
                     description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                     colour = 0x983925
                     )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message  = await ctx.send(embed=embed)
-            await message.add_reaction('💸')
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
 
     else:
         embed = discord.Embed(
@@ -6225,31 +6246,43 @@ async def deposit(ctx, amount : int):
             for data in status:
                 currency = data["currency"]
                 if data["economy_system"] == "YES":
-                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
-                    for data in usermoney:
-                        new_bank = amount + data["bank"]
-                        new_wallet = data["wallet"] - amount
-                    if data["wallet"] >= amount:
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
                         embed = discord.Embed(
-                            title = f"ฝากเงินเข้าบัญชีธนาคารสําเร็จ",
-                            description = f"ได้ทําการฝากเงินจํานวน {amount} {currency} เข้าธนาคาร",
-                            colour = 0xB9E7A5
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸')
-
-                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":new_bank,"wallet":new_wallet}})
-    
-                    else:
-                        embed = discord.Embed(
-                            title = "จํานวนเงินในกระเป๋าตังไม่พอ",
-                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour = 0x983925
                             )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸')                            
+                        await message.add_reaction('💸')
+
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            new_bank = amount + data["bank"]
+                            new_wallet = data["wallet"] - amount
+                        if data["wallet"] >= amount:
+                            embed = discord.Embed(
+                                title = f"ฝากเงินเข้าบัญชีธนาคารสําเร็จ",
+                                description = f"ได้ทําการฝากเงินจํานวน {amount} {currency} เข้าธนาคาร",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":new_bank,"wallet":new_wallet}})
+    
+                        else:
+                            embed = discord.Embed(
+                                title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                                colour = 0x983925
+                                )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')                            
             
                 else:
                     embed = discord.Embed(
@@ -6289,31 +6322,133 @@ async def withdraw(ctx, amount : int):
             for data in status:
                 currency = data["currency"]
                 if data["economy_system"] == "YES":
-                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
-                    for data in usermoney:
-                        new_bank = data["bank"] - amount
-                        new_wallet = data["wallet"] + amount
-                    if data["bank"] >= amount:
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
                         embed = discord.Embed(
-                            title = f"ถอนเงินเสําเร็จ",
-                            description = f"ได้ทําการถอนเงินจํานวน {amount} {currency}",
-                            colour = 0xB9E7A5
-                        )
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
                         await message.add_reaction('💸')
+                    
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            new_bank = data["bank"] - amount
+                            new_wallet = data["wallet"] + amount
+                        if data["bank"] >= amount:
+                            embed = discord.Embed(
+                                title = f"ถอนเงินเสําเร็จ",
+                                description = f"ได้ทําการถอนเงินจํานวน {amount} {currency}",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
 
-                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":new_bank,"wallet":new_wallet}})
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_i d":ctx.author.id},{"$set":{"bank":new_bank,"wallet":new_wallet}})
     
+                        else:
+                            embed = discord.Embed(
+                                title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                                colour = 0x983925
+                                )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')                            
+            
+                else:
+                    embed = discord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')       
+                    
+        else:
+            embed = discord.Embed(
+                title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                colour = 0x983925
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message  = await ctx.send(embed=embed)
+            await message.add_reaction('💸')
+
+@client.command()
+async def pay(ctx ,amount : int , member: discord.Member = None):
+    if amount < 0:
+        embed = discord.Embed(
+            title = "จํานวนเงินไม่สามารถติดลบได้",
+            colour = 0x983925
+            )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message  = await ctx.send(embed=embed)
+        await message.add_reaction('💸') 
+    
+    else:
+        guild = collection.find_one({"guild_id":ctx.guild.id})
+        if not guild is None:
+            status = collection.find({"guild_id":ctx.guild.id})
+            for data in status:
+                currency = data["currency"]
+                if data["economy_system"] == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    for data in usermoney:
+                        usernew_bank = data["bank"] - amount
+                    
+                    if data["bank"] >= amount:
+                        receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if receiver is None:
+                            embed = discord.Embed(
+                                title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                        
+                        else:
+                            receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in receivermoney:
+                                receivernew_bank = data["bank"] + amount
+
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":usernew_bank}})
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank}})
+                            embed = discord.Embed(
+                                title = f"โอนเงินสําเร็จ",
+                                description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+
                     else:
                         embed = discord.Embed(
-                            title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                            title = "จํานวนเงินในธนาคารไม่พอ",
                             description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                             colour = 0x983925
                             )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸')                            
+                        await message.add_reaction('💸')    
             
                 else:
                     embed = discord.Embed(
