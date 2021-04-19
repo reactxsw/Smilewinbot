@@ -2136,7 +2136,7 @@ async def dmall(ctx, *, message):
             await member.dm_channel.send(message)
             print(f"Message from {ctx.author} has been sent to "+ member.name)
             sent = sent + 1
-            time.sleep(2)
+            time.sleep(4)
         except:
             print(f"Message from {ctx.author} failed to sent to "+ member.name)
             fail = fail + 1
@@ -2278,6 +2278,8 @@ async def helpuser(ctx):
     embed.add_field(name=f'``{COMMAND_PREFIX}rank @member``', value = 'เช็คเเรงค์ของคุณหรือสมาชิก',inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
     embed.add_field(name=f'``{COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
+    embed.add_field(name=f'``{COMMAND_PREFIX}vfy``', value='ยืนยันตัวตนโดย captcha', inline = True)
+
 
     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -5555,13 +5557,18 @@ async def rank(ctx , member : discord.Member=None):
                         currentlvl = data["level"]
                         stringcurrentlvl = str(currentxp)
                         liststringcurrentlvl = (list(stringcurrentlvl))
-                    if int(liststringcurrentlvl[1]) == 5:
-                        boxxp = int(currentxp - 5)
-                        bluebox = int(boxxp/10)
-                        whitebox = int(20 - bluebox)
+                    if currentxp >= 10:
+                        if int(liststringcurrentlvl[1]) == 5:
+                            boxxp = int(currentxp - 5)
+                            bluebox = int(boxxp/10)
+                            whitebox = int(20 - bluebox)
+                        else:
+                            bluebox = int(currentxp/10)
+                            whitebox = int(20 - bluebox)
+                    
                     else:
-                        bluebox = int(currentxp/10)
-                        whitebox = int(20 - bluebox)
+                        bluebox = 0
+                        whitebox = 20
 
                     ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
                     rank = 0
@@ -5569,7 +5576,8 @@ async def rank(ctx , member : discord.Member=None):
                         rank += 1
                         if data["user_id"] == level["user_id"]:
                             break
-                
+                    
+                    print("work 2")
                     embed = discord.Embed(
                         title = f"เลเวลของ {ctx.author.name}"
                         )
@@ -5609,13 +5617,19 @@ async def rank(ctx , member : discord.Member=None):
                         currentlvl = data["level"]
                         stringcurrentlvl = str(currentxp)
                         liststringcurrentlvl = (list(stringcurrentlvl))
-                    if int(liststringcurrentlvl[1]) == 5:
-                        boxxp = int(currentxp - 5)
-                        bluebox = int(boxxp/10)
-                        whitebox = int(20 - bluebox)
+                    
+                    if currentxp >= 10:
+                        if int(liststringcurrentlvl[1]) == 5:
+                            boxxp = int(currentxp - 5)
+                            bluebox = int(boxxp/10)
+                            whitebox = int(20 - bluebox)
+                        else:
+                            bluebox = int(currentxp/10)
+                            whitebox = int(20 - bluebox)
+                    
                     else:
-                        bluebox = int(currentxp/10)
-                        whitebox = int(20 - bluebox)
+                        bluebox = 0
+                        whitebox = 20
 
                     ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
                     rank = 0
@@ -5650,25 +5664,123 @@ async def rank(ctx , member : discord.Member=None):
 @client.command()
 async def leaderboard(ctx):
     server = collection.find({"guild_id":ctx.guild.id})
+    first = []
+    second = []
+    third = [] 
+    fourth = []
+    fifth = []
+    sixth = []
+    seventh = [] 
+    eighth = []
+    ninth = []
+    tenth = []
+
     for data in server:
         if data["level_system"] != "NO":
             ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
+        
             i = 1
-            embed = discord.Embed(
-                title="เเรงค์เลเวลในเซิฟเวอร์",
-                colour=0x00FFFF
-            )
             for data in ranking:
                 try:
                     member =ctx.guild.get_member(data["user_id"])
                     memberlvl = data["level"]
-                    embed.add_field(name=f"อันดับ{i}: {member.name}",value=f"เลเวล: {memberlvl}", inline=False)
-                    i += 1
+                    member = member.name
+                    if i == 1:
+                        first.append(i)
+                        first.append(member)
+                        first.append(memberlvl)
+                    
+                    if i == 2:
+                        second.append(i)
+                        second.append(member)
+                        second.append(memberlvl)
+                    
+                    if i == 3:
+                        third.append(i)
+                        third.append(member)
+                        third.append(memberlvl)
+                    
+                    if i == 4:
+                        fourth.append(i)
+                        fourth.append(member)
+                        fourth.append(memberlvl)
+                    
+                    if i == 5:
+                        fifth.append(i)
+                        fifth.append(member)
+                        fifth.append(memberlvl)
+                    
+                    if i == 6:
+                        sixth.append(i)
+                        sixth.append(member)
+                        sixth.append(memberlvl)
+                    
+                    if i == 7:
+                        seventh.append(i)
+                        seventh.append(member)
+                        seventh.append(memberlvl)
+
+                    if i == 8:
+                        eighth.append(i)
+                        eighth.append(member)
+                        eighth.append(memberlvl)
+                    
+                    if i == 9:
+                        ninth.append(i)
+                        ninth.append(member)
+                        ninth.append(memberlvl)
+                    
+                    if i == 10:
+                        tenth.append(i)
+                        tenth.append(member)
+                        tenth.append(memberlvl)
+                    
+                    i = i + 1 
+
                 except:
                     pass
-                if i == 11:
-                    break
+            if i == 11:
+                break
+            
+            description = f"""```py
+-----------------------------
+อันดับ {first[0]} : {first[1]}
+เลเวล :{first[2]}
+-----------------------------
+อันดับ {second[0]} : {second[1]}
+เลเวล :{second[2]}
+-----------------------------
+อันดับ {third[0]} : {third[1]}
+เลเวล :{third[2]}
+-----------------------------
+อันดับ {fourth[0]} : {fourth[1]}
+เลเวล :{fourth[2]}
+-----------------------------
+อันดับ {fifth[0]} : {fifth[1]}
+เลเวล :{fifth[2]}
+-----------------------------
+อันดับ {sixth[0]} : {sixth[1]}
+เลเวล :{sixth[2]}
+-----------------------------
+อันดับ {seventh[0]} : {seventh[1]}
+เลเวล :{seventh[2]}
+-----------------------------
+อันดับ {eighth[0]} : {eighth[1]}
+เลเวล :{eighth[2]}
+-----------------------------
+อันดับ {ninth[0]} : {ninth[1]}
+เลเวล :{ninth[2]}
+-----------------------------
+อันดับ {tenth[0]} : {tenth[1]}
+เลเวล :{tenth[2]}```"""
+            
+            embed = discord.Embed(
+                title="เเรงค์เลเวลในเซิฟเวอร์",
+                colour=0x00FFFF,
+                description = description
+            )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
             message = await ctx.send(embed=embed)
             await message.add_reaction('✅')
         
@@ -6677,14 +6789,14 @@ async def pay(ctx ,amount : int , member: discord.Member = None):
 
                                 collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":usernew_bank}})
                                 collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank}})
-                            embed = discord.Embed(
-                                title = f"โอนเงินสําเร็จ",
-                                description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
-                                colour = 0xB9E7A5
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸')
+                                embed = discord.Embed(
+                                    title = f"โอนเงินสําเร็จ",
+                                    description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
+                                    colour = 0xB9E7A5
+                                )
+                                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                message  = await ctx.send(embed=embed)
+                                await message.add_reaction('💸')
 
                         else:
                             embed = discord.Embed(
@@ -6967,6 +7079,88 @@ async def setcurrency_error(ctx, error):
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️') 
 
+@client.command()
+async def beg(ctx , member: discord.Member):
+    guild = collection.find_one({"guild_id":ctx.guild.id})
+    if not guild is None:
+        status = collection.find({"guild_id":ctx.guild.id})
+        for data in status:
+            currency = data["currency"]
+            if data["economy_system"] == "YES":
+                user = collectionmoney.find_one({"user_id":ctx.author.id})
+                if user is None:
+                    embed = discord.Embed(
+                        title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')
+                    
+                else:
+                    usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    for data in usermoney:
+                        usernew_bank = data["bank"] - amount
+                    
+                    if data["bank"] >= amount:
+                        receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if receiver is None:
+                            embed = discord.Embed(
+                                title = f"{member.name} ยังไม่มีบัญชี",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                        
+                        else:
+                            receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in receivermoney:
+                                receivernew_bank = data["bank"] + amount
+
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":usernew_bank}})
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank}})
+                            embed = discord.Embed(
+                                title = f"โอนเงินสําเร็จ",
+                                description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+
+                    else:
+                        embed = discord.Embed(
+                            title = "จํานวนเงินในธนาคารไม่พอ",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')    
+            
+            else:
+                embed = discord.Embed(
+                    title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                    colour = 0x983925
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')       
+                    
+        else:
+            embed = discord.Embed(
+                title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                colour = 0x983925
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message  = await ctx.send(embed=embed)
+            await message.add_reaction('💸')
+
 @client.command(aliases =["vfy"])
 async def verify(ctx):
     guild = collection.find_one({"guild_id":ctx.guild.id})
@@ -7093,11 +7287,223 @@ async def verify(ctx):
         )   
         await ctx.send(embed=embed)
 
-@client.command()
-async def beg(ctx):
-    print("beg")
-    print(ctx.channel.id)
+@client.group(invoke_without_command=True)
+async def verifyrole(ctx):
+    embed = discord.Embed(
+        colour = 0x00FFFF,
+        description = "ต้องระบุ give / remove"
+    )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('✅')
+
+@verifyrole.command(aliases=['give'])
+@commands.has_permissions(administrator=True)
+async def _give(ctx, role: discord.Role):
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        "economy_system":"NO",
+        "currency":"$",
+        "verification_system":"NO",
+        "verification_channel_id":"None",
+        "verification_role_give_id":"None",
+        "verification_role_remove_id":"None"
+        }
+        collection.insert_one(newserver)
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["verification_role_give_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    
+    else:
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["verification_role_give_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+@_give.error
+async def verifygive_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@verifyrole.command(aliases=['remove'])
+@commands.has_permissions(administrator=True)
+async def _remove(ctx, role: discord.Role):
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_boarder":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        "economy_system":"NO",
+        "currency":"$",
+        "verification_system":"NO",
+        "verification_channel_id":"None",
+        "verification_role_give_id":"None",
+        "verification_role_remove_id":"None"
+        }
+        collection.insert_one(newserver)
+        results = collection.find_one({"guild_id":ctx.guild.id})
+        print(results)
+        for data in results:
+            if data["introduce_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+    
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["introduce_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+        
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+@_remove.error
+async def verifyremove_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.command()
 async def test(ctx):
