@@ -110,7 +110,7 @@ def clearcmd():
     else:
         os.system("clear")
 
-#I don't even know what is this but if it work it work
+
 intents = discord.Intents.default()
 intents.members = True
 client = discord.Client()
@@ -118,10 +118,12 @@ client = commands.Bot(command_prefix = COMMAND_PREFIX,  case_insensitive=True ,i
 start_time = datetime.datetime.utcnow()
 client.remove_command('help')
 cluster = MongoClient(mongodb)
+
 db = cluster["Smilewin"]
 collection = db["Data"]
 collectionlevel = db["Level"]
 collectionmoney = db["Money"]
+collectionlanguage = db["Language"]
 
 print(ASCII_ART)
 print("BOT STATUS : OFFLINE")
@@ -133,6 +135,7 @@ async def on_ready():
     clearcmd()
     print(ASCII_ART)
     print(f"BOT NAME : {client.user}")
+    print(f"BOT ID : {client.user.id}")
     print("BOT STATUS : ONLINE")
     print("SERVER : " + str(len(client.guilds)))
     print("")
@@ -140,711 +143,1854 @@ async def on_ready():
     print("")
 
 @client.group(invoke_without_command=True)
-async def setrole(ctx):
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        description = "ต้องระบุ give / remove"
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+async def setlanguage(ctx):
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            description = "specify language / ต้องระบุภาษา : thai / english"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+@setlanguage.command()
+@commands.has_permissions(administrator=True)
+async def thai(ctx):
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "Language":"Thai"
+        }
+
+        collectionlanguage.insert_one(newserver)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าภาษา",
+            description= f"ภาษาได้ถูกตั้งเป็น Thai"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+    
+    else:
+        collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"Thai"}})
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าภาษา",
+            description= f"ภาษาได้ถูกอัพเดตเป็น Thai"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+@setlanguage.command()
+@commands.has_permissions(administrator=True)
+async def english(ctx):
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "Language":"English"
+        }
+
+        collectionlanguage.insert_one(newserver)
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าภาษา",
+            description= f"ภาษาได้ถูกตั้งเป็น English"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+    
+    else:
+        collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"English"}})
+        embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าภาษา",
+            description= f"ภาษาได้ถูกอัพเดตเป็น English"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('✅')
+
+@client.group(invoke_without_command=True)
+async def setrole(ctx):
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "คุณต้องระบุ give / remove"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+        
+        else:
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "you need to specify give / remove"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
 
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def give(ctx, role: discord.Role):
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find_one({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_role_give_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
-        results = collection.find_one({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_role_give_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-                    description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        if server_language == "Thai": 
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_give_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
         
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                            description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
-                    description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_give_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                            description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                            description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English": 
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_give_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "role to give after member introduce themself",
+                            description= f"role to give after member introduce themself have been set to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to give after member introduce themself",
+                            description= f"role to give after member introduce themself have been updated to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
+            else:
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_give_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "role to give after member introduce themself",
+                            description= f"role to give after member introduce themself have been set to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to give after member introduce themself",
+                            description= f"role to give after member introduce themself have been updated to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 @give.error
 async def give_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+    
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
 
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
-            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
+                description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
+                    description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a role to give after a member introduce themself",
+                    description = f" ⚠️``{ctx.author}`` need to specify a role to give after a member introduce themself ``{COMMAND_PREFIX}setrole give @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @setrole.command()
 @commands.has_permissions(administrator=True)
 async def remove(ctx, role: discord.Role):
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find_one({"guild_id":ctx.guild.id})
-        print(results)
-        for data in results:
-            if data["introduce_role_remove_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
-                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
-                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_role_remove_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
-                    description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        if server_language == "Thai":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+            }
+                collection.insert_one(newserver)
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_remove_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                            description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
         
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                            description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
-                    description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_remove_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                            description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
         
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                            description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+            }
+                collection.insert_one(newserver)
+                results = collection.find_one({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_remove_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to remove after member introduce themself",
+                            description= f"role to remove after member introduce themself have been set to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to remove after member introduce themself",
+                            description= f"role to remove after member introduce themself have been updated to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
+            else:
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_role_remove_id"] == "None": 
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to remove after member introduce themself",
+                            description= f"role to remove after member introduce themself have been set to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "role to remove after member introduce themself",
+                            description= f"role to remove after member introduce themself have been updated to {role.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
 @remove.error
 async def remove_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
-            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
+                description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+        
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
+                    description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a role to remove after a member introduce themself",
+                    description = f" ⚠️``{ctx.author}`` need to specify a role to give after a member introduce themself ``{COMMAND_PREFIX}setrole give @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setintroduce(ctx, channel:discord.TextChannel):
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_channel_id"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                    )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
     else:
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_channel_id"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title= "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "channel for introduction",
+                            description= f"Channel have been set to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "channel for introduction",
+                            description= f"Channel have been updated to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+            else:
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "channel for introduction",
+                            description= f"Channel have been set to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title= "channel for introduction",
+                            description= f"Channel have been updated to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 @setintroduce.error
 async def setintroduce_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ระบุห้องที่จะตั้ง",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{COMMAND_PREFIX}setintroduce #channel``"
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุห้องที่จะตั้ง",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{COMMAND_PREFIX}setintroduce #channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a channel",
+                    description = f" ⚠️``{ctx.author}`` need to specify a channel ``{COMMAND_PREFIX}setintroduce #channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
 @client.command()
 @commands.has_permissions(administrator=True)
-async def setboarder(ctx, *,boarder):
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_boarder"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่ากรอบเเนะนําตัว",
-                    description= f"กรอบได้ถูกตั้งเป็น {boarder}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่ากรอบเเนะนําตัว",
-                    description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-
-    else:
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_boarder"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
-                embed = discord.Embed(
-                colour= 0x00FFFF,
-                title = "ตั้งค่ากรอบเเนะนําตัว",
-                description= f"กรอบได้ถูกตั้งเป็น {boarder}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_boarder":boarder}})
-                embed = discord.Embed(
-                colour= 0x00FFFF,
-                title = "ตั้งค่ากรอบเเนะนําตัว",
-                description= f"กรอบได้ถูกอัพเดตเป็น {boarder}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-
-@setboarder.error
-async def setboarder_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
+async def setframe(ctx, *,frame):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
-
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        if server_language == "Thai": 
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_frame"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ากรอบเเนะนําตัว",
+                            description= f"กรอบได้ถูกตั้งเป็น {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ากรอบเเนะนําตัว",
+                            description= f"กรอบได้ถูกอัพเดตเป็น {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+            else:
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_frame"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ากรอบเเนะนําตัว",
+                            description= f"กรอบได้ถูกตั้งเป็น {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่ากรอบเเนะนําตัว",
+                            description= f"กรอบได้ถูกอัพเดตเป็น {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English": 
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_frame"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "set frame",
+                            description= f"frame have been set to {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "set frame",
+                            description= f"frame have been updated to {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+            else:
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_frame"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "set frame",
+                            description= f"frame have been set to {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "set frame",
+                            description= f"frame have been updated to {frame}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+@setframe.error
+async def setframe_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+        
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ระบุกรอบที่จะตั้ง",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุกรอบที่จะตั้ง ``{COMMAND_PREFIX}setframe (frame)``"
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+        
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุกรอบที่จะตั้ง",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุกรอบที่จะตั้ง ``{COMMAND_PREFIX}setframe (frame)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a frame",
+                    description = f" ⚠️``{ctx.author}`` need to specify a frame ``{COMMAND_PREFIX}setframe (frame)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.group(invoke_without_command=True)
 async def introduce(ctx):
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        description = "ต้องระบุ ON / OFF"
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "คุณต้องระบุ ON / OFF"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "you need to specify ON / OFF"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
 
 @introduce.command()
 @commands.has_permissions(administrator=True)
 async def on(ctx):
-    status = "YES"
-     
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
     else:
-        status = "YES"
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_channel_id"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+            status = "YES"
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเเนะนําตัว",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                status = "YES"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเเนะนําตัว",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเเนะนําตัว",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+
+            status = "YES"
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+            else:
+                status = "YES"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
 @on.error
 async def on_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
     
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
 @introduce.command()
 @commands.has_permissions(administrator=True)
 async def off(ctx):
-    status = "NO"
-     
-    server = collection.find({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
     else:
-        status = "NO"
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_channel_id"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            status = "NO"
+            server = collection.find({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องเเนะนําตัว",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                status = "NO"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องเเนะนําตัว",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+            status = "NO"
+            server = collection.find({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+            else:
+                status = "NO"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
 @off.error
 async def off_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+
+        else:
+            language = collectionlanguage.find({"guild_id":ctx.guild.id})
+            for data in language:
+                server_language = data["Language"]
+            
+            if server_language == "Thai":
+                if isinstance(error, commands.MissingPermissions):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                        description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                    )
+
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+        
+            if server_language == "English":
+                if isinstance(error, commands.MissingPermissions):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "You don't have permission",
+                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                    )
+
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwebhook(ctx , channel:discord.TextChannel):
     webhook = await channel.create_webhook(name='Smilewinbot')
     webhook = webhook.url
-     
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_boarder":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["webhook_url"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["introduce_channel_id"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_url"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_url"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "room to talk to a stranger",
+                            description= f"channel have been set to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "room to talk to a stranger",
+                            description= f"channel have been updated to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+    
+            else:
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["introduce_channel_id"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "room to talk to a stranger",
+                            description= f"channel have been set to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "room to talk to a stranger",
+                            description= f"channel have been updated to {channel.mention}"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 @setwebhook.error
 async def setwebhook_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ระบุห้องที่จะตั้ง",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{COMMAND_PREFIX}setwebhook #text-channel``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ระบุห้องที่จะตั้ง",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{COMMAND_PREFIX}setwebhook #text-channel``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
 
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุห้องที่จะตั้ง",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{COMMAND_PREFIX}setwebhook #text-channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a channel",
+                    description = f" ⚠️``{ctx.author}`` need to specify a channel ``{COMMAND_PREFIX}setwebhook #channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.group(invoke_without_command=True)
 @commands.has_permissions(administrator=True)
@@ -886,7 +2032,7 @@ async def _on(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -953,7 +2099,7 @@ async def _on(ctx):
                 await message.add_reaction('✅')
 
 @_on.error
-async def _on_error(ctx, error):
+async def chaton_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
@@ -980,7 +2126,7 @@ async def _off(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -1047,7 +2193,7 @@ async def _off(ctx):
                 await message.add_reaction('✅')
 
 @_off.error
-async def _off_error(ctx, error):
+async def chatoff_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
@@ -1073,7 +2219,7 @@ async def setwelcome(ctx , channel:discord.TextChannel):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -1178,7 +2324,7 @@ async def setleave(ctx , channel:discord.TextChannel):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -1291,7 +2437,6 @@ async def clear(ctx, amount : int):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-        print(f"{ctx.author} try to clear {amount} of messages but it is more than 2000")
 
 @clear.error
 async def clear_error(ctx, error):
@@ -1306,7 +2451,6 @@ async def clear_error(ctx, error):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-        print(f"{ctx.author} try to clear message but is missing argument")
 
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
@@ -1319,7 +2463,6 @@ async def clear_error(ctx, error):
 
         message = await ctx.send(embed=embed ) 
         await message.add_reaction('⚠️')
-        print(f"{ctx.author} try to clear message but is missing permission")
 
 @client.event
 async def on_member_join(member):
@@ -2207,260 +3350,404 @@ async def covid19th(ctx):
 
 @client.command()
 async def help(ctx):
-    embed=discord.Embed(
-        title='คำสั่งสำหรับใช้งานบอท',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คำสั่งสำหรับใช้งานบอท',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
 
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpfun``',value='คําสั่งบรรเทิง' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpeconomy``',value='คําสั่งเกี่ยวกับระบบเศรษฐกิจ' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpuser``',value='คําสั่งข้อมูลของสมาชิกเช่น เลเวล' , inline = False)
-    embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = False)
-    embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpfun``',value='คําสั่งบรรเทิง' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpeconomy``',value='คําสั่งเกี่ยวกับระบบเศรษฐกิจ' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpuser``',value='คําสั่งข้อมูลของสมาชิกเช่น เลเวล' , inline = False)
+        embed.add_field(name=f'``{COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = False)
+        embed.set_thumbnail(url='https://i.imgur.com/rPfYXGs.png')
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpeconomy(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}openbal``', value = 'เปิดบัญชีธนาคาร',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}bal (@member)``', value='ดูเงินของคุณหรือของสมาชิก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}deposit (amount)``', value ='ฝากเงินเข้าธนาคาร', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}withdraw (amount)``', value = 'ถอนเงินจากธนาคาร',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}pay @member``', value ='โอนเงินจากธนาคารให้สชาชิกในเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}slot (amount)``', value ='เล่นพนัน slot', inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}openbal``', value = 'เปิดบัญชีธนาคาร',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}bal (@member)``', value='ดูเงินของคุณหรือของสมาชิก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}deposit (amount)``', value ='ฝากเงินเข้าธนาคาร', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}withdraw (amount)``', value = 'ถอนเงินจากธนาคาร',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}pay @member``', value ='โอนเงินจากธนาคารให้สชาชิกในเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}slot (amount)``', value ='เล่นพนัน slot', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}rob @member``', value ='ขโมยเงินจากสมาชิก', inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpbot(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับตัวบอท',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}test``', value = 'ดูว่าบอทonline ไหม',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
-    embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
-    embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}support (text)``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับตัวบอท',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}test``', value = 'ดูว่าบอทonline ไหม',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
+        embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
+        embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}support (text)``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpuser(ctx):
-    embed=discord.Embed(
-        title='คําสั่งข้อมูลของสมาชิก',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}rank @member``', value = 'เช็คเเรงค์ของคุณหรือสมาชิก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}vfy``', value='ยืนยันตัวตนโดย captcha', inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งข้อมูลของสมาชิก',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}rank @member``', value = 'เช็คเเรงค์ของคุณหรือสมาชิก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}vfy``', value='ยืนยันตัวตนโดย captcha', inline = True)
 
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpsetup(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับตั้งค่า',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยที่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}setboarder``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}economy on/off``', value ='เปิด / ปิดการใช้งานระบบเศรษฐกิจ', inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับตั้งค่า',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยที่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}setframe``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}economy on/off``', value ='เปิด / ปิดการใช้งานระบบเศรษฐกิจ', inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpgame(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับเกม',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}roll``', value='ทอยลูกเต๋า', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับเกม',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}roll``', value='ทอยลูกเต๋า', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpinfo(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับข้อมูล',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
-    embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับข้อมูล',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}rule``',value='กฎของเซิฟ smilewin',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpadmin(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวเเอดมิน',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวเเอดมิน',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}dmall (ข้อความ)``', value = 'ส่งข้อความให้ทุกคนในเซิฟผ่านบอท',inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}dm @member``' ,value = 'ส่งข้อความหาสมาชิกโดยผ่านบอท', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpfun(ctx):
-    embed=discord.Embed(
-        title='คําสั่งบรรเทิง',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งบรรเทิง',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+        )
+        embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpgeneral(ctx):
-    embed=discord.Embed(
-        title='คําสั่งทั่วไป',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}calculator a (symbol) b``', value= 'คํานวน + - * / ^ ', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งทั่วไป',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}calculator a (symbol) b``', value= 'คํานวน + - * / ^ ', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpimage(ctx):
-    embed=discord.Embed(
-        title='คําสั่งเกี่ยวกับรูป',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
-        )
-    embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
-    embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งเกี่ยวกับรูป',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
+        embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def helpnsfw(ctx):
-    embed=discord.Embed(
-        title='คําสั่งnsfw',
-        description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-        color=0x00FFFF   
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
-    embed.add_field(name=f"""
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        embed=discord.Embed(
+            title='คําสั่งnsfw',
+            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+            color=0x00FFFF   
+            )
+        embed.add_field(name=f"""
 
 ส่งรูปตาม catergory 
 
@@ -2490,9 +3777,9 @@ async def helpnsfw(ctx):
 
 """, value= "บางคําสั่ง18+")
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
 @client.command()
 async def covid19(ctx):
@@ -4980,8 +6267,8 @@ async def introduction(ctx):
     results = collection.find({"guild_id":ctx.guild.id})
     for data in results:
         if data["introduce_status"] == "YES":
-            if data["introduce_boarder"] == "None":
-                boarder = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+            if data["introduce_frame"] == "None":
+                frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
 
                 if data["introduce_channel_id"] == "None":
                     try:
@@ -5038,11 +6325,11 @@ async def introduction(ctx):
                     embed = discord.Embed(
                         colour = 0x00FFFF,
                         description = (f"""```
-{boarder}
+{frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-{boarder}```""")
+{frame}```""")
             )
                     embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
                     embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
@@ -5130,11 +6417,11 @@ async def introduction(ctx):
                     embed = discord.Embed(
                         colour = 0x00FFFF,
                         description = (f"""```
-{boarder}
+{frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-{boarder}```""")
+{frame}```""")
             )
                     embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
                     embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
@@ -5147,7 +6434,7 @@ async def introduction(ctx):
                 
             
             else:
-                boarder = data["introduce_boarder"]
+                frame = data["introduce_frame"]
 
                 if data["introduce_channel_id"] == "None":
                     try:
@@ -5204,11 +6491,11 @@ async def introduction(ctx):
                     embed = discord.Embed(
                         colour = 0x00FFFF,
                         description = (f"""```
-{boarder}
+{frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-{boarder}```""")
+{frame}```""")
             )
                     embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
                     embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
@@ -5296,11 +6583,11 @@ async def introduction(ctx):
                     embed = discord.Embed(
                         colour = 0x00FFFF,
                         description = (f"""```
-{boarder}
+{frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
-{boarder}```""")
+{frame}```""")
             )
                     embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
                     embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
@@ -5353,7 +6640,7 @@ async def setup(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -5639,7 +6926,7 @@ async def rank(ctx , member : discord.Member=None):
                             break
                 
                     embed = discord.Embed(
-                        title = f"เลเวลของ {ctx.author.name}"
+                        title = f"เลเวลของ {member.name}"
                         )
                     embed.add_field(name = "ชื่อ",value= f"{member.name}",inline=True)
                     embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
@@ -5834,7 +7121,7 @@ async def __on(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -5928,7 +7215,7 @@ async def __off(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -6122,7 +7409,7 @@ async def ____on(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -6216,7 +7503,7 @@ async def ____off(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -6972,7 +8259,7 @@ async def a78JR8hAqR7wuQBaF(ctx):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -7080,7 +8367,7 @@ async def setcurrency_error(ctx, error):
         await message.add_reaction('⚠️') 
 
 @client.command()
-async def beg(ctx , member: discord.Member):
+async def rob(ctx , member: discord.Member):
     guild = collection.find_one({"guild_id":ctx.guild.id})
     if not guild is None:
         status = collection.find({"guild_id":ctx.guild.id})
@@ -7101,46 +8388,69 @@ async def beg(ctx , member: discord.Member):
                 else:
                     usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                     for data in usermoney:
-                        usernew_bank = data["bank"] - amount
-                    
-                    if data["bank"] >= amount:
-                        receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
-                        if receiver is None:
-                            embed = discord.Embed(
-                                title = f"{member.name} ยังไม่มีบัญชี",
-                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
-                                colour = 0x983925
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸')
-                        
-                        else:
-                            receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
-                            for data in receivermoney:
-                                receivernew_bank = data["bank"] + amount
-
-                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"bank":usernew_bank}})
-                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank}})
-                            embed = discord.Embed(
-                                title = f"โอนเงินสําเร็จ",
-                                description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
-                                colour = 0xB9E7A5
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸')
-
-                    else:
+                        user_wallet = data["wallet"] 
+ 
+                    taking = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                    if taking is None:
                         embed = discord.Embed(
-                            title = "จํานวนเงินในธนาคารไม่พอ",
-                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                            title = f"{member.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour = 0x983925
-                            )
+                        )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸')    
-            
+                        await message.add_reaction('💸')
+                        
+                    else:
+                        takingmoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                        for data in takingmoney:
+                            victimwallet = data["wallet"] 
+
+                        if victimwallet > 0:
+                            percent = (random.randint(1,101))
+                            if percent >= 80:
+                                percentmoney = (random.randint(60,101))
+                                stolen = (victimwallet * (percentmoney/100))
+                                stolen = round(stolen)
+                                victimnew_wallet = victimwallet - stolen
+                                stolernew_wallet = user_wallet + stolen
+                                collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":stolernew_wallet}})
+                                collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"wallet":victimnew_wallet}})
+                                embed = discord.Embed(
+                                    title = f"ขโมยเงินจาก {member.name}",
+                                    description = f"ขโมยเงินได้จํานวน {stolen} {currency}",
+                                    colour = 0x00FFFF
+
+                                )
+                                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                message  = await ctx.send(embed=embed)
+                                await message.add_reaction('💸')  
+ 
+                            else:
+                                reason = ["วิ่งหนีทัน","ไหวตัวทัน","วิ่งเร็วโครต","มีไหวพริบดี","รู้ตัวว่าจะโดนปล้น"]
+                                num = (random.randint(0,4))
+                                randomreason = reason[num]
+                                embed = discord.Embed(
+                                    title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
+                                    description = f"เพราะว่า {member.name} {randomreason}",
+                                    colour = 0x983925
+
+                                )
+                                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                message  = await ctx.send(embed=embed)
+                                await message.add_reaction('💸') 
+
+                        else:
+                            embed = discord.Embed(
+                                title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
+                                description = f"เพราะว่า {member.name} ไม่มีเงินในกระเป๋าตังสักบาท",
+                                colour = 0x983925
+
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸') 
+
             else:
                 embed = discord.Embed(
                     title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
@@ -7310,7 +8620,7 @@ async def _give(ctx, role: discord.Role):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -7329,7 +8639,7 @@ async def _give(ctx, role: discord.Role):
                 collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    title = "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                     description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7341,7 +8651,7 @@ async def _give(ctx, role: discord.Role):
                 collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                     description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7356,7 +8666,7 @@ async def _give(ctx, role: discord.Role):
                 collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    title = "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                     description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7368,7 +8678,7 @@ async def _give(ctx, role: discord.Role):
                 collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                     description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7393,8 +8703,8 @@ async def verifygive_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
-            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
+            title = "ระบุยศที่จะให้หลังจากยืนยันตัวตน",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากยืนยันตัวตน ``{COMMAND_PREFIX}setrole give @role``"
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -7413,7 +8723,7 @@ async def _remove(ctx, role: discord.Role):
         "webhook_channel_id":"None",
         "webhook_status":"None",
         "introduce_channel_id":"None",
-        "introduce_boarder":"None",
+        "introduce_frame":"None",
         "introduce_role_give_id":"None",
         "introduce_role_remove_id":"None",
         "introduce_status":"YES",
@@ -7429,11 +8739,11 @@ async def _remove(ctx, role: discord.Role):
         results = collection.find_one({"guild_id":ctx.guild.id})
         print(results)
         for data in results:
-            if data["introduce_role_remove_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+            if data["verification_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                     description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7442,10 +8752,10 @@ async def _remove(ctx, role: discord.Role):
                 await message.add_reaction('✅')
         
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                     description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7456,11 +8766,11 @@ async def _remove(ctx, role: discord.Role):
     else:
         results = collection.find({"guild_id":ctx.guild.id})
         for data in results:
-            if data["introduce_role_remove_id"] == "None": 
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+            if data["verification_role_remove_id"] == "None": 
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                     description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7469,10 +8779,10 @@ async def _remove(ctx, role: discord.Role):
                 await message.add_reaction('✅')
         
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                 embed = discord.Embed(
                     colour= 0x00FFFF,
-                    title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
+                    title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                     description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -7497,9 +8807,114 @@ async def verifyremove_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
-            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
+            title = "ระบุยศที่จะลบหลังจากยืนยันตัวตน",
+            description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากยืนยันตัวตน ``{COMMAND_PREFIX}setrole remove @role``"
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def setverify(ctx , channel:discord.TextChannel):
+     
+    server = collection.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        newserver = {"guild_id":ctx.guild.id,
+        "welcome_id":"None",
+        "leave_id":"None",
+        "webhook_url":"None",
+        "webhook_channel_id":"None",
+        "webhook_status":"None",
+        "introduce_channel_id":"None",
+        "introduce_frame":"None",
+        "introduce_role_give_id":"None",
+        "introduce_role_remove_id":"None",
+        "introduce_status":"YES",
+        "level_system":"NO",
+        "economy_system":"NO",
+        "currency":"$",
+        "verification_system":"NO",
+        "verification_channel_id":"None",
+        "verification_role_give_id":"None",
+        "verification_role_remove_id":"None"
+        }
+        collection.insert_one(newserver)
+    results = collection.find({"guild_id":ctx.guild.id})
+    for data in results:
+        if data["verification_channel_id"] == "None":
+            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+
+            embed = discord.Embed(
+            colour= 0x00FFFF,
+            title = "ตั้งค่าห้องยืนยันตัวตน",
+            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+        )
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+        else:
+            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+
+            embed = discord.Embed(
+            colour= 0x00FFFF,
+            title= "ตั้งค่าห้องยืนยันตัวตน",
+            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+        )
+        
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+    else:
+        results = collection.find({"guild_id":ctx.guild.id})
+        for data in results:
+            if data["verification_channel_id"] == "None":
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title = "ตั้งค่าห้องยืนยันตัวตน",
+                description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+            )
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+
+                embed = discord.Embed(
+                colour= 0x00FFFF,
+                title= "ตั้งค่าห้องยืนยันตัวตน",
+                description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+            )
+        
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')         
+
+@setverify.error
+async def setverify_error(ctx, error):
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "ตั้งค่าห้องยืนยันตัวตน",
+            description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือน ``{COMMAND_PREFIX}setverify #text-channel``"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+        )
+
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed ) 
