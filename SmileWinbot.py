@@ -220,6 +220,7 @@ async def english(ctx):
         await message.add_reaction('✅')
 
 @client.group(invoke_without_command=True)
+@commands.has_permissions(administrator=True)
 async def setrole(ctx):
     server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if server is None:
@@ -256,6 +257,53 @@ async def setrole(ctx):
 
             message = await ctx.send(embed=embed)
             await message.add_reaction('✅')
+
+@setrole.error
+async def setrole_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')         
 
 @setrole.command()
 @commands.has_permissions(administrator=True)
@@ -687,7 +735,7 @@ async def remove_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -716,7 +764,7 @@ async def remove_error(ctx, error):
             if isinstance(error, commands.MissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
                     description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
                 )
 
@@ -939,7 +987,7 @@ async def setintroduce_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -967,7 +1015,7 @@ async def setintroduce_error(ctx, error):
             if isinstance(error, commands.MissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
                     description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
                 )
 
@@ -1191,7 +1239,7 @@ async def setframe_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -1220,7 +1268,7 @@ async def setframe_error(ctx, error):
             if isinstance(error, commands.MissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
                     description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
                 )
 
@@ -1483,7 +1531,7 @@ async def on_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -1699,7 +1747,7 @@ async def off_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -1930,7 +1978,7 @@ async def setwebhook_error(ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = discord.Embed(
                 colour = 0x983925,
-                title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
             )
 
@@ -1959,7 +2007,7 @@ async def setwebhook_error(ctx, error):
             if isinstance(error, commands.MissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
                     description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
                 )
 
@@ -1995,216 +2043,534 @@ async def setwebhook_error(ctx, error):
 @client.group(invoke_without_command=True)
 @commands.has_permissions(administrator=True)
 async def chat(ctx):
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        description = "ต้องระบุ ON / OFF"
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "ต้องระบุ on / off"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "you need to specify on / off"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
 
 @chat.error
 async def chat_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @chat.command(aliases=['on'])
 @commands.has_permissions(administrator=True)
 async def _on(ctx):
-    status = "YES"
-     
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_frame":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["webhook_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
     else:
-        status = "YES"
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["webhook_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            status = "YES"
+     
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                status = "YES"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+        if server_language == "English":
+            status = "YES"
+     
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+            else:
+                status = "YES"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been activated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
 @_on.error
 async def chaton_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @chat.command(aliases=['off'])
 @commands.has_permissions(administrator=True)
 async def _off(ctx):
-    status = "NO"
-     
-    server = collection.find_one({"guild_id":ctx.guild.id})
-    if server is None:
-        newserver = {"guild_id":ctx.guild.id,
-        "welcome_id":"None",
-        "leave_id":"None",
-        "webhook_url":"None",
-        "webhook_channel_id":"None",
-        "webhook_status":"None",
-        "introduce_channel_id":"None",
-        "introduce_frame":"None",
-        "introduce_role_give_id":"None",
-        "introduce_role_remove_id":"None",
-        "introduce_status":"YES",
-        "level_system":"NO",
-        "economy_system":"NO",
-        "currency":"$",
-        "verification_system":"NO",
-        "verification_channel_id":"None",
-        "verification_role_give_id":"None",
-        "verification_role_remove_id":"None"
-        }
-        collection.insert_one(newserver)
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["webhook_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                    )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
-        
-            else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
     else:
-        status = "NO"
-        results = collection.find({"guild_id":ctx.guild.id})
-        for data in results:
-            if data["webhook_status"] == "None":
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+        if server_language == "Thai":
+            status = "NO"
 
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
             else:
-                collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                embed = discord.Embed(
-                    colour= 0x00FFFF,
-                    title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                    description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                status = "NO"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('✅')
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
+                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+     
+        if server_language == "English":
+            status = "NO"
+     
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+        
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+            else:
+                status = "NO"
+                results = collection.find({"guild_id":ctx.guild.id})
+                for data in results:
+                    if data["webhook_status"] == "None":
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "Anonymous chat",
+                            description= f"The command have been deactivated"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
 @_off.error
 async def chatoff_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -2302,7 +2668,7 @@ async def setwelcome_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            title = "คุณไม่มีสิทธิ์ตั้งค่าห้อง",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -2407,7 +2773,7 @@ async def setleave_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            title = "คุณไม่มีสิทธิ์ตั้งค่าห้อง",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -2553,6 +2919,10 @@ async def on_guild_join(guild):
             print(f"Bot have joined a new server {guild.name}")
 
         break
+
+@client.event
+async def on_guild_remove(guild):
+    print(f"Bot have left {guild.name}")
 
 @client.event
 async def on_command_error(ctx, error):
@@ -7098,7 +7468,7 @@ async def level_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -7192,7 +7562,7 @@ async def levelon_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -7286,7 +7656,7 @@ async def leveloff_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -7480,7 +7850,7 @@ async def economyon_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -7574,7 +7944,7 @@ async def economyoff_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -8691,7 +9061,7 @@ async def verifygive_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -8795,7 +9165,7 @@ async def verifyremove_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่า",
+            title = "คุณไม่มีสิทธิ์ตั้งค่า",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
@@ -8911,7 +9281,7 @@ async def setverify_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "คุณจำไม่มีสิทธิ์ตั้งค่าห้อง",
+            title = "คุณไม่มีสิทธิ์ตั้งค่าห้อง",
             description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
         )
 
