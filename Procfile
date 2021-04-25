@@ -1,1 +1,1 @@
-worker: python SmileWinbot.p
+worker: python SmileWinbot.py
