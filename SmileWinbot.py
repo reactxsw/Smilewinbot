@@ -6114,17 +6114,45 @@ async def covid19(ctx):
             
 
 @client.command()
-async def lmgtfy(ctx, *, message): 
-    r = urlencode({"q": message})
-    url = (f'<https://lmgtfy.com/?{r}>')
-    embed= discord.Embed(
-        colour =0x00FFFF,
-        title= f"ลิงค์ lmgtfy ของคุณ {ctx.author}",
-        description = f"{url}"
-    )
+async def lmgtfy(ctx, *, message):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        r = urlencode({"q": message})
+        url = (f'<https://lmgtfy.com/?{r}>')
+
+        if server_language == "Thai": 
+            embed= discord.Embed(
+                colour =0x00FFFF,
+                title= f"ลิงค์ lmgtfy ของคุณ {ctx.author}",
+                description = f"{url}"
+            )
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English": 
+            embed= discord.Embed(
+                colour =0x00FFFF,
+                title= f"lmgtfy link for {ctx.author}",
+                description = f"{url}"
+            )
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
     
 @lmgtfy.error
 async def lmgtfy_error(ctx, error):
@@ -6141,19 +6169,32 @@ async def lmgtfy_error(ctx, error):
     
 @client.command()
 async def tweet(ctx, username: str, *, message: str): 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"https://nekobot.xyz/api/imagegen?type=tweet&username={username}&text={message}") as r:
-            response = await r.json()
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "🕊️ Twitter generator"
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://nekobot.xyz/api/imagegen?type=tweet&username={username}&text={message}") as r:
+                response = await r.json()
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = "🕊️ Twitter generator"
 
 
-            )
-            embed.set_image(url=response["message"])
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👍')
+                )
+                embed.set_image(url=response["message"])
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
 
 @client.command()
 async def credit(ctx):
@@ -6517,15 +6558,66 @@ async def rps(ctx):
 @commands.has_permissions(administrator=True)
 
 async def movetome(ctx, member : discord.Member):
-    await member.move_to(channel=ctx.author.voice.channel)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = f"{member}ได้ถูกย้ายไปที่ห้องของ {ctx.author}"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('✅')
+        if server_language == "Thai": 
+            if ctx.author.voice and ctx.author.voice.channel:
+                await member.move_to(channel=ctx.author.voice.channel)
+
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"{member}ได้ถูกย้ายไปที่ห้องของ {ctx.author}"
+
+                )
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` คุณไม่ได้อยู่ในห้องคุย"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+        
+        if server_language == "English": 
+            if ctx.author.voice and ctx.author.voice.channel:
+                await member.move_to(channel=ctx.author.voice.channel)
+
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"{member}have been move to {ctx.author} voice chat"
+
+                )
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('✅')
+
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` You are not connected to voice chat"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 async def guildicon(ctx):
@@ -7103,372 +7195,648 @@ async def captcha_error(ctx, error):
         await message.add_reaction('⚠️')
  
 @client.command()
-async def anal(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/anal")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "Anal"
+async def anal(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/anal")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "Anal"
 
-@client.command()
-async def smallboob(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/smallboobs")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "smallboobs"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def gsolo(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/solog")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "Girl solo"
+async def smallboob(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/smallboobs")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "smallboobs"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def erofeet(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/erofeet")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "erofeet"
+async def gsolo(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/solog")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "Girl solo"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
+
+@client.command()
+async def erofeet(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/erofeet")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "erofeet"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
     
 @client.command()
-async def feet(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/feetg")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "feet"
+async def feet(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/feetg")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "feet"
 
-@client.command()
-async def pussy(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "pussy"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def hentai(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "hentai"
+async def pussy(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "pussy"
 
-@client.command()
-async def eroyuri(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/eroyuri")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "eroyuri"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def yuri(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/yuri")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "yuri"
+async def hentai(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "hentai"
 
-@client.command()
-async def solo(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/solo")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "solo"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def classic(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/classic")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "classic"
+async def eroyuri(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/eroyuri")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "eroyuri"
 
-@client.command()
-async def boobs(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/boobs")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "boobs"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def tits(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/tits")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "tits"
+async def yuri(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/yuri")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "yuri"
 
-@client.command()
-async def blowjob(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/blowjob")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "blowjob"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)   
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def lewd(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "lewd"
+async def solo(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}") 
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)  
-    await message.add_reaction('❤️') 
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/solo")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "solo"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
 
 @client.command()
-async def lesbian(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/les")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "lesbian"
+async def classic(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')   
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/classic")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "classic"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
+
+@client.command()
+async def boobs(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/boobs")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "boobs"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
+
+@client.command()
+async def tits(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/tits")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "tits"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
+
+@client.command()
+async def blowjob(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/blowjob")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "blowjob"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)   
+        await message.add_reaction('❤️')
+
+@client.command()
+async def lewd(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "lewd"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}") 
+
+        message = await ctx.send(embed=embed)  
+        await message.add_reaction('❤️') 
+
+@client.command()
+async def lesbian(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/les")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "lesbian"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')   
 
 @client.command()  
-async def feed(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/feed")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "feed"
+async def feed(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/feed")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "feed"
 
-@client.command()
-async def tickle(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/tickle")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "tickle"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
 
 @client.command()
-async def slap(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/slap")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "slap"
+async def tickle(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+    else:  
+        r = requests.get("https://nekos.life/api/v2/img/tickle")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "tickle"
 
-@client.command()
-async def hug(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/hug")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "hug"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
 
 @client.command()
-async def smug(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/smug")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "smug"
+async def slap(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+    else:  
+        r = requests.get("https://nekos.life/api/v2/img/slap")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "slap"
 
-@client.command()
-async def pat(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/pat")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "pat"
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
 
 @client.command()
-async def kiss(ctx): 
-    r = requests.get("https://nekos.life/api/v2/img/kiss")
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0xFC7EF5,
-        title = "kiss"
+async def hug(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    )   
-    url = r['url']
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)  
-    await message.add_reaction('❤️')
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/hug")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "hug"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
+
+@client.command()
+async def smug(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/smug")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "smug"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
+
+@client.command()
+async def pat(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/pat")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "pat"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('❤️')
+
+@client.command()
+async def kiss(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+        r = requests.get("https://nekos.life/api/v2/img/kiss")
+        r = r.json()
+        embed = discord.Embed(
+            colour = 0xFC7EF5,
+            title = "kiss"
+
+        )   
+        url = r['url']
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)  
+        await message.add_reaction('❤️')
 
 @client.command()
 async def botcode(ctx):
