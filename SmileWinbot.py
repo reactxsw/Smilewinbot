@@ -138,6 +138,7 @@ async def on_ready():
     print(f"BOT ID : {client.user.id}")
     print("BOT STATUS : ONLINE")
     print("SERVER : " + str(len(client.guilds)))
+    print("USER : " + str(len(client.users)))
     print("")
     print("CONSOLE : ")
     print("")
@@ -3388,40 +3389,44 @@ async def on_guild_remove(guild):
 
 @client.event
 async def on_command_error(ctx, error):
-    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
-    if languageserver is None:
+    try:
+        languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            pass
+
+        else:
+            language = collectionlanguage.find({"guild_id":ctx.guild.id})
+            for data in language:
+                server_language = data["Language"]
+            
+            if server_language == "Thai":
+                if isinstance(error, commands.CommandNotFound):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+
+                else:
+                    raise error
+            
+            if server_language == "English":
+                if isinstance(error, commands.CommandNotFound):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"⚠️ Command not found"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+
+                else:
+                    raise error
+    
+    except Exception:
         pass
-
-    else:
-        language = collectionlanguage.find({"guild_id":ctx.guild.id})
-        for data in language:
-            server_language = data["Language"]
-        
-        if server_language == "Thai":
-            if isinstance(error, commands.CommandNotFound):
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-
-            else:
-                raise error
-        
-        if server_language == "English":
-            if isinstance(error, commands.CommandNotFound):
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    title = f"⚠️ Command not found"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-
-            else:
-                raise error
 
 @client.command()
 async def membercount(ctx):
@@ -5253,7 +5258,7 @@ async def covid19th(ctx):
             embed.add_field(name='🏠 Total hospitalize',value=f"{hospital} คน")
             embed.add_field(name='🏠 New hospitalize',value=f"{hospitalnew} คน")
             embed.add_field(name='☠️ Total death',value=f"{death} คน")
-            embed.add_field(name='☠️ Net death',value=f"{newdeath} คน")
+            embed.add_field(name='☠️ New death',value=f"{newdeath} คน")
             embed.set_footer(text=f'''Source : {source}''')
 
             message= await ctx.send(embed=embed)
@@ -5581,7 +5586,7 @@ async def helpgame(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (username)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -5594,17 +5599,17 @@ async def helpgame(ctx):
                 description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
-            embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}roll``', value='ทอยลูกเต๋า', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='ดูว่าควรจะทําสิงๆนั้นไหม', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'จํานวนคนที่เล่น CSGO ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'จํานวนคนที่เล่น APEX ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'จํานวนคนที่เล่น RB6 ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}coinflip``', value='flip a coin', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}rps``', value = 'play rock paper scissor',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}roll``', value='roll a dice', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}8ball (question) ``', value='plau 8ball', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}csgonow``', value = 'People playing CSGO at this time',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}apexnow``', value = 'People playing Apex at this time',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}rb6now``', value = 'People playing RB6 at this time',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'People playing PUBG at this time',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'People playing gtanow at this time',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'see a user apex in-game stat',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (username)``', value = 'see a user rank and mmr in rb6',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5624,29 +5629,59 @@ async def helpinfo(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งเกี่ยวกับข้อมูล',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-            )
-        embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศทั่วโลก',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-    
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed=discord.Embed(
+                title='คําสั่งเกี่ยวกับข้อมูล',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='ข้อมูลเกี่ยวกับสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'ข้อมูลเกี่ยวกับcovid19 ในไทย',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'ข้อมูลเกี่ยวกับcovid19ทั่วโลก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'ข้อมูลเกี่ยว IP นั้น',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'ดูสภาพอากาศของจังหวัด',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'ดูข้อมูลของประเทศ',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='ข้อมูลเกี่ยวกับราคา Bitcoin',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='ข้อมูลเกี่ยวกับราคา Ethereum ',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='ดูข้อมูลในของคนใน Github',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed=discord.Embed(
+                title='help commands related to information',
+                description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}serverinfo``', value='info about your server', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}membercount``', value='Number of members in the server', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}userinfo @member``', value ='info about member', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}covid19th``', value = 'Thailand COVID-19 status',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}covid19``', value = 'Covid-19 around the world',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}geoip (ip)``', value = 'Info about the ip address',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}weather (city)``', value = 'display weather of a city',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}country (country)``', value = 'see info of a country',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}btc``',value='Bitcoin prices',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}eth``',value='Ethereum prices',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}github (username)``',value='info of Github user',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='View your profile picture or a member profile picture',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search your profile picture or a member profile picture',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='View server icon',inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def helpadmin(ctx):
@@ -5662,26 +5697,53 @@ async def helpadmin(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งเกี่ยวเเอดมิน',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-            )
-        embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed=discord.Embed(
+                title='คําสั่งเกี่ยวเเอดมิน',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed=discord.Embed(
+                title='คําสั่งเกี่ยวเเอดมิน',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def helpfun(ctx):
@@ -5697,28 +5759,57 @@ async def helpfun(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งบรรเทิง',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-        )
-        embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+        if server_language == "Thai":
+            embed=discord.Embed(
+                title='คําสั่งบรรเทิง',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+            )
+            embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed=discord.Embed(
+                title='คําสั่งบรรเทิง',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+            )
+            embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}meme``', value='ส่งมีม', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ascii (message)``', value='เปลี่ยนตัวอักษรภาษาอังกฤษเป็นภาพ ASCII', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}tweet (username) (message)``', value='สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}phcomment (text)``', value='สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}wasted @member``', value='ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gay @member``', value='ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}trigger @member``', value='ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิก และ ตัวเอง', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}slim``', value='สุ่มส่งคําพูดของสลิ่ม', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def helpgeneral(ctx):
@@ -5734,29 +5825,59 @@ async def helpgeneral(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งทั่วไป',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-            )
-        embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}calculator (equation)``', value= 'คํานวนคณิตศาสตร์ + - * / ^ ', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed=discord.Embed(
+                title='คําสั่งทั่วไป',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}calculator (equation)``', value= 'คํานวนคณิตศาสตร์ + - * / ^ ', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed=discord.Embed(
+                title='คําสั่งทั่วไป',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}pastebin (message)``', value='สร้างลิงค์ Pastebin โดยมีข้อความข้อข้างใน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}lmgtfy (message)``', value= 'สร้างลิงค์ lmgtfy เพื่อsearchหาสิ่งที่เขียน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}timer (second)``', value= 'นาฬิกานับถอยหลัง (ห้ามมีจุดทศนิยม)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}count (second)``', value= 'นาฬิกานับเวลา (ห้ามมีจุดทศนิยม)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}upper (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมใหญ่ทั้งหมด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}lower (message)``', value= 'เปลี่ยนประโยคหรือคําเป็นตัวพิมเล็กทั้งหมด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}calculator (equation)``', value= 'คํานวนคณิตศาสตร์ + - * / ^ ', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def helpimage(ctx):
@@ -5772,21 +5893,43 @@ async def helpimage(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งเกี่ยวกับรูป',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-            )
-        embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
-        embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed=discord.Embed(
+                title='คําสั่งเกี่ยวกับรูป',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed=discord.Embed(
+                title='คําสั่งเกี่ยวกับรูป',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}cat``', value= 'ส่งภาพเเมว', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def helpnsfw(ctx):
@@ -5802,12 +5945,18 @@ async def helpnsfw(ctx):
         await message.add_reaction('👍')
     
     else:
-        embed=discord.Embed(
-            title='คําสั่งnsfw',
-            description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
-            color=0x00FFFF   
-            )
-        embed.add_field(name=f"""
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+
+            embed=discord.Embed(
+                title='คําสั่งnsfw',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f"""
 
 ส่งรูปตาม catergory 
 
@@ -5837,51 +5986,132 @@ async def helpnsfw(ctx):
 
 """, value= "บางคําสั่ง18+")
 
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+
+            embed=discord.Embed(
+                title='คําสั่งnsfw',
+                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                color=0x00FFFF   
+                )
+            embed.add_field(name=f"""
+
+ส่งรูปตาม catergory 
+
+{COMMAND_PREFIX}gsolo
+{COMMAND_PREFIX}smallboob
+{COMMAND_PREFIX}classic
+{COMMAND_PREFIX}pussy
+{COMMAND_PREFIX}eroyuri
+{COMMAND_PREFIX}yuri
+{COMMAND_PREFIX}solo
+{COMMAND_PREFIX}anal
+{COMMAND_PREFIX}erofeet
+{COMMAND_PREFIX}feet
+{COMMAND_PREFIX}hentai
+{COMMAND_PREFIX}boobs
+{COMMAND_PREFIX}tits
+{COMMAND_PREFIX}blowjob
+{COMMAND_PREFIX}lewd
+{COMMAND_PREFIX}lesbian
+{COMMAND_PREFIX}feed
+{COMMAND_PREFIX}tickle 
+{COMMAND_PREFIX}slap
+{COMMAND_PREFIX}hug
+{COMMAND_PREFIX}smug
+{COMMAND_PREFIX}pat
+{COMMAND_PREFIX}kiss
+
+""", value= "บางคําสั่ง18+")
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def covid19(ctx):
-    r = requests.get(f'https://disease.sh/v3/covid-19/all')
-    r = r.json()
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    case = r['cases']
-    todaycase = r['todayCases']
-    totaldeath = r['deaths']
-    todaydeath = r['todayDeaths']
-    recover = r['recovered']
-    todayRecover = r['todayRecovered']      
-    activecase = r['active']
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    case = humanize.intcomma(case)
-    todaycase = humanize.intcomma(todaycase)
-    totaldeath = humanize.intcomma(totaldeath)
-    todaydeath = humanize.intcomma(todaydeath)
-    recover = humanize.intcomma(recover)
-    todayRecover = humanize.intcomma(todayRecover)
-    activecase = humanize.intcomma(activecase)
+        r = requests.get(f'https://disease.sh/v3/covid-19/all')
+        r = r.json()
 
-    embed = discord.Embed(
-        colour =0x00FFFF,
-        title = "💊สถานะไวรัสโควิด-19 ทั่วโลก",
-        description = "เเหล่งที่มา : https://disease.sh/v3/covid-19/all"
+        case = r['cases']
+        todaycase = r['todayCases']
+        totaldeath = r['deaths']
+        todaydeath = r['todayDeaths']
+        recover = r['recovered']
+        todayRecover = r['todayRecovered']      
+        activecase = r['active']
 
-    )
-    embed.set_thumbnail(url="https://i.imgur.com/kmabvi8.png")
+        case = humanize.intcomma(case)
+        todaycase = humanize.intcomma(todaycase)
+        totaldeath = humanize.intcomma(totaldeath)
+        todaydeath = humanize.intcomma(todaydeath)
+        recover = humanize.intcomma(recover)
+        todayRecover = humanize.intcomma(todayRecover)
+        activecase = humanize.intcomma(activecase)
 
-    embed.add_field(name="📊 ยืนยันเเล้ว : ", value=f"{case}")
-    embed.add_field(name="💀 เสียชีวิตแล้ว : ", value=f"{totaldeath}")
-    embed.add_field(name="✅ รักษาหายแล้ว : ", value=f"{recover}")
-    embed.add_field(name="📈 ผู้ติดเชื่อวันนี้ : ", value=f"{case}")
-    embed.add_field(name="💀 จำนวนเสียชีวิตวันนี้ : ", value=f"{todaydeath}")
-    embed.add_field(name="✅ รักษาหายวันนี้ : ", value=f"{todayRecover}")
-    embed.add_field(name="⚠️ ผู้ติดเชื้อ : ", value=f"{activecase}")
+        if server_language == "Thai": 
+            embed = discord.Embed(
+                colour =0x00FFFF,
+                title = "💊สถานะไวรัสโควิด-19 ทั่วโลก",
+                description = "เเหล่งที่มา : https://disease.sh/v3/covid-19/all"
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+            )
+            embed.set_thumbnail(url="https://i.imgur.com/kmabvi8.png")
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('💊')
+            embed.add_field(name="📊 ยืนยันเเล้ว : ", value=f"{case}")
+            embed.add_field(name="💀 เสียชีวิตแล้ว : ", value=f"{totaldeath}")
+            embed.add_field(name="✅ รักษาหายแล้ว : ", value=f"{recover}")
+            embed.add_field(name="📈 ผู้ติดเชื่อวันนี้ : ", value=f"{case}")
+            embed.add_field(name="💀 จำนวนเสียชีวิตวันนี้ : ", value=f"{todaydeath}")
+            embed.add_field(name="✅ รักษาหายวันนี้ : ", value=f"{todayRecover}")
+            embed.add_field(name="⚠️ ผู้ติดเชื้อ : ", value=f"{activecase}")
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('💊')
+        
+        if server_language == "English": 
+            embed = discord.Embed(
+                colour =0x00FFFF,
+                title = "💊Covid-19 around the world",
+                description = "Source : https://disease.sh/v3/covid-19/all"
+
+            )
+            embed.set_thumbnail(url="https://i.imgur.com/kmabvi8.png")
+
+            embed.add_field(name="📊 Total confirm cases : ", value=f"{case}")
+            embed.add_field(name="💀 Total death : ", value=f"{totaldeath}")
+            embed.add_field(name="✅ Total recover patients : ", value=f"{recover}")
+            embed.add_field(name="📈 Total confirm cases today : ", value=f"{todaycase}")
+            embed.add_field(name="💀 New death : ", value=f"{todaydeath}")
+            embed.add_field(name="✅ Today recover patients : ", value=f"{todayRecover}")
+            embed.add_field(name="⚠️ Active cases : ", value=f"{activecase}")
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('💊')
+            
 
 @client.command()
 async def lmgtfy(ctx, *, message): 
@@ -6013,131 +6243,275 @@ async def dm_error(ctx, error):
 
 @client.command()
 async def rps(ctx):
-    embed = discord.Embed(
-        colour =0x00FFFF,
-        title = "เกมเป่ายิ้งฉุบ"
-    )
-
-    embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
-    embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('✊')
-    await message.add_reaction('✋')
-    await message.add_reaction('✌️')
-
-    try:
-        reaction, user = await client.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
-
-        if str(reaction.emoji) == "✊":
-            #rock , paper , scissor
-            answer = "rock"
-        if str(reaction.emoji) == "✋":
-            #rock , paper , scissor
-            answer = "paper"
-        if str(reaction.emoji) == "✌️":
-            #rock , paper , scissor
-            answer = "scissor"
-
-        responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
-        botresponse = random.choice(responses)
-
-        if botresponse == "https://i.imgur.com/hdG222Q.jpg":
-            if answer == "rock":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😮 คุณเสมอ"
-                )
-                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
-
-                await message.edit(embed=embed)
-
-            elif answer == "paper":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😄 คุณชนะ"
-                )
-                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
-                await message.edit(embed=embed)
-            
-            else:
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😭 คุณเเพ้"
-                )
-                embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
-                await message.edit(embed=embed)
-
-        elif botresponse == "https://i.imgur.com/O3ZLDRr.jpg":
-            if answer == "rock":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😭 คุณเเพ้"
-                )
-                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
-
-                await message.edit(embed=embed)
-
-            elif answer == "paper":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😮 คุณเสมอ"
-                )
-                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
-                await message.edit(embed=embed)
-            
-            else:
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😄 คุณชนะ"
-                )
-                embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
-                await message.edit(embed=embed)
-        
-        else:
-            if answer == "rock":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😄 คุณชนะ"
-                )
-                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
-
-                await message.edit(embed=embed)
-
-            elif answer == "paper":
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😭 คุณเเพ้"
-                )
-                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
-                await message.edit(embed=embed)
-            
-            else:
-                embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = "เกมเป่ายิ้งฉุบ",
-                description = "😮 คุณเสมอ"
-                )
-                embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
-                await message.edit(embed=embed)
-
-    except asyncio.TimeoutError:
-        
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            title = "🕑 หมดเวลา" ,
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-        await message.edit(embed=embed)
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour =0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ"
+            )
+
+            embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
+            embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✊')
+            await message.add_reaction('✋')
+            await message.add_reaction('✌️')
+
+            try:
+                reaction, user = await client.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
+
+                if str(reaction.emoji) == "✊":
+                    #rock , paper , scissor
+                    answer = "rock"
+                if str(reaction.emoji) == "✋":
+                    #rock , paper , scissor
+                    answer = "paper"
+                if str(reaction.emoji) == "✌️":
+                    #rock , paper , scissor
+                    answer = "scissor"
+
+                responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+                botresponse = random.choice(responses)
+
+                if botresponse == "https://i.imgur.com/hdG222Q.jpg":
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                        await message.edit(embed=embed)
+
+                elif botresponse == "https://i.imgur.com/O3ZLDRr.jpg":
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                        await message.edit(embed=embed)
+                
+                else:
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                        await message.edit(embed=embed)
+
+            except asyncio.TimeoutError:
+                
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "🕑 หมดเวลา" ,
+                )
+
+                embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+
+                await message.edit(embed=embed)
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour =0x00FFFF,
+                title = "เกมเป่ายิ้งฉุบ"
+            )
+
+            embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
+            embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✊')
+            await message.add_reaction('✋')
+            await message.add_reaction('✌️')
+
+            try:
+                reaction, user = await client.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
+
+                if str(reaction.emoji) == "✊":
+                    #rock , paper , scissor
+                    answer = "rock"
+                if str(reaction.emoji) == "✋":
+                    #rock , paper , scissor
+                    answer = "paper"
+                if str(reaction.emoji) == "✌️":
+                    #rock , paper , scissor
+                    answer = "scissor"
+
+                responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+                botresponse = random.choice(responses)
+
+                if botresponse == "https://i.imgur.com/hdG222Q.jpg":
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
+                        await message.edit(embed=embed)
+
+                elif botresponse == "https://i.imgur.com/O3ZLDRr.jpg":
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
+                        await message.edit(embed=embed)
+                
+                else:
+                    if answer == "rock":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😄 คุณชนะ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+
+                        await message.edit(embed=embed)
+
+                    elif answer == "paper":
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😭 คุณเเพ้"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                        await message.edit(embed=embed)
+                    
+                    else:
+                        embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "เกมเป่ายิ้งฉุบ",
+                        description = "😮 คุณเสมอ"
+                        )
+                        embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
+                        await message.edit(embed=embed)
+
+            except asyncio.TimeoutError:
+                
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "🕑 หมดเวลา" ,
+                )
+
+                embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+
+                await message.edit(embed=embed)
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -6154,57 +6528,152 @@ async def movetome(ctx, member : discord.Member):
     await message.add_reaction('✅')
 
 @client.command()
-async def guildicon(ctx): 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title=f"เซิฟเวอร์: {ctx.guild.name}")
-    embed.set_image(url=ctx.guild.icon_url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+async def guildicon(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("✅")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai": 
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title=f"เซิฟเวอร์: {ctx.guild.name}")
+            embed.set_image(url=ctx.guild.icon_url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("✅")
+        
+        if server_language == "English": 
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title=f"Server: {ctx.guild.name}")
+            embed.set_image(url=ctx.guild.icon_url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("✅")
 
 @client.command()
 async def avatar(ctx , member : discord.Member=None): 
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    if member is None:
-        member = ctx.author
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        if member is None:
+            member = ctx.author
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title=f"รูปของสมาชิก: {member}",
-        description = f"ลิงค์ : [คลิกที่นี้]({member.avatar_url})")
-    embed.set_image(url=member.avatar_url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai": 
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("✅")
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title=f"รูปของสมาชิก: {member}",
+                description = f"ลิงค์ : [คลิกที่นี้]({member.avatar_url})")
+            embed.set_image(url=member.avatar_url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("✅")
+
+        if server_language == "English": 
+
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title=f"{member} profile picture",
+                description = f"link : [click here]({member.avatar_url})")
+            embed.set_image(url=member.avatar_url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("✅")
 
 @client.command()
 async def searchavatar(ctx, member: discord.Member=None): 
-    if member is None:
-        member = ctx.author
-
-    try:
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f"หารูปของสมาชิก: {member}",
-            description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
-           
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction("✅")
-    
-    except:
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = f"ไม่สามารถหาภาพของสมาชิก{member}ได้"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
         )
-
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed)
-        await message.add_reaction("⚠️")
+        await message.add_reaction('👍')
+
+    else:
+        if member is None:
+            member = ctx.author
+
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai": 
+            try:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"หารูปของสมาชิก: {member}",
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("✅")
+            
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"ไม่สามารถหาภาพของสมาชิก{member}ได้"
+
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("⚠️")
+        
+        if server_language == "English": 
+            try:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"search for {member} profile picture",
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("✅")
+            
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"unable to find {member} profile picture"
+
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("⚠️")
     
 @client.command()
 async def qr(ctx , data):
@@ -8781,37 +9250,40 @@ async def support(ctx, * , message):
 
 @client.listen()
 async def on_message(message):
-    if not message.content.startswith(COMMAND_PREFIX):
-        server = collection.find({"guild_id":message.guild.id})
-        guild = collection.find_one({"guild_id":message.guild.id})
-        if not guild is None:
-            if not message.author.bot:
-                for data in server:
-                    if data["level_system"] == "YES":
-                        user = collectionlevel.find_one({"user_id":message.author.id})
-                        if user is None:
-                            newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":0}
-                            collectionlevel.insert_one(newuser)
-                        else:
-                            userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
-                            for data in userlevel:
+    if message.guild:
+        if not message.content.startswith('/r '):
+            server = collection.find({"guild_id":message.guild.id})
+            guild = collection.find_one({"guild_id":message.guild.id})
+            if not guild is None:
+                if not message.author.bot:
+                    for data in server:
+                        if data["level_system"] == "YES":
+                            user = collectionlevel.find_one({"user_id":message.author.id})
+                            if user is None:
+                                newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":0}
+                                collectionlevel.insert_one(newuser)
+                            else:
+                                userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
+                                for data in userlevel:
 
-                                userxp = data["xp"] + 5
-                                collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
-                                currentxp = data["xp"]
-                                currentlvl = data["level"]
-                                if currentxp > 200:
-                                    currentlvl += 1
-                                    currentxp = 0
-                                    collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
-                                    await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
-                                else:
-                                    pass
-                    else:
-                        pass
+                                    userxp = data["xp"] + 5
+                                    collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
+                                    currentxp = data["xp"]
+                                    currentlvl = data["level"]
+                                    if currentxp > 200:
+                                        currentlvl += 1
+                                        currentxp = 0
+                                        collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
+                                        await message.channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {currentlvl}")
+                                    else:
+                                        pass
+                        else:
+                            pass
+            else:
+                pass
+        
         else:
             pass
-    
     else:
         pass
             
