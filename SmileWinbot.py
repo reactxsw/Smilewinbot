@@ -18,6 +18,7 @@ from pymongo import MongoClient
 from pathlib import Path
 from googleapiclient.discovery import build
 
+os.system("title Smilewin#0644")
 if Path("config.json").exists():
     with open('config.json') as setting:
         config = json.load(setting)
@@ -6156,17 +6157,45 @@ async def lmgtfy(ctx, *, message):
     
 @lmgtfy.error
 async def lmgtfy_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
     
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                        colour = 0x983925,
+                        description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                        colour = 0x983925,
+                        description = f" ⚠️``{ctx.author}`` Specify what to search on lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+ 
 @client.command()
 async def tweet(ctx, username: str, *, message: str): 
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -6198,89 +6227,53 @@ async def tweet(ctx, username: str, *, message: str):
 
 @client.command()
 async def credit(ctx):
-    embed = discord.Embed(
-        title= '💻 เครดิตคนทําบอท',
-        description=
-        """
-```ดิสคอร์ด : REACT#1120
-เซิฟดิสคอร์ด : https://discord.com/invite/R8RYXyB4Cg
-Github : https://github.com/reactxsw
-        ```
-        """,
-        colour=0x00FFFF  
-    )
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
-@client.command()
-@commands.has_permissions(administrator=True)
-async def dm(ctx, member: discord.Member, *, message):
-
-    embed = discord.Embed(
-        color = 0x00FFFF,
-        title = f"ส่งข้อความหาคนในดิสคอร์ด {ctx.guild.name}",
-        description = (f"""
-        กําลังส่งข้อความหา {member} : 
-        ```{message}```""")
-
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    msg = await ctx.send(embed=embed)
-    time.sleep(2)
-    
-    try:
-        await member.create_dm()
-        await member.dm_channel.send(message)
-        print(f"Message from {ctx.author} has been sent to "+ member.name)
-
-        embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f'ข้อความได้ส่งไปถึง {member}',
-            description =f'ข้อความ ```{message}```'
-
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        await msg.edit(embed=embed)
-  
-    except:
-        print(f"Message from {ctx.author} failed to sent to "+ member.name)
-
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = f'ไม่สามารถส่งข้อความถึง {member} ได้'
-
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        await msg.edit(embed=embed)
-
-@dm.error
-async def dm_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}dm [message]``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-        print(f"{ctx.author} try to dm member but is missing argument")
-
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์เเอดมิน",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if server_language == "Thai":
+            embed = discord.Embed(
+                title= '💻 เครดิตคนทําบอท',
+                description=
+                """
+        ```ดิสคอร์ด : REACT#1120
+        เซิฟดิสคอร์ด : https://discord.com/invite/R8RYXyB4Cg
+        Github : https://github.com/reactxsw
+                ```
+                """,
+                colour=0x00FFFF  
+            )
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                title= '💻 Developer',
+                description=
+                """
+        ```Discord : REACT#1120
+        Discord server : https://discord.com/invite/R8RYXyB4Cg
+        Github : https://github.com/reactxsw
+                ```
+                """,
+                colour=0x00FFFF  
+            )
 
-        print(f"{ctx.author} try to dm member but is missing permission")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
 
 @client.command()
 async def rps(ctx):
@@ -6434,7 +6427,7 @@ async def rps(ctx):
             )
 
             embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
-            embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
+            embed.set_footer(text=f"⏳ click on emoji in 10 seconds")
             message = await ctx.send(embed=embed)
             await message.add_reaction('✊')
             await message.add_reaction('✋')
@@ -6460,8 +6453,8 @@ async def rps(ctx):
                     if answer == "rock":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
+                        title = "Rock paper scissor",
+                        description = "😮 Draw"
                         )
                         embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
 
@@ -6470,8 +6463,8 @@ async def rps(ctx):
                     elif answer == "paper":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
+                        title = "Rock paper scissor",
+                        description = "😄 You won"
                         )
                         embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
                         await message.edit(embed=embed)
@@ -6479,8 +6472,8 @@ async def rps(ctx):
                     else:
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
+                        title = "Rock paper scissor",
+                        description = "😭 You lose"
                         )
                         embed.set_image(url="https://i.imgur.com/hdG222Q.jpg")
                         await message.edit(embed=embed)
@@ -6489,8 +6482,8 @@ async def rps(ctx):
                     if answer == "rock":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
+                        title = "Rock paper scissor",
+                        description = "😭 You lose"
                         )
                         embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
 
@@ -6499,8 +6492,8 @@ async def rps(ctx):
                     elif answer == "paper":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
+                        title = "Rock paper scissor",
+                        description = "😮 Draw"
                         )
                         embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
                         await message.edit(embed=embed)
@@ -6508,8 +6501,8 @@ async def rps(ctx):
                     else:
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
+                        title = "Rock paper scissor",
+                        description = "😄 You won"
                         )
                         embed.set_image(url="https://i.imgur.com/O3ZLDRr.jpg")
                         await message.edit(embed=embed)
@@ -6518,8 +6511,8 @@ async def rps(ctx):
                     if answer == "rock":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
+                        title = "Rock paper scissor",
+                        description = "😄 You won"
                         )
                         embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
 
@@ -6528,8 +6521,8 @@ async def rps(ctx):
                     elif answer == "paper":
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
+                        title = "Rock paper scissor",
+                        description = "😭 You lose"
                         )
                         embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
                         await message.edit(embed=embed)
@@ -6537,8 +6530,8 @@ async def rps(ctx):
                     else:
                         embed = discord.Embed(
                         colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
+                        title = "Rock paper scissor",
+                        description = "😮 Draw"
                         )
                         embed.set_image(url="https://i.imgur.com/dZOVJ4r.jpg")
                         await message.edit(embed=embed)
@@ -6547,7 +6540,7 @@ async def rps(ctx):
                 
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "🕑 หมดเวลา" ,
+                    title = "🕑 Out of time" ,
                 )
 
                 embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
@@ -6769,57 +6762,138 @@ async def searchavatar(ctx, member: discord.Member=None):
     
 @client.command()
 async def qr(ctx , data):
-    url = f"https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data}"
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "💻 QR CODE GENERATOR",
-        description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data})"
-    )
-    embed.set_image(url=url)
-    await ctx.send(embed=embed)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        url = f"https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data}"
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "💻 QR CODE GENERATOR",
+                description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data})"
+            )
+            embed.set_image(url=url)
+            await ctx.send(embed=embed)
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "💻 QR CODE GENERATOR",
+                description = f"link : [click here](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={data})"
+            )
+            embed.set_image(url=url)
+            await ctx.send(embed=embed)
 
 @client.command()
-async def meme(ctx): 
-    r = requests.get('https://some-random-api.ml/meme')
-    r = r.json()
-    url  = r['image']
-    cap = r['caption']
+async def meme(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed=  discord.Embed(
-        colour = 0x00FFFF,
-        title = f"{cap}"
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('😂')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        r = requests.get('https://some-random-api.ml/meme')
+        r = r.json()
+        url  = r['image']
+        cap = r['caption']
+
+        embed=  discord.Embed(
+            colour = 0x00FFFF,
+            title = f"{cap}"
+        )
+        embed.set_image(url=url)
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('😂')
 
 @client.command()
-async def geoip(ctx, *, ip): 
-    ip = str(ip)
-    r = requests.get(f'http://extreme-ip-lookup.com/json/{ip}')
-    r = r.json()
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title =f"💻 IP {ip}"
-    )
-    embed.add_field(name="IP",value=f":{r['query']}")
-    embed.add_field(name="ประเภทของ IP",value=f":{r['ipType']}")
-    embed.add_field(name="ประเทศ",value=f":{r['country']}")
-    embed.add_field(name="code ประเทศ",value=f":{r['countryCode']}")
-    embed.add_field(name="จังหวัด",value=f":{r['city']}")
-    embed.add_field(name="ทวีป",value=f":{r['continent']}")
-    embed.add_field(name="ค่ายเน็ท",value=f":{r['isp']}")
-    embed.add_field(name="ภูมิภาค",value=f":{r['region']}")
-    embed.add_field(name="ชื่อองค์กร",value=f":{r['org']}")
-    embed.add_field(name="ชื่อบริษัท",value=f":{r['businessName']}")
-    embed.add_field(name="เว็บไซต์บริษัท",value=f":{r['businessWebsite']}")
-    embed.add_field(name="ค่า logitude",value=f":{r['lon']}")
-    embed.add_field(name="ค่า latitude",value=f":{r['lat']}")
+async def geoip(ctx, *, ip):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('💻')
+        ip = str(ip)
+        r = requests.get(f'http://extreme-ip-lookup.com/json/{ip}')
+        r = r.json()
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title =f"💻 IP {ip}"
+            )
+            embed.add_field(name="IP",value=f":{r['query']}")
+            embed.add_field(name="ประเภทของ IP",value=f":{r['ipType']}")
+            embed.add_field(name="ประเทศ",value=f":{r['country']}")
+            embed.add_field(name="code ประเทศ",value=f":{r['countryCode']}")
+            embed.add_field(name="จังหวัด",value=f":{r['city']}")
+            embed.add_field(name="ทวีป",value=f":{r['continent']}")
+            embed.add_field(name="ค่ายเน็ท",value=f":{r['isp']}")
+            embed.add_field(name="ภูมิภาค",value=f":{r['region']}")
+            embed.add_field(name="ชื่อองค์กร",value=f":{r['org']}")
+            embed.add_field(name="ชื่อบริษัท",value=f":{r['businessName']}")
+            embed.add_field(name="เว็บไซต์บริษัท",value=f":{r['businessWebsite']}")
+            embed.add_field(name="ค่า logitude",value=f":{r['lon']}")
+            embed.add_field(name="ค่า latitude",value=f":{r['lat']}")
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('💻')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title =f"💻 IP {ip}"
+            )
+            embed.add_field(name="IP",value=f":{r['query']}")
+            embed.add_field(name="type of IP",value=f":{r['ipType']}")
+            embed.add_field(name="country",value=f":{r['country']}")
+            embed.add_field(name="country code",value=f":{r['countryCode']}")
+            embed.add_field(name="city",value=f":{r['city']}")
+            embed.add_field(name="continent",value=f":{r['continent']}")
+            embed.add_field(name="isp",value=f":{r['isp']}")
+            embed.add_field(name="region",value=f":{r['region']}")
+            embed.add_field(name="organization",value=f":{r['org']}")
+            embed.add_field(name="businessName",value=f":{r['businessName']}")
+            embed.add_field(name="businessWebsite",value=f":{r['businessWebsite']}")
+            embed.add_field(name="logitude",value=f":{r['lon']}")
+            embed.add_field(name="latitude",value=f":{r['lat']}")
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('💻')
 
 @geoip.error
 async def geoip_error(ctx, error):
@@ -7905,93 +7979,255 @@ async def weather_error(ctx, error):
 
 @client.command()
 async def bird(ctx):
-    r = requests.get("https://some-random-api.ml/img/birb")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพนก"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🐦')
+        r = requests.get("https://some-random-api.ml/img/birb")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพนก"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐦')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="Bird"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐦')
 
 @client.command()
 async def panda(ctx):
-    r = requests.get("https://some-random-api.ml/img/panda")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพเเพนด้า"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🐼')
+        r = requests.get("https://some-random-api.ml/img/panda")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพเเพนด้า"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐼')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="Panda"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐼')
 
 @client.command()
 async def cat(ctx):
-    r = requests.get("https://some-random-api.ml/img/cat")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพเเมว"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🐱')
+        r = requests.get("https://some-random-api.ml/img/cat")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพเเมว"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐱')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพเเมว"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐱')
 
 @client.command()
 async def dog(ctx):
-    r = requests.get("https://some-random-api.ml/img/dog")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพหมา"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🐶')
+        r = requests.get("https://some-random-api.ml/img/dog")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพหมา"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐶')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="Dog"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐶')
 
 @client.command()
 async def fox(ctx):
-    r = requests.get("https://some-random-api.ml/img/fox")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพสุนัขจิ้งจอก"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🦊')
+        r = requests.get("https://some-random-api.ml/img/fox")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพสุนัขจิ้งจอก"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🦊')
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="Fox"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🦊')
 
 @client.command()
 async def koala(ctx):
-    r = requests.get("https://some-random-api.ml/img/koala")
-    r = r.json()
-    url = r['link']
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title="ภาพหมีโคอาล่า"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    )
-    embed.set_image(url=url)
-    message = await ctx.send(embed= embed)
-    await message.add_reaction('🐨')
+        r = requests.get("https://some-random-api.ml/img/koala")
+        r = r.json()
+        url = r['link']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="ภาพหมีโคอาล่า"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐨')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title="Koala"
+
+            )
+            embed.set_image(url=url)
+            message = await ctx.send(embed= embed)
+            await message.add_reaction('🐨')
 
 @client.command()
 async def country(ctx, *, country):
