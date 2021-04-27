@@ -3574,7 +3574,6 @@ async def botinfo(ctx):
             embed.add_field(name='📁 ``จํานวนคําสั่ง``', value=f'{len(client.commands)}',inline =True)
             embed.add_field(name='📁 ``สมาชิกทั้งหมด``', value=f'{len(client.users)}',inline =True)
             embed.add_field(name='🤖 ``เครื่องหมายหน้าคำสั่ง``', value=f'{client.command_prefix}',inline =True)
-            embed.add_field(name='📁 ``คําสั่งทั้งหมด``', value=f'{len(client.all_commands)}',inline =True)
             embed.add_field(name='🤖 ``คําสั่งช่วยเหลือ``', value=f'{COMMAND_PREFIX}help',inline =True)
             embed.add_field(name='🤖 ``เวลาทำงาน``', value=f'{uptime}',inline =True)
             embed.add_field(name='🤖 ``Ping ของบอท``', value=f'{round(client.latency * 1000)}ms',inline =True)
@@ -5730,17 +5729,17 @@ async def helpadmin(ctx):
                 description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
-            embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='ปลดเเบนสมาชิก', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'ให้ยศกับสมาชิก',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'เอายศของสมาชิกออก',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'ให้ยศกับสมาชิกทุกคนที่สามารถให้ได้',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'ลบยศกับสมาชิกทุกคน',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'เปลี่ยนชื่อของสมาชิก',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='ban a member', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}ban @member``', value ='kick a member', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}unban member#1111``', value ='unban a member', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}giverole @member @role``', value = 'give role to member',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removerole @member @role``', value = 'remove role from member',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}roleall @role``', value = 'give role to all member',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}removeroleall @role``', value = 'remove role to all member',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}changenick @member newnick``', value = 'change member nickname',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}clear (จํานวน) ``', value = 'clear messages',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect a member', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}movetome @member``' ,value = 'move a member to your voice chat', inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -6000,7 +5999,7 @@ async def helpnsfw(ctx):
                 )
             embed.add_field(name=f"""
 
-ส่งรูปตาม catergory 
+Send photos according to the catergory
 
 {COMMAND_PREFIX}gsolo
 {COMMAND_PREFIX}smallboob
@@ -6026,7 +6025,7 @@ async def helpnsfw(ctx):
 {COMMAND_PREFIX}pat
 {COMMAND_PREFIX}kiss
 
-""", value= "บางคําสั่ง18+")
+""", value= "Some commands are 18+")
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed=embed)
@@ -7913,69 +7912,143 @@ async def kiss(ctx):
         await message.add_reaction('❤️')
 
 @client.command()
-async def botcode(ctx):
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "โค้ดของบอท SmileWin",
-        description = f"[คลิกที่นี้](https://github.com/reactxsw/Smilewinbot)"
-
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('❤️')
-
-@client.command()
 async def weather(ctx, *, city):
-    try:
-        r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
-        r = r.json()
-        temperature = (float(r['main']['temp']) -273.15)
-        feellike = (float(r['main']['feels_like']) -273.15)
-        highesttemp = (float(r['main']['temp_max']) -273.15)
-        lowesttemp = (float(r['main']['temp_min']) -273.15)
-        humidity = float(r['main']['humidity'])
-        windspeed = float(r['wind']['speed'])
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            try:
+                r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
+                r = r.json()
+                temperature = (float(r['main']['temp']) -273.15)
+                feellike = (float(r['main']['feels_like']) -273.15)
+                highesttemp = (float(r['main']['temp_max']) -273.15)
+                lowesttemp = (float(r['main']['temp_min']) -273.15)
+                humidity = float(r['main']['humidity'])
+                windspeed = float(r['wind']['speed'])
+                
+                day = r['weather'][0]['description']
+
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"สภาพอากาศในจังหวัด {city}",
+                    description = f"""```
+        อุณหภูมิตอนนี้ : {temperature}°C
+        อุณหภูมิสูงสุดของวัน : {highesttemp}°C
+        อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
+        อุณหภูมิรู้สึกเหมือน : {feellike}
+        ความชื้น : {humidity}%
+        ความเร็วลม : {windspeed}mph
+        สภาพอากาศ : {day}```
+                    """
+                    
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed)
+
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{COMMAND_PREFIX}weather (city)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
         
-        day = r['weather'][0]['description']
+        if server_language == "English":
+            try:
+                r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
+                r = r.json()
+                temperature = (float(r['main']['temp']) -273.15)
+                feellike = (float(r['main']['feels_like']) -273.15)
+                highesttemp = (float(r['main']['temp_max']) -273.15)
+                lowesttemp = (float(r['main']['temp_min']) -273.15)
+                humidity = float(r['main']['humidity'])
+                windspeed = float(r['wind']['speed'])
+                
+                day = r['weather'][0]['description']
 
-        embed = discord.Embed(
-            colour = 0x00FFFF,
-            title = f"สภาพอากาศในจังหวัด {city}",
-            description = f"""```
-อุณหภูมิตอนนี้ : {temperature}°C
-อุณหภูมิสูงสุดของวัน : {highesttemp}°C
-อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
-อุณหภูมิรู้สึกเหมือน : {feellike}
-ความชื้น : {humidity}%
-ความเร็วลม : {windspeed}mph
-สภาพอากาศ : {day}```
-            """
-            
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        await ctx.send(embed=embed)
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"weather in {city}",
+                    description = f"""```
+        Temperature now : {temperature}°C
+        Highest temperature today : {highesttemp}°C
+        Lowest temperature today : {lowesttemp}°C
+        Feel like : {feellike}
+        Humidity : {humidity}%
+        windspeed : {windspeed}mph
+        Weather : {day}```
+                    """
+                    
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed)
 
-    except:
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{COMMAND_PREFIX}weather (city)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Cannot find this city ``{COMMAND_PREFIX}weather (city)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @weather.error
 async def weather_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 async def bird(ctx):
@@ -8231,107 +8304,235 @@ async def koala(ctx):
 
 @client.command()
 async def country(ctx, *, country):
-    r = requests.get(f"https://restcountries.eu/rest/v2/name/{country}?fullText=true")
-    r = r.json()
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    name = r[0]['name']
-    population = r[0]['population']
-    area = r[0]['area']
-    capital = r[0]['capital']
-    subregion = r[0]['subregion']
-    nativename = r[0]['nativeName']
-    timezone = r[0]['timezones'][0]
-    currency = r[0]['currencies'][0]['name']
-    symbol = r[0]['currencies'][0]['symbol']
-    language = r[0]['languages'][0]['name']
-    code = r[0]['alpha2Code']
-    codephone = r[0]['callingCodes'][0]
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    population = humanize.intcomma(population)
-    area =humanize.intcomma(area)
+        r = requests.get(f"https://restcountries.eu/rest/v2/name/{country}?fullText=true")
+        r = r.json()
 
-    codelower = code.lower()
+        name = r[0]['name']
+        population = r[0]['population']
+        area = r[0]['area']
+        capital = r[0]['capital']
+        subregion = r[0]['subregion']
+        nativename = r[0]['nativeName']
+        timezone = r[0]['timezones'][0]
+        currency = r[0]['currencies'][0]['name']
+        symbol = r[0]['currencies'][0]['symbol']
+        language = r[0]['languages'][0]['name']
+        code = r[0]['alpha2Code']
+        codephone = r[0]['callingCodes'][0]
 
-    flag = (f"https://flagcdn.com/256x192/{codelower}.png")
+        population = humanize.intcomma(population)
+        area =humanize.intcomma(area)
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = f"{name}",
-        description = f"""```
+        codelower = code.lower()
 
-ชื่อพื้นเมือง : {nativename}
-โค้ดประเทศ : {code}
-รหัสโทร : {codephone}
-ภูมิภาค : {subregion}
-ประชากร : {population} คน
-เมืองหลวง : {capital}
-พื้นที่ : {area} km²
-เขตเวลา : {timezone}
-สกุลเงิน : {currency} สัญลักษณ์ : ({symbol})
-ภาษา : {language}```""")
+        flag = (f"https://flagcdn.com/256x192/{codelower}.png")
 
-    embed.set_thumbnail(url=flag)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = f"{name}",
+                description = f"""```
 
-    await message.add_reaction('😊')
+        ชื่อพื้นเมือง : {nativename}
+        โค้ดประเทศ : {code}
+        รหัสโทร : {codephone}
+        ภูมิภาค : {subregion}
+        ประชากร : {population} คน
+        เมืองหลวง : {capital}
+        พื้นที่ : {area} km²
+        เขตเวลา : {timezone}
+        สกุลเงิน : {currency} สัญลักษณ์ : ({symbol})
+        ภาษา : {language}```""")
+
+            embed.set_thumbnail(url=flag)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+
+            await message.add_reaction('😊')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = f"{name}",
+                description = f"""```
+
+        Native name : {nativename}
+        country code : {code}
+        calling code : {codephone}
+        subregion : {subregion}
+        population : {population} peoples
+        capital city : {capital}
+        area : {area} km²
+        timezone : {timezone}
+        currency : {currency} symbol : ({symbol})
+        language : {language}```""")
+
+            embed.set_thumbnail(url=flag)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+
+            await message.add_reaction('😊')
 
 @country.error
 async def country_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{COMMAND_PREFIX}country (country)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-@client.command()
-async def pingweb(ctx, website = None): 
-
-    if website is None: 
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมเว็บที่จะดู ``{COMMAND_PREFIX}pingweb (website)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-    else:
-        try:
-            r = requests.get(website).status_code
-        except:
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
             embed = discord.Embed(
                 colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{COMMAND_PREFIX}pingweb (website)``"
+                description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{COMMAND_PREFIX}country (country)``"
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed ) 
             await message.add_reaction('⚠️')
-            
-        if r == 404:
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = f"สถานะของเว็บไซต์ {website}",
-                description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{COMMAND_PREFIX}country (country)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️') 
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Specify a country to search ``{COMMAND_PREFIX}country (country)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        else:
-            embed = discord.Embed(
-                colour = 0x75ff9f,
-                title = f"สถานะของเว็บไซต์ {website}",
-                description = f"```เว็บไซต์ออนไลน์ปกติ```"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed )
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+@client.command()
+async def pingweb(ctx, website = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai": 
+            if website is None: 
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมเว็บที่จะดู ``{COMMAND_PREFIX}pingweb (website)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            else:
+                try:
+                    r = requests.get(website).status_code
+                except:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{COMMAND_PREFIX}pingweb (website)``"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+                    
+                if r == 404:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"สถานะของเว็บไซต์ {website}",
+                        description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️') 
+
+                else:
+                    embed = discord.Embed(
+                        colour = 0x75ff9f,
+                        title = f"สถานะของเว็บไซต์ {website}",
+                        description = f"```เว็บไซต์ออนไลน์ปกติ```"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed )
+        
+        if server_language == "English": 
+            if website is None: 
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Specify a website to search ``{COMMAND_PREFIX}pingweb (website)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            else:
+                try:
+                    r = requests.get(website).status_code
+                except:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        description = f" ⚠️``{ctx.author}`` Unable to find the website ``{COMMAND_PREFIX}pingweb (website)``"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+                    
+                if r == 404:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"Status of {website}",
+                        description = f" ⚠️`` Website is offline```")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️') 
+
+                else:
+                    embed = discord.Embed(
+                        colour = 0x75ff9f,
+                        title = f"Status of {website}",
+                        description = f"``` Website is online```"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed )
 
 @client.command()
 async def rb6rank(ctx , username):
@@ -8559,374 +8760,581 @@ async def rb6rank_error(ctx, error):
 
 @client.command()
 async def iphonex(ctx , image=None):
-
-    if image is None:
-        image = ctx.author.avatar_url
-
-    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}")
-    r = r.json()
-
-    url = r['message']
-
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "Iphone X"
-
-    )
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed ) 
-    await message.add_reaction('📱')
-
-@client.command()
-async def phcomment(ctx , * ,text, username = None , image=None):
-
-    if image is None:
-        image = ctx.author.avatar_url
-
-    if username is None:
-        username = ctx.author
-
-    r = requests.get(f"https://nekobot.xyz/api/imagegen?type=phcomment&image={image}&text={text}&username={username}")
-    r = r.json()
-
-    url = r['message']
-
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "Pornhub"
-
-    )
-    embed.set_image(url=url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-    message = await ctx.send(embed=embed ) 
-    await message.add_reaction('📱')
-
-@phcomment.error
-async def phcomment_error(ctx,error):
-    if isinstance(error, commands.MissingRequiredArgument):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{COMMAND_PREFIX}phcomment (text)``"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+
+        if image is None:
+            image = ctx.author.avatar_url
+
+        r = requests.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}")
+        r = r.json()
+
+        url = r['message']
+
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "Iphone X"
+
+        )
+        embed.set_image(url=url)
         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
         message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        await message.add_reaction('📱')
+
+@client.command()
+async def phcomment(ctx , * ,text, username = None , image=None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else: 
+
+        if image is None:
+            image = ctx.author.avatar_url
+
+        if username is None:
+            username = ctx.author
+
+        r = requests.get(f"https://nekobot.xyz/api/imagegen?type=phcomment&image={image}&text={text}&username={username}")
+        r = r.json()
+
+        url = r['message']
+
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title = "Pornhub"
+
+        )
+        embed.set_image(url=url)
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('📱')
+
+@phcomment.error
+async def phcomment_error(ctx,error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{COMMAND_PREFIX}phcomment (text)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{COMMAND_PREFIX}phcomment (text)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Specify a text to put as comment ``{COMMAND_PREFIX}phcomment (text)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+                
 
 @client.command()
 async def slim(ctx):
-    quoteslim = ["ไม่ใช่สลิ่มนะ แต่...",
-                 "ไม่ใช่ติ่งลุงตู่ แต่..."
-                 "เราคนไทยเหมือนกัน",
-                 "ไม่มี REDACTED ประเทศไทยจะพัฒนามาถึงจุดนี้หรือ,",
-                 "รักชาติ ศาสน์ กษัตริย์",
-                 "ไอ้ทอน",
-                 "ตี๋ทอน",
-                 "ไอ้บุตร",
-                 "ปีแยร์บูด",
-                 "กะปิบูด",
-                 "อีช่อ",
-                 "อีฉ้อ",
-                 "ชังชาติ",
-                 "ขายชาติ",
-                 "ไม่สำนึกในบุญคุณ ",
-                 "หนักแผ่นดิน",
-                 "เนรคุณแผ่นดิน",
-                 "เราคือผู้อยู่อาศัย ไม่ใช่เจ้าของบ้าน",
-                 "ล้มเจ้า",
-                 "ส้มเน่า",
-                 "เผาไทย",
-                 "ลิเบอร่าน",
-                 "คณะร่าน",
-                 "เห่อหมอยคลั่งชาติฝรั่ง",
-                 "ขุ่นพ่อง",
-                 "รังนกสีฟ้า",
-                 "เก่งอยู่หลังคีย์บอร์ด",
-                 "ต่างชาติชักใยอยู่เบื้องหลัง",
-                 "ชักศึกเข้าบ้าน",
-                 "มีทุกอย่างที่ดีเพราะใคร ฉันจะไม่ลืม​",
-                 "พวกเผาบ้านเผาเมือง",
-                 "จำนำข้าว",
-                 "เป็นคนปลอมตัวมาสร้างสถานการณ์ค่ะ คนเสื้อเหลืองไม่มีใครทำแบบนั้น",
-                 "ศูนย์รวมจิตใจของชาติ",
-                 "ให้มันจบที่เรือนจำ",
-                 "ตอบแทนบุญคุณแผ่นดิน",
-                 "ควายแดง",
-                 "สวะส้ม",
-                 "ด่าทุกเรื่องที่รัฐออกนโยบาย แต่ลงทะเบียนทุกอย่างที่รัฐแจกให้ฟรี",
-                 "ไอแม้ว",
-                 "ฟังคำเตือนจากผู้ใหญ่บ้าง",
-                 "ไม่รักชาติก็ออกจากประเทศไป",
-                 "เด็กๆพวกนี้มันคิดเองไม่ได้หรอก โดนหลอกกันมาทั้งนั้น",
-                 "ไม่พอใจก็ไปอยู่ประเทศอื่น",
-                 "ไม่ได้อยู่ฝั่งไหน",
-                 "ด่ารัฐบาลก็ด่าไป อย่าไปวุ่นวายกับเบื้องสูง​",
-                 "อาบน้ำร้อนมาก่อน",
-                 "พวกหัวรุนแรง",
-                 "ไร้ซึ่งจริยธรรม",
-                 "โดนจูงจมูก",
-                 "ลุงเป็นคนดี แค่เข้ามาผิดเวลา",
-                 "เป็นกลาง ไม่เลือกข้าง",
-                 "พวกอันธพาล ไม่พอใจก็ลงถนน​",
-                 "ต้องเริ่มต้นที่ตัวเองก่อน",
-                 "พวกขี้ข้าทักษิณ",
-                 "ซ้ายจัดดัดจริต",
-                 "โง่ไม่มีสมอง",
-                 "ไม่เคารพผู้หลักผู้ใหญ่",
-                 "เป็นบุคคลสาธารณะ อย่าพูดเรื่องการเมือง",
-                 "นำชีวิตตัวเองยังทำให้ได้ดีไม่ได้",
-                 "ไปทำหน้าที่ตัวเองให้ดีก่อน",
-                 "ทำไมไม่ยืน",
-                 "อย่าทำให้บ้านเมืองเดือดร้อน",
-                 "จาบจ้วงสถาบัน",
-                 "ประชามติ 16.8 ล้านเสียง",
-                 "บังอาจก้าวล่วง",
-                 "ทำร้ายจิตใจคนไทย",
-                 "เป็นอันตรายต่อความมั่นคงของประเทศชาติ",
-                 "รัฐมิได้ใช้ความรุนแรง",
-                 "หยุดสร้างความแตกแยก",
-                 "ขี้ข้าไอ้ทอน",
-                 "ลุงมาจากการเลือกตั้ง",
-                 "เชียร์ลุง",
-                 "#อนุชนรักชาติศาสน์กษัตริย์",
-                 "ที่มีแผ่นดินอยู่ทุกวันนี้เพราะใคร",
-                 "ม๊อบสวะ",
-                 "ทำประโยชน์อะไรให้ชาติบ้านเมืองบ้าง",
-                 "ไอ้เจ็กกบฎ",
-                 "แปะสติ๊กเกอร์ ซาลาเปา &​ ",
-                 "โดนไอ้แม้วซื้อไปแล้ว",
-                 "รับไปห้าร้อย",
-                 "ประชาธิปไตยต้องเคารพกฎหมา",
-                 "เขาแค่ทำตามที่กฏหมายห้ามเท่านั้น",
-                 "นักการเมืองก็โกงเหมือนกันทุกคน",
-                 "ลุงตู่เป็นคนดี",
-                 "ลุงตู่อยู่บ้านเมืองสงบ",
-                 "บ้านเมืองสงบ จบที่ลุงตู่",
-                 "ระบอบทักษิณ",
-                 "สมบูรณาญาสิทธิทุน",
-                 "นี่คือการปฏิวัติที่อ่อนละมุน",
-                 "รัฐประหารโดยสันติวิธี",
-                 "Unfortunately, some people died.",
-                 "คนดี ถึงจะเป็นเผด็จการ ก็เป็นเผด็จการที่ดี",
-                 "ก็ไม่ได้ชอบลุงตู่นะ แต่ถ้าจะให้ไอ้ทอนมาเป็น ยังไงลุงตู่ก็ดีกว่า",
-                 "หนึ่งคือนายกฯ รักประเทศชาติ, สองคือนายกฯ รักพระมหากษัตริย์, สามคือนายกจริงใจ และทำเพื่อประเทศไทยจริง ๆ",
-                 "มึงมาไล่ดูสิ",
-                 "ลูกหลานอยู่ไม่ได้วันหน้า ก็โทษพ่อมันนั่นแหละ",
-                 "ถ้ารุนแรงคงมีคนตายไปแล้ว",
-                 "ไปให้ตำรวจยิงหรอ",
-                 "จะกี่รัฐบาลก็เหมือนกันหมด",
-                 "เอาเวลาไปหาเงินเลี้ยงปากท้องเถอะ",
-                 "เก่งมากก็ไปเป็นนายกฯเองสิ",
-                 "แค่รถฉีดน้ำจะไปกลัวทำไม เขาทำตามหลักสากล",
-                 "ท่านทรงงานหนัก",
-                 "โดนแค่ฉีดน้ำทำเป็นบ่น ตอนนั้น กปปส โดนแก๊สน้ำตานะ",
-                 "หัวก้าวหน้า ปัญญาล้าหลัง",
-                 "สัตว์นรก",
-                 "คนไทยทั้งประเทศ",
-                 "ขอพูดแรงๆ ซักครั้งในชีวิต พูดแล้วอยากจะร้องไห้​",
-                 "จะเปลี่ยนแปลงประเทศ ช่วยพ่อแม่ล้างจานหรือยัง",
-                 "ถ้าคนไทยฆ่ากันเอง จะร้องเพลงชาติไทยให้ใครฟัง",
-                 "ถ้าพวกมึงเป็นอะไรขึ้นมา คิดว่าพ่อนักการเมืองของมึงเขาจะมาช่วยเหรอ",
-                 "เห็นเราเงียบ ใช่ว่าเราจะไม่รู้สึก คุณด่าพ่อเรา เราเสียใจนะ",
-                 "ถ้าพ่อมองลงมา พ่อจะรู้สึกยังไง",
-                 "พวกคอมมิวนิสต์",
-                 "อยากได้เสรีภาพมากเกินไป",
-                 "วันๆ เอาแต่เรียกร้องเสรีภาพ ถึงไม่รู้ไงว่าท่านทำอะไรบ้าง",
-                 "หัดศึกษาประวัติศาสตร์บ้างนะ",
-                 "ถอยกันคนละก้าว",
-                 "เจ้าจะทำอะไรก็เรื่องของเค้า",
-                 "จ่ายภาษีหรือเปล่า",
-                 "ม็อบมุ้งมิ้ง",
-                 "ทำไมไม่เคารพความเห็นต่าง",
-                 "เป็น นร ก็กลับไปตั้งใจเรียนหนังสือ",
-                 "เด็กๆเอาแต่เล่นโซเชียล fake news ทั้งนั้น",
-                 "รัฐบาลมีผลงานเยอะแยะ แค่ข่าวไม่ออกเท่านั้นแหละ",
-                 "คิดต่างได้ แต่ต้องมีสถาบัน",
-                 "รักประยุทธ์ ก็ยังดีกว่าโดนล้างสมอง",
-                 "อยู่อย่างจงรัก ตายอย่างภักดี ปกป้องสถาบัน",
-                 "ไปฟังคนไม่จบ ม.6 มันพูดทำไม",
-                 "ก่อนจะสานต่ออุดมการณ์เพื่อชาติ วันนี้ช่วยแม่ทำงานบ้าน กรอกน้ำใส่ตู้เย็นหรือยัง",
-                 "ขยันอ่านหนังสือสอบให้เหมือนอ่านเบิกเนตรหรือยัง",
-                 "คุณภาพชีวิตจะดีขึ้น ถ้าคนเป็นคนดี ถ้าตัวเราดี",
-                 "แล้วที่หลานทำไม่เรียกว่าคุกคาม��ถาบันหรือ",
-                 "เป็น IO ดีกว่าเป็นควายให้ไอ้แม้วไอ้ทอนจูงจมูก",
-                 "ทำร้ายตำรวจ ด้วยคีมเหล็กขนาดใหญ่",
-                 "พวกเนตรนารีคุกคามเราก่อน",
-                 "เขามองพวกผมด้วยสายตาล้มสถาบัน",
-                 "เยาวชนปลดแอ๊ก",
-                 "ประชาธิปไตยแดกได้เหรอ",
-                 "ควรอยู่อย่างพอเพียงนะ",
-                 "เศรษฐกิจก็ดีอยู่แล้วนี่ เห็นคนซื้อนั่นซื้อนี่",
-                 "ไอทอนมันมาทำให้ประเทศวุ่นวาย",
-                 "อย่าไปดูการเมืองมาก มันปั่น",
-                 "ดีจ๊ะหนู พ่อแม่คงภูมิใจมาก",
-                 "รู้ทุกเรื่อง ยกเว้นเรื่องตนเอง หน้าที่ของตนเอง",
-                 "ตบเสียบ้างก็ดีเหมือนกัน เด็กสมัยนี้ไม่รู้กินอะไรเข้าไป",
-                 "ไอ้บูดจงพินาศ ประชาชาติจงพ้นภัย",
-                 "ผมก็ว่าเนชั่นเป็นกลางสุดแล้วในการเสนอข่าว ไม่ได้อวยใดๆพูดตามเนื้อผ้าครับ",
-                 "สร้างแต่ปัญหาให้ลุงตู่ แผนตื้นๆยังไปติดกับดัก",
-                 "ไม่เอาต่างชาติเป็นนาย",
-                 "เหยียบย่ำหัวใจคนไทย",
-                 "ชู 3 นิ้ว กูเอามึงตายเลย",
-                 "เราว่าลุงไม่เก่งนะ แต่ลุงไม่โกง",
-                 "มันทำได้แม้กระทั่ง ปารองเท้าปาขวดเขย่ารถพระที่นั่ง!!",
-                 "ไม่ภูมิใจเหรอ ที่ได้ตอบแทนคุณแผ่นดิน",
-                 "เราไม่ได้สนใจอ่ะนะ เราต้องทำงาน ถ้าไม่ทำงาน ก็ไม่มีแดก",
-                 "อย่าอ้างคำว่าประชาธิปไตยแล้วทำร้ายหัวใจคนทั้งชาติ",
-                 "ผมไม่ใช่สลิ่มนะ แต่ผมว่าป้าม่วงไม่ผิด",
-                 "โปรดอย่าบิดเบือนความจริงไปมากกว่านี้เลย มันเจ็บ...",
-                 "3 แสนเสียงใน กทม. แต่เป็นเสียงที่มีคุณภาพ ย่อมดีกว่า 15 ล้านเสียงใน ตจว. แต่ไร้คุณภาพ",
-                 "แน่จริงเรียนให้จบ มีเงินเดือน มีรายได้แล้วค่อยบอกว่าภาษีกู",
-                 "จ่ายแค่ VAT 7% แล้วยังมาเรียกตัวเองว่าผู้เสียภาษี",
-                 "ประเทศชาติจะดีขึ้นถ้าทุกคนหาเลี้ยงตัวเองได้",
-                 "เด็กๆถ้าอยากเห็นอนาคตที่ดีอะ คุณต้องให้ประเทศชาติมีความมั่นคงก่อน อย่าขายชาติ",
-                 "รังเกียจสถาบัน แล้วทำไมไม่เลิกใช้ธนบัตรและเหรียญเลยล่ะครับ​",
-                 "แปะสติ๊กเกอร์หนูหิ่น",
-                 "เมกามันอยู่เบื้องหลัง แล้วให้ไอ้ธรบงการอีกที",
-                 "นักเลง อันธพาล คนเกเร คนติดยา ผีพนัน คนสีเทา เค้ายังรู้จักรัก ปกป้องสถาบัน",
-                 "ผมน่ะทำงานเพื่อบ้านเมือง",
-                 "จะไล่ประยุทธ์ก็ไล่ไปสิ ทำไมต้องเอาพระองค์ท่านมาเกี่ยวด้วย",
-                 "ถ้าเข้ามาในฐานะคนรักดนตรีแล้วทิ้งเรื่องการเมืองไว้นอกรั้ว ก็คงไม่มีใครไปปิดกั้น",
-                 "ทำมาหากินเลี้ยงตัวเองเลี้ยงครอบครัวให้รอด พอแล้ว ใครจะมาหาว่าเป็น Ignorant ช่างหัวพ่อมัน",
-                 "วันแรกขาย iPhone 12 ในประเทศไทย คิวยาวเหยียด อ้าว! นึกว่าเศรษฐกิจไม่ดี!",
-                 "คงได้ผัวก่อนเรียนจบ แต่งตัวแบบนี้",
-                 "โกงนิดๆ หน่อยๆ ไม่เป็นไรหรอก ไอ้พวกนักการเมืองมันโกงมากกว่านี้เยอะ",
-                 "ฉันเออ ฉันอยากร้องไห้ ฉันxxxไว้แก ฉันโอยฉัน อึ้ยฉัน โอ้ย แกแกฉันตื่นเต้นมาก ฉัน โอ้ย ฉันxxxxหนักมากเลย ฉันบอกแล้วว่าฉันร้องไห้ เออฉัน โอย ฉัน โอ้ยแก้หัวใจฉันจะวาย โอ้ยฉัน ใจฉันเต้นตึก ๆ โอยๆ แก ฉันได้จับมือท่านน่ารักมากแก แบบ โอ้ยฉันสุดฤทธิ์ แก ฉันจะเป็นลม ไม่ โอ้ยเออ แก ฉันดีใจ",
-                 "ให้ใครมาด่าพ่อแม่คุณไม่ผิดเอาไหม",
-                 "แม้เหลือคนเดียวทั้งโรง เราก็จะยืน",
-                 "ถ้าเป็นรัฐบาลอื่น มาเจอวิกฤติโควิด สถานการณ์แม่งเละกว่านี้อีก",
-                 "ไม่ได้เชียร์ลุง แต่ลุงเค้าทำตามกฏหมาย",
-                 "แล้วคนด่ารับผิดชอบอะไร เกิดมาทำอะไรให้กับบ้านนี้เมืองนี้",
-                 "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย",
-                 "อีเด็กพวกนี้มันจะไปรู้อะไร",
-                 "การซื้อตำแหน่งมันเรื่องปกติ ถ้าคุณขยันหาเงินนั่นคือคุณก็มีสิทธิ์ คนละเรื่องกับคอรัปชั่นเลย",
-                 "ห้ามวิจารณ์ 112",
-                 "พูดแต่เรื่องซ้ำซาก ไม่มีหลักฐาน",
-                 "ไม่เอาสถาบันกษัตริย์ แต่พวกตัวเองก็ไม่เคยทำประโยชน์กับประชาชนเลยสักอย่าง เพราะฉะนั้นอยู่กับสถาบันกษัตริย์นี่แหละมีประโยชน์ที่สุดแล้ว",
-                 "ติดอยู่ตรงกลาง ม๊อบก็ไม่ใช้ สลิ่มก็ไม่เชิง งงม่ะ?",
-                 "ไม่อยากให้เพจนี้แสดงออกทางการเมืองเลยค่ะ",
-                 "วันที่ออกมาไม่เจออากาศแย่ก็มี ถนนหน้าบ้านเราก็ไม่ได้พัง สวยด้วย น้ำก็ไม่ได้กร่อยอ่ะ คนที่จนแถวบ้าน เมื่อเช้าก็เห็นเค้านั่งโขกหมากรุก หัวเราะเอิ๊กอ๊ากอยู่นะ​",
-                 "คือเราอยากให้ประเทศพัฒนา และในช่วงปีหลังๆ ตั้งแต่ 58 เป็นต้นมามันมีหลายอย่างที่พัฒนาแบบจับต้องได้มากๆ และรัฐบาลก็ผ่านการเลือกตั้งมาแล้ว เพราะงั้นเราไม่เห็นว่ามีความจำเป็นอะไรต้องล้มรัฐบาลในตอนนี้ที่วิกฤติ Covid ยังดำเนินอยู่ เว้นแต่ว่ามีคอรัปชันอะไรที่รับไม่ได้ถึงจะเห็นสมควรค่ะ",
-                 "เป็นเพจการเมืองไปเสียแล้วคงต้องเลิกติดตาม ไปกิน MK ดีกว่า 555",
-                 "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
-                 "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
-                 "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
-                 "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน"]
-    
-    slimrandom = random.choice(quoteslim)
-    embed = discord.Embed(
-        colour = 0xffe852,
-        title = "คําพูดสลิ่ม",
-        description = f"```{slimrandom}```"
-    )
-    
-    embed.set_thumbnail(url="https://i.imgur.com/prrLCPC.png")
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("🐃")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        quoteslim = ["ไม่ใช่สลิ่มนะ แต่...",
+                    "ไม่ใช่ติ่งลุงตู่ แต่..."
+                    "เราคนไทยเหมือนกัน",
+                    "ไม่มี REDACTED ประเทศไทยจะพัฒนามาถึงจุดนี้หรือ,",
+                    "รักชาติ ศาสน์ กษัตริย์",
+                    "ไอ้ทอน",
+                    "ตี๋ทอน",
+                    "ไอ้บุตร",
+                    "ปีแยร์บูด",
+                    "กะปิบูด",
+                    "อีช่อ",
+                    "อีฉ้อ",
+                    "ชังชาติ",
+                    "ขายชาติ",
+                    "ไม่สำนึกในบุญคุณ ",
+                    "หนักแผ่นดิน",
+                    "เนรคุณแผ่นดิน",
+                    "เราคือผู้อยู่อาศัย ไม่ใช่เจ้าของบ้าน",
+                    "ล้มเจ้า",
+                    "ส้มเน่า",
+                    "เผาไทย",
+                    "ลิเบอร่าน",
+                    "คณะร่าน",
+                    "เห่อหมอยคลั่งชาติฝรั่ง",
+                    "ขุ่นพ่อง",
+                    "รังนกสีฟ้า",
+                    "เก่งอยู่หลังคีย์บอร์ด",
+                    "ต่างชาติชักใยอยู่เบื้องหลัง",
+                    "ชักศึกเข้าบ้าน",
+                    "มีทุกอย่างที่ดีเพราะใคร ฉันจะไม่ลืม​",
+                    "พวกเผาบ้านเผาเมือง",
+                    "จำนำข้าว",
+                    "เป็นคนปลอมตัวมาสร้างสถานการณ์ค่ะ คนเสื้อเหลืองไม่มีใครทำแบบนั้น",
+                    "ศูนย์รวมจิตใจของชาติ",
+                    "ให้มันจบที่เรือนจำ",
+                    "ตอบแทนบุญคุณแผ่นดิน",
+                    "ควายแดง",
+                    "สวะส้ม",
+                    "ด่าทุกเรื่องที่รัฐออกนโยบาย แต่ลงทะเบียนทุกอย่างที่รัฐแจกให้ฟรี",
+                    "ไอแม้ว",
+                    "ฟังคำเตือนจากผู้ใหญ่บ้าง",
+                    "ไม่รักชาติก็ออกจากประเทศไป",
+                    "เด็กๆพวกนี้มันคิดเองไม่ได้หรอก โดนหลอกกันมาทั้งนั้น",
+                    "ไม่พอใจก็ไปอยู่ประเทศอื่น",
+                    "ไม่ได้อยู่ฝั่งไหน",
+                    "ด่ารัฐบาลก็ด่าไป อย่าไปวุ่นวายกับเบื้องสูง​",
+                    "อาบน้ำร้อนมาก่อน",
+                    "พวกหัวรุนแรง",
+                    "ไร้ซึ่งจริยธรรม",
+                    "โดนจูงจมูก",
+                    "ลุงเป็นคนดี แค่เข้ามาผิดเวลา",
+                    "เป็นกลาง ไม่เลือกข้าง",
+                    "พวกอันธพาล ไม่พอใจก็ลงถนน​",
+                    "ต้องเริ่มต้นที่ตัวเองก่อน",
+                    "พวกขี้ข้าทักษิณ",
+                    "ซ้ายจัดดัดจริต",
+                    "โง่ไม่มีสมอง",
+                    "ไม่เคารพผู้หลักผู้ใหญ่",
+                    "เป็นบุคคลสาธารณะ อย่าพูดเรื่องการเมือง",
+                    "นำชีวิตตัวเองยังทำให้ได้ดีไม่ได้",
+                    "ไปทำหน้าที่ตัวเองให้ดีก่อน",
+                    "ทำไมไม่ยืน",
+                    "อย่าทำให้บ้านเมืองเดือดร้อน",
+                    "จาบจ้วงสถาบัน",
+                    "ประชามติ 16.8 ล้านเสียง",
+                    "บังอาจก้าวล่วง",
+                    "ทำร้ายจิตใจคนไทย",
+                    "เป็นอันตรายต่อความมั่นคงของประเทศชาติ",
+                    "รัฐมิได้ใช้ความรุนแรง",
+                    "หยุดสร้างความแตกแยก",
+                    "ขี้ข้าไอ้ทอน",
+                    "ลุงมาจากการเลือกตั้ง",
+                    "เชียร์ลุง",
+                    "#อนุชนรักชาติศาสน์กษัตริย์",
+                    "ที่มีแผ่นดินอยู่ทุกวันนี้เพราะใคร",
+                    "ม๊อบสวะ",
+                    "ทำประโยชน์อะไรให้ชาติบ้านเมืองบ้าง",
+                    "ไอ้เจ็กกบฎ",
+                    "แปะสติ๊กเกอร์ ซาลาเปา &​ ",
+                    "โดนไอ้แม้วซื้อไปแล้ว",
+                    "รับไปห้าร้อย",
+                    "ประชาธิปไตยต้องเคารพกฎหมา",
+                    "เขาแค่ทำตามที่กฏหมายห้ามเท่านั้น",
+                    "นักการเมืองก็โกงเหมือนกันทุกคน",
+                    "ลุงตู่เป็นคนดี",
+                    "ลุงตู่อยู่บ้านเมืองสงบ",
+                    "บ้านเมืองสงบ จบที่ลุงตู่",
+                    "ระบอบทักษิณ",
+                    "สมบูรณาญาสิทธิทุน",
+                    "นี่คือการปฏิวัติที่อ่อนละมุน",
+                    "รัฐประหารโดยสันติวิธี",
+                    "Unfortunately, some people died.",
+                    "คนดี ถึงจะเป็นเผด็จการ ก็เป็นเผด็จการที่ดี",
+                    "ก็ไม่ได้ชอบลุงตู่นะ แต่ถ้าจะให้ไอ้ทอนมาเป็น ยังไงลุงตู่ก็ดีกว่า",
+                    "หนึ่งคือนายกฯ รักประเทศชาติ, สองคือนายกฯ รักพระมหากษัตริย์, สามคือนายกจริงใจ และทำเพื่อประเทศไทยจริง ๆ",
+                    "มึงมาไล่ดูสิ",
+                    "ลูกหลานอยู่ไม่ได้วันหน้า ก็โทษพ่อมันนั่นแหละ",
+                    "ถ้ารุนแรงคงมีคนตายไปแล้ว",
+                    "ไปให้ตำรวจยิงหรอ",
+                    "จะกี่รัฐบาลก็เหมือนกันหมด",
+                    "เอาเวลาไปหาเงินเลี้ยงปากท้องเถอะ",
+                    "เก่งมากก็ไปเป็นนายกฯเองสิ",
+                    "แค่รถฉีดน้ำจะไปกลัวทำไม เขาทำตามหลักสากล",
+                    "ท่านทรงงานหนัก",
+                    "โดนแค่ฉีดน้ำทำเป็นบ่น ตอนนั้น กปปส โดนแก๊สน้ำตานะ",
+                    "หัวก้าวหน้า ปัญญาล้าหลัง",
+                    "สัตว์นรก",
+                    "คนไทยทั้งประเทศ",
+                    "ขอพูดแรงๆ ซักครั้งในชีวิต พูดแล้วอยากจะร้องไห้​",
+                    "จะเปลี่ยนแปลงประเทศ ช่วยพ่อแม่ล้างจานหรือยัง",
+                    "ถ้าคนไทยฆ่ากันเอง จะร้องเพลงชาติไทยให้ใครฟัง",
+                    "ถ้าพวกมึงเป็นอะไรขึ้นมา คิดว่าพ่อนักการเมืองของมึงเขาจะมาช่วยเหรอ",
+                    "เห็นเราเงียบ ใช่ว่าเราจะไม่รู้สึก คุณด่าพ่อเรา เราเสียใจนะ",
+                    "ถ้าพ่อมองลงมา พ่อจะรู้สึกยังไง",
+                    "พวกคอมมิวนิสต์",
+                    "อยากได้เสรีภาพมากเกินไป",
+                    "วันๆ เอาแต่เรียกร้องเสรีภาพ ถึงไม่รู้ไงว่าท่านทำอะไรบ้าง",
+                    "หัดศึกษาประวัติศาสตร์บ้างนะ",
+                    "ถอยกันคนละก้าว",
+                    "เจ้าจะทำอะไรก็เรื่องของเค้า",
+                    "จ่ายภาษีหรือเปล่า",
+                    "ม็อบมุ้งมิ้ง",
+                    "ทำไมไม่เคารพความเห็นต่าง",
+                    "เป็น นร ก็กลับไปตั้งใจเรียนหนังสือ",
+                    "เด็กๆเอาแต่เล่นโซเชียล fake news ทั้งนั้น",
+                    "รัฐบาลมีผลงานเยอะแยะ แค่ข่าวไม่ออกเท่านั้นแหละ",
+                    "คิดต่างได้ แต่ต้องมีสถาบัน",
+                    "รักประยุทธ์ ก็ยังดีกว่าโดนล้างสมอง",
+                    "อยู่อย่างจงรัก ตายอย่างภักดี ปกป้องสถาบัน",
+                    "ไปฟังคนไม่จบ ม.6 มันพูดทำไม",
+                    "ก่อนจะสานต่ออุดมการณ์เพื่อชาติ วันนี้ช่วยแม่ทำงานบ้าน กรอกน้ำใส่ตู้เย็นหรือยัง",
+                    "ขยันอ่านหนังสือสอบให้เหมือนอ่านเบิกเนตรหรือยัง",
+                    "คุณภาพชีวิตจะดีขึ้น ถ้าคนเป็นคนดี ถ้าตัวเราดี",
+                    "แล้วที่หลานทำไม่เรียกว่าคุกคาม��ถาบันหรือ",
+                    "เป็น IO ดีกว่าเป็นควายให้ไอ้แม้วไอ้ทอนจูงจมูก",
+                    "ทำร้ายตำรวจ ด้วยคีมเหล็กขนาดใหญ่",
+                    "พวกเนตรนารีคุกคามเราก่อน",
+                    "เขามองพวกผมด้วยสายตาล้มสถาบัน",
+                    "เยาวชนปลดแอ๊ก",
+                    "ประชาธิปไตยแดกได้เหรอ",
+                    "ควรอยู่อย่างพอเพียงนะ",
+                    "เศรษฐกิจก็ดีอยู่แล้วนี่ เห็นคนซื้อนั่นซื้อนี่",
+                    "ไอทอนมันมาทำให้ประเทศวุ่นวาย",
+                    "อย่าไปดูการเมืองมาก มันปั่น",
+                    "ดีจ๊ะหนู พ่อแม่คงภูมิใจมาก",
+                    "รู้ทุกเรื่อง ยกเว้นเรื่องตนเอง หน้าที่ของตนเอง",
+                    "ตบเสียบ้างก็ดีเหมือนกัน เด็กสมัยนี้ไม่รู้กินอะไรเข้าไป",
+                    "ไอ้บูดจงพินาศ ประชาชาติจงพ้นภัย",
+                    "ผมก็ว่าเนชั่นเป็นกลางสุดแล้วในการเสนอข่าว ไม่ได้อวยใดๆพูดตามเนื้อผ้าครับ",
+                    "สร้างแต่ปัญหาให้ลุงตู่ แผนตื้นๆยังไปติดกับดัก",
+                    "ไม่เอาต่างชาติเป็นนาย",
+                    "เหยียบย่ำหัวใจคนไทย",
+                    "ชู 3 นิ้ว กูเอามึงตายเลย",
+                    "เราว่าลุงไม่เก่งนะ แต่ลุงไม่โกง",
+                    "มันทำได้แม้กระทั่ง ปารองเท้าปาขวดเขย่ารถพระที่นั่ง!!",
+                    "ไม่ภูมิใจเหรอ ที่ได้ตอบแทนคุณแผ่นดิน",
+                    "เราไม่ได้สนใจอ่ะนะ เราต้องทำงาน ถ้าไม่ทำงาน ก็ไม่มีแดก",
+                    "อย่าอ้างคำว่าประชาธิปไตยแล้วทำร้ายหัวใจคนทั้งชาติ",
+                    "ผมไม่ใช่สลิ่มนะ แต่ผมว่าป้าม่วงไม่ผิด",
+                    "โปรดอย่าบิดเบือนความจริงไปมากกว่านี้เลย มันเจ็บ...",
+                    "3 แสนเสียงใน กทม. แต่เป็นเสียงที่มีคุณภาพ ย่อมดีกว่า 15 ล้านเสียงใน ตจว. แต่ไร้คุณภาพ",
+                    "แน่จริงเรียนให้จบ มีเงินเดือน มีรายได้แล้วค่อยบอกว่าภาษีกู",
+                    "จ่ายแค่ VAT 7% แล้วยังมาเรียกตัวเองว่าผู้เสียภาษี",
+                    "ประเทศชาติจะดีขึ้นถ้าทุกคนหาเลี้ยงตัวเองได้",
+                    "เด็กๆถ้าอยากเห็นอนาคตที่ดีอะ คุณต้องให้ประเทศชาติมีความมั่นคงก่อน อย่าขายชาติ",
+                    "รังเกียจสถาบัน แล้วทำไมไม่เลิกใช้ธนบัตรและเหรียญเลยล่ะครับ​",
+                    "แปะสติ๊กเกอร์หนูหิ่น",
+                    "เมกามันอยู่เบื้องหลัง แล้วให้ไอ้ธรบงการอีกที",
+                    "นักเลง อันธพาล คนเกเร คนติดยา ผีพนัน คนสีเทา เค้ายังรู้จักรัก ปกป้องสถาบัน",
+                    "ผมน่ะทำงานเพื่อบ้านเมือง",
+                    "จะไล่ประยุทธ์ก็ไล่ไปสิ ทำไมต้องเอาพระองค์ท่านมาเกี่ยวด้วย",
+                    "ถ้าเข้ามาในฐานะคนรักดนตรีแล้วทิ้งเรื่องการเมืองไว้นอกรั้ว ก็คงไม่มีใครไปปิดกั้น",
+                    "ทำมาหากินเลี้ยงตัวเองเลี้ยงครอบครัวให้รอด พอแล้ว ใครจะมาหาว่าเป็น Ignorant ช่างหัวพ่อมัน",
+                    "วันแรกขาย iPhone 12 ในประเทศไทย คิวยาวเหยียด อ้าว! นึกว่าเศรษฐกิจไม่ดี!",
+                    "คงได้ผัวก่อนเรียนจบ แต่งตัวแบบนี้",
+                    "โกงนิดๆ หน่อยๆ ไม่เป็นไรหรอก ไอ้พวกนักการเมืองมันโกงมากกว่านี้เยอะ",
+                    "ฉันเออ ฉันอยากร้องไห้ ฉันxxxไว้แก ฉันโอยฉัน อึ้ยฉัน โอ้ย แกแกฉันตื่นเต้นมาก ฉัน โอ้ย ฉันxxxxหนักมากเลย ฉันบอกแล้วว่าฉันร้องไห้ เออฉัน โอย ฉัน โอ้ยแก้หัวใจฉันจะวาย โอ้ยฉัน ใจฉันเต้นตึก ๆ โอยๆ แก ฉันได้จับมือท่านน่ารักมากแก แบบ โอ้ยฉันสุดฤทธิ์ แก ฉันจะเป็นลม ไม่ โอ้ยเออ แก ฉันดีใจ",
+                    "ให้ใครมาด่าพ่อแม่คุณไม่ผิดเอาไหม",
+                    "แม้เหลือคนเดียวทั้งโรง เราก็จะยืน",
+                    "ถ้าเป็นรัฐบาลอื่น มาเจอวิกฤติโควิด สถานการณ์แม่งเละกว่านี้อีก",
+                    "ไม่ได้เชียร์ลุง แต่ลุงเค้าทำตามกฏหมาย",
+                    "แล้วคนด่ารับผิดชอบอะไร เกิดมาทำอะไรให้กับบ้านนี้เมืองนี้",
+                    "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย",
+                    "อีเด็กพวกนี้มันจะไปรู้อะไร",
+                    "การซื้อตำแหน่งมันเรื่องปกติ ถ้าคุณขยันหาเงินนั่นคือคุณก็มีสิทธิ์ คนละเรื่องกับคอรัปชั่นเลย",
+                    "ห้ามวิจารณ์ 112",
+                    "พูดแต่เรื่องซ้ำซาก ไม่มีหลักฐาน",
+                    "ไม่เอาสถาบันกษัตริย์ แต่พวกตัวเองก็ไม่เคยทำประโยชน์กับประชาชนเลยสักอย่าง เพราะฉะนั้นอยู่กับสถาบันกษัตริย์นี่แหละมีประโยชน์ที่สุดแล้ว",
+                    "ติดอยู่ตรงกลาง ม๊อบก็ไม่ใช้ สลิ่มก็ไม่เชิง งงม่ะ?",
+                    "ไม่อยากให้เพจนี้แสดงออกทางการเมืองเลยค่ะ",
+                    "วันที่ออกมาไม่เจออากาศแย่ก็มี ถนนหน้าบ้านเราก็ไม่ได้พัง สวยด้วย น้ำก็ไม่ได้กร่อยอ่ะ คนที่จนแถวบ้าน เมื่อเช้าก็เห็นเค้านั่งโขกหมากรุก หัวเราะเอิ๊กอ๊ากอยู่นะ​",
+                    "คือเราอยากให้ประเทศพัฒนา และในช่วงปีหลังๆ ตั้งแต่ 58 เป็นต้นมามันมีหลายอย่างที่พัฒนาแบบจับต้องได้มากๆ และรัฐบาลก็ผ่านการเลือกตั้งมาแล้ว เพราะงั้นเราไม่เห็นว่ามีความจำเป็นอะไรต้องล้มรัฐบาลในตอนนี้ที่วิกฤติ Covid ยังดำเนินอยู่ เว้นแต่ว่ามีคอรัปชันอะไรที่รับไม่ได้ถึงจะเห็นสมควรค่ะ",
+                    "เป็นเพจการเมืองไปเสียแล้วคงต้องเลิกติดตาม ไปกิน MK ดีกว่า 555",
+                    "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
+                    "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
+                    "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
+                    "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน"]
+        
+        slimrandom = random.choice(quoteslim)
+        embed = discord.Embed(
+            colour = 0xffe852,
+            title = "คําพูดสลิ่ม",
+            description = f"```{slimrandom}```"
+        )
+        
+        embed.set_thumbnail(url="https://i.imgur.com/prrLCPC.png")
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed)
+        await message.add_reaction("🐃")
 
 @client.command()
 async def calculator(ctx , *,equation):
-    url = f"https://api.mathjs.org/v4/?expr=https://api.mathjs.org/v4/?expr={equation}"
-    req = requests.get(url)
-    result = BeautifulSoup(req.text, "html.parser")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "เครื่องคิดเลข",
-        description = f"""```
-โจทย์ : {equation}
-คําตอบ : {result}
-```""")
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    await ctx.send(embed=embed)
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+        
+            url = f"https://api.mathjs.org/v4/?expr={equation}"
+            req = requests.get(url)
+            result = BeautifulSoup(req.text, "html.parser")
+
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "เครื่องคิดเลข",
+                description = f"""```
+        โจทย์ : {equation}
+        คําตอบ : {result}
+        ```""")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
+        
+        if server_language == "Thai":
+        
+            url = f"https://api.mathjs.org/v4/?expr={equation}"
+            req = requests.get(url)
+            result = BeautifulSoup(req.text, "html.parser")
+
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "Calculato",
+                description = f"""```
+        Equation : {equation}
+        Answer : {result}
+        ```""")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
 
 
 @calculator.error
 async def calculator_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ข้อผิดพลาดในการคํานวน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่เว้นวรรคหลังจากตัวเลขเเละไม่สามารถคํานวนนอกเหนือจาก + - * / ^ ``{COMMAND_PREFIX}calculator a (symbol) b``"
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ข้อผิดพลาดในการคํานวณ",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่สิ่งที่จะคําณวน ``{COMMAND_PREFIX}calculator (equation)``"
+                )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุสิ่งที่จะคําณวน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องระบุใส่สิ่งที่จะคําณวน ``{COMMAND_PREFIX}calculator (equation)``"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify an equation",
+                    description = f" ⚠️``{ctx.author}`` need to specify a math equation ``{COMMAND_PREFIX}calculator (equation)``"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 async def length(ctx, *, text):
-    num = len(text)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "LENGTH COUNTER",
-        description = f"""```
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        num = len(text)
+        if server_language == "Thai": 
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "LENGTH COUNTER",
+                description = f"""```
 ข้อความ : {text}
 ความยาว : {num}```"""
 
-    )
+            )
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    await ctx.send(embed=embed)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
+        
+        if server_language == "English": 
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "LENGTH COUNTER",
+                description = f"""```
+text : {text}
+length : {num}```"""
+
+            )
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            await ctx.send(embed=embed)
 
 @length.error
 async def length_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify a text ``{COMMAND_PREFIX}length (text)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
-async def github(ctx, *, user=None):    
-    url = f"https://api.github.com/users/{user}"
-    if user is None:
+async def github(ctx, *, user=None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของGithubที่จะดู ``{COMMAND_PREFIX}github (user)``"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-    
-    try:
-        r = requests.get(url)
-        r = r.json()
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            url = f"https://api.github.com/users/{user}"
+            if user is None:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของGithubที่จะดู ``{COMMAND_PREFIX}github (user)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        username = r['login']
-        avatar =  r['avatar_url']
-        githuburl = r['html_url']
-        name = r['name']
-        location = r['location']
-        email = r['email']
-        company = r['company']
-        bio = r['bio']
-        repo = r['public_repos']
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+            
+            try:
+                r = requests.get(url)
+                r = r.json()
 
-    except:
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                username = r['login']
+                avatar =  r['avatar_url']
+                githuburl = r['html_url']
+                name = r['name']
+                location = r['location']
+                email = r['email']
+                company = r['company']
+                bio = r['bio']
+                repo = r['public_repos']
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = f"💻 ข้อมูล Github ของ {username}",
-        description = f"""```
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = f"💻 ข้อมูล Github ของ {username}",
+                description = f"""```
 ชื่อ Github : {username}
 ลิงค์ Github : {githuburl}
 ชื่อ : {name}
@@ -8935,106 +9343,303 @@ async def github(ctx, *, user=None):
 บริษัท : {company}
 Bio : {bio}
 จํานวนงานที่ลง : {repo}
-```"""
-    )
-    embed.set_thumbnail(url = avatar)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    
-    await message.add_reaction("💻")
+        ```"""
+            )
+            embed.set_thumbnail(url = avatar)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            
+            await message.add_reaction("💻")
+
+        if server_language == "English":
+            url = f"https://api.github.com/users/{user}"
+            if user is None:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Specify a github username to search ``{COMMAND_PREFIX}github (user)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+            
+            try:
+                r = requests.get(url)
+                r = r.json()
+
+                username = r['login']
+                avatar =  r['avatar_url']
+                githuburl = r['html_url']
+                name = r['name']
+                location = r['location']
+                email = r['email']
+                company = r['company']
+                bio = r['bio']
+                repo = r['public_repos']
+
+            except:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️Unable to find the github profile please check your spelling")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = f"💻 ข้อมูล Github ของ {username}",
+                description = f"""```
+Github username: {username}
+Github link : {githuburl}
+Name : {name}
+Location : {location}
+Email : {email}
+Company : {company}
+Bio : {bio}
+Repository : {repo}
+        ```"""
+            )
+            embed.set_thumbnail(url = avatar)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            
+            await message.add_reaction("💻")
 
 @client.command()
 async def roll(ctx):
-    num = ["1","2","3","4 ","5","6","1","2","3","4","5","6","1","2","3","4","5","6"]
-    x = random.choice(num)
-    url = (f"https://www.calculator.net/img/dice{x}.png")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "🎲 ทอยลูกเต่า"
-    )
-    embed.set_image(url = url)
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("🎲")
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        num = ["1","2","3","4 ","5","6","1","2","3","4","5","6","1","2","3","4","5","6"]
+        x = random.choice(num)
+        url = (f"https://www.calculator.net/img/dice{x}.png")
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "🎲 ทอยลูกเต่า"
+            )
+            embed.set_image(url = url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("🎲")
+        
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "🎲 Dice"
+            )
+            embed.set_image(url = url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("🎲")
 
 @client.command(aliases=['8ball'])
 async def _8ball(ctx, *,question):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    r = requests.get(f"https://8ball.delegator.com/magic/JSON/{question}")
-    r = r.json()
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    answer = r['magic']['answer']
-    ask = r['magic']['question']
-    percent = r['magic']['type']
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title = "🎱 8ball",
-        description = f"""```
+        r = requests.get(f"https://8ball.delegator.com/magic/JSON/{question}")
+        r = r.json()
+
+        answer = r['magic']['answer']
+        ask = r['magic']['question']
+        percent = r['magic']['type']
+
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "🎱 8ball",
+                description = f"""```
 คําถาม : {ask}
 คําตอบ : {answer}
 ความน่าจะเป็น : {percent}```"""
-    )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction("🎱")
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("🎱")
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                title = "🎱 8ball",
+                description = f"""```
+Question : {ask}
+Respond : {answer}
+Probability : {percent}```"""
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("🎱")
 
 @client.command()
 async def embed(ctx,*,message):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    if "//" in message:
-        message = message.replace('//', '\n')
-        #somehow make it go to the next line
-        #if // is in the message it will move to the next line and continue the message which is after the //
-    
-    embed = discord.Embed(
-        colour = 0x00FFFF,
-        title= f"{message}"
-    )
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    await ctx.send(embed=embed)
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if "//" in message:
+            message = message.replace('//', '\n')
+            #somehow make it go to the next line
+            #if // is in the message it will move to the next line and continue the message which is after the //
+        
+        embed = discord.Embed(
+            colour = 0x00FFFF,
+            title= f"{message}"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        await ctx.send(embed=embed)
 
 @embed.error
 async def embed_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็น embed ``{COMMAND_PREFIX}embed (message)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็น embed ``{COMMAND_PREFIX}embed (message)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` Specify text to make into embed ``{COMMAND_PREFIX}embed (message)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
     
 @client.command()
 @commands.has_permissions(administrator=True)
 async def unban(ctx, *, member):
-    banned_users = await ctx.guild.bans()
-    member_name, member_discriminator = member.split('#')
-    for ban_entry in banned_users:
-        user = ban_entry.user
-        if (user.name, user.discriminator)==(member_name, member_discriminator):
-            await ctx.guild.unban(user)
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = f"ปลดเเบน {member}",
-                description = f"{member} ได้ถูกปลนเเบน"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            await ctx.send(embed=embed)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        else:
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = f"ไม่พบชื่อ {member}",
-                description = "ไม่มีชื่อนี้ในรายชื่อคนที่ถูกเเบนโปรดเช็คชื่อเเละเลขข้างหลัง"
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            await ctx.send(embed=embed)
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":          
+            banned_users = await ctx.guild.bans()
+            member_name, member_discriminator = member.split('#')
+            for ban_entry in banned_users:
+                user = ban_entry.user
+                if (user.name, user.discriminator)==(member_name, member_discriminator):
+                    await ctx.guild.unban(user)
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = f"ปลดเเบน {member}",
+                        description = f"{member} ได้ถูกปลนเเบน"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    await ctx.send(embed=embed)
+
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"ไม่พบชื่อ {member}",
+                        description = "ไม่มีชื่อนี้ในรายชื่อคนที่ถูกเเบนโปรดเช็คชื่อเเละเลขข้างหลัง"
+
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    await ctx.send(embed=embed)
+        
+        if server_language == "English":          
+            banned_users = await ctx.guild.bans()
+            member_name, member_discriminator = member.split('#')
+            for ban_entry in banned_users:
+                user = ban_entry.user
+                if (user.name, user.discriminator)==(member_name, member_discriminator):
+                    await ctx.guild.unban(user)
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = f"unban {member}",
+                        description = f"{member} have been unban"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    await ctx.send(embed=embed)
+
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"No user named {member}",
+                        description = "Please check spelling and number behind the name"
+
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    await ctx.send(embed=embed)
 
 @unban.error
 async def unban_error(ctx, error):
