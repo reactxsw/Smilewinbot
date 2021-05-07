@@ -3450,45 +3450,47 @@ async def on_guild_remove(guild):
 
 @client.event
 async def on_command_error(ctx, error):
-    try:
-        languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if languageserver is None:
-            pass
+    channel = client.get_channel(id = int(supportchannel))
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        pass
 
-        else:
-            language = collectionlanguage.find({"guild_id":ctx.guild.id})
-            for data in language:
-                server_language = data["Language"]
-            
-            if server_language == "Thai":
-                if isinstance(error, commands.CommandNotFound):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.CommandNotFound):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
-                else:
-                    raise error
-            
-            if server_language == "English":
-                if isinstance(error, commands.CommandNotFound):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = f"⚠️ Command not found"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+            else:
+                bug = traceback.format_exc()
+                await channel.send(bug)
+                await channel.send(error)
+                raise error
+        
+        if server_language == "English":
+            if isinstance(error, commands.CommandNotFound):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"⚠️ Command not found"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
-                else:
-                    raise error
-    
-    except Exception:
-        traceback.print_exc()
-
+            else:
+                bug = traceback.format_exc()
+                await channel.send(bug)
+                await channel.send(error)
+                raise error
 
 @client.command()
 async def membercount(ctx):
@@ -15913,6 +15915,7 @@ async def verify(ctx):
                                         colour =  0xB9E7A5
                                         )
                                         embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        await file.delete()
                                         await message.edit(embed=embed)
 
                                         if data["verification_role_give_id"] != "None":
@@ -16025,7 +16028,7 @@ async def verify(ctx):
                                 )
                                 embed.set_image(url = "attachment://captcha.png")
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar_url}") 
 
                                 message = await ctx.send(embed=embed , file=file)
 
@@ -16034,10 +16037,11 @@ async def verify(ctx):
                                     answer = answer.content
                                     if answer == text:
                                         embed = discord.Embed(
-                                        description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
+                                        description = f":white_check_mark: You have been verified",
                                         colour =  0xB9E7A5
                                         )
                                         embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        await file.delete()
                                         await message.edit(embed=embed)
 
                                         if data["verification_role_give_id"] != "None":
@@ -16068,7 +16072,7 @@ async def verify(ctx):
                             
                                     else:
                                         embed = discord.Embed(
-                                            description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
+                                            description = f":x: Incorrect captcha please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                             colour =  0x983925
                                         )
                                         embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
@@ -16076,11 +16080,11 @@ async def verify(ctx):
                             
                                 except asyncio.TimeoutError:
                                     embed = discord.Embed(
-                                        description = f":x: คุณใช้เวลานานเกินไป {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
-                                        colour =  0x983925
-                                    )
+                                            description = f":x: timeout please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
+                                            colour =  0x983925
+                                        )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                    await message.edit(embed=embed)      
+                                    await message.edit(embed=embed)
 
                             else:
                                 embed = discord.Embed(
@@ -16963,12 +16967,12 @@ async def setverify_error(ctx, error):
 
 @client.command()
 async def join(ctx):
-    try:
-        await ctx.author.voice.channel.connect() #Joins author's voice channel
-    
-    except Exception as e:
-        print(e)
-
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    if ctx.author.voice is None:
+        return await ctx.send('You are not connected to a voice channel')
+    else:
+        if voice == None:
+            await ctx.author.voice.channel.connect()
 
 @client.command()
 async def leave(ctx):
@@ -16976,13 +16980,12 @@ async def leave(ctx):
 
 @client.command()
 async def play(ctx, *, url):
-    uservc = ctx.message.author.voice.channel
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     if ctx.author.voice is None:
         return await ctx.send('You are not connected to a voice channel')
     else:
         if voice == None:
-            await uservc.connect()
+            await ctx.author.voice.channel.connect()
             player = music.get_player(guild_id=ctx.guild.id)
             if not player:
                 player = music.create_player(ctx, ffmpeg_error_betterfix=True)
