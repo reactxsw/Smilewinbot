@@ -292,17 +292,14 @@ async def setrole(ctx):
 async def setrole_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
+        )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -514,28 +511,14 @@ async def give_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
     
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
-                description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole give @role``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -769,29 +752,14 @@ async def remove(ctx, role: discord.Role):
 async def remove_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
-                description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{COMMAND_PREFIX}setrole remove @role``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
         
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -1026,28 +994,14 @@ async def setintroduce(ctx, channel:discord.TextChannel):
 async def setintroduce_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-    
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุห้องที่จะตั้ง",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{COMMAND_PREFIX}setintroduce #channel``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -1281,29 +1235,14 @@ async def setframe(ctx, *,frame):
 async def setframe_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-        
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุกรอบที่จะตั้ง",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุกรอบที่จะตั้ง ``{COMMAND_PREFIX}setframe (frame)``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
         
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -1578,18 +1517,14 @@ async def on_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-    
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -1798,48 +1733,45 @@ async def off(ctx):
 async def off_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        else:
-            language = collectionlanguage.find({"guild_id":ctx.guild.id})
-            for data in language:
-                server_language = data["Language"]
-            
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                        description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "You don't have permission",
-                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
-                    )
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -2022,29 +1954,15 @@ async def setwebhook(ctx , channel:discord.TextChannel):
 async def setwebhook_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุห้องที่จะตั้ง",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{COMMAND_PREFIX}setwebhook #text-channel``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-    
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -2141,17 +2059,14 @@ async def chat(ctx):
 async def chat_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -2369,17 +2284,14 @@ async def chaton_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -2595,17 +2507,14 @@ async def chatoff_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -2814,28 +2723,15 @@ async def setwelcome_error(ctx, error):
 
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-    
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุห้องที่จะตั้ง",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือนคนเข้าเซิฟเวอร์ ``{COMMAND_PREFIX}setwelcome #channel``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -3066,28 +2962,14 @@ async def setleave_error(ctx, error):
 
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-    
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ระบุห้องที่จะตั้ง",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือนคนออกเซิฟเวอร์ ``{COMMAND_PREFIX}setleave #channel``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -3198,28 +3080,14 @@ async def clear(ctx, amount : int):
 async def clear_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "จํานวนข้อความที่ต้องการที่จะลบ",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนของข้อความที่จะลบหลังจากคําสั่ง ``{COMMAND_PREFIX}clear [จํานวน]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ลบข้อความ",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``ลบข้อความ`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -3895,16 +3763,14 @@ https://hastebin.com/{r['key']}```"""
 async def hastebin_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ข้อความที่ต้องการที่จะใส่",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่ต้องการที่จะใส่ ``{COMMAND_PREFIX}hastebin (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -4002,16 +3868,14 @@ async def pastebin(ctx, *,message):
 async def pastebin_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ข้อความที่ต้องการที่จะใส่",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่ต้องการที่จะใส่ ``{COMMAND_PREFIX}pastebin (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -4112,15 +3976,14 @@ async def sreddit(ctx, subreddit):
 async def sreddit_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` กรุณาระบุsubreddit ที่ต้องการ ``{COMMAND_PREFIX}sreddit (subreddit)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -4767,15 +4630,14 @@ async def ascii_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
     
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งที่ต้องการสร้าง ascii art ``{COMMAND_PREFIX}ascii (word)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -4943,29 +4805,14 @@ async def kick(ctx, member : discord.Member, *, reason=None):
 async def kick_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ชื่อสมาชิกที่จะเเตะ",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของสมาชิกที่จะเเตะ ``{COMMAND_PREFIX}kick [@user]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์เเตะ",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเตะ`` ก่อนใช้งานคำสั่งนี้"
-            )
-            
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️') 
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -5084,28 +4931,14 @@ async def ban_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ชื่อสมาชิกที่จะเเบน",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของสมาชิกที่จะเเบน ``{COMMAND_PREFIX}ban [@user]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์เเตะ",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเบน`` ก่อนใช้งานคำสั่งนี้"
-            )
-            
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️') 
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -5203,28 +5036,14 @@ async def disconnect(ctx, member : discord.Member):
 async def disconnect_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ชื่อสมาชิกที่จะdisconnect",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของสมาชิกที่จะเเบน ``{COMMAND_PREFIX}disconnect [@user]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-    
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ย้ายสมาชิก",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-            
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️') 
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -6222,15 +6041,14 @@ async def lmgtfy(ctx, *, message):
 async def lmgtfy_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                    colour = 0x983925,
-                    description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{COMMAND_PREFIX}lmgtfy [message]``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -6962,15 +6780,14 @@ async def geoip(ctx, *, ip):
 async def geoip_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` กรุณาระบุ IP ที่ต้องการที่จะค้นหา ``{COMMAND_PREFIX}geoip [IP]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7003,15 +6820,14 @@ async def geoip_error(ctx, error):
 async def qr_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งที่จะเขียนใน QR code ``{COMMAND_PREFIX}qr [message]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7048,15 +6864,14 @@ async def qr_error(ctx, error):
 async def tweet(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งชื่อเเละสิ่งที่จะเขียนในโพส twitter ``{COMMAND_PREFIX}tweet [username] [message]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7089,27 +6904,14 @@ async def tweet(ctx, error):
 async def movetome_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะส่ง ``{COMMAND_PREFIX}movetome @member``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์เเอดมิน",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-            
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️') 
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7151,17 +6953,16 @@ async def movetome_error(ctx, error):
                 await message.add_reaction('⚠️')
 
             if isinstance(error, commands.MissingPermissions):
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "You don't have permission",
-                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
-                    )
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 
 @client.command()
@@ -7405,15 +7206,14 @@ async def timer_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับถอยหลัง ``{COMMAND_PREFIX}timer (second)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7572,15 +7372,14 @@ Uppercase text : {big}```"""
 async def upper_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมใหญ่ ``{COMMAND_PREFIX}upper (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7659,15 +7458,14 @@ Lowercase text : {lower}```"""
 async def lower_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมเล็ก ``{COMMAND_PREFIX}lower (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7746,15 +7544,14 @@ Reverse text : {reverse}```"""
 async def reverse_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะกลับด้าน ``{COMMAND_PREFIX}reverse (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7787,15 +7584,14 @@ async def reverse_error(ctx, error):
 async def count_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับ ``{COMMAND_PREFIX}count (second)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7906,15 +7702,14 @@ async def apexstat(ctx, username):
 async def apexstat_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมใส่ชื่อของผู้เล่น ``{COMMAND_PREFIX}apexstat (username)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -7993,15 +7788,14 @@ async def captcha(ctx, *, text):
 async def captcha_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมคําที่จะทําเป็น captcha ``{COMMAND_PREFIX}captcha (word)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -8776,15 +8570,14 @@ async def weather(ctx, *, city):
 async def weather_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{COMMAND_PREFIX}weather (city)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -9156,15 +8949,14 @@ async def country(ctx, *, country):
 async def country_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{COMMAND_PREFIX}country (country)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -9511,15 +9303,14 @@ async def rb6rank(ctx , username):
 
 @rb6rank.error
 async def rb6rank_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของผู้เล่นที่จะดู ``{COMMAND_PREFIX}rb6rank (username)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+    embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        )
+    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
 
 @client.command()
 async def iphonex(ctx , image=None):
@@ -9596,15 +9387,14 @@ async def phcomment(ctx , * ,text, username = None , image=None):
 async def phcomment_error(ctx,error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{COMMAND_PREFIX}phcomment (text)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -9915,16 +9705,14 @@ async def calculator(ctx , *,equation):
 async def calculator_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "ข้อผิดพลาดในการคํานวณ",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่สิ่งที่จะคําณวน ``{COMMAND_PREFIX}calculator (equation)``"
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10004,15 +9792,14 @@ length : {num}```"""
 async def length_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{COMMAND_PREFIX}length (text)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10298,15 +10085,14 @@ async def embed(ctx,*,message):
 async def embed_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็น embed ``{COMMAND_PREFIX}embed (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10408,27 +10194,14 @@ async def unban(ctx, *, member):
 async def unban_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะปลดเเบน ``{COMMAND_PREFIX}unban (member#1111)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-        
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ปลดเเบน",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10642,27 +10415,14 @@ async def giverole(ctx, user: discord.Member, role: discord.Role):
 async def giverole_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะให้ยศเเละยศที่จะให้ ``{COMMAND_PREFIX}giverole @user @role``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-        
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ให้ยศ",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10794,27 +10554,14 @@ async def removerole(ctx, user: discord.Member, role: discord.Role):
 async def removerole_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องการจะให้ยศเเละยศที่เอาออก ``{COMMAND_PREFIX}removerole @role``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-        
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์เอายศออก",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -10911,27 +10658,14 @@ async def changenick(ctx, user: discord.Member, Change):
 async def changenick_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของคนที่ต้องที่จะเปลี่ยนชื่อเเละชื่อใหม่ ``{COMMAND_PREFIX}changenick @member newnick``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
-        
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์เปลี่ยนชื่อ",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
-
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -11106,15 +10840,14 @@ async def anon(ctx, *,message):
 async def anon_error(ctx,error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่จะส่ง ``{COMMAND_PREFIX}anon (message)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -12879,17 +12612,14 @@ async def level(ctx):
 async def level_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -13102,17 +12832,14 @@ async def levelon_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -13325,17 +13052,14 @@ async def leveloff_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -13448,15 +13172,14 @@ async def youtube(ctx, *, keywords):
 async def youtube_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหา ``{COMMAND_PREFIX}youtube [ชื่อคลิป]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -13546,15 +13269,14 @@ async def ytsearch(ctx, *, keywords):
 async def ytsearch_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหา ``{COMMAND_PREFIX}ytsearch [keywords]``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -13806,17 +13528,14 @@ async def economyon_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -14033,17 +13752,14 @@ async def economyoff_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
 
-        if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-            )
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -14624,16 +14340,14 @@ async def deposit(ctx, amount : int):
 async def deposit_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "จํานวนเงินที่จะฝากเข้าธนาคาร",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนเงินที่จะฝากเข้าธนาคาร ``{COMMAND_PREFIX}deposit (amount)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-    
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
@@ -14839,16 +14553,14 @@ async def withdraw(ctx, amount : int):
 async def withdraw_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
-        if isinstance(error, commands.MissingRequiredArgument):
-            embed = discord.Embed(
-                colour = 0x983925,
-                title = "จํานวนเงินที่จะถอนจากธนาคาร",
-                description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนเงินที่จะถอนจากธนาคาร ``{COMMAND_PREFIX}withdraw (amount)``"
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-    
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
@@ -14995,7 +14707,7 @@ async def addcredit(ctx ,amount : int , member: discord.Member = None):
 
                                 collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank}})
                                 embed = discord.Embed(
-                                    title = f"โอนเงินสําเร็จ",
+                                    title = f"เพิ่มเงิน",
                                     description = f"ได้ทําการโอนเงินให้ {member.name} จํานวน {amount} {currency} เข้าธนาคาร",
                                     colour = 0xB9E7A5
                                 )
@@ -15025,29 +14737,67 @@ async def addcredit(ctx ,amount : int , member: discord.Member = None):
 
 @addcredit.error
 async def addcredit_error(ctx, error):
-
-    if isinstance(error, commands.MissingPermissions):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์ให้ตัง",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ให้ตัง",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
-    
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}pay (amount) @member``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
- 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️') 
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}addcredit_error (amount) @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify a member to add money``{COMMAND_PREFIX}addcredit_error (amount) @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
         
 
 @client.command()
@@ -15252,17 +15002,45 @@ async def pay(ctx ,amount : int , member: discord.Member = None):
 
 @pay.error
 async def pay_error(ctx, error):
-
-    if isinstance(error, commands.MissingRequiredArgument):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}pay (amount) @member``"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
- 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}addcredit_error (amount) @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify a member to add money``{COMMAND_PREFIX}addcredit_error (amount) @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 async def slot(ctx, amount:int):
@@ -15474,334 +15252,362 @@ async def slot(ctx, amount:int):
                                 title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                                 description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                                 colour = 0x983925
-                                )
+                            )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
                             message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸')  
+                            await message.add_reaction('💸')
                 else:
                     embed = discord.Embed(
                         title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                         description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                         colour = 0x983925
-                        )
+                    )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message  = await ctx.send(embed=embed)
                     await message.add_reaction('💸')
 
 @slot.error
 async def slot_error(ctx, error):
-
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "จํานวนเงินที่จะลงพนัน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนเงินที่จะลงพนัน``{COMMAND_PREFIX}slot (amount)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
- 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "จํานวนเงินที่จะลงพนัน",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนเงินที่จะลงพนัน``{COMMAND_PREFIX}slot (amount)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "จํานวนเงินที่จะลงพนัน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่จํานวนเงินที่จะลงพนัน``{COMMAND_PREFIX}slot (amount)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Amount of money to bet",
+                    description = f" ⚠️``{ctx.author}`` need to specify amount of money to bet``{COMMAND_PREFIX}slot (amount)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setcurrency(ctx, *, currency):
-    guild = collection.find_one({"guild_id":ctx.guild.id})
-    if not guild is None:
-        status = collection.find({"guild_id":ctx.guild.id})
-        for data in status:
-            if data["economy_system"] == "YES":
-                try:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"currency":currency}})
-                    embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title = "ตั้งค่าค่าเงิน",
-                        description= f"ตั้ง ``{currency}`` เป็นค่าเงินสําเร็จ"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction('✅')
-         
-                except:
-                    embed = discord.Embed(
-                        colour= 0x983925,
-                        title = "ตั้งค่าค่าเงิน",
-                        description= f"ไม่สามารถตั้ง ``{currency}`` เป็นค่าเงิน"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction('✅')
+        if server_language == "Thai":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    if data["economy_system"] == "YES":
+                        try:
+                            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"currency":currency}})
+                            embed = discord.Embed(
+                                colour= 0x00FFFF,
+                                title = "ตั้งค่าค่าเงิน",
+                                description= f"ตั้ง ``{currency}`` เป็นค่าเงินสําเร็จ"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed)
+                            await message.add_reaction('✅')
+                
+                        except:
+                            embed = discord.Embed(
+                                colour= 0x983925,
+                                title = "ตั้งค่าค่าเงิน",
+                                description= f"ไม่สามารถตั้ง ``{currency}`` เป็นค่าเงิน"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed)
+                            await message.add_reaction('✅')
+                    else:
+                        embed = discord.Embed(
+                            title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+
             else:
                 embed = discord.Embed(
                     title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                     description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                     colour = 0x983925
-                    )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message  = await ctx.send(embed=embed)
-                await message.add_reaction('💸')
-
-    else:
-        embed = discord.Embed(
-            title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-            description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
-            colour = 0x983925
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message  = await ctx.send(embed=embed)
-        await message.add_reaction('💸')
-
-@setcurrency.error
-async def setcurrency_error(ctx, error):
-
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ค่าเงิน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ค่าเงินที่จะเปลี่ยน ``{COMMAND_PREFIX}setcurrency (currency)``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์เเอดมิน",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
-        
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
-
-@client.command()
-async def rob(ctx , member: discord.Member):
-    guild = collection.find_one({"guild_id":ctx.guild.id})
-    if not guild is None:
-        status = collection.find({"guild_id":ctx.guild.id})
-        for data in status:
-            currency = data["currency"]
-            status = data["economy_system"]
-        if status == "YES":
-            user = collectionmoney.find_one({"user_id":ctx.author.id})
-            if user is None:
-                embed = discord.Embed(
-                    title = f"{ctx.author.name} ยังไม่มีบัญชี",
-                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
-                    colour = 0x983925
-                    )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message  = await ctx.send(embed=embed)
-                await message.add_reaction('💸')
-                
-            else:
-                usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
-                for data in usermoney:
-                    user_wallet = data["wallet"] 
-
-                taking = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
-                if taking is None:
-                    embed = discord.Embed(
-                        title = f"{member.name} ยังไม่มีบัญชี",
-                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
-                        colour = 0x983925
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message  = await ctx.send(embed=embed)
-                    await message.add_reaction('💸')
-                    
-                else:
-                    takingmoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
-                    for data in takingmoney:
-                        victimwallet = data["wallet"] 
-
-                    if victimwallet > 0:
-                        percent = (random.randint(1,101))
-                        if percent >= 30:
-                            percentmoney = (random.randint(60,101))
-                            stolen = (victimwallet * (percentmoney/100))
-                            stolen = round(stolen)
-                            victimnew_wallet = victimwallet - stolen
-                            stolernew_wallet = user_wallet + stolen
-                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":stolernew_wallet}})
-                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"wallet":victimnew_wallet}})
-                            embed = discord.Embed(
-                                title = f"ขโมยเงินจาก {member.name}",
-                                description = f"ขโมยเงินได้จํานวน {stolen} {currency}",
-                                colour = 0x00FFFF
-
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸')  
-
-                        else:
-                            reason = ["วิ่งหนีทัน","ไหวตัวทัน","วิ่งเร็วโครต","มีไหวพริบดี","รู้ตัวว่าจะโดนปล้น"]
-                            num = (random.randint(0,4))
-                            randomreason = reason[num]
-                            embed = discord.Embed(
-                                title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
-                                description = f"เพราะว่า {member.name} {randomreason}",
-                                colour = 0x983925
-
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message  = await ctx.send(embed=embed)
-                            await message.add_reaction('💸') 
-
-                    else:
-                        embed = discord.Embed(
-                            title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
-                            description = f"เพราะว่า {member.name} ไม่มีเงินในกระเป๋าตังสักบาท",
-                            colour = 0x983925
-
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸') 
-
-        else:
-            embed = discord.Embed(
-                title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
-                colour = 0x983925
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message  = await ctx.send(embed=embed)
-            await message.add_reaction('💸')       
-                    
-    else:
-        embed = discord.Embed(
-            title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-            description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
-            colour = 0x983925
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message  = await ctx.send(embed=embed)
-        await message.add_reaction('💸')
-
-@client.command()
-async def work(ctx):
-    guild = collection.find_one({"guild_id":ctx.guild.id})
-    if not guild is None:
-        status = collection.find({"guild_id":ctx.guild.id})
-        for data in status:
-            currency = data["currency"]
-            status = data["economy_system"]
-        if status == "YES":
-            user = collectionmoney.find_one({"user_id":ctx.author.id})
-            if user is None:
-                embed = discord.Embed(
-                    title = f"{ctx.author.name} ยังไม่มีบัญชี",
-                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
-                    colour = 0x983925
-                    )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message  = await ctx.send(embed=embed)
-                await message.add_reaction('💸')
-            
-            else:
-                usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
-                for data in usermoney:
-                    user_wallet = data["wallet"]
-                
-                money = (random.randint(1000,9500))
-                usernew_wallet = user_wallet + money
-                work = ["ล้างจาน","ถูพื้น","ขายตัว","ขับ taxi","ไปส่ง pizza","ขับ Grab"]
-                num = (random.randint(0,5))
-                ranwork = work[num]
-                collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":usernew_wallet}})
-                embed = discord.Embed(
-                    title = f"",
-                    description = f"{ctx.author} ได้ {ranwork} เเละได้รับเงิน {money}{currency}",
-                    colour = 0xB9E7A5
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message  = await ctx.send(embed=embed)
                 await message.add_reaction('💸')
-        else:
-            embed = discord.Embed(
-                title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
-                colour = 0x983925
-                )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message  = await ctx.send(embed=embed)
-            await message.add_reaction('💸')       
-            
-    else:
-        embed = discord.Embed(
-            title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-            description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
-            colour = 0x983925
-            )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message  = await ctx.send(embed=embed)
-        await message.add_reaction('💸')
 
-@client.command()
-@commands.has_permissions(administrator=True)
-async def resetmoney(ctx , member: discord.Member = None):
-    if member is None:
-        try:
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title = f"คุณเเน่ในที่จะ reset เงินของ {ctx.author}",
-                description = "พิม YES / NO")
-
-            embed.set_footer(text=":")
-            message = await ctx.send(embed=embed)
-
-            choice = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-            userchoice = choice.content
-            userchoice = userchoice.lower()
-            await asyncio.sleep(1) 
-            await choice.delete() 
-            await asyncio.sleep(1) 
-            await message.delete() 
-
-        except asyncio.TimeoutError:
-            await message.delete()
-        
-        if userchoice == "yes":
+        if server_language == "English":
             guild = collection.find_one({"guild_id":ctx.guild.id})
             if not guild is None:
                 status = collection.find({"guild_id":ctx.guild.id})
                 for data in status:
-                    currency = data["currency"]
-                    status = data["economy_system"] 
-                if status == "YES":
-                    receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
-                    if receiver is None:
+                    if data["economy_system"] == "YES":
+                        try:
+                            collection.update_one({"guild_id":ctx.guild.id},{"$set":{"currency":currency}})
+                            embed = discord.Embed(
+                                colour= 0x00FFFF,
+                                title = "set currency",
+                                description= f"currency have been set to ``{currency}``"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed)
+                            await message.add_reaction('✅')
+                
+                        except:
+                            embed = discord.Embed(
+                                colour= 0x983925,
+                                title = "set currency",
+                                description= f"unable to set ``{currency}`` as currency"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed)
+                            await message.add_reaction('✅')
+                    else:
                         embed = discord.Embed(
-                            title = f"{member.name} ยังไม่มีบัญชี",
-                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            title = "Command is disable",
+                            description = f"This command is disable please use {COMMAND_PREFIX}economy on",
                             colour = 0x983925
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
                         await message.add_reaction('💸')
-                
-                    else:
-                        receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
-                        for data in receivermoney:
-                            receivernew_bank = data["bank"] * 0
-                            receivernew_wallet = data["bank"] * 0
 
-                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank,"wallet":receivernew_wallet}})
+            else:
+                embed = discord.Embed(
+                    title = "Command is disable",
+                    description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                    colour = 0x983925
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+@setcurrency.error
+async def setcurrency_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ค่าเงิน",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ค่าเงินที่จะเปลี่ยน ``{COMMAND_PREFIX}setcurrency (currency)``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์เเอดมิน",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
+            
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️') 
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ค่าเงิน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ค่าเงินที่จะเปลี่ยน ``{COMMAND_PREFIX}setcurrency (currency)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์เเอดมิน",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️') 
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "currency",
+                    description = f" ⚠️``{ctx.author}`` need to specify a currency symbol to set ``{COMMAND_PREFIX}setcurrency (currency)``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+@client.command()
+async def rob(ctx , member: discord.Member):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
                         embed = discord.Embed(
-                            title = f"โอนเงินสําเร็จ",
-                            description = f"ได้ทําการ reset เงินของ {ctx.author}",
-                            colour = 0xB9E7A5
-                        )
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message  = await ctx.send(embed=embed)
-                        await message.add_reaction('💸')      
-            
+                        await message.add_reaction('💸')
+                        
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"] 
+
+                        taking = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if taking is None:
+                            embed = discord.Embed(
+                                title = f"{member.name} ยังไม่มีบัญชี",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                            
+                        else:
+                            takingmoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in takingmoney:
+                                victimwallet = data["wallet"] 
+
+                            if victimwallet > 0:
+                                percent = (random.randint(1,101))
+                                if percent >= 30:
+                                    percentmoney = (random.randint(60,101))
+                                    stolen = (victimwallet * (percentmoney/100))
+                                    stolen = round(stolen)
+                                    victimnew_wallet = victimwallet - stolen
+                                    stolernew_wallet = user_wallet + stolen
+                                    collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":stolernew_wallet}})
+                                    collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"wallet":victimnew_wallet}})
+                                    embed = discord.Embed(
+                                        title = f"ขโมยเงินจาก {member.name}",
+                                        description = f"ขโมยเงินได้จํานวน {stolen} {currency}",
+                                        colour = 0x00FFFF
+
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message  = await ctx.send(embed=embed)
+                                    await message.add_reaction('💸')  
+
+                                else:
+                                    reason = ["วิ่งหนีทัน","ไหวตัวทัน","วิ่งเร็วโครต","มีไหวพริบดี","รู้ตัวว่าจะโดนปล้น"]
+                                    num = (random.randint(0,4))
+                                    randomreason = reason[num]
+                                    embed = discord.Embed(
+                                        title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
+                                        description = f"เพราะว่า {member.name} {randomreason}",
+                                        colour = 0x983925
+
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message  = await ctx.send(embed=embed)
+                                    await message.add_reaction('💸') 
+
+                            else:
+                                embed = discord.Embed(
+                                    title = f"ปล้นเงินจาก {member.name} ไม่สําเร็จ",
+                                    description = f"เพราะว่า {member.name} ไม่มีเงินในกระเป๋าตังสักบาท",
+                                    colour = 0x983925
+
+                                )
+                                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                message  = await ctx.send(embed=embed)
+                                await message.add_reaction('💸') 
+
                 else:
                     embed = discord.Embed(
                         title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
@@ -15811,7 +15617,7 @@ async def resetmoney(ctx , member: discord.Member = None):
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message  = await ctx.send(embed=embed)
                     await message.add_reaction('💸')       
-                        
+                            
             else:
                 embed = discord.Embed(
                     title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
@@ -15822,31 +15628,497 @@ async def resetmoney(ctx , member: discord.Member = None):
                 message  = await ctx.send(embed=embed)
                 await message.add_reaction('💸')
 
+        if server_language == "English":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                            title = f"{ctx.author.name} don't have a balance",
+                            description = f"use {COMMAND_PREFIX}openbal to open balance",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                        
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"] 
+
+                        taking = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if taking is None:
+                            embed = discord.Embed(
+                                title = f"{member.name} don't have a balance",
+                                description = f"use {COMMAND_PREFIX}openbal to open balance",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                            
+                        else:
+                            takingmoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in takingmoney:
+                                victimwallet = data["wallet"] 
+
+                            if victimwallet > 0:
+                                percent = (random.randint(1,101))
+                                if percent >= 30:
+                                    percentmoney = (random.randint(60,101))
+                                    stolen = (victimwallet * (percentmoney/100))
+                                    stolen = round(stolen)
+                                    victimnew_wallet = victimwallet - stolen
+                                    stolernew_wallet = user_wallet + stolen
+                                    collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":stolernew_wallet}})
+                                    collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"wallet":victimnew_wallet}})
+                                    embed = discord.Embed(
+                                        title = f"rob from {member.name}",
+                                        description = f"you have earned {stolen} {currency}",
+                                        colour = 0x00FFFF
+
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message  = await ctx.send(embed=embed)
+                                    await message.add_reaction('💸')  
+
+                                else:
+                                    reason = ["run away","is aware","run too fast","know how to fight","fight back" , "there is a police nearby"]
+                                    num = (random.randint(0,4))
+                                    randomreason = reason[num]
+                                    embed = discord.Embed(
+                                        title = f"fail to rob {member.name}",
+                                        description = f"reason : {member.name} {randomreason}",
+                                        colour = 0x983925
+
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message  = await ctx.send(embed=embed)
+                                    await message.add_reaction('💸') 
+
+                            else:
+                                embed = discord.Embed(
+                                    title = f"fail to rob {member.name} ",
+                                    description = f"reason : {member.name} have no money in his wallet",
+                                    colour = 0x983925
+
+                                )
+                                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                message  = await ctx.send(embed=embed)
+                                await message.add_reaction('💸') 
+
+                else:
+                    embed = discord.Embed(
+                        title = "Command is disable",
+                        description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                        colour = 0x983925
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')     
+                            
+            else:
+                embed = discord.Embed(
+                    title = "Command is disable",
+                    description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                    colour = 0x983925
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+@client.command()
+async def work(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"]
+                        
+                        money = (random.randint(1000,9500))
+                        usernew_wallet = user_wallet + money
+                        work = ["ล้างจาน","ถูพื้น","ขายตัว","ขับ taxi","ไปส่ง pizza","ขับ Grab"]
+                        num = (random.randint(0,5))
+                        ranwork = work[num]
+                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":usernew_wallet}})
+                        embed = discord.Embed(
+                            title = f"",
+                            description = f"{ctx.author} ได้ {ranwork} เเละได้รับเงิน {money}{currency}",
+                            colour = 0xB9E7A5
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                else:
+                    embed = discord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')       
+                    
+            else:
+                embed = discord.Embed(
+                    title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                    colour = 0x983925
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+        if server_language == "English":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                                title = f"{ctx.author.name} don't have a balance",
+                                description = f"use {COMMAND_PREFIX}openbal to open balance",
+                                colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"]
+                        
+                        money = (random.randint(1000,9500))
+                        usernew_wallet = user_wallet + money
+                        work = ["Wash the dishes","Mop the floor","drive uber","deliver a pizza"]
+                        num = (random.randint(0,5))
+                        ranwork = work[num]
+                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":usernew_wallet}})
+                        embed = discord.Embed(
+                            title = f"",
+                            description = f"{ctx.author} have {ranwork} and earned {money}{currency}",
+                            colour = 0xB9E7A5
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                else:
+                    embed = discord.Embed(
+                        title = "Command is disable",
+                        description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')     
+                    
+            else:
+                embed = discord.Embed(
+                    title = "Command is disable",
+                    description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                    colour = 0x983925
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+@client.command()
+@commands.has_permissions(administrator=True)
+async def resetmoney(ctx , member: discord.Member = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            if member is None:
+                member = ctx.author
+
+            try:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"คุณเเน่ในที่จะ reset เงินของ {member.name}",
+                    description = "พิม YES / NO")
+
+                embed.set_footer(text=":")
+                message = await ctx.send(embed=embed)
+
+                choice = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                userchoice = choice.content
+                userchoice = userchoice.lower()
+                await asyncio.sleep(1) 
+                await choice.delete() 
+                await asyncio.sleep(1) 
+                await message.delete() 
+
+            except asyncio.TimeoutError:
+                await message.delete()
+            
+            if userchoice == "yes":
+                guild = collection.find_one({"guild_id":ctx.guild.id})
+                if not guild is None:
+                    status = collection.find({"guild_id":ctx.guild.id})
+                    for data in status:
+                        status = data["economy_system"] 
+                    if status == "YES":
+                        receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if receiver is None:
+                            embed = discord.Embed(
+                                title = f"{member.name} ยังไม่มีบัญชี",
+                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                    
+                        else:
+                            receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in receivermoney:
+                                receivernew_bank = data["bank"] * 0
+                                receivernew_wallet = data["bank"] * 0
+
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank,"wallet":receivernew_wallet}})
+                            embed = discord.Embed(
+                                title = f"reset เงิน",
+                                description = f"ได้ทําการ reset เงินของ {member.name}",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')      
+                
+                    else:
+                        embed = discord.Embed(
+                            title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')       
+                            
+                else:
+                    embed = discord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')
+
+        if server_language == "English":  
+            if member is None:
+                member = ctx.author
+            try:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"Are you sure you want to reset {ctx.author} money ?",
+                    description = "type YES / NO")
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+
+                choice = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                userchoice = choice.content
+                userchoice = userchoice.lower()
+                await asyncio.sleep(1) 
+                await choice.delete() 
+                await asyncio.sleep(1) 
+                await message.delete() 
+
+            except asyncio.TimeoutError:
+                await message.delete()
+            
+            if userchoice == "yes":
+                guild = collection.find_one({"guild_id":ctx.guild.id})
+                if not guild is None:
+                    status = collection.find({"guild_id":ctx.guild.id})
+                    for data in status:
+                        status = data["economy_system"] 
+                    if status == "YES":
+                        receiver = collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":member.id})
+                        if receiver is None:
+                            embed = discord.Embed(
+                                title = f"{member.name} don't have a balance",
+                                description = f"use {COMMAND_PREFIX}openbal to open balance",
+                                colour = 0x983925
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')
+                    
+                        else:
+                            receivermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":member.id})
+                            for data in receivermoney:
+                                receivernew_bank = data["bank"] * 0
+                                receivernew_wallet = data["bank"] * 0
+
+                            collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":member.id},{"$set":{"bank":receivernew_bank,"wallet":receivernew_wallet}})
+                            embed = discord.Embed(
+                                title = f"โอนเงินสําเร็จ",
+                                description = f"ได้ทําการ reset เงินของ {member.name}",
+                                colour = 0xB9E7A5
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')      
+                
+                    else:
+                        embed = discord.Embed(
+                            title = "Command is disable",
+                            description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                            colour = 0x983925
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')     
+                            
+                else:
+                    embed = discord.Embed(
+                            title = "Command is disable",
+                            description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                            colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')
+
 @resetmoney.error
 async def resetmoney_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        if isinstance(error, commands.MissingPermissions):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "คุณไม่มีสิทธิ์ให้ตัง",
+                description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+            )
+            
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์ให้ตัง",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️') 
         
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
+        if isinstance(error, commands.MissingRequiredArgument):
+            embed = discord.Embed(
+                colour = 0x983925,
+                title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
+                description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}resetmoney @member``"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
     
-    if isinstance(error, commands.MissingRequiredArgument):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}pay (amount) @member``"
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
- 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed ) 
+            await message.add_reaction('⚠️')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ให้ตัง",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️') 
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อสมาชิกที่จะโอนเงินให้ เเละจํานวนเงินที่จะทําการโอน ``{COMMAND_PREFIX}resetmoney @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+        
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+            
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify a member to reset money``{COMMAND_PREFIX}resetmoney @member``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command(aliases =["vfy"])
 async def verify(ctx):
@@ -16956,7 +17228,7 @@ async def setverify_error(ctx, error):
             if isinstance(error, commands.MissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
-                    title = "You don't have permission",
+                    title = "   You don't have permission",
                     description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
                 )
 
@@ -16964,6 +17236,196 @@ async def setverify_error(ctx, error):
 
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
+
+@client.command()
+async def gethttp(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/http.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/http.txt", filename="http.txt")
+            await ctx.send(file = f)
+        
+        if server_language == "English":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/http.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/http.txt", filename="http.txt")
+            await ctx.send(file = f)
+
+@client.command()
+async def gethttps(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/https.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/https.txt", filename="https.txt")
+            await ctx.send(file = f)
+        
+        if server_language == "English":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/https.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/https.txt", filename="https.txt")
+            await ctx.send(file = f)
+
+@client.command()
+async def getproxy(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/proxy.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/proxy.txt", filename="proxy.txt")
+            await ctx.send(file = f)
+        
+        if server_language == "English":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/proxy.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/proxy.txt", filename="proxy.txt")
+            await ctx.send(file = f)
+
+@client.command()
+async def getsock4(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/sock4.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/sock4.txt", filename="sock4.txt")
+            await ctx.send(file = f)
+        
+        if server_language == "English":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/sock4.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/sock4.txt", filename="sock4.txt")
+            await ctx.send(file = f)
+
+@client.command()
+async def getsock5(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/sock5.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/sock5.txt", filename="data/sock5.txt")
+            await ctx.send(file = f)
+        
+        if server_language == "English":
+            url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt"
+            r = requests.get(url)
+            r = r.text
+            with open("data/sock5.txt", "w") as file:
+                file.write(r)
+            file.close()
+            f = discord.File("data/sock5.txt", filename="data/sock5.txt")
+            await ctx.send(file = f)
 
 @client.command()
 async def join(ctx):
@@ -17095,7 +17557,27 @@ async def cleancmd(ctx):
 
 @client.command()
 async def test(ctx):
-    await ctx.send("Bot online เเล้ว")
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            await ctx.send("Bot online เเล้ว")
+        
+        if server_language == "English":
+            await ctx.send("Bot is online")
 
 ###########################################################
 #            /\                                           #
