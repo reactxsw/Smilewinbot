@@ -4,9 +4,9 @@ import asyncio
 import datetime  
 import itertools 
 import os
-import praw 
 import requests 
 import random 
+import asyncpraw
 import urllib 
 import aiohttp
 import bs4 
@@ -58,7 +58,7 @@ if Path("config.json").exists():
     TOKEN = config.get("bot_token")
     COMMAND_PREFIX = config.get("bot_prefix")
     openweathermapAPI = config.get("openweathermap_api")
-    reddit = praw.Reddit(
+    reddit = asyncpraw.Reddit(
         client_id=config.get("reddit_client_id"),
         client_secret=config.get("reddit_client_secret"),
         username=config.get("reddit_username"),
@@ -198,6 +198,20 @@ async def setlanguage(ctx):
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
+
+@setlanguage.error
+async def setlanguage_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "You don't have permission",
+            description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @setlanguage.command()
 @commands.has_permissions(administrator=True)
@@ -3952,52 +3966,108 @@ async def sreddit(ctx, subreddit):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            subreddit=reddit.subreddit(subreddit)
+            subreddit = await reddit.subreddit(subreddit)
             all_subs = []
-            hot = subreddit.hot(limit = 10)
-
-            for submission in hot:
+            async for submission in subreddit.hot(limit = 10):
                 all_subs.append(submission) 
-        
+            
             random_sub = random.choice(all_subs)
             title =random_sub.title
             url = random_sub.url
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title =f"{title}",
-                description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
-                )
 
-            embed.set_image(url=url)
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            embed.timestamp = datetime.datetime.utcnow()
+            if submission.over_18:
+                if ctx.channel.is_nsfw():
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title =f"{title}",
+                        description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
+                        )
 
-            message= await ctx.send(embed=embed)
-            await message.add_reaction('✨')
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.timestamp = datetime.datetime.utcnow()
+
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('✨')
+                
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title =f"NSFW",
+                        description = f"คุณไม่สามารถค้นหา subreddit ที่ 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                        )
+
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.timestamp = datetime.datetime.utcnow()
+
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('✨')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title =f"{title}",
+                    description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
+                    )
+
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
         
         if server_language == "English":
-            subreddit=reddit.subreddit(subreddit)
+            subreddit= await reddit.subreddit(subreddit)
             all_subs = []
-            hot = subreddit.hot(limit = 10)
 
-            for submission in hot:
+            async for submission in subreddit.hot(limit = 10):
                 all_subs.append(submission) 
         
             random_sub = random.choice(all_subs)
             title =random_sub.title
             url = random_sub.url
-            embed = discord.Embed(
-                colour = 0x00FFFF,
-                title =f"{title}",
-                description = f"Source : subreddit r/{subreddit}"
-                )
 
-            embed.set_image(url=url)
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            embed.timestamp = datetime.datetime.utcnow()
+            if submission.over_18:
+                if ctx.channel.is_nsfw():
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title =f"{title}",
+                        description = f"Source : subreddit r/{subreddit}"
+                        )
 
-            message= await ctx.send(embed=embed)
-            await message.add_reaction('✨')
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.timestamp = datetime.datetime.utcnow()
+
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('✨')
+
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title =f"NSFW",
+                        description = f"unable to search subreddit which is 18+ in this text channel please use this in NSFW channel"
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.timestamp = datetime.datetime.utcnow()
+
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('✨')
+
+            else:
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title =f"{title}",
+                    description = f"Source : subreddit r/{subreddit}"
+                    )
+
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @sreddit.error
 async def sreddit_error(ctx, error):
@@ -7867,20 +7937,67 @@ async def anal(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/anal")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "Anal"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/anal")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "Anal"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/anal")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "Anal"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def smallboob(ctx):
@@ -7895,20 +8012,67 @@ async def smallboob(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/smallboobs")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "smallboobs"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/smallboobs")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "smallboobs"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/smallboobs")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "smallboobs"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def gsolo(ctx):
@@ -7923,20 +8087,67 @@ async def gsolo(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/solog")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "Girl solo"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/solog")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "Girl solo"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/solog")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "Girl solo"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def erofeet(ctx):
@@ -7952,19 +8163,66 @@ async def erofeet(ctx):
         await message.add_reaction('👍')
 
     else: 
-        r = requests.get("https://nekos.life/api/v2/img/erofeet")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "erofeet"
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/erofeet")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "erofeet"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/erofeet")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "erofeet"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
     
 @client.command()
 async def feet(ctx):
@@ -7979,20 +8237,67 @@ async def feet(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/feetg")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "feet"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/feetg")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "feet"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/feetg")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "feet"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def pussy(ctx):
@@ -8007,20 +8312,67 @@ async def pussy(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "pussy"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "pussy"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "pussy"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def hentai(ctx):
@@ -8035,21 +8387,68 @@ async def hentai(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "hentai"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "hentai"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
 
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "hentai"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+            
 @client.command()
 async def eroyuri(ctx):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -8063,20 +8462,67 @@ async def eroyuri(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/eroyuri")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "eroyuri"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/eroyuri")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "eroyuri"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/eroyuri")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "eroyuri"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+                
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def yuri(ctx):
@@ -8091,20 +8537,67 @@ async def yuri(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/yuri")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "yuri"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/yuri")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "yuri"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/yuri")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "yuri"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def solo(ctx):
@@ -8119,20 +8612,67 @@ async def solo(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/solo")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "solo"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/solo")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "solo"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/solo")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "solo"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def classic(ctx):
@@ -8147,20 +8687,67 @@ async def classic(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/classic")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "classic"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/classic")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "classic"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw(): 
+                r = requests.get("https://nekos.life/api/v2/img/classic")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "classic"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def boobs(ctx):
@@ -8175,20 +8762,67 @@ async def boobs(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/boobs")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "boobs"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/boobs")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "boobs"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+        
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/boobs")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "boobs"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+        
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def tits(ctx):
@@ -8203,21 +8837,68 @@ async def tits(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/tits")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "tits"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/tits")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "tits"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
 
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/tits")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "tits"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+                
 @client.command()
 async def blowjob(ctx):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -8231,20 +8912,67 @@ async def blowjob(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/blowjob")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "blowjob"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/blowjob")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "blowjob"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)   
-        await message.add_reaction('❤️')
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+        
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/blowjob")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "blowjob"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+        
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def lewd(ctx):
@@ -8259,20 +8987,67 @@ async def lewd(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "lewd"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "lewd"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}") 
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}") 
 
-        message = await ctx.send(embed=embed)  
-        await message.add_reaction('❤️') 
+                message = await ctx.send(embed=embed)  
+                await message.add_reaction('❤️') 
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "lewd"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}") 
+
+                message = await ctx.send(embed=embed)  
+                await message.add_reaction('❤️') 
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()
 async def lesbian(ctx):
@@ -8287,20 +9062,67 @@ async def lesbian(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/les")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "lesbian"
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/les")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "lesbian"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')   
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                r = requests.get("https://nekos.life/api/v2/img/les")
+                r = r.json()
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                    title = "lesbian"
+
+                )   
+                url = r['url']
+                embed.set_image(url=url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 @client.command()  
 async def feed(ctx):
@@ -8533,13 +9355,13 @@ async def weather(ctx, *, city):
                     colour = 0x00FFFF,
                     title = f"สภาพอากาศในจังหวัด {city}",
                     description = f"""```
-        อุณหภูมิตอนนี้ : {temperature}°C
-        อุณหภูมิสูงสุดของวัน : {highesttemp}°C
-        อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
-        อุณหภูมิรู้สึกเหมือน : {feellike}
-        ความชื้น : {humidity}%
-        ความเร็วลม : {windspeed}mph
-        สภาพอากาศ : {day}```
+อุณหภูมิตอนนี้ : {temperature}°C
+อุณหภูมิสูงสุดของวัน : {highesttemp}°C
+อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
+อุณหภูมิรู้สึกเหมือน : {feellike}
+ความชื้น : {humidity}%
+ความเร็วลม : {windspeed}mph
+สภาพอากาศ : {day}```
                     """
                     
                 )
@@ -8573,13 +9395,13 @@ async def weather(ctx, *, city):
                     colour = 0x00FFFF,
                     title = f"weather in {city}",
                     description = f"""```
-        Temperature now : {temperature}°C
-        Highest temperature today : {highesttemp}°C
-        Lowest temperature today : {lowesttemp}°C
-        Feel like : {feellike}
-        Humidity : {humidity}%
-        windspeed : {windspeed}mph
-        Weather : {day}```
+Temperature now : {temperature}°C
+Highest temperature today : {highesttemp}°C
+Lowest temperature today : {lowesttemp}°C
+Feel like : {feellike}
+Humidity : {humidity}%
+windspeed : {windspeed}mph
+Weather : {day}```
                     """
                     
                 )
