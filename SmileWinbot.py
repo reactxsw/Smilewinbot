@@ -43,6 +43,46 @@ from pymongo import MongoClient
 from pathlib import Path
 from googleapiclient.discovery import build
 
+if not Path("download").exists():
+    directory = os.path.dirname(__file__) 
+    folder = f"{directory}/download" 
+
+    try:
+        os.makedirs(folder)
+
+    except OSError:
+        pass
+
+if not Path("data").exists():
+    directory = os.path.dirname(__file__) 
+    folder = f"{directory}/data" 
+
+    try:
+        os.makedirs(folder)
+        
+    except OSError:
+        pass
+
+if not Path("image").exists():
+    directory = os.path.dirname(__file__) 
+    folder = f"{directory}/image" 
+
+    try:
+        os.makedirs(folder)
+        
+    except OSError:
+        pass
+
+if not Path("logs").exists():
+    directory = os.path.dirname(__file__) 
+    folder = f"{directory}/logs" 
+
+    try:
+        os.makedirs(folder)
+        
+    except OSError:
+        pass
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='logs/botlog.log', encoding='utf-8', mode='w')
@@ -204,8 +244,12 @@ async def setlanguage_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
         embed = discord.Embed(
             colour = 0x983925,
-            title = "You don't have permission",
-            description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+            title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+            description = f"""
+⚠️ ``{ctx.author.mention}``
+
+English : You must have ``Administrator`` to be able to use this command
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
         )
 
         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -245,6 +289,24 @@ async def thai(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
 
+@thai.error
+async def thai_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+            description = f"""
+⚠️ ``{ctx.author.mention}``
+
+English : You must have ``Administrator`` to be able to use this command
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
+
 @setlanguage.command()
 @commands.has_permissions(administrator=True)
 async def english(ctx):
@@ -276,6 +338,24 @@ async def english(ctx):
 
         message = await ctx.send(embed=embed)
         await message.add_reaction('✅')
+
+@english.error
+async def english_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        embed = discord.Embed(
+            colour = 0x983925,
+            title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+            description = f"""
+⚠️ ``{ctx.author.mention}``
+
+English : You must have ``Administrator`` to be able to use this command
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
+        )
+
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+        message = await ctx.send(embed=embed ) 
+        await message.add_reaction('⚠️')
 
 @client.group(invoke_without_command=True)
 @commands.has_permissions(administrator=True)
@@ -379,7 +459,7 @@ async def give(ctx, role: discord.Role):
         for data in language:
             server_language = data["Language"]
 
-        if server_language == "Thai": 
+        if server_language == "Thai":   
             server = collection.find_one({"guild_id":ctx.guild.id})
             if server is None:
                 newserver = {"guild_id":ctx.guild.id,
@@ -3378,6 +3458,21 @@ async def on_command_error(ctx, error):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
+            
+            else:
+                bug = traceback.format_exc()
+                await channel.send(bug)
+                await channel.send(error)
+                raise error
+
+            if isinstance(commands.BotMissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"⚠️บอทไม่มีสิทธิ คุณต้องให้สิทธิเเอดมินกับบอทก่อนใช้คําสั่งนี้"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
             else:
                 bug = traceback.format_exc()
@@ -3390,6 +3485,15 @@ async def on_command_error(ctx, error):
                 embed = discord.Embed(
                     colour = 0x983925,
                     title = f"⚠️ Command not found"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+            
+            elif isinstance(commands.BotMissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = f"⚠️Bot don't have enough permission to do that please give administrator permission to the bot"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed ) 
@@ -5709,7 +5813,7 @@ async def helpadmin(ctx):
         if server_language == "English":
             embed=discord.Embed(
                 title='คําสั่งเกี่ยวเเอดมิน',
-                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
             embed.add_field(name=f'``{COMMAND_PREFIX}kick @member``', value='ban a member', inline = True)
@@ -5773,7 +5877,7 @@ async def helpfun(ctx):
         if server_language == "English":
             embed=discord.Embed(
                 title='คําสั่งบรรเทิง',
-                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
             )
             embed.add_field(name=f'``{COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {COMMAND_PREFIX}helpsetup', inline = True)
@@ -5840,7 +5944,7 @@ async def helpgeneral(ctx):
         if server_language == "English":
             embed=discord.Embed(
                 title='คําสั่งทั่วไป',
-                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
             embed.add_field(name=f'``{COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
@@ -5900,7 +6004,7 @@ async def helpimage(ctx):
         if server_language == "English":
             embed=discord.Embed(
                 title='คําสั่งเกี่ยวกับรูป',
-                description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
+                description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
             embed.add_field(name=f'``{COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
@@ -5943,6 +6047,7 @@ async def helpnsfw(ctx):
 
 ส่งรูปตาม catergory 
 
+{COMMAND_PREFIX}porn
 {COMMAND_PREFIX}gsolo
 {COMMAND_PREFIX}smallboob
 {COMMAND_PREFIX}classic
@@ -5976,7 +6081,7 @@ async def helpnsfw(ctx):
         if server_language == "English":
 
             embed=discord.Embed(
-                title='คําสั่งnsfw',
+                title='NSFW commands',
                 description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
@@ -5984,6 +6089,7 @@ async def helpnsfw(ctx):
 
 Send photos according to the catergory
 
+{COMMAND_PREFIX}porn
 {COMMAND_PREFIX}gsolo
 {COMMAND_PREFIX}smallboob
 {COMMAND_PREFIX}classic
@@ -7923,7 +8029,7 @@ async def captcha_error(ctx, error):
 
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
- 
+
 @client.command()
 async def anal(ctx):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -7985,6 +8091,85 @@ async def anal(ctx):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+
+@client.command()
+async def porn(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                tag = random.randint(1,39235)
+                url = f"https://cdn.porngifs.com/img/{tag}"
+                response = requests.get(url)
+                file = open(f"download/pg{tag}.gif", "wb")
+                file.write(response.content)
+                file.close()
+                file = discord.File(f"download/pg{tag}.gif", filename=f"pg{tag}.gif")
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                )   
+                embed.set_image(url=f"attachment://pg{tag}.gif")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed , file=file)   
+                await message.add_reaction('❤️')
+            
+            else:
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title =f"NSFW",
+                    description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+                    )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
+
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
+        
+        if server_language == "English":
+            if ctx.channel.is_nsfw():
+                tag = random.randint(1,39235)
+                url = f"https://cdn.porngifs.com/img/{tag}"
+                response = requests.get(url)
+                file = open(f"download/pg.gif", "wb")
+                file.write(response.content)
+                file.close()
+                file = discord.File(f"download/pg.gif", filename=f"pg.gif")
+                embed = discord.Embed(
+                    colour = 0xFC7EF5,
+                )   
+                embed.set_image(url=f"attachment://pg.gif")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed , file=file)   
                 await message.add_reaction('❤️')
             
             else:
@@ -10487,7 +10672,37 @@ async def slim(ctx):
                     "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
                     "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
                     "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
-                    "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน"]
+                    "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน",
+                    "เชื่อเถิดครับว่าสิ่งที่เรามีมาและมีอยู่แล้วน่ะ...ดีที่สุดแล้ว",
+                    "ถ้าเสพแต่ข่าวด้านเดียวก็จะเห็นแต่ด้านแย่ของรัฐบาล ของประเทศ แต่ในความเป็นจริงมันมีแค่ด้านนั้นรึเปล่า",
+                    "รัฐบาลนี้อาจไม่ได้ดีเลิศประเสริฐศรีอะไร แต่มันก็ไม่ได้เลวร้ายอย่างที่คนบางกลุ่มพยายามทำให้มันเป็นหรอก เหตุผลแถมอีกอย่างคือ เป็นรัฐบาลที่เชิดชูสถาบัน ไม่ปล่อยให้พวกตาสว่างอยู่ในกะลาเนรคุณชาติเนรคุณแผ่นดินทำตามใจชอบเกินไปนัก อันนี้บวกเพิ่มอีกหนึ่งคะแนน",
+                    "พวกสามกีบ",
+                    "เอาจริงชีวิตควรมีอะไรมากกว่าแค่การเมืองครับ วันๆหมกมุ่นแต่เรื่องนี้มากๆ ชีวิตไม่เจริญกันพอดี",
+                    "เราก็เคยอินกับม็อบค่ะ เคยบริจาคตั้งหลายรอบ แต่พอติงเรื่องข้อ 3 ก็โดนผลักเป็นสลิ่ม โดนสัก 3-4 ครั้งก็เลยแบบอะไรของเค้า โกรธมาก พอเริ่มรับข้อมูลจากฝั่งสลิ่มบ้างก็ค่อยๆเห็นผลงานลุงตู่และความปลอมของม็อบ ตอนนี้เลยเป็นสลิ่มอยู่ยาวละ5555",
+                    "การเป็นหมอได้ ขยัน เรียนดีแน่นอน แต่คุณธรรมล่ะ มีแค่ไหน มันสอนกันไม่ได้ ถ้าไม่มีพ่อแม่เป็นแบบอย่างที่ดีก็จบ",
+                    "คนนึงแพ้การเมืองจนต้องหนีออกต่างประเทศ อีกคนโดนด่าทุกวันแต่ยังสามารถอาศัยอยู่ในประเทศอย่างชิลๆ ได้ ผมว่าความเก่งในการเล่นการเมืองคนนึงเก่งกว่าอีกฝั่งอย่างทาบไม่ติดเลย",
+                    "ฉันคือบุคคลที่เคยไปเป่านกหวีด ฉันไม่ชอบลุง และฉันก็ไม่ชอบใครเลย🤣 ฉันไม่ได้อยู่กับกลุ่มไหนทั้งสิ้น โดยเฉพาะกลุ่มที่ด่าสถาบัน ตอนนี้ฉันไม่รู้ว่าอยู่จุดไหนของการเมือง",
+                    "ผมไม่ได้หายใจเข้าออกเป็นเรื่องการเมือง ผมไม่เคยสมาทานตัวเองอยู่ข้างใคร ทุกวันยังหงุดหงิดกับใครก็ตามที่มาเป็นรัฐบาล เฉกเช่นประชาชนคนหนึ่งไม่ต่างกัน แต่ที่สำคัญก็คือ ไม่ว่าผมจะชอบหรือจะเกลียดนายกแค่ไหน มันก็ไม่ทำให้ผมมีความคิดว่าอยากจะไปแต่งเพลงด่า",
+                    "รัฐประหารมีความจำเป็นในการเมืองไทย ในฐานะของเครื่องตัดไฟ รัฐประหารไม่ได้ทำให้ประเทศไทยก้าวหน้านัก แต่ทำให้ไม่บรรลัยหรือตายหมู่เกิดสงครามกลางเมือง",
+                    "สวัสดีครับ ผมขอแนะนำตัวครับว่าผมเคยเป็นเยาวชนหัวรุนแรงคนหนึ่งมาก่อน ที่เคยต่อต้านสถาบัน วันนี้ ผมสำนึกผิดจากใจแล้วครับ ผมขอโทษแผ่นดินไทย และผมสัญญาว่าจะรักชาติ ศาสนา และพระมหากษัตริย์ไทยสืบต่อไปครับ ผมจะขอรับสื่อที่เหมาะสมสำหรับผมในทวิตนี้นะครับ",
+                    "1 สวดมนตร์ 2 รักชาติ 3 ช่วยคนจน 4 เธอไม่ได้หล่อนะ 5 คิดดีทำดี 6 แต่งตัวให้สุภาพ 7 ทำมาหากิน 8 อย่าทำลายสังคม 9 เคารพผู้ใหญ่ 10 กตัญญู",
+                    "สำหรับคนที่ด่าประเทศไทย ผมอยากไห้คุณไปอยู่ USA .Russia,Germany ,UK, France .China ,UAE, etc..ประเทศละ1ปี...แล้วคุณจะ #รักประเทศไทย #love",
+                    "เด็กสมัยนี้...สนใจแต่จะย้ายไปประเทศอื่น...แต่ไม่มีใครสนใจที่จะแก้ไขปัญหา...ในประเทศตัวเอง..คงจะโดนปลูกฝังให้ชังชาติตั้งแต่เล็ก..😔😔",
+                    "ลุ่งตู่และพี่น้องไทยที่รักสถาบัน เราเลิกคบสหรัฐหันกลับมาคบจีนเถิดคับ",
+                    "อีคนจัญไร หนีออกนอกประเทศ ทําให้แผ่นดินสูงขึ้น อยากให้ไอ้พวก 3 นิ้วจัญไรรีบออกนอกประเทศให้หมดถ้ามีปัญญา ไอ้พวกกระจอก",
+                    'วันวัน ทําอะไร..เพื่อประเทศชาติและประชาชน บ้างวะ ไม่เห็นจะทําอะไร ที่เป็นประโยชน์เลย รัฐบาลมืออาชีพ เหรอ "ถุย" ประเทศล่มจ่มไปเท่าไรแล้ว โกงกิน กันมาตลอด ติดคุกกันไปเท่าไร หนีคดีไปอยู่ต่างประเทศ ทั้งพี่ทั้งน้อง รวมทั้งลูกสมุน แล้วใครวะจะตั้งรัฐบาลมืออาชีพ ถุย ถุย....ไอ้พวกที่อยู่ นะไหวเหรอ ซื่อสัตย์สอาดพอ แล้วหรื',
+                    "ใคร ที่บอกให้ลุงตู่ลาออก เสียใจด้วยครับ เพราะไม่มีใครเหมาะ ท่าลุงตู่อีกแล้ว",
+                    "อย่าเอาท่านพันท้ายนรสิงห์ มาเปรียบเทียบกับ สัตว์นรกอัปรีย์จัญไรแบบพวกมึง.. เพราะท่านพันท้าย ท่านจงรักภักดีต่อพระมหากษัตริย์ไทย ... แต่พวหมึงไม่ใช่ พวกมึงมันแค่สัตว์เลื้อยคลานที่แดกขี้เป็นอาหาร ถึงได้มีพฤติกรรมสันดานหยาบหนาเกินกว่าคนทั่วไปเค้าทํากัน.. ยิ่งไออ้แก่นี่ตัวเหี้ยเลยเมื่อไหร่จะตายห่าซะที แผ่นดินจะได้สูงขึ้น..",
+                    "สมองกวงหมดแระ",
+                    "นัก การ เมือง เรียก ร้อง ให้ ยกเลิก ส.ว. เรา ประชา ชน คนหนึ่ง ขอ เรียก ร้องให้ ยกเลิก ส.ส. มีแต่ คสช ก้อ พอ",
+                    "ตอนนี้แฮกแทคยุบฝ่ายค้านกระหึ่มโซเชีบลแล้วครับพี่น้อง 55555555555555",
+                    "สันดานฝ่ายค้นมันห็นแก่ตัวมากๆๆ วันๆไม่ทําห่าอะไรหรอกคอยแต่จะหาเรื่องนายกตลอด #เปลืองภาษี กูจริงๆๆๆๆ",
+                    'พวกที่รักชาติ รักสถาบัน ล้วมันเรียกเราว่า "สลิ่ม" งั้นขอเรียกพวกชังชาติ ชังเจ้าว่า "สวะ" จะได้ไหมครับ',
+                    "เรียก แม่ง.สวะสังขม..หรือขยะของสังคม..ไปเลย.ไอ้พวกสามสัส.สามกีบ",
+                    "ไอ้พวกควาย 3 นิ้วจัญไรสถุน ต่างชาติจะมาเสือกเรื่องในไทยไม่ได้ จะมาอยู่เหนือกฎหมายไทยไม่ได้ พวกมึงนี่ไม่มีสมองจริงๆควายก็ไม่ใช่หมาก็ไม่ใช่ไม่รู้จะเปรียบเทียบกับสมองอะไรดี",
+                    "ชาติบ้านเมืองของเรา อาจจะวุ่นวายไปบ้าง มีความแตกแยก มีคนเลว มีนักการเมืองเลว มีประชาชนเลวและเห็นแก่ตัว มีต่างชาติเข้ามาแทรกแซงกิจการภายในประเทศ มีการกลั่นแกล้งรังแกกัน แต่ถ้าเรายึดมั่นในการทำความดีเพื่อชาติบ้านเมือง ผมเชื่อมั่นว่าแล้วความดีจะคุ้มครองเรา อยู่ที่ไหน ทำเพื่อใครก็ไม่เท่ากับทำให้แผ่นดินเกิด",
+                    "ประเทศไทยนี่แหละครับที่ต่างชาติอยากมาอยู่และมาใช้ชีวิตในบั้นปลายมากที่สุดเพราะที่นี่มีอะไรดีๆ มีเสน่ห์ในตัวเอง งดงาม ไม่เหมือนใคร และไม่มีใครเหมือนบนโลกใบนี้",
+                    "มีเหตุการณ์หนึ่งที่ฝังใจผมมาก วันหนึ่งอากาศหนาวมาก ผมจะเข้าบ้านเช้า เลยถอดถุงมือเพื่อให้จับลูกกุญแจไขลูกบิดได้ถนัด เอามือเปล่าจับประตูแล้วเนื่องจากหนาวเย็นจัดมาก มือเปล่าๆ เลยเกิดน้ำแข็งเกาะติดกับลูกบิดประตู ผมต้องก้มเอาลมปากร้อนๆ เป่ามือจนเอามือออกจากลูกบิด พร้อมกับคำถามในใจว่า เราจะมาอยู่ทรมานเป็นพลเมืองชั้นสามชั้นสี่ในที่ๆ ไม่ใช่บ้านเกิดเมืองนอนของเราไปทำไม วินาทีนั้นทำให้ผมตัดสินใจในทันทีว่าผมต้องกลับมารับใช้ชาติบ้านเมือง"]
         
         slimrandom = random.choice(quoteslim)
         embed = discord.Embed(
@@ -12695,6 +12910,50 @@ async def setup(ctx):
                 )
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('✅')
+
+@setup.error
+async def setup_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')   
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -16965,124 +17224,134 @@ async def verify(ctx):
             if not guild is None:
                 results = collection.find({"guild_id":ctx.guild.id})
                 for data in results:
-                    if data["verification_system"] == "YES":
-                        if data["verification_channel_id"] != "None":
-                            channel_id = int(data["verification_channel_id"])
-                            channel = client.get_channel(channel_id)
+                    status = data["verification_system"] 
+                    vfchannel = data["verification_channel_id"]
+                    give = data["verification_role_give_id"]
+                    remove = data["verification_role_remove_id"]
+                if status == "YES":
+                    if vfchannel != "None":
+                        channel_id = int(vfchannel)
+                        channel = client.get_channel(channel_id)
 
-                            if int(ctx.channel.id) == data["verification_channel_id"]:
-                                if not Path('arial.ttf').exists():
-                                    dirname = os.path.dirname(os.path.abspath(__file__))
-                                    fontfile = os.path.join(dirname, 'arial.ttf')
-            
-                                else:
-                                    fontfile = 'arial.ttf'
+                        if int(ctx.channel.id) == vfchannel:
+                            if not Path('arial.ttf').exists():
+                                dirname = os.path.dirname(os.path.abspath(__file__))
+                                fontfile = os.path.join(dirname, 'arial.ttf')
+        
+                            else:
+                                fontfile = 'arial.ttf'
 
-                                chars = 'abcdefghifklmnopqrstwxyzABCDEFGHIJKLMNOP12345678910'
-                                text = ''
-                                for i in range(6):
-                                    text = text + random.choice(chars)
-                                img = Image.new('RGB', (200, 50))
+                            chars = 'abcdefghifkmnopqrstwxyzABCDEFGHJKMNOP12345678910'
+                            text = ''
+                            for i in range(6):
+                                text = text + random.choice(chars)
+                            img = Image.new('RGB', (200, 50))
 
-                                font = ImageFont.truetype(fontfile, 40)
-                                imgdraw = ImageDraw.Draw(img)
-                                imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
-                                img.save('image/verify.png')
-                                file = discord.File("image/verify.png", filename="verify.png")
+                            font = ImageFont.truetype(fontfile, 40)
+                            imgdraw = ImageDraw.Draw(img)
+                            imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
+                            img.save('image/verify.png')
+                            file = discord.File("image/verify.png", filename="verify.png")
 
-                                embed = discord.Embed(
-                                    colour  = 0x00FFFF,
-                                    title = "Captcha"
-                                )
-                                embed.set_image(url = "attachment://verify.png")
-                                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar_url}") 
+                            embed = discord.Embed(
+                                colour  = 0x00FFFF,
+                                title = "Captcha"
+                            )
+                            embed.set_image(url = "attachment://verify.png")
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar_url}") 
 
-                                message = await ctx.send(embed=embed , file=file)
+                            message = await ctx.send(embed=embed , file=file)
 
-                                try:
-                                    answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                    answer = answer.content
-                                    if answer == text:
-                                        embed = discord.Embed(
-                                        description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
-                                        colour =  0xB9E7A5
-                                        )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                        await message.edit(embed=embed)
+                            try:
+                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                answer = answer.content
+                                if answer == text:
+                                    await message.delete()
+                                    embed = discord.Embed(
+                                    description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
+                                    colour =  0xB9E7A5
+                                    )
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    await ctx.send(embed=embed)
 
-                                        if data["verification_role_give_id"] != "None":
-                                            try:
-                                                role = data["verification_role_give_id"]
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                    if give != "None":
+                                        try:
+                                            role = give
+                                            role = int(role)
+                                            role = ctx.guild.get_role(role)
+                                            await ctx.author.add_roles(role)
 
-                                            except Exception:
-                                                pass
-
-                                        else: 
+                                        except Exception as e:
                                             pass
 
-                                        if data["verification_role_remove_id"] != "None":
-                                            try:
-                                                role = data["verification_role_remove_id"]
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                    else: 
+                                        pass
 
-                                            except Exception:
-                                                pass
-                            
-                                        else:
-                                            pass  
-                            
+                                    if remove != "None":
+                                        try:
+                                            role = remove
+                                            role = int(role)
+                                            role = ctx.guild.get_role(role)
+                                            await ctx.author.add_roles(role)
+
+                                        except Exception:
+                                            pass
+                        
                                     else:
-                                        embed = discord.Embed(
-                                            description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
-                                            colour =  0x983925
-                                        )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                        await message.edit(embed=embed)
-                            
-                                except asyncio.TimeoutError:
+                                        pass  
+                        
+                                else:
+                                    await message.delete()
                                     embed = discord.Embed(
-                                        description = f":x: คุณใช้เวลานานเกินไป {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
+                                        description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                         colour =  0x983925
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                    await message.edit(embed=embed)      
-
-                            else:
+                                    await ctx.send(embed=embed)
+                        
+                            except asyncio.TimeoutError:
+                                await message.delete()
                                 embed = discord.Embed(
-                                    description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
+                                    description = f":x: คุณใช้เวลานานเกินไป {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                     colour =  0x983925
                                 )
                                 embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                await ctx.send(embed=embed)  
-                                
+                                await ctx.send(embed=embed)      
+
                         else:
                             embed = discord.Embed(
-                                title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
-                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                                description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                 colour =  0x983925
                             )
-                            await ctx.send(embed=embed)          
-
+                            embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                            await ctx.send(embed=embed)  
+                            
                     else:
                         embed = discord.Embed(
                             title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                             description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
                             colour =  0x983925
-                            )   
-                        await ctx.send(embed=embed)   
+                        )
+                
+                        await ctx.send(embed=embed)          
+
+                else:
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                        )
+                
+                    await ctx.send(embed=embed)   
             
             else:
                 embed = discord.Embed(
                     title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                     description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
                     colour =  0x983925
-                )   
+                )
+              
                 await ctx.send(embed=embed)
 
         if server_language == "English":
@@ -17134,7 +17403,7 @@ async def verify(ctx):
                                         colour =  0xB9E7A5
                                         )
                                         embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                        await file.delete()
+
                                         await message.edit(embed=embed)
 
                                         if data["verification_role_give_id"] != "None":
@@ -17336,8 +17605,7 @@ async def _give(ctx, role: discord.Role):
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["verification_role_remove_id"]
+                give_role_id = results["verification_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -17364,8 +17632,7 @@ async def _give(ctx, role: discord.Role):
             
             else:
                 results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["verification_role_remove_id"]
+                give_role_id = results["verification_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -17414,8 +17681,7 @@ async def _give(ctx, role: discord.Role):
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["verification_role_remove_id"]
+                give_role_id = results["verification_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -17442,8 +17708,7 @@ async def _give(ctx, role: discord.Role):
             
             else:
                 results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["verification_role_remove_id"]
+                give_role_id = results["verification_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -18811,6 +19076,143 @@ async def cleancmd(ctx):
             print("")
             print("CONSOLE : ")
             print("")
+
+@client.command()
+async def setting(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            if data is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                embed = discord.Embed(
+                    title = "การตั้งค่าของ Server",
+                    description = "```Database ID : Not assigned```",
+                    colour= 0x00FFFF
+                )
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
+                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                await ctx.send(embed=embed)
+
+            else:
+                server = collection.find_one({"guild_id":ctx.guild.id})
+                for data in server:
+                    database_id = data["_id"]
+                    welcome_channel_id = data["welcome_id"]
+                    leave_channel_id = data["leave_id"]
+                    webhook_id = server["webhook_channel_id"]
+                    introduce_id = server["introduce_channel_id"]
+                    verification_id = server["verification_channel_id"]
+                    webhook_stat = server["webhook_status"]
+                    economy_stat = server["economy_system"]
+                    welcome_channel = server["welcome_id"]
+                    welcome_channel = server["welcome_id"]
+                    welcome_channel = server["welcome_id"]
+                    welcome_channel = server["welcome_id"]
+                
+                embed = discord.Embed(
+                    title = "การตั้งค่าของ Server",
+                    description = "```Database ID : Not assigned```",
+                    colour= 0x00FFFF
+                )
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
+                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
+                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
+
+        if server_language == "English":
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            if data is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                embed = discord.Embed(
+                    title = "การตั้งค่าของ Server",
+                    description = "```Database ID : Not assigned```",
+                    colour= 0x00FFFF
+                )
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
+                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=True)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
+            
+            else:
+                embed = discord.Embed(
+                    title = "การตั้งค่าของ Server",
+                    description = "```Database ID : Not assigned```",
+                    colour= 0x00FFFF
+                )
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None \n ห้องเเจ้งเตือนคนออก : None \n ห้องคุยกับคนเเปลกหน้า : None \n  ห้องเเนะนําตัว : None \n ห้องยืนยันตัวตน : None```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None \n ระบบเลเวล : NO \n ระบบเศรษฐกิจ : NO \n ระบบยืนยันตัวตน : NO \n ระบบเเนะนําตัว : YES```",inline=True)
+                embed.add_field(name = "ชื่อ",value= f"{ctx.author.name}",inline=True)
+
+                await ctx.send(embed=embed)
+
 
 @client.command()
 async def test(ctx):
