@@ -1,3 +1,4 @@
+# coding=utf-8
 #import
 import discord  
 import asyncio 
@@ -482,9 +483,8 @@ async def give(ctx, role: discord.Role):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["introduce_role_give_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                give_role_id = data["introduce_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -510,9 +510,8 @@ async def give(ctx, role: discord.Role):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["introduce_role_give_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                give_role_id = data["introduce_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -560,9 +559,8 @@ async def give(ctx, role: discord.Role):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["introduce_role_give_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                give_role_id = data["introduce_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -588,9 +586,8 @@ async def give(ctx, role: discord.Role):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    give_role_id = data["introduce_role_give_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                give_role_id = data["introduce_role_give_id"]
                 if give_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
                     embed = discord.Embed(
@@ -723,9 +720,8 @@ async def remove(ctx, role: discord.Role):
                 "verification_role_remove_id":"None"
             }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["introduce_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["introduce_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -751,9 +747,8 @@ async def remove(ctx, role: discord.Role):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["introduce_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["introduce_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -799,11 +794,10 @@ async def remove(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
-            }
+                }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["introduce_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["introduce_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -829,9 +823,8 @@ async def remove(ctx, role: discord.Role):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["introduce_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["introduce_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -965,9 +958,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    introduce_channel = data["introduce_channel_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["introduce_channel_id"]
                 if introduce_channel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
                     embed = discord.Embed(
@@ -993,9 +985,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                     await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    introduce_channel = data["introduce_channel_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["introduce_channel_id"]
                 if introduce_channel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
                     embed = discord.Embed(
@@ -1044,9 +1035,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    introduce_channel = data["introduce_channel_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["introduce_channel_id"]
                 if introduce_channel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
                     embed = discord.Embed(
@@ -1072,9 +1062,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                     await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    introduce_channel = data["introduce_channel_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["introduce_channel_id"]
                 if introduce_channel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
                     embed = discord.Embed(
@@ -1206,9 +1195,8 @@ async def setframe(ctx, *,frame):
                 }
                 collection.insert_one(newserver)
 
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    frame = data["introduce_frame"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                frame = data["introduce_frame"]
                 if frame == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
                     embed = discord.Embed(
@@ -1234,9 +1222,8 @@ async def setframe(ctx, *,frame):
                     await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    frame = data["introduce_frame"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                frame = data["introduce_frame"]
                 if frame == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
                     embed = discord.Embed(
@@ -1285,9 +1272,8 @@ async def setframe(ctx, *,frame):
                 }
                 collection.insert_one(newserver)
 
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    frame = data["introduce_frame"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                frame = data["introduce_frame"]
                 if frame == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
                     embed = discord.Embed(
@@ -1313,9 +1299,8 @@ async def setframe(ctx, *,frame):
                     await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    frame = data["introduce_frame"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                frame = data["introduce_frame"]
                 if frame == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
                     embed = discord.Embed(
@@ -1487,10 +1472,9 @@ async def on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1515,11 +1499,9 @@ async def on(ctx):
                     await message.add_reaction('✅')
 
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1568,10 +1550,9 @@ async def on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1594,11 +1575,9 @@ async def on(ctx):
                     await message.add_reaction('✅')
 
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1707,10 +1686,9 @@ async def off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1734,11 +1712,9 @@ async def off(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1786,10 +1762,9 @@ async def off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1811,11 +1786,9 @@ async def off(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["introduce_status"]
-                if status == "None":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -1926,9 +1899,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    webhook = data["webhook_url"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                webhook = data["webhook_url"]
                 if webhook == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
@@ -1954,9 +1926,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    webhook = data["webhook_url"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                webhook = data["webhook_url"]
                 if webhook == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
@@ -2004,9 +1975,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    webhook = data["webhook_url"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                webhook = data["webhook_url"]
                 if webhook == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
@@ -2032,9 +2002,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
     
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    webhook = data["webhook_url"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                webhook = data["webhook_url"]
                 if webhook == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
@@ -2252,9 +2221,8 @@ async def _on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2280,9 +2248,8 @@ async def _on(ctx):
                     await message.add_reaction('✅')
             else:
                 status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2332,9 +2299,8 @@ async def _on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2360,9 +2326,8 @@ async def _on(ctx):
                     await message.add_reaction('✅')
             else:
                 status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2476,9 +2441,8 @@ async def _off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2504,9 +2468,8 @@ async def _off(ctx):
                     await message.add_reaction('✅')
             else:
                 status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2556,9 +2519,8 @@ async def _off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2584,9 +2546,8 @@ async def _off(ctx):
                     await message.add_reaction('✅')
             else:
                 status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["webhook_status"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["webhook_status"]
                 if status == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
                     embed = discord.Embed(
@@ -2698,57 +2659,57 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["welcome_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
-                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                        )
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                welcome = data["welcome_id"]
+                if welcome == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
-                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["welcome_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                welcome = data["welcome_id"]
+                if welcome == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
-                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
-                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅') 
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅') 
 
         if server_language == "English":
 
@@ -2774,57 +2735,57 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["welcome_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "channel for welcome",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                welcome = data["welcome_id"]
+                if welcome == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for welcome",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "channel for welcome",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for welcome",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["welcome_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                welcome = data["welcome_id"]
+                if welcome == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "channel for welcome",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for welcome",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "channel for welcome",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')        
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for welcome",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')        
 
 @setwelcome.error
 async def setwelcome_error(ctx, error):
@@ -2936,58 +2897,58 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["leave_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                leave = data["leave_id"]
+                if leave == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["leave_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                leave = data["leave_id"]
+                if leave == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-                            description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
-                            description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
         if server_language == "English":
 
@@ -3013,58 +2974,58 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["leave_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                leave = data["leave_id"]
+                if leave == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "channel for leave",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for leave",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "channel for leave",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for leave",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["leave_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                leave = data["leave_id"]
+                if leave == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "channel for leave",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for leave",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title= "channel for leave",
-                            description= f"Channel have been set to {channel.mention}"
-                        )
-        
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for leave",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 @setleave.error
 async def setleave_error(ctx, error):
 
@@ -3261,67 +3222,66 @@ async def on_member_join(member):
             server_language = data["Language"]
         
         if server_language == "Thai":
-     
-            try:
-                results = collection.find({"guild_id":member.guild.id})
-                for data in results:
-                    if not data["welcome_id"] == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x99e68b,
-                                title =f'ยินดีต้อนรับเข้าสู่ {member.guild.name}',
-                                description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
-                            )
-
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-                            embed.timestamp = datetime.datetime.utcnow()
-
-                            print(f"{member.name} have joined the server {member.guild.name}")      
-                            channel = client.get_channel(id = int(data["welcome_id"]))
-                            await channel.send(embed=embed)
-
-                        except Exception:
-                            pass
-                
-                    else:
-                        return
-    
-            except Exception:
+            data = collection.find_one({"guild_id":member.guild.id})
+            if data is None:
                 pass
-    
+
+            else:
+                welcome = data["welcome_id"] 
+                if not welcome == "None":
+                    try:
+                        embed = discord.Embed(
+                            colour = 0x99e68b,
+                            title =f'ยินดีต้อนรับเข้าสู่ {member.guild.name}',
+                            description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
+                        )
+
+                        embed.set_thumbnail(url=f"{member.avatar_url}")
+                        embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                        embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                        embed.timestamp = datetime.datetime.utcnow()
+
+                        print(f"{member.name} have joined the server {member.guild.name}")      
+                        channel = client.get_channel(id = int(welcome))
+                        await channel.send(embed=embed)
+
+                    except Exception:
+                        pass
+                
+                else:
+                    return
+
+ 
         if server_language == "English":
-     
-            try:
-                results = collection.find({"guild_id":member.guild.id})
-                for data in results:
-                    if not data["welcome_id"] == "None":
-                        try:
-                            embed = discord.Embed(
+            data = collection.find_one({"guild_id":member.guild.id})
+            if data is None:
+                pass
+
+            else:
+                welcome = data["welcome_id"] 
+                if not welcome == "None":
+                    try:
+                        embed = discord.Embed(
                                 colour = 0x99e68b,
                                 title =f'Welcome to {member.guild.name}',
                                 description = 'Please read and follow our rules'
                             )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-                            embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_thumbnail(url=f"{member.avatar_url}")
+                        embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                        embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                        embed.timestamp = datetime.datetime.utcnow()
 
-                            print(f"{member.name} have joined the server {member.guild.name}")      
-                            channel = client.get_channel(id = int(data["welcome_id"]))
-                            await channel.send(embed=embed)
+                        print(f"{member.name} have joined the server {member.guild.name}")      
+                        channel = client.get_channel(id = int(welcome))
+                        await channel.send(embed=embed)
 
-                        except Exception:
-                            pass
+                    except Exception:
+                        pass
                 
-                    else:
-                        return
-    
-            except Exception:
-                pass
-    
+                else:
+                    return
+
     else:
         pass
 
@@ -3334,66 +3294,64 @@ async def on_member_remove(member):
             server_language = data["Language"]
         
         if server_language == "Thai":
-     
-            try:
-                results = collection.find({"guild_id":member.guild.id})
-                for data in results:
-                    if not data["leave_id"] == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour=0x983925, 
-                                title = "Member leave",
-                                description= f"{member.name}ได้ออกจากเซิฟเวอร์"
-                            )
-
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-                            embed.timestamp = datetime.datetime.utcnow()
-
-                            print(f"{member.name} have left the server {member.guild.name}")      
-                            channel = client.get_channel(id = int(data["leave_id"]))
-                            await channel.send(embed=embed)
-
-                        except Exception:
-                            pass
-                
-                    else:
-                        return
-    
-            except Exception:
+            data = collection.find_one({"guild_id":member.guild.id})
+            if data is None:
                 pass
+
+            else:
+                welcome = data["leave_id"] 
+                if not welcome == "None":
+                    try:
+                        embed = discord.Embed(
+                            colour=0x983925, 
+                            title = "Member leave",
+                            description= f"{member.name}ได้ออกจากเซิฟเวอร์"
+                        )
+
+                        embed.set_thumbnail(url=f"{member.avatar_url}")
+                        embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                        embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                        embed.timestamp = datetime.datetime.utcnow()
+
+                        print(f"{member.name} have left the server {member.guild.name}")      
+                        channel = client.get_channel(id = int(data["leave_id"]))
+                        await channel.send(embed=embed)
+
+                    except Exception:
+                        pass
+            
+                else:
+                    return
         
         if server_language == "English":
-     
-            try:
-                results = collection.find({"guild_id":member.guild.id})
-                for data in results:
-                    if not data["leave_id"] == "None":
-                        try:
-                            embed = discord.Embed(
+            data = collection.find_one({"guild_id":member.guild.id})
+            if data is None:
+                pass
+
+            else:
+                welcome = data["leave_id"] 
+                if not welcome == "None":
+                    try:
+                        embed = discord.Embed(
                                 colour=0x983925, 
                                 title = "Member leave",
                                 description= f"{member.name} have left the server"
                             )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
-                            embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_thumbnail(url=f"{member.avatar_url}")
+                        embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                        embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                        embed.timestamp = datetime.datetime.utcnow()
 
-                            print(f"{member.name} have left the server {member.guild.name}")      
-                            channel = client.get_channel(id = int(data["leave_id"]))
-                            await channel.send(embed=embed)
+                        print(f"{member.name} have left the server {member.guild.name}")      
+                        channel = client.get_channel(id = int(data["leave_id"]))
+                        await channel.send(embed=embed)
 
-                        except Exception:
-                            pass
+                    except Exception:
+                        pass
                 
-                    else:
-                        return
-    
-            except Exception:
-                pass
+                else:
+                    return
     
     else:
         pass
@@ -3411,10 +3369,14 @@ async def on_guild_join(guild):
         if channel.permissions_for(guild.me).send_messages:
             embed = discord.Embed(
                 colour = 0x00FFFF,
-                title = f"🙏 สวัสดีครับเซิฟเวอร์ {guild.name}",
+                title = f"🙏 สวัสดีครับเซิฟเวอร์ / Hello {guild.name}",
                 description = f"""
                 พิม ``{COMMAND_PREFIX}help`` เพื่อดูคําสั่งของบอท
                 Support : https://discord.com/invite/R8RYXyB4Cg
+
+                use ``{COMMAND_PREFIX}help`` to view bot commands
+                support : https://discord.com/invite/R8RYXyB4Cg
+
                 """
 
             )
@@ -3440,6 +3402,10 @@ async def on_guild_remove(guild):
 @client.event
 async def on_command_error(ctx, error):
     channel = client.get_channel(id = int(supportchannel))
+    bug = traceback.format_exc()
+    await channel.send(bug)
+    await channel.send(error)
+
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         pass
@@ -3458,12 +3424,6 @@ async def on_command_error(ctx, error):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
-            
-            else:
-                bug = traceback.format_exc()
-                await channel.send(bug)
-                await channel.send(error)
-                raise error
 
             if isinstance(commands.BotMissingPermissions):
                 embed = discord.Embed(
@@ -3473,12 +3433,6 @@ async def on_command_error(ctx, error):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
-
-            else:
-                bug = traceback.format_exc()
-                await channel.send(bug)
-                await channel.send(error)
-                raise error
         
         if server_language == "English":
             if isinstance(error, commands.CommandNotFound):
@@ -3498,12 +3452,6 @@ async def on_command_error(ctx, error):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
-
-            else:
-                bug = traceback.format_exc()
-                await channel.send(bug)
-                await channel.send(error)
-                raise error
 
 @client.command()
 async def membercount(ctx):
@@ -10476,246 +10424,412 @@ async def slim(ctx):
         await message.add_reaction('👍')
     
     else:
-        quoteslim = ["ไม่ใช่สลิ่มนะ แต่...",
-                    "ไม่ใช่ติ่งลุงตู่ แต่..."
-                    "เราคนไทยเหมือนกัน",
-                    "ไม่มี REDACTED ประเทศไทยจะพัฒนามาถึงจุดนี้หรือ,",
-                    "รักชาติ ศาสน์ กษัตริย์",
-                    "ไอ้ทอน",
-                    "ตี๋ทอน",
-                    "ไอ้บุตร",
-                    "ปีแยร์บูด",
-                    "กะปิบูด",
-                    "อีช่อ",
-                    "อีฉ้อ",
-                    "ชังชาติ",
-                    "ขายชาติ",
-                    "ไม่สำนึกในบุญคุณ ",
-                    "หนักแผ่นดิน",
-                    "เนรคุณแผ่นดิน",
-                    "เราคือผู้อยู่อาศัย ไม่ใช่เจ้าของบ้าน",
-                    "ล้มเจ้า",
-                    "ส้มเน่า",
-                    "เผาไทย",
-                    "ลิเบอร่าน",
-                    "คณะร่าน",
-                    "เห่อหมอยคลั่งชาติฝรั่ง",
-                    "ขุ่นพ่อง",
-                    "รังนกสีฟ้า",
-                    "เก่งอยู่หลังคีย์บอร์ด",
-                    "ต่างชาติชักใยอยู่เบื้องหลัง",
-                    "ชักศึกเข้าบ้าน",
-                    "มีทุกอย่างที่ดีเพราะใคร ฉันจะไม่ลืม​",
-                    "พวกเผาบ้านเผาเมือง",
-                    "จำนำข้าว",
-                    "เป็นคนปลอมตัวมาสร้างสถานการณ์ค่ะ คนเสื้อเหลืองไม่มีใครทำแบบนั้น",
-                    "ศูนย์รวมจิตใจของชาติ",
-                    "ให้มันจบที่เรือนจำ",
-                    "ตอบแทนบุญคุณแผ่นดิน",
-                    "ควายแดง",
-                    "สวะส้ม",
-                    "ด่าทุกเรื่องที่รัฐออกนโยบาย แต่ลงทะเบียนทุกอย่างที่รัฐแจกให้ฟรี",
-                    "ไอแม้ว",
-                    "ฟังคำเตือนจากผู้ใหญ่บ้าง",
-                    "ไม่รักชาติก็ออกจากประเทศไป",
-                    "เด็กๆพวกนี้มันคิดเองไม่ได้หรอก โดนหลอกกันมาทั้งนั้น",
-                    "ไม่พอใจก็ไปอยู่ประเทศอื่น",
-                    "ไม่ได้อยู่ฝั่งไหน",
-                    "ด่ารัฐบาลก็ด่าไป อย่าไปวุ่นวายกับเบื้องสูง​",
-                    "อาบน้ำร้อนมาก่อน",
-                    "พวกหัวรุนแรง",
-                    "ไร้ซึ่งจริยธรรม",
-                    "โดนจูงจมูก",
-                    "ลุงเป็นคนดี แค่เข้ามาผิดเวลา",
-                    "เป็นกลาง ไม่เลือกข้าง",
-                    "พวกอันธพาล ไม่พอใจก็ลงถนน​",
-                    "ต้องเริ่มต้นที่ตัวเองก่อน",
-                    "พวกขี้ข้าทักษิณ",
-                    "ซ้ายจัดดัดจริต",
-                    "โง่ไม่มีสมอง",
-                    "ไม่เคารพผู้หลักผู้ใหญ่",
-                    "เป็นบุคคลสาธารณะ อย่าพูดเรื่องการเมือง",
-                    "นำชีวิตตัวเองยังทำให้ได้ดีไม่ได้",
-                    "ไปทำหน้าที่ตัวเองให้ดีก่อน",
-                    "ทำไมไม่ยืน",
-                    "อย่าทำให้บ้านเมืองเดือดร้อน",
-                    "จาบจ้วงสถาบัน",
-                    "ประชามติ 16.8 ล้านเสียง",
-                    "บังอาจก้าวล่วง",
-                    "ทำร้ายจิตใจคนไทย",
-                    "เป็นอันตรายต่อความมั่นคงของประเทศชาติ",
-                    "รัฐมิได้ใช้ความรุนแรง",
-                    "หยุดสร้างความแตกแยก",
-                    "ขี้ข้าไอ้ทอน",
-                    "ลุงมาจากการเลือกตั้ง",
-                    "เชียร์ลุง",
-                    "#อนุชนรักชาติศาสน์กษัตริย์",
-                    "ที่มีแผ่นดินอยู่ทุกวันนี้เพราะใคร",
-                    "ม๊อบสวะ",
-                    "ทำประโยชน์อะไรให้ชาติบ้านเมืองบ้าง",
-                    "ไอ้เจ็กกบฎ",
-                    "แปะสติ๊กเกอร์ ซาลาเปา &​ ",
-                    "โดนไอ้แม้วซื้อไปแล้ว",
-                    "รับไปห้าร้อย",
-                    "ประชาธิปไตยต้องเคารพกฎหมา",
-                    "เขาแค่ทำตามที่กฏหมายห้ามเท่านั้น",
-                    "นักการเมืองก็โกงเหมือนกันทุกคน",
-                    "ลุงตู่เป็นคนดี",
-                    "ลุงตู่อยู่บ้านเมืองสงบ",
-                    "บ้านเมืองสงบ จบที่ลุงตู่",
-                    "ระบอบทักษิณ",
-                    "สมบูรณาญาสิทธิทุน",
-                    "นี่คือการปฏิวัติที่อ่อนละมุน",
-                    "รัฐประหารโดยสันติวิธี",
-                    "Unfortunately, some people died.",
-                    "คนดี ถึงจะเป็นเผด็จการ ก็เป็นเผด็จการที่ดี",
-                    "ก็ไม่ได้ชอบลุงตู่นะ แต่ถ้าจะให้ไอ้ทอนมาเป็น ยังไงลุงตู่ก็ดีกว่า",
-                    "หนึ่งคือนายกฯ รักประเทศชาติ, สองคือนายกฯ รักพระมหากษัตริย์, สามคือนายกจริงใจ และทำเพื่อประเทศไทยจริง ๆ",
-                    "มึงมาไล่ดูสิ",
-                    "ลูกหลานอยู่ไม่ได้วันหน้า ก็โทษพ่อมันนั่นแหละ",
-                    "ถ้ารุนแรงคงมีคนตายไปแล้ว",
-                    "ไปให้ตำรวจยิงหรอ",
-                    "จะกี่รัฐบาลก็เหมือนกันหมด",
-                    "เอาเวลาไปหาเงินเลี้ยงปากท้องเถอะ",
-                    "เก่งมากก็ไปเป็นนายกฯเองสิ",
-                    "แค่รถฉีดน้ำจะไปกลัวทำไม เขาทำตามหลักสากล",
-                    "ท่านทรงงานหนัก",
-                    "โดนแค่ฉีดน้ำทำเป็นบ่น ตอนนั้น กปปส โดนแก๊สน้ำตานะ",
-                    "หัวก้าวหน้า ปัญญาล้าหลัง",
-                    "สัตว์นรก",
-                    "คนไทยทั้งประเทศ",
-                    "ขอพูดแรงๆ ซักครั้งในชีวิต พูดแล้วอยากจะร้องไห้​",
-                    "จะเปลี่ยนแปลงประเทศ ช่วยพ่อแม่ล้างจานหรือยัง",
-                    "ถ้าคนไทยฆ่ากันเอง จะร้องเพลงชาติไทยให้ใครฟัง",
-                    "ถ้าพวกมึงเป็นอะไรขึ้นมา คิดว่าพ่อนักการเมืองของมึงเขาจะมาช่วยเหรอ",
-                    "เห็นเราเงียบ ใช่ว่าเราจะไม่รู้สึก คุณด่าพ่อเรา เราเสียใจนะ",
-                    "ถ้าพ่อมองลงมา พ่อจะรู้สึกยังไง",
-                    "พวกคอมมิวนิสต์",
-                    "อยากได้เสรีภาพมากเกินไป",
-                    "วันๆ เอาแต่เรียกร้องเสรีภาพ ถึงไม่รู้ไงว่าท่านทำอะไรบ้าง",
-                    "หัดศึกษาประวัติศาสตร์บ้างนะ",
-                    "ถอยกันคนละก้าว",
-                    "เจ้าจะทำอะไรก็เรื่องของเค้า",
-                    "จ่ายภาษีหรือเปล่า",
-                    "ม็อบมุ้งมิ้ง",
-                    "ทำไมไม่เคารพความเห็นต่าง",
-                    "เป็น นร ก็กลับไปตั้งใจเรียนหนังสือ",
-                    "เด็กๆเอาแต่เล่นโซเชียล fake news ทั้งนั้น",
-                    "รัฐบาลมีผลงานเยอะแยะ แค่ข่าวไม่ออกเท่านั้นแหละ",
-                    "คิดต่างได้ แต่ต้องมีสถาบัน",
-                    "รักประยุทธ์ ก็ยังดีกว่าโดนล้างสมอง",
-                    "อยู่อย่างจงรัก ตายอย่างภักดี ปกป้องสถาบัน",
-                    "ไปฟังคนไม่จบ ม.6 มันพูดทำไม",
-                    "ก่อนจะสานต่ออุดมการณ์เพื่อชาติ วันนี้ช่วยแม่ทำงานบ้าน กรอกน้ำใส่ตู้เย็นหรือยัง",
-                    "ขยันอ่านหนังสือสอบให้เหมือนอ่านเบิกเนตรหรือยัง",
-                    "คุณภาพชีวิตจะดีขึ้น ถ้าคนเป็นคนดี ถ้าตัวเราดี",
-                    "แล้วที่หลานทำไม่เรียกว่าคุกคาม��ถาบันหรือ",
-                    "เป็น IO ดีกว่าเป็นควายให้ไอ้แม้วไอ้ทอนจูงจมูก",
-                    "ทำร้ายตำรวจ ด้วยคีมเหล็กขนาดใหญ่",
-                    "พวกเนตรนารีคุกคามเราก่อน",
-                    "เขามองพวกผมด้วยสายตาล้มสถาบัน",
-                    "เยาวชนปลดแอ๊ก",
-                    "ประชาธิปไตยแดกได้เหรอ",
-                    "ควรอยู่อย่างพอเพียงนะ",
-                    "เศรษฐกิจก็ดีอยู่แล้วนี่ เห็นคนซื้อนั่นซื้อนี่",
-                    "ไอทอนมันมาทำให้ประเทศวุ่นวาย",
-                    "อย่าไปดูการเมืองมาก มันปั่น",
-                    "ดีจ๊ะหนู พ่อแม่คงภูมิใจมาก",
-                    "รู้ทุกเรื่อง ยกเว้นเรื่องตนเอง หน้าที่ของตนเอง",
-                    "ตบเสียบ้างก็ดีเหมือนกัน เด็กสมัยนี้ไม่รู้กินอะไรเข้าไป",
-                    "ไอ้บูดจงพินาศ ประชาชาติจงพ้นภัย",
-                    "ผมก็ว่าเนชั่นเป็นกลางสุดแล้วในการเสนอข่าว ไม่ได้อวยใดๆพูดตามเนื้อผ้าครับ",
-                    "สร้างแต่ปัญหาให้ลุงตู่ แผนตื้นๆยังไปติดกับดัก",
-                    "ไม่เอาต่างชาติเป็นนาย",
-                    "เหยียบย่ำหัวใจคนไทย",
-                    "ชู 3 นิ้ว กูเอามึงตายเลย",
-                    "เราว่าลุงไม่เก่งนะ แต่ลุงไม่โกง",
-                    "มันทำได้แม้กระทั่ง ปารองเท้าปาขวดเขย่ารถพระที่นั่ง!!",
-                    "ไม่ภูมิใจเหรอ ที่ได้ตอบแทนคุณแผ่นดิน",
-                    "เราไม่ได้สนใจอ่ะนะ เราต้องทำงาน ถ้าไม่ทำงาน ก็ไม่มีแดก",
-                    "อย่าอ้างคำว่าประชาธิปไตยแล้วทำร้ายหัวใจคนทั้งชาติ",
-                    "ผมไม่ใช่สลิ่มนะ แต่ผมว่าป้าม่วงไม่ผิด",
-                    "โปรดอย่าบิดเบือนความจริงไปมากกว่านี้เลย มันเจ็บ...",
-                    "3 แสนเสียงใน กทม. แต่เป็นเสียงที่มีคุณภาพ ย่อมดีกว่า 15 ล้านเสียงใน ตจว. แต่ไร้คุณภาพ",
-                    "แน่จริงเรียนให้จบ มีเงินเดือน มีรายได้แล้วค่อยบอกว่าภาษีกู",
-                    "จ่ายแค่ VAT 7% แล้วยังมาเรียกตัวเองว่าผู้เสียภาษี",
-                    "ประเทศชาติจะดีขึ้นถ้าทุกคนหาเลี้ยงตัวเองได้",
-                    "เด็กๆถ้าอยากเห็นอนาคตที่ดีอะ คุณต้องให้ประเทศชาติมีความมั่นคงก่อน อย่าขายชาติ",
-                    "รังเกียจสถาบัน แล้วทำไมไม่เลิกใช้ธนบัตรและเหรียญเลยล่ะครับ​",
-                    "แปะสติ๊กเกอร์หนูหิ่น",
-                    "เมกามันอยู่เบื้องหลัง แล้วให้ไอ้ธรบงการอีกที",
-                    "นักเลง อันธพาล คนเกเร คนติดยา ผีพนัน คนสีเทา เค้ายังรู้จักรัก ปกป้องสถาบัน",
-                    "ผมน่ะทำงานเพื่อบ้านเมือง",
-                    "จะไล่ประยุทธ์ก็ไล่ไปสิ ทำไมต้องเอาพระองค์ท่านมาเกี่ยวด้วย",
-                    "ถ้าเข้ามาในฐานะคนรักดนตรีแล้วทิ้งเรื่องการเมืองไว้นอกรั้ว ก็คงไม่มีใครไปปิดกั้น",
-                    "ทำมาหากินเลี้ยงตัวเองเลี้ยงครอบครัวให้รอด พอแล้ว ใครจะมาหาว่าเป็น Ignorant ช่างหัวพ่อมัน",
-                    "วันแรกขาย iPhone 12 ในประเทศไทย คิวยาวเหยียด อ้าว! นึกว่าเศรษฐกิจไม่ดี!",
-                    "คงได้ผัวก่อนเรียนจบ แต่งตัวแบบนี้",
-                    "โกงนิดๆ หน่อยๆ ไม่เป็นไรหรอก ไอ้พวกนักการเมืองมันโกงมากกว่านี้เยอะ",
-                    "ฉันเออ ฉันอยากร้องไห้ ฉันxxxไว้แก ฉันโอยฉัน อึ้ยฉัน โอ้ย แกแกฉันตื่นเต้นมาก ฉัน โอ้ย ฉันxxxxหนักมากเลย ฉันบอกแล้วว่าฉันร้องไห้ เออฉัน โอย ฉัน โอ้ยแก้หัวใจฉันจะวาย โอ้ยฉัน ใจฉันเต้นตึก ๆ โอยๆ แก ฉันได้จับมือท่านน่ารักมากแก แบบ โอ้ยฉันสุดฤทธิ์ แก ฉันจะเป็นลม ไม่ โอ้ยเออ แก ฉันดีใจ",
-                    "ให้ใครมาด่าพ่อแม่คุณไม่ผิดเอาไหม",
-                    "แม้เหลือคนเดียวทั้งโรง เราก็จะยืน",
-                    "ถ้าเป็นรัฐบาลอื่น มาเจอวิกฤติโควิด สถานการณ์แม่งเละกว่านี้อีก",
-                    "ไม่ได้เชียร์ลุง แต่ลุงเค้าทำตามกฏหมาย",
-                    "แล้วคนด่ารับผิดชอบอะไร เกิดมาทำอะไรให้กับบ้านนี้เมืองนี้",
-                    "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย",
-                    "อีเด็กพวกนี้มันจะไปรู้อะไร",
-                    "การซื้อตำแหน่งมันเรื่องปกติ ถ้าคุณขยันหาเงินนั่นคือคุณก็มีสิทธิ์ คนละเรื่องกับคอรัปชั่นเลย",
-                    "ห้ามวิจารณ์ 112",
-                    "พูดแต่เรื่องซ้ำซาก ไม่มีหลักฐาน",
-                    "ไม่เอาสถาบันกษัตริย์ แต่พวกตัวเองก็ไม่เคยทำประโยชน์กับประชาชนเลยสักอย่าง เพราะฉะนั้นอยู่กับสถาบันกษัตริย์นี่แหละมีประโยชน์ที่สุดแล้ว",
-                    "ติดอยู่ตรงกลาง ม๊อบก็ไม่ใช้ สลิ่มก็ไม่เชิง งงม่ะ?",
-                    "ไม่อยากให้เพจนี้แสดงออกทางการเมืองเลยค่ะ",
-                    "วันที่ออกมาไม่เจออากาศแย่ก็มี ถนนหน้าบ้านเราก็ไม่ได้พัง สวยด้วย น้ำก็ไม่ได้กร่อยอ่ะ คนที่จนแถวบ้าน เมื่อเช้าก็เห็นเค้านั่งโขกหมากรุก หัวเราะเอิ๊กอ๊ากอยู่นะ​",
-                    "คือเราอยากให้ประเทศพัฒนา และในช่วงปีหลังๆ ตั้งแต่ 58 เป็นต้นมามันมีหลายอย่างที่พัฒนาแบบจับต้องได้มากๆ และรัฐบาลก็ผ่านการเลือกตั้งมาแล้ว เพราะงั้นเราไม่เห็นว่ามีความจำเป็นอะไรต้องล้มรัฐบาลในตอนนี้ที่วิกฤติ Covid ยังดำเนินอยู่ เว้นแต่ว่ามีคอรัปชันอะไรที่รับไม่ได้ถึงจะเห็นสมควรค่ะ",
-                    "เป็นเพจการเมืองไปเสียแล้วคงต้องเลิกติดตาม ไปกิน MK ดีกว่า 555",
-                    "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
-                    "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
-                    "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
-                    "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน",
-                    "เชื่อเถิดครับว่าสิ่งที่เรามีมาและมีอยู่แล้วน่ะ...ดีที่สุดแล้ว",
-                    "ถ้าเสพแต่ข่าวด้านเดียวก็จะเห็นแต่ด้านแย่ของรัฐบาล ของประเทศ แต่ในความเป็นจริงมันมีแค่ด้านนั้นรึเปล่า",
-                    "รัฐบาลนี้อาจไม่ได้ดีเลิศประเสริฐศรีอะไร แต่มันก็ไม่ได้เลวร้ายอย่างที่คนบางกลุ่มพยายามทำให้มันเป็นหรอก เหตุผลแถมอีกอย่างคือ เป็นรัฐบาลที่เชิดชูสถาบัน ไม่ปล่อยให้พวกตาสว่างอยู่ในกะลาเนรคุณชาติเนรคุณแผ่นดินทำตามใจชอบเกินไปนัก อันนี้บวกเพิ่มอีกหนึ่งคะแนน",
-                    "พวกสามกีบ",
-                    "เอาจริงชีวิตควรมีอะไรมากกว่าแค่การเมืองครับ วันๆหมกมุ่นแต่เรื่องนี้มากๆ ชีวิตไม่เจริญกันพอดี",
-                    "เราก็เคยอินกับม็อบค่ะ เคยบริจาคตั้งหลายรอบ แต่พอติงเรื่องข้อ 3 ก็โดนผลักเป็นสลิ่ม โดนสัก 3-4 ครั้งก็เลยแบบอะไรของเค้า โกรธมาก พอเริ่มรับข้อมูลจากฝั่งสลิ่มบ้างก็ค่อยๆเห็นผลงานลุงตู่และความปลอมของม็อบ ตอนนี้เลยเป็นสลิ่มอยู่ยาวละ5555",
-                    "การเป็นหมอได้ ขยัน เรียนดีแน่นอน แต่คุณธรรมล่ะ มีแค่ไหน มันสอนกันไม่ได้ ถ้าไม่มีพ่อแม่เป็นแบบอย่างที่ดีก็จบ",
-                    "คนนึงแพ้การเมืองจนต้องหนีออกต่างประเทศ อีกคนโดนด่าทุกวันแต่ยังสามารถอาศัยอยู่ในประเทศอย่างชิลๆ ได้ ผมว่าความเก่งในการเล่นการเมืองคนนึงเก่งกว่าอีกฝั่งอย่างทาบไม่ติดเลย",
-                    "ฉันคือบุคคลที่เคยไปเป่านกหวีด ฉันไม่ชอบลุง และฉันก็ไม่ชอบใครเลย🤣 ฉันไม่ได้อยู่กับกลุ่มไหนทั้งสิ้น โดยเฉพาะกลุ่มที่ด่าสถาบัน ตอนนี้ฉันไม่รู้ว่าอยู่จุดไหนของการเมือง",
-                    "ผมไม่ได้หายใจเข้าออกเป็นเรื่องการเมือง ผมไม่เคยสมาทานตัวเองอยู่ข้างใคร ทุกวันยังหงุดหงิดกับใครก็ตามที่มาเป็นรัฐบาล เฉกเช่นประชาชนคนหนึ่งไม่ต่างกัน แต่ที่สำคัญก็คือ ไม่ว่าผมจะชอบหรือจะเกลียดนายกแค่ไหน มันก็ไม่ทำให้ผมมีความคิดว่าอยากจะไปแต่งเพลงด่า",
-                    "รัฐประหารมีความจำเป็นในการเมืองไทย ในฐานะของเครื่องตัดไฟ รัฐประหารไม่ได้ทำให้ประเทศไทยก้าวหน้านัก แต่ทำให้ไม่บรรลัยหรือตายหมู่เกิดสงครามกลางเมือง",
-                    "สวัสดีครับ ผมขอแนะนำตัวครับว่าผมเคยเป็นเยาวชนหัวรุนแรงคนหนึ่งมาก่อน ที่เคยต่อต้านสถาบัน วันนี้ ผมสำนึกผิดจากใจแล้วครับ ผมขอโทษแผ่นดินไทย และผมสัญญาว่าจะรักชาติ ศาสนา และพระมหากษัตริย์ไทยสืบต่อไปครับ ผมจะขอรับสื่อที่เหมาะสมสำหรับผมในทวิตนี้นะครับ",
-                    "1 สวดมนตร์ 2 รักชาติ 3 ช่วยคนจน 4 เธอไม่ได้หล่อนะ 5 คิดดีทำดี 6 แต่งตัวให้สุภาพ 7 ทำมาหากิน 8 อย่าทำลายสังคม 9 เคารพผู้ใหญ่ 10 กตัญญู",
-                    "สำหรับคนที่ด่าประเทศไทย ผมอยากไห้คุณไปอยู่ USA .Russia,Germany ,UK, France .China ,UAE, etc..ประเทศละ1ปี...แล้วคุณจะ #รักประเทศไทย #love",
-                    "เด็กสมัยนี้...สนใจแต่จะย้ายไปประเทศอื่น...แต่ไม่มีใครสนใจที่จะแก้ไขปัญหา...ในประเทศตัวเอง..คงจะโดนปลูกฝังให้ชังชาติตั้งแต่เล็ก..😔😔",
-                    "ลุ่งตู่และพี่น้องไทยที่รักสถาบัน เราเลิกคบสหรัฐหันกลับมาคบจีนเถิดคับ",
-                    "อีคนจัญไร หนีออกนอกประเทศ ทําให้แผ่นดินสูงขึ้น อยากให้ไอ้พวก 3 นิ้วจัญไรรีบออกนอกประเทศให้หมดถ้ามีปัญญา ไอ้พวกกระจอก",
-                    'วันวัน ทําอะไร..เพื่อประเทศชาติและประชาชน บ้างวะ ไม่เห็นจะทําอะไร ที่เป็นประโยชน์เลย รัฐบาลมืออาชีพ เหรอ "ถุย" ประเทศล่มจ่มไปเท่าไรแล้ว โกงกิน กันมาตลอด ติดคุกกันไปเท่าไร หนีคดีไปอยู่ต่างประเทศ ทั้งพี่ทั้งน้อง รวมทั้งลูกสมุน แล้วใครวะจะตั้งรัฐบาลมืออาชีพ ถุย ถุย....ไอ้พวกที่อยู่ นะไหวเหรอ ซื่อสัตย์สอาดพอ แล้วหรื',
-                    "ใคร ที่บอกให้ลุงตู่ลาออก เสียใจด้วยครับ เพราะไม่มีใครเหมาะ ท่าลุงตู่อีกแล้ว",
-                    "อย่าเอาท่านพันท้ายนรสิงห์ มาเปรียบเทียบกับ สัตว์นรกอัปรีย์จัญไรแบบพวกมึง.. เพราะท่านพันท้าย ท่านจงรักภักดีต่อพระมหากษัตริย์ไทย ... แต่พวหมึงไม่ใช่ พวกมึงมันแค่สัตว์เลื้อยคลานที่แดกขี้เป็นอาหาร ถึงได้มีพฤติกรรมสันดานหยาบหนาเกินกว่าคนทั่วไปเค้าทํากัน.. ยิ่งไออ้แก่นี่ตัวเหี้ยเลยเมื่อไหร่จะตายห่าซะที แผ่นดินจะได้สูงขึ้น..",
-                    "สมองกวงหมดแระ",
-                    "นัก การ เมือง เรียก ร้อง ให้ ยกเลิก ส.ว. เรา ประชา ชน คนหนึ่ง ขอ เรียก ร้องให้ ยกเลิก ส.ส. มีแต่ คสช ก้อ พอ",
-                    "ตอนนี้แฮกแทคยุบฝ่ายค้านกระหึ่มโซเชีบลแล้วครับพี่น้อง 55555555555555",
-                    "สันดานฝ่ายค้นมันห็นแก่ตัวมากๆๆ วันๆไม่ทําห่าอะไรหรอกคอยแต่จะหาเรื่องนายกตลอด #เปลืองภาษี กูจริงๆๆๆๆ",
-                    'พวกที่รักชาติ รักสถาบัน ล้วมันเรียกเราว่า "สลิ่ม" งั้นขอเรียกพวกชังชาติ ชังเจ้าว่า "สวะ" จะได้ไหมครับ',
-                    "เรียก แม่ง.สวะสังขม..หรือขยะของสังคม..ไปเลย.ไอ้พวกสามสัส.สามกีบ",
-                    "ไอ้พวกควาย 3 นิ้วจัญไรสถุน ต่างชาติจะมาเสือกเรื่องในไทยไม่ได้ จะมาอยู่เหนือกฎหมายไทยไม่ได้ พวกมึงนี่ไม่มีสมองจริงๆควายก็ไม่ใช่หมาก็ไม่ใช่ไม่รู้จะเปรียบเทียบกับสมองอะไรดี",
-                    "ชาติบ้านเมืองของเรา อาจจะวุ่นวายไปบ้าง มีความแตกแยก มีคนเลว มีนักการเมืองเลว มีประชาชนเลวและเห็นแก่ตัว มีต่างชาติเข้ามาแทรกแซงกิจการภายในประเทศ มีการกลั่นแกล้งรังแกกัน แต่ถ้าเรายึดมั่นในการทำความดีเพื่อชาติบ้านเมือง ผมเชื่อมั่นว่าแล้วความดีจะคุ้มครองเรา อยู่ที่ไหน ทำเพื่อใครก็ไม่เท่ากับทำให้แผ่นดินเกิด",
-                    "ประเทศไทยนี่แหละครับที่ต่างชาติอยากมาอยู่และมาใช้ชีวิตในบั้นปลายมากที่สุดเพราะที่นี่มีอะไรดีๆ มีเสน่ห์ในตัวเอง งดงาม ไม่เหมือนใคร และไม่มีใครเหมือนบนโลกใบนี้",
-                    "มีเหตุการณ์หนึ่งที่ฝังใจผมมาก วันหนึ่งอากาศหนาวมาก ผมจะเข้าบ้านเช้า เลยถอดถุงมือเพื่อให้จับลูกกุญแจไขลูกบิดได้ถนัด เอามือเปล่าจับประตูแล้วเนื่องจากหนาวเย็นจัดมาก มือเปล่าๆ เลยเกิดน้ำแข็งเกาะติดกับลูกบิดประตู ผมต้องก้มเอาลมปากร้อนๆ เป่ามือจนเอามือออกจากลูกบิด พร้อมกับคำถามในใจว่า เราจะมาอยู่ทรมานเป็นพลเมืองชั้นสามชั้นสี่ในที่ๆ ไม่ใช่บ้านเกิดเมืองนอนของเราไปทำไม วินาทีนั้นทำให้ผมตัดสินใจในทันทีว่าผมต้องกลับมารับใช้ชาติบ้านเมือง"]
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-        slimrandom = random.choice(quoteslim)
-        embed = discord.Embed(
-            colour = 0xffe852,
-            title = "คําพูดสลิ่ม",
-            description = f"```{slimrandom}```"
-        )
-        
-        embed.set_thumbnail(url="https://i.imgur.com/prrLCPC.png")
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if server_language == "Thai":
+            quoteslim = ["ไม่ใช่สลิ่มนะ แต่...",
+                        "ไม่ใช่ติ่งลุงตู่ แต่..."
+                        "เราคนไทยเหมือนกัน",
+                        "ไม่มี REDACTED ประเทศไทยจะพัฒนามาถึงจุดนี้หรือ,",
+                        "รักชาติ ศาสน์ กษัตริย์",
+                        "ไอ้ทอน",
+                        "ตี๋ทอน",
+                        "ไอ้บุตร",
+                        "ปีแยร์บูด",
+                        "กะปิบูด",
+                        "อีช่อ",
+                        "อีฉ้อ",
+                        "ชังชาติ",
+                        "ขายชาติ",
+                        "ไม่สำนึกในบุญคุณ ",
+                        "หนักแผ่นดิน",
+                        "เนรคุณแผ่นดิน",
+                        "เราคือผู้อยู่อาศัย ไม่ใช่เจ้าของบ้าน",
+                        "ล้มเจ้า",
+                        "ส้มเน่า",
+                        "เผาไทย",
+                        "ลิเบอร่าน",
+                        "คณะร่าน",
+                        "เห่อหมอยคลั่งชาติฝรั่ง",
+                        "ขุ่นพ่อง",
+                        "รังนกสีฟ้า",
+                        "เก่งอยู่หลังคีย์บอร์ด",
+                        "ต่างชาติชักใยอยู่เบื้องหลัง",
+                        "ชักศึกเข้าบ้าน",
+                        "มีทุกอย่างที่ดีเพราะใคร ฉันจะไม่ลืม​",
+                        "พวกเผาบ้านเผาเมือง",
+                        "จำนำข้าว",
+                        "เป็นคนปลอมตัวมาสร้างสถานการณ์ค่ะ คนเสื้อเหลืองไม่มีใครทำแบบนั้น",
+                        "ศูนย์รวมจิตใจของชาติ",
+                        "ให้มันจบที่เรือนจำ",
+                        "ตอบแทนบุญคุณแผ่นดิน",
+                        "ควายแดง",
+                        "สวะส้ม",
+                        "ด่าทุกเรื่องที่รัฐออกนโยบาย แต่ลงทะเบียนทุกอย่างที่รัฐแจกให้ฟรี",
+                        "ไอแม้ว",
+                        "ฟังคำเตือนจากผู้ใหญ่บ้าง",
+                        "ไม่รักชาติก็ออกจากประเทศไป",
+                        "เด็กๆพวกนี้มันคิดเองไม่ได้หรอก โดนหลอกกันมาทั้งนั้น",
+                        "ไม่พอใจก็ไปอยู่ประเทศอื่น",
+                        "ไม่ได้อยู่ฝั่งไหน",
+                        "ด่ารัฐบาลก็ด่าไป อย่าไปวุ่นวายกับเบื้องสูง​",
+                        "อาบน้ำร้อนมาก่อน",
+                        "พวกหัวรุนแรง",
+                        "ไร้ซึ่งจริยธรรม",
+                        "โดนจูงจมูก",
+                        "ลุงเป็นคนดี แค่เข้ามาผิดเวลา",
+                        "เป็นกลาง ไม่เลือกข้าง",
+                        "พวกอันธพาล ไม่พอใจก็ลงถนน​",
+                        "ต้องเริ่มต้นที่ตัวเองก่อน",
+                        "พวกขี้ข้าทักษิณ",
+                        "ซ้ายจัดดัดจริต",
+                        "โง่ไม่มีสมอง",
+                        "ไม่เคารพผู้หลักผู้ใหญ่",
+                        "เป็นบุคคลสาธารณะ อย่าพูดเรื่องการเมือง",
+                        "นำชีวิตตัวเองยังทำให้ได้ดีไม่ได้",
+                        "ไปทำหน้าที่ตัวเองให้ดีก่อน",
+                        "ทำไมไม่ยืน",
+                        "อย่าทำให้บ้านเมืองเดือดร้อน",
+                        "จาบจ้วงสถาบัน",
+                        "ประชามติ 16.8 ล้านเสียง",
+                        "บังอาจก้าวล่วง",
+                        "ทำร้ายจิตใจคนไทย",
+                        "เป็นอันตรายต่อความมั่นคงของประเทศชาติ",
+                        "รัฐมิได้ใช้ความรุนแรง",
+                        "หยุดสร้างความแตกแยก",
+                        "ขี้ข้าไอ้ทอน",
+                        "ลุงมาจากการเลือกตั้ง",
+                        "เชียร์ลุง",
+                        "#อนุชนรักชาติศาสน์กษัตริย์",
+                        "ที่มีแผ่นดินอยู่ทุกวันนี้เพราะใคร",
+                        "ม๊อบสวะ",
+                        "ทำประโยชน์อะไรให้ชาติบ้านเมืองบ้าง",
+                        "ไอ้เจ็กกบฎ",
+                        "แปะสติ๊กเกอร์ ซาลาเปา &​ ",
+                        "โดนไอ้แม้วซื้อไปแล้ว",
+                        "รับไปห้าร้อย",
+                        "ประชาธิปไตยต้องเคารพกฎหมา",
+                        "เขาแค่ทำตามที่กฏหมายห้ามเท่านั้น",
+                        "นักการเมืองก็โกงเหมือนกันทุกคน",
+                        "ลุงตู่เป็นคนดี",
+                        "ลุงตู่อยู่บ้านเมืองสงบ",
+                        "บ้านเมืองสงบ จบที่ลุงตู่",
+                        "ระบอบทักษิณ",
+                        "สมบูรณาญาสิทธิทุน",
+                        "นี่คือการปฏิวัติที่อ่อนละมุน",
+                        "รัฐประหารโดยสันติวิธี",
+                        "Unfortunately, some people died.",
+                        "คนดี ถึงจะเป็นเผด็จการ ก็เป็นเผด็จการที่ดี",
+                        "ก็ไม่ได้ชอบลุงตู่นะ แต่ถ้าจะให้ไอ้ทอนมาเป็น ยังไงลุงตู่ก็ดีกว่า",
+                        "หนึ่งคือนายกฯ รักประเทศชาติ, สองคือนายกฯ รักพระมหากษัตริย์, สามคือนายกจริงใจ และทำเพื่อประเทศไทยจริง ๆ",
+                        "มึงมาไล่ดูสิ",
+                        "ลูกหลานอยู่ไม่ได้วันหน้า ก็โทษพ่อมันนั่นแหละ",
+                        "ถ้ารุนแรงคงมีคนตายไปแล้ว",
+                        "ไปให้ตำรวจยิงหรอ",
+                        "จะกี่รัฐบาลก็เหมือนกันหมด",
+                        "เอาเวลาไปหาเงินเลี้ยงปากท้องเถอะ",
+                        "เก่งมากก็ไปเป็นนายกฯเองสิ",
+                        "แค่รถฉีดน้ำจะไปกลัวทำไม เขาทำตามหลักสากล",
+                        "ท่านทรงงานหนัก",
+                        "โดนแค่ฉีดน้ำทำเป็นบ่น ตอนนั้น กปปส โดนแก๊สน้ำตานะ",
+                        "หัวก้าวหน้า ปัญญาล้าหลัง",
+                        "สัตว์นรก",
+                        "คนไทยทั้งประเทศ",
+                        "ขอพูดแรงๆ ซักครั้งในชีวิต พูดแล้วอยากจะร้องไห้​",
+                        "จะเปลี่ยนแปลงประเทศ ช่วยพ่อแม่ล้างจานหรือยัง",
+                        "ถ้าคนไทยฆ่ากันเอง จะร้องเพลงชาติไทยให้ใครฟัง",
+                        "ถ้าพวกมึงเป็นอะไรขึ้นมา คิดว่าพ่อนักการเมืองของมึงเขาจะมาช่วยเหรอ",
+                        "เห็นเราเงียบ ใช่ว่าเราจะไม่รู้สึก คุณด่าพ่อเรา เราเสียใจนะ",
+                        "ถ้าพ่อมองลงมา พ่อจะรู้สึกยังไง",
+                        "พวกคอมมิวนิสต์",
+                        "อยากได้เสรีภาพมากเกินไป",
+                        "วันๆ เอาแต่เรียกร้องเสรีภาพ ถึงไม่รู้ไงว่าท่านทำอะไรบ้าง",
+                        "หัดศึกษาประวัติศาสตร์บ้างนะ",
+                        "ถอยกันคนละก้าว",
+                        "เจ้าจะทำอะไรก็เรื่องของเค้า",
+                        "จ่ายภาษีหรือเปล่า",
+                        "ม็อบมุ้งมิ้ง",
+                        "ทำไมไม่เคารพความเห็นต่าง",
+                        "เป็น นร ก็กลับไปตั้งใจเรียนหนังสือ",
+                        "เด็กๆเอาแต่เล่นโซเชียล fake news ทั้งนั้น",
+                        "รัฐบาลมีผลงานเยอะแยะ แค่ข่าวไม่ออกเท่านั้นแหละ",
+                        "คิดต่างได้ แต่ต้องมีสถาบัน",
+                        "รักประยุทธ์ ก็ยังดีกว่าโดนล้างสมอง",
+                        "อยู่อย่างจงรัก ตายอย่างภักดี ปกป้องสถาบัน",
+                        "ไปฟังคนไม่จบ ม.6 มันพูดทำไม",
+                        "ก่อนจะสานต่ออุดมการณ์เพื่อชาติ วันนี้ช่วยแม่ทำงานบ้าน กรอกน้ำใส่ตู้เย็นหรือยัง",
+                        "ขยันอ่านหนังสือสอบให้เหมือนอ่านเบิกเนตรหรือยัง",
+                        "คุณภาพชีวิตจะดีขึ้น ถ้าคนเป็นคนดี ถ้าตัวเราดี",
+                        "แล้วที่หลานทำไม่เรียกว่าคุกคาม��ถาบันหรือ",
+                        "เป็น IO ดีกว่าเป็นควายให้ไอ้แม้วไอ้ทอนจูงจมูก",
+                        "ทำร้ายตำรวจ ด้วยคีมเหล็กขนาดใหญ่",
+                        "พวกเนตรนารีคุกคามเราก่อน",
+                        "เขามองพวกผมด้วยสายตาล้มสถาบัน",
+                        "เยาวชนปลดแอ๊ก",
+                        "ประชาธิปไตยแดกได้เหรอ",
+                        "ควรอยู่อย่างพอเพียงนะ",
+                        "เศรษฐกิจก็ดีอยู่แล้วนี่ เห็นคนซื้อนั่นซื้อนี่",
+                        "ไอทอนมันมาทำให้ประเทศวุ่นวาย",
+                        "อย่าไปดูการเมืองมาก มันปั่น",
+                        "ดีจ๊ะหนู พ่อแม่คงภูมิใจมาก",
+                        "รู้ทุกเรื่อง ยกเว้นเรื่องตนเอง หน้าที่ของตนเอง",
+                        "ตบเสียบ้างก็ดีเหมือนกัน เด็กสมัยนี้ไม่รู้กินอะไรเข้าไป",
+                        "ไอ้บูดจงพินาศ ประชาชาติจงพ้นภัย",
+                        "ผมก็ว่าเนชั่นเป็นกลางสุดแล้วในการเสนอข่าว ไม่ได้อวยใดๆพูดตามเนื้อผ้าครับ",
+                        "สร้างแต่ปัญหาให้ลุงตู่ แผนตื้นๆยังไปติดกับดัก",
+                        "ไม่เอาต่างชาติเป็นนาย",
+                        "เหยียบย่ำหัวใจคนไทย",
+                        "ชู 3 นิ้ว กูเอามึงตายเลย",
+                        "เราว่าลุงไม่เก่งนะ แต่ลุงไม่โกง",
+                        "มันทำได้แม้กระทั่ง ปารองเท้าปาขวดเขย่ารถพระที่นั่ง!!",
+                        "ไม่ภูมิใจเหรอ ที่ได้ตอบแทนคุณแผ่นดิน",
+                        "เราไม่ได้สนใจอ่ะนะ เราต้องทำงาน ถ้าไม่ทำงาน ก็ไม่มีแดก",
+                        "อย่าอ้างคำว่าประชาธิปไตยแล้วทำร้ายหัวใจคนทั้งชาติ",
+                        "ผมไม่ใช่สลิ่มนะ แต่ผมว่าป้าม่วงไม่ผิด",
+                        "โปรดอย่าบิดเบือนความจริงไปมากกว่านี้เลย มันเจ็บ...",
+                        "3 แสนเสียงใน กทม. แต่เป็นเสียงที่มีคุณภาพ ย่อมดีกว่า 15 ล้านเสียงใน ตจว. แต่ไร้คุณภาพ",
+                        "แน่จริงเรียนให้จบ มีเงินเดือน มีรายได้แล้วค่อยบอกว่าภาษีกู",
+                        "จ่ายแค่ VAT 7% แล้วยังมาเรียกตัวเองว่าผู้เสียภาษี",
+                        "ประเทศชาติจะดีขึ้นถ้าทุกคนหาเลี้ยงตัวเองได้",
+                        "เด็กๆถ้าอยากเห็นอนาคตที่ดีอะ คุณต้องให้ประเทศชาติมีความมั่นคงก่อน อย่าขายชาติ",
+                        "รังเกียจสถาบัน แล้วทำไมไม่เลิกใช้ธนบัตรและเหรียญเลยล่ะครับ​",
+                        "แปะสติ๊กเกอร์หนูหิ่น",
+                        "เมกามันอยู่เบื้องหลัง แล้วให้ไอ้ธรบงการอีกที",
+                        "นักเลง อันธพาล คนเกเร คนติดยา ผีพนัน คนสีเทา เค้ายังรู้จักรัก ปกป้องสถาบัน",
+                        "ผมน่ะทำงานเพื่อบ้านเมือง",
+                        "จะไล่ประยุทธ์ก็ไล่ไปสิ ทำไมต้องเอาพระองค์ท่านมาเกี่ยวด้วย",
+                        "ถ้าเข้ามาในฐานะคนรักดนตรีแล้วทิ้งเรื่องการเมืองไว้นอกรั้ว ก็คงไม่มีใครไปปิดกั้น",
+                        "ทำมาหากินเลี้ยงตัวเองเลี้ยงครอบครัวให้รอด พอแล้ว ใครจะมาหาว่าเป็น Ignorant ช่างหัวพ่อมัน",
+                        "วันแรกขาย iPhone 12 ในประเทศไทย คิวยาวเหยียด อ้าว! นึกว่าเศรษฐกิจไม่ดี!",
+                        "คงได้ผัวก่อนเรียนจบ แต่งตัวแบบนี้",
+                        "โกงนิดๆ หน่อยๆ ไม่เป็นไรหรอก ไอ้พวกนักการเมืองมันโกงมากกว่านี้เยอะ",
+                        "ฉันเออ ฉันอยากร้องไห้ ฉันxxxไว้แก ฉันโอยฉัน อึ้ยฉัน โอ้ย แกแกฉันตื่นเต้นมาก ฉัน โอ้ย ฉันxxxxหนักมากเลย ฉันบอกแล้วว่าฉันร้องไห้ เออฉัน โอย ฉัน โอ้ยแก้หัวใจฉันจะวาย โอ้ยฉัน ใจฉันเต้นตึก ๆ โอยๆ แก ฉันได้จับมือท่านน่ารักมากแก แบบ โอ้ยฉันสุดฤทธิ์ แก ฉันจะเป็นลม ไม่ โอ้ยเออ แก ฉันดีใจ",
+                        "ให้ใครมาด่าพ่อแม่คุณไม่ผิดเอาไหม",
+                        "แม้เหลือคนเดียวทั้งโรง เราก็จะยืน",
+                        "ถ้าเป็นรัฐบาลอื่น มาเจอวิกฤติโควิด สถานการณ์แม่งเละกว่านี้อีก",
+                        "ไม่ได้เชียร์ลุง แต่ลุงเค้าทำตามกฏหมาย",
+                        "แล้วคนด่ารับผิดชอบอะไร เกิดมาทำอะไรให้กับบ้านนี้เมืองนี้",
+                        "เรียกร้องทุกอย่างจากกษัตริย์ขนาดนี้ เอาระบอบสมบูรณาญาสิทธิราชย์เลยไหม ไม่ต้องมีละนักการเมือง ไม่ต้องระบอบประชาธิปไตย",
+                        "อีเด็กพวกนี้มันจะไปรู้อะไร",
+                        "การซื้อตำแหน่งมันเรื่องปกติ ถ้าคุณขยันหาเงินนั่นคือคุณก็มีสิทธิ์ คนละเรื่องกับคอรัปชั่นเลย",
+                        "ห้ามวิจารณ์ 112",
+                        "พูดแต่เรื่องซ้ำซาก ไม่มีหลักฐาน",
+                        "ไม่เอาสถาบันกษัตริย์ แต่พวกตัวเองก็ไม่เคยทำประโยชน์กับประชาชนเลยสักอย่าง เพราะฉะนั้นอยู่กับสถาบันกษัตริย์นี่แหละมีประโยชน์ที่สุดแล้ว",
+                        "ติดอยู่ตรงกลาง ม๊อบก็ไม่ใช้ สลิ่มก็ไม่เชิง งงม่ะ?",
+                        "ไม่อยากให้เพจนี้แสดงออกทางการเมืองเลยค่ะ",
+                        "วันที่ออกมาไม่เจออากาศแย่ก็มี ถนนหน้าบ้านเราก็ไม่ได้พัง สวยด้วย น้ำก็ไม่ได้กร่อยอ่ะ คนที่จนแถวบ้าน เมื่อเช้าก็เห็นเค้านั่งโขกหมากรุก หัวเราะเอิ๊กอ๊ากอยู่นะ​",
+                        "คือเราอยากให้ประเทศพัฒนา และในช่วงปีหลังๆ ตั้งแต่ 58 เป็นต้นมามันมีหลายอย่างที่พัฒนาแบบจับต้องได้มากๆ และรัฐบาลก็ผ่านการเลือกตั้งมาแล้ว เพราะงั้นเราไม่เห็นว่ามีความจำเป็นอะไรต้องล้มรัฐบาลในตอนนี้ที่วิกฤติ Covid ยังดำเนินอยู่ เว้นแต่ว่ามีคอรัปชันอะไรที่รับไม่ได้ถึงจะเห็นสมควรค่ะ",
+                        "เป็นเพจการเมืองไปเสียแล้วคงต้องเลิกติดตาม ไปกิน MK ดีกว่า 555",
+                        "กลับบ้านไปทำไร่ทำนาอยู่อย่างพอเพียง ขยันหน่อยอยู่ได้ครับ",
+                        "ที่ภาคเหนือมีฝุ่นPM2.5เยอะ ก็ไม่ต้องไปโทษใคร เป็นผลกรรมจากไอ้แม้วนี่แหละ รู้เอาไว้นะคะ​",
+                        "ถ้าข้างบ้านเขาทะเลาะกัน คุณจะทำยังไง ในเมื่อคุณก็แค่คนที่มีบ้านติดกับเขา",
+                        "เรื่องนามงามพม่า เรื่องของประเทศเขาเราอย่าสนใจเลย ประเทศใครประเทศมัน",
+                        "เชื่อเถิดครับว่าสิ่งที่เรามีมาและมีอยู่แล้วน่ะ...ดีที่สุดแล้ว",
+                        "ถ้าเสพแต่ข่าวด้านเดียวก็จะเห็นแต่ด้านแย่ของรัฐบาล ของประเทศ แต่ในความเป็นจริงมันมีแค่ด้านนั้นรึเปล่า",
+                        "รัฐบาลนี้อาจไม่ได้ดีเลิศประเสริฐศรีอะไร แต่มันก็ไม่ได้เลวร้ายอย่างที่คนบางกลุ่มพยายามทำให้มันเป็นหรอก เหตุผลแถมอีกอย่างคือ เป็นรัฐบาลที่เชิดชูสถาบัน ไม่ปล่อยให้พวกตาสว่างอยู่ในกะลาเนรคุณชาติเนรคุณแผ่นดินทำตามใจชอบเกินไปนัก อันนี้บวกเพิ่มอีกหนึ่งคะแนน",
+                        "พวกสามกีบ",
+                        "เอาจริงชีวิตควรมีอะไรมากกว่าแค่การเมืองครับ วันๆหมกมุ่นแต่เรื่องนี้มากๆ ชีวิตไม่เจริญกันพอดี",
+                        "เราก็เคยอินกับม็อบค่ะ เคยบริจาคตั้งหลายรอบ แต่พอติงเรื่องข้อ 3 ก็โดนผลักเป็นสลิ่ม โดนสัก 3-4 ครั้งก็เลยแบบอะไรของเค้า โกรธมาก พอเริ่มรับข้อมูลจากฝั่งสลิ่มบ้างก็ค่อยๆเห็นผลงานลุงตู่และความปลอมของม็อบ ตอนนี้เลยเป็นสลิ่มอยู่ยาวละ5555",
+                        "การเป็นหมอได้ ขยัน เรียนดีแน่นอน แต่คุณธรรมล่ะ มีแค่ไหน มันสอนกันไม่ได้ ถ้าไม่มีพ่อแม่เป็นแบบอย่างที่ดีก็จบ",
+                        "คนนึงแพ้การเมืองจนต้องหนีออกต่างประเทศ อีกคนโดนด่าทุกวันแต่ยังสามารถอาศัยอยู่ในประเทศอย่างชิลๆ ได้ ผมว่าความเก่งในการเล่นการเมืองคนนึงเก่งกว่าอีกฝั่งอย่างทาบไม่ติดเลย",
+                        "ฉันคือบุคคลที่เคยไปเป่านกหวีด ฉันไม่ชอบลุง และฉันก็ไม่ชอบใครเลย🤣 ฉันไม่ได้อยู่กับกลุ่มไหนทั้งสิ้น โดยเฉพาะกลุ่มที่ด่าสถาบัน ตอนนี้ฉันไม่รู้ว่าอยู่จุดไหนของการเมือง",
+                        "ผมไม่ได้หายใจเข้าออกเป็นเรื่องการเมือง ผมไม่เคยสมาทานตัวเองอยู่ข้างใคร ทุกวันยังหงุดหงิดกับใครก็ตามที่มาเป็นรัฐบาล เฉกเช่นประชาชนคนหนึ่งไม่ต่างกัน แต่ที่สำคัญก็คือ ไม่ว่าผมจะชอบหรือจะเกลียดนายกแค่ไหน มันก็ไม่ทำให้ผมมีความคิดว่าอยากจะไปแต่งเพลงด่า",
+                        "รัฐประหารมีความจำเป็นในการเมืองไทย ในฐานะของเครื่องตัดไฟ รัฐประหารไม่ได้ทำให้ประเทศไทยก้าวหน้านัก แต่ทำให้ไม่บรรลัยหรือตายหมู่เกิดสงครามกลางเมือง",
+                        "สวัสดีครับ ผมขอแนะนำตัวครับว่าผมเคยเป็นเยาวชนหัวรุนแรงคนหนึ่งมาก่อน ที่เคยต่อต้านสถาบัน วันนี้ ผมสำนึกผิดจากใจแล้วครับ ผมขอโทษแผ่นดินไทย และผมสัญญาว่าจะรักชาติ ศาสนา และพระมหากษัตริย์ไทยสืบต่อไปครับ ผมจะขอรับสื่อที่เหมาะสมสำหรับผมในทวิตนี้นะครับ",
+                        "1 สวดมนตร์ 2 รักชาติ 3 ช่วยคนจน 4 เธอไม่ได้หล่อนะ 5 คิดดีทำดี 6 แต่งตัวให้สุภาพ 7 ทำมาหากิน 8 อย่าทำลายสังคม 9 เคารพผู้ใหญ่ 10 กตัญญู",
+                        "สำหรับคนที่ด่าประเทศไทย ผมอยากไห้คุณไปอยู่ USA .Russia,Germany ,UK, France .China ,UAE, etc..ประเทศละ1ปี...แล้วคุณจะ #รักประเทศไทย #love",
+                        "เด็กสมัยนี้...สนใจแต่จะย้ายไปประเทศอื่น...แต่ไม่มีใครสนใจที่จะแก้ไขปัญหา...ในประเทศตัวเอง..คงจะโดนปลูกฝังให้ชังชาติตั้งแต่เล็ก..😔😔",
+                        "ลุ่งตู่และพี่น้องไทยที่รักสถาบัน เราเลิกคบสหรัฐหันกลับมาคบจีนเถิดคับ",
+                        "อีคนจัญไร หนีออกนอกประเทศ ทําให้แผ่นดินสูงขึ้น อยากให้ไอ้พวก 3 นิ้วจัญไรรีบออกนอกประเทศให้หมดถ้ามีปัญญา ไอ้พวกกระจอก",
+                        'วันวัน ทําอะไร..เพื่อประเทศชาติและประชาชน บ้างวะ ไม่เห็นจะทําอะไร ที่เป็นประโยชน์เลย รัฐบาลมืออาชีพ เหรอ "ถุย" ประเทศล่มจ่มไปเท่าไรแล้ว โกงกิน กันมาตลอด ติดคุกกันไปเท่าไร หนีคดีไปอยู่ต่างประเทศ ทั้งพี่ทั้งน้อง รวมทั้งลูกสมุน แล้วใครวะจะตั้งรัฐบาลมืออาชีพ ถุย ถุย....ไอ้พวกที่อยู่ นะไหวเหรอ ซื่อสัตย์สอาดพอ แล้วหรื',
+                        "ใคร ที่บอกให้ลุงตู่ลาออก เสียใจด้วยครับ เพราะไม่มีใครเหมาะ ท่าลุงตู่อีกแล้ว",
+                        "อย่าเอาท่านพันท้ายนรสิงห์ มาเปรียบเทียบกับ สัตว์นรกอัปรีย์จัญไรแบบพวกมึง.. เพราะท่านพันท้าย ท่านจงรักภักดีต่อพระมหากษัตริย์ไทย ... แต่พวหมึงไม่ใช่ พวกมึงมันแค่สัตว์เลื้อยคลานที่แดกขี้เป็นอาหาร ถึงได้มีพฤติกรรมสันดานหยาบหนาเกินกว่าคนทั่วไปเค้าทํากัน.. ยิ่งไออ้แก่นี่ตัวเหี้ยเลยเมื่อไหร่จะตายห่าซะที แผ่นดินจะได้สูงขึ้น..",
+                        "สมองกวงหมดแระ",
+                        "นัก การ เมือง เรียก ร้อง ให้ ยกเลิก ส.ว. เรา ประชา ชน คนหนึ่ง ขอ เรียก ร้องให้ ยกเลิก ส.ส. มีแต่ คสช ก้อ พอ",
+                        "ตอนนี้แฮกแทคยุบฝ่ายค้านกระหึ่มโซเชีบลแล้วครับพี่น้อง 55555555555555",
+                        "สันดานฝ่ายค้นมันห็นแก่ตัวมากๆๆ วันๆไม่ทําห่าอะไรหรอกคอยแต่จะหาเรื่องนายกตลอด #เปลืองภาษี กูจริงๆๆๆๆ",
+                        'พวกที่รักชาติ รักสถาบัน ล้วมันเรียกเราว่า "สลิ่ม" งั้นขอเรียกพวกชังชาติ ชังเจ้าว่า "สวะ" จะได้ไหมครับ',
+                        "เรียก แม่ง.สวะสังขม..หรือขยะของสังคม..ไปเลย.ไอ้พวกสามสัส.สามกีบ",
+                        "ไอ้พวกควาย 3 นิ้วจัญไรสถุน ต่างชาติจะมาเสือกเรื่องในไทยไม่ได้ จะมาอยู่เหนือกฎหมายไทยไม่ได้ พวกมึงนี่ไม่มีสมองจริงๆควายก็ไม่ใช่หมาก็ไม่ใช่ไม่รู้จะเปรียบเทียบกับสมองอะไรดี",
+                        "ชาติบ้านเมืองของเรา อาจจะวุ่นวายไปบ้าง มีความแตกแยก มีคนเลว มีนักการเมืองเลว มีประชาชนเลวและเห็นแก่ตัว มีต่างชาติเข้ามาแทรกแซงกิจการภายในประเทศ มีการกลั่นแกล้งรังแกกัน แต่ถ้าเรายึดมั่นในการทำความดีเพื่อชาติบ้านเมือง ผมเชื่อมั่นว่าแล้วความดีจะคุ้มครองเรา อยู่ที่ไหน ทำเพื่อใครก็ไม่เท่ากับทำให้แผ่นดินเกิด",
+                        "ประเทศไทยนี่แหละครับที่ต่างชาติอยากมาอยู่และมาใช้ชีวิตในบั้นปลายมากที่สุดเพราะที่นี่มีอะไรดีๆ มีเสน่ห์ในตัวเอง งดงาม ไม่เหมือนใคร และไม่มีใครเหมือนบนโลกใบนี้",
+                        "มีเหตุการณ์หนึ่งที่ฝังใจผมมาก วันหนึ่งอากาศหนาวมาก ผมจะเข้าบ้านเช้า เลยถอดถุงมือเพื่อให้จับลูกกุญแจไขลูกบิดได้ถนัด เอามือเปล่าจับประตูแล้วเนื่องจากหนาวเย็นจัดมาก มือเปล่าๆ เลยเกิดน้ำแข็งเกาะติดกับลูกบิดประตู ผมต้องก้มเอาลมปากร้อนๆ เป่ามือจนเอามือออกจากลูกบิด พร้อมกับคำถามในใจว่า เราจะมาอยู่ทรมานเป็นพลเมืองชั้นสามชั้นสี่ในที่ๆ ไม่ใช่บ้านเกิดเมืองนอนของเราไปทำไม วินาทีนั้นทำให้ผมตัดสินใจในทันทีว่าผมต้องกลับมารับใช้ชาติบ้านเมือง"]
+            
+            slimrandom = random.choice(quoteslim)
+            embed = discord.Embed(
+                colour = 0xffe852,
+                title = "คําพูดสลิ่ม",
+                description = f"```{slimrandom}```"
+            )
+            
+            embed.set_thumbnail(url="https://i.imgur.com/prrLCPC.png")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("🐃")
+
+        else:
+            pass
+
+@client.command()
+async def quote(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed)
-        await message.add_reaction("🐃")
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            quote = ["ไม่แพ้หรอกฝุ่น แพ้คุณ​มากกว่า",
+                    "เราก็เหมือนยาดม ไม่เน้นให้ใครชื่นชม แต่เน้นให้คนชื่นใจ",
+                    "แดดแรงทำให้หน้าพัง แต่เธอน่ารักจังทำให้หน้าแดง",
+                    "แม่หนูชอบเขา ไม่เอาแล้วทะเล🌲🌄",
+                    "จีบเราไม่ต้องเปย์...ขอแค่ทุ่มเทและใส่ใจ ❤",
+                    "เป็นเด็กอ้วนมันไม่ดี เป็นเด็กดีของพี่ได้เปล่า 😆",
+                    "อยากเจอรักดีดี นาทีนี้ก็ต้องเราแล้วป่ะ 😂",
+                    "ของอร่อยมีแต่ทำให้เราอ้วน แล้วเราอ้วนคิดดูว่าจะอร่อยแค่ไหน 🐷",
+                    "รีบจีบตอนนี้ ถ้าสวยกว่านี้จีบยากละนะ",
+                    "เป็นคนยิ้มยาก แต่ถ้าชอบใครมากๆ จะยิ้มให้",
+                    "เราเป็นคนหน้านิ่ง ไม่อยากยิ้มเดี๋ยวเธอละลาย",
+                    "ไม่อยากเป็น Number One อยากเป็นแค่ Only One ของเธอก็พอ",
+                    "ไม่ใช่ผู้หญิงสวย ที่อยู่ใกล้แล้วสบายตา แต่เป็นผู้หญิงที่ฮา อยู่ใกล้แล้วสบายใจ",
+                    "ช่วงนี้อ่อนไหว มองหน้าใครก็ใช่ไปหมดเลย",
+                    "รอเธอมาจีบ อยากถูกถีบตกคาน",
+                    "มุขเสี่ยวเราไม่มี แต่ใจดีๆ อะมีแน่นอน ❤",
+                    "ข้างกายมันเหงา มาอยู่ข้างเราดีกว่ามั้ย",
+                    "โสดโอนไว มีความจริงใจแถมให้ด้วย",
+                    "ไม่สวยไม่ขาว แต่หน้าหนาวกอดอุ่นนะ",
+                    "อยู่คนเดียวมันอิสระ แต่ลองคบเรามั้ยจ๊ะแล้วจะสนุก",
+                    "มีตะปูต้องมีค้อน แต่ถ้าอยากมีคนให้อ้อน ต้องมีเค้า",
+                    "ถ้าเธอไม่ชอบความเหงา งั้นหันมาชอบเราก็ได้นะ",
+                    "ช่วงนี้รู้สึกว่าหนักใจ..ขอเอาไปวางไว้ที่เธอได้ป่ะ",
+                    "ยืนอยู่คนเดียวเพราะหลงทาง พอเธอมายืนข้างๆ เลยหลงเธอ",
+                    "รถติดให้เผื่อเวลา แต่ถ้าได้เธอมาจะไม่เผื่อใจ",
+                    "หวานเป็นลม เราไม่ขมนะกินได้ 😛",
+                    "ไม่ต้องฟอลโล่วไอจี แต่ช่วยฟอลอินเลิฟวิทมีได้มั้ย",
+                    "เราเป็นคนตรงๆ นะ ตรงนี้ยังว่าง! รอคนข้างๆ มาเติมเต็ม",
+                    "ไอจีไม่คุมโทน แต่อยากได้คนมาคุมใจ",
+                    "ครูสอนให้รักในความรู้ แต่เธอสอนให้รู้ในความรัก",
+                    "ไม่ได้เป็นคนเจ้าชู้ ดูหน้าก็รู้ว่าเป็นคนรักเดียว",
+                    "ถ้าสตอรี่เธอว่าง ถ่ายรูปเราไปลงบ้างก็ได้นะ🙋🏻‍♀️",
+                    "กดรักมันเชย กดทักมาขอเป็นแฟนเลยจะดีกว่า",
+                    "ถึงน้องจะไม่มีใจ ไม่เป็นไรพี่มีตังค์",
+                    "ถึงตัวจะบวม แต่รวมๆ เราน่ารักนะ",
+                    "แบตหมดให้เดินหาปลั๊ก แต่ถ้าขาดความรักให้เดินมาหาเรา",
+                    "เป็นเเฟนเราไม่มีคบซ้อน ง่วงก็นอน เฟสไม่ออน ดูแต่ยูทูป",
+                    "ที่ถ่ายรูปชอบทำหน้านิ่ง เพราะอยากเก็บรอยยิ้มไว้ให้คนที่ใช่",
+                    "ถ้าเธอชอบนั่งรถไฟ เราสับรางไวเธอชอบไหม",
+                    "ถ้าอยากได้คุณ ต้องทำบุญหรือต้องทำใจ",
+                    "ไม่ต้องรีบรักให้เต็มร้อย แต่ขอรักทีละน้อยๆ ให้เต็มใจ",
+                    "ถึงภาพจะไม่น่ารัก แต่สเตตัสเราโสดนะ",
+                    "ถ้าโลกนี้มันอยู่ยาก มาอยู่บ้านเราก็ได้นะ",
+                    "อย่าใจดำกับเราเลย ลำพังขอบตาดำก็พอแล้ว",
+                    "อยากเป็นหน้ากาก จะได้สัมผัสปากเธอทุกวัน",
+                    "หนูยิ้มขนาดนี้ ไม่สะเทือนใจพี่บ้างหรอ",
+                    "ถ้าเธอไม่อยากเหงา…ก็มีเราเป็นแฟนดิ",
+                    "มองท้องฟ้าแล้วใจละเมอ มองเธอแล้วใจละลาย"
+                    "ขนาดแมวยังหวงก้าง แล้วเราจะหวงเธอบ้างไม่ได้เหรอ",
+                    'น่ารักก็บอก ไม่ต้องแซวหรอกว่า "อ้วน"',
+                    "เบื่อแล้วเป็นพี่น้อง อยากลองเป็นที่รักดูบ้าง",
+                    "รักหรอก จึงหยอกเล่น แต่ไม่รักเล่นๆ นะบอกเลย",
+                    "อากาศข้างนอกมันอบอ้าว มาอยู่ในใจเรามะ มันอบอุ่น",
+                    "น้ำอัดลมทำให้เราชอบเรอ🥤 แต่น่ารักแบบเธอ ทำให้เราชอบใจ",
+                    "ไม่อยากหยุดแค่วันอาทิตย์ แต่อยากหยุดทั้งชีวิตไปกับเธอ",
+                    "อยากให้เธอกินคลีนจัง🥦🥕🥑 เธอจะได้ลดของมัน แล้วมาเป็นของเรา",
+                    "ธนาคาร มีไว้ฝากตังค์ เธอมีใครหรือยัง อยากฝากใจ",
+                    "เปลี่ยนจากกดติดตาม มาติดใจเราแทนได้ป่ะ",
+                    "จะผอมได้ยังไง ในเมื่อในใจเราอยากกินแต่เธอ",
+                    "เลิกเป็นเถอะคนเหงา มาเป็นคนดีของเราดีกว่า",
+                    "ภาพถ่ายอาจจะหน้าชัดหลังเบลอ แต่ภาพของเธอในใจเรามันชัดเจน",
+                    "จะมองอะไรนักหนา เธอมีปัญหาหรือว่ามีใจ", 
+                    "หาวเอาไว้ใช้กับง่วง หวงเอาไว้ใช้กับเธอ",
+                    "ถึงเราจะไม่ได้ผอม แต่เวลาหอมแล้วหายเหนื่อย",
+                    "ถ้ายังรู้จักเราไม่ดีพอ ศึกษาต่อในแชทได้นะคะ",
+                    "ยอมรับว่าเป็นคนคิดมาก แต่ก็ไม่มากเท่าคิดถึงคุณ",
+                    "อยากโทรถามเคอรี่ ความรักที่ส่งให้เธอนี่ กี่วันถึง ❤️",
+                    "เลิกเหอะเช็คอินร้านเหล้า เปลี่ยนมาเช็คอินบ้านเราดีกว่า",
+                    "ถึงขาเราไม่เรียว แต่เรามีรักเดียวนะเธอ",
+                    'เหงาก็ต้องทน เพราะเป็นคน "ไม่มีแฟน"',
+                    "ไม่มีหรอกคำบรรยาย มีแต่ไอดีไลน์จะเอามะ",
+                    "จ้องคอมแล้วตาเบลอ👀 แล้วถ้าจ้องเธอจะได้เบอร์ไหม",
+                    "ไม่ใช่คนน่ารัก แต่ถ้าลองคุยไปสักพัก ระวังจะรักไม่รู้ตัว",
+                    "มีไข้ให้ไปหายา แต่ถ้าอยากมีค่าให้มาหาเรา",
+                    "เบื่อแล้วความร้อน เมื่อไหร่จะเจอความรักบ้างอะ",
+                    "สำหรับใครที่กำลังเหงา คงไม่มีอะไรแนะนำนอกจากเรา",
+                    "ถ้าเบื่อคนใส่ทอง หันมามองคนใส่ใจบ้างก็ได้นะ",
+                    "ปกติเป็นคนไม่แพ้อะไร...แต่แปลกจัง ทำไมต้องมาแพ้ใจคนอย่างเธอ",
+                    "ไม่ได้อยากกินหญ้าอ่อน แต่ดันเกิดก่อนให้ทำไง",
+                    "เป็นแค่คนในจอ คงไม่ดีพอเท่าคนไหนใจ",
+                    "ถ้าไม่นับเงินในกระเป๋า เราดีกว่าเขาเเน่นอน",
+                    "จุดที่หนาวที่สุด ไม่ใช่บนยอดดอย แต่เป็นจุดที่รอคอยแล้วเขาไม่มาสักที",
+                    "ใจกลางเมืองมีเเต่ตึก ใจกลางความรู้สึกนั้นมีแค่คุณ",
+                    "ถึงจะไม่ใช่ปีเตอร์แพน แต่ก็พาเธอไปดินแดนแห่งความรักได้นะ",
+                    "ถ้าเธอไม่ชอบความเหงา งั้นหันมาชอบเราก็ได้นะ😆",
+                    "ความรักก็เหมือนเเท็กซี่ ปฏิเสธทุกทีทั้งที่ยังว่าง",
+                    "ใต้คางยังมีเหนียง แต่ข้างเคียงยังไม่มีใคร",
+                    "เป็นคนที่ยิ้มยาก แต่หันไปเจอโต๊ะข้างๆ ก็อยากจะยิ้มให้",
+                    "แค่ทักๆ อาจจะยังไม่รู้..ลองมาคบดูแล้วจะรู้ว่าน่ารัก",
+                    "ที่เห็นมาทะเลบ่อยๆ เพราะอยากเป็นไข้ที่ชลฯ...อยากเป็น “คนที่ใช่”",
+                    "ใจเธอก็เหมือนหมูสามชั้น ที่มีแต่มัน!! ไม่มีเรา!!",
+                    "เหงาจริงไม่ได้อ่อย ชาไข่มุกอร่อย แต่น้อยกว่าเรา",
+                    "อยากใจสั่นให้กินกาแฟ อยากมีคนดูแลให้มาเป็นแฟนเรา",
+                    "สั่งก๋วยเตี๋ยวกลับบ้านต้องใส่ถุง แต่อยากได้แฟนมีพุงต้องเลือกเรา",
+                    "น่ารักกว่าเราอะมีเยอะ แต่น่ารักและกินเยอะอะมีแค่เรา",
+                    "จะผอมได้ไง ในใจอยากกินแต่เธอ",
+                    "ในชั่วโมงที่อ้างว้าง ถ้ามีของกินอยู่ข้างๆ ก็สบายใจ",
+                    "โจ๊กพิเศษต้องใส่ใข่ แต่รักพิเศษแถมความห่วงใย ต้องเป็นเรา",
+                    "ถ้าเนื้อคู่ยังไม่ว่าง ขอเนื้อย่างก่อนได้ป่าว",
+                    "เหงาจริงไม่ได้อ่อย เค้กที่ว่าอร่อยยังไม่เท่าเรา",
+                    "เดี๋ยวนี้ใครเค้าลงรูปคู่ เค้าลงรูปชาบูกันแล้วจ้ะ",
+                    "กินน้ำอัดลมมันกัดกระเพาะ กินเราดีกว่าเนาะกัดเซาะแต่หัวใจ",
+                    "ถ้าเธอชอบของหวาน เราเสี่ยงเป็นเบาหวานเธอชอบมั้ย",
+                    "ช่วยชัดเจนหน่อยได้มั้ย จะได้รู้ว่าต้องอ่อยหรือต้องเปย์",
+                    "เนื้อคู่ที่ถูกใจ❤️ ยังไม่สู้เนื้อสันในที่ติดมัน",
+                    "ถ้าพี่ไม่ชอบกินสเต็กหมู พี่ลองกินหนูได้นะคะ",
+                    "ถ้าเธอชอบหมูสามชั้น คางเราสามชั้น เธอชอบมั้ย",
+                    "ขนาดหมูติดมันยังอร่อย แล้วผู้หญิงมีไขมันหน่อยๆ จะไม่อร่อยได้ยังไง",
+                    "กินข้าวอะอิ่มท้อง แต่พอมองหน้าน้อง โอ๊ย อิ่มใจ",
+                    "เราอาจจะไม่ใช่เค้กที่นุ่มฟู แต่เราจะเป็นเนื้อคู่ที่นุ่มนวล",
+                    "ที่โพสต์รูปของกินบ่อยๆ เพราะอยากอ่อยว่าทำกับข้าวเป็น",
+                    "ถึงจะไม่มีสถานะ แต่ถ้ามีหมูกระทะเราก็อยู่ได้",
+                    "ไม่ไหวอย่าฝืน ไม่มีที่ยืนก็นอนค่ะ",
+                    "โสดแล้วสตรอง ดีกว่าเป็นรองแล้วเสียนํ้าตา",
+                    "ถ้าไม่คิดจะจริงจัง ทิ้งตังค์ไว้ก็พอ",
+                    "เสียใจแล้วยิ้มได้ เป็นเรื่องง่ายๆ สำหรับฉันเลย",
+                    "ใครมันจะอยู่ข้างเรา ได้ดีเท่าเงาของตัวเราเอง",
+                    "โสด สวย สตรอง ถ้าเธอได้มอง แล้วจะเสียดาย",
+                    "โสดแล้วยิ้ม ดีกว่าถูกทิ้ง แล้วร้องไห้",
+                    "เป็นโสดอย่างอิสระ ดีกว่าเข้าไปเป็นภาระหัวใจใคร",
+                    "อย่าถามว่าตื่นมาคิดถึงใคร ตอบได้ชัดเจนเลยว่า “ที่นอน”",
+                    "ใจเธอที่เย็นชา ก็สู้น้ำประปาที่เย็นเฉียบไม่ได้"]
+            
+            quoterandom = random.choice(quote)
+            embed = discord.Embed(
+                colour = 0xffe852,
+                title = "คําคม",
+                description = f"```{quoterandom}```"
+            )
+            
+            embed.set_thumbnail(url="https://i.imgur.com/xG1k658.png")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("❤️")
+
+        else:
+            pass
 
 @client.command()
 async def calculator(ctx , *,equation):
@@ -10751,7 +10865,7 @@ async def calculator(ctx , *,equation):
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             await ctx.send(embed=embed)
         
-        if server_language == "Thai":
+        if server_language == "English":
         
             url = f"https://api.mathjs.org/v4/?expr={equation}"
             req = requests.get(url)
@@ -10766,7 +10880,6 @@ async def calculator(ctx , *,equation):
         ```""")
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             await ctx.send(embed=embed)
-
 
 @calculator.error
 async def calculator_error(ctx, error):
@@ -11822,36 +11935,45 @@ async def anon(ctx, *,message):
             payload = {"content":message,"username":username,"avatar_url":avatar}
             
             anonresults = collection.find({"webhook_status":"YES"})
-            results = collection.find({"guild_id":ctx.guild.id})
-            for data in results:
-                if data["webhook_status"] == "YES":
-                    for anondata in anonresults:
-                        webhook = anondata["webhook_url"]
-                        requests.post(webhook,data=payload)
-                        time.sleep(0.005)
-            
-                else:
-                    results = collection.find({"guild_id":ctx.guild.id})
-                    for data in results:
-                        if data["webhook_status"] != "YES" and data["webhook_url"] == "None":
-                            embed = discord.Embed(
-                                colour = 0x983925,
-                                title = "ไม่พบ webhook ของคุณ",
-                                description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}setwebhook #channel"
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message = await ctx.send(embed = embed)
-                            await message.add_reaction('⚠️')
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            status = data["webhook_status"]
+            webhookurl = data["webhook_url"] 
+            if status == "YES" and webhookurl != "None":
+                for anondata in anonresults:
+                    webhook = anondata["webhook_url"]
+                    requests.post(webhook,data=payload)
+                    time.sleep(0.005)
+        
+            else:
+                if status == "YES" and webhookurl == "None":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "ไม่พบ webhook ของคุณ",
+                        description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}setwebhook #channel"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
 
-                        elif data["webhook_url"] != "None" and data["webhook_status"] == "NO":
-                            embed = discord.Embed(
-                                colour = 0x983925,
-                                title = "คุณได้ปิดคําสั่งนี้ไว้",
-                                description = f"คุณต้องเปิดใช้คําสั่งนี้โดยใช้ {COMMAND_PREFIX}chat on"
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message = await ctx.send(embed = embed)
-                            await message.add_reaction('⚠️')
+                elif status == "NO" and webhookurl != "None":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "คุณได้ปิดคําสั่งนี้ไว้",
+                        description = f"คุณต้องเปิดใช้คําสั่งนี้โดยใช้ {COMMAND_PREFIX}chat on"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
+                
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "ตั้งค่าห้องคุย",
+                        description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {COMMAND_PREFIX}setwebhook #channel"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
         
         if server_language == "English":
             username = "Smilewin"
@@ -11872,36 +11994,45 @@ async def anon(ctx, *,message):
             payload = {"content":message,"username":username,"avatar_url":avatar}
             
             anonresults = collection.find({"webhook_status":"YES"})
-            results = collection.find({"guild_id":ctx.guild.id})
-            for data in results:
-                if data["webhook_status"] == "YES":
-                    for anondata in anonresults:
-                        webhook = anondata["webhook_url"]
-                        requests.post(webhook,data=payload)
-                        time.sleep(0.005)
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            status = data["webhook_status"]
+            webhookurl = data["webhook_url"] 
+            if status == "YES" and webhookurl != "None":
+                for anondata in anonresults:
+                    webhook = anondata["webhook_url"]
+                    requests.post(webhook,data=payload)
+                    time.sleep(0.005)
             
-                else:
-                    results = collection.find({"guild_id":ctx.guild.id})
-                    for data in results:
-                        if data["webhook_status"] != "YES" and data["webhook_url"] == "None":
-                            embed = discord.Embed(
-                                colour = 0x983925,
-                                title = "Your webhook is not found",
-                                description = f"You need to setup a room to talk to stranger {COMMAND_PREFIX}setwebhook #channel"
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message = await ctx.send(embed = embed)
-                            await message.add_reaction('⚠️')
+            else:
+                if status == "YES" and webhookurl == "None":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "Your webhook is not found",
+                        description = f"You need to setup a room to talk to stranger {COMMAND_PREFIX}setwebhook #channel"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
 
-                        elif data["webhook_url"] != "None" and data["webhook_status"] == "NO":
-                            embed = discord.Embed(
-                                colour = 0x983925,
-                                title = "Command is disable",
-                                description = f"This command is disable please use {COMMAND_PREFIX}chat on"
-                            )
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-                            message = await ctx.send(embed = embed)
-                            await message.add_reaction('⚠️')
+                elif status == "NO" and webhookurl != "None":
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "Command is disable",
+                        description = f"This command is disable please use {COMMAND_PREFIX}chat on"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
+                
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "setup room",
+                        description = f"You need to setup a room to talk to stranger {COMMAND_PREFIX}setwebhook #channel"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed = embed)
+                    await message.add_reaction('⚠️')
 
 @anon.error
 async def anon_error(ctx,error):
@@ -12071,13 +12202,12 @@ async def introduction(ctx):
             server_language = data["Language"]
 
         if server_language == "Thai":
-            results = collection.find({"guild_id":ctx.guild.id})
-            for data in results:
-                status = data["introduce_status"]
-                frame = data["introduce_frame"]
-                channel = data["introduce_channel_id"] 
-                give = data["introduce_role_give_id"]
-                remove = data["introduce_role_remove_id"]
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            status = data["introduce_status"]
+            frame = data["introduce_frame"]
+            channel = data["introduce_channel_id"] 
+            give = data["introduce_role_give_id"]
+            remove = data["introduce_role_remove_id"]
 
             if status == "YES":
                 if frame == "None":
@@ -12441,13 +12571,12 @@ async def introduction(ctx):
                 await message.delete()  
 
         if server_language == "English":
-            results = collection.find({"guild_id":ctx.guild.id})
-            for data in results:
-                status = data["introduce_status"]
-                frame = data["introduce_frame"]
-                channel = data["introduce_channel_id"] 
-                give = data["introduce_role_give_id"]
-                remove = data["introduce_role_remove_id"]
+            data = collection.find_one({"guild_id":ctx.guild.id})
+            status = data["introduce_status"]
+            frame = data["introduce_frame"]
+            channel = data["introduce_channel_id"] 
+            give = data["introduce_role_give_id"]
+            remove = data["introduce_role_remove_id"]
 
             if status == "YES":
                 if frame == "None":
@@ -13807,58 +13936,57 @@ async def __on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
         if server_language == "English":
             status = "YES"
@@ -13885,58 +14013,57 @@ async def __on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
 @__on.error
 async def levelon_error(ctx, error):
@@ -14027,58 +14154,57 @@ async def __off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                            )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
                         )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่าเลเวล",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเลเวล",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
         if server_language == "English":
             status = "NO"
@@ -14105,58 +14231,57 @@ async def __off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["level_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                level_status = data["level_system"]
+                if level_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Level system",
-                            description= f"The level system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Level system",
+                        description= f"The level system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
 @__off.error
 async def leveloff_error(ctx, error):
@@ -14499,10 +14624,9 @@ async def ____on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "NO":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "NO":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -14526,11 +14650,9 @@ async def ____on(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "NO":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "NO":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -14579,11 +14701,10 @@ async def ____on(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "NO":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
@@ -14595,7 +14716,7 @@ async def ____on(ctx):
                     await message.add_reaction('✅')
             
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
@@ -14606,12 +14727,10 @@ async def ____on(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "NO":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
@@ -14623,7 +14742,7 @@ async def ____on(ctx):
                     await message.add_reaction('✅')
 
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
@@ -14723,10 +14842,9 @@ async def ____off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "YES":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "YES":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -14750,11 +14868,9 @@ async def ____off(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "YES":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "YES":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -14803,10 +14919,9 @@ async def ____off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "YES":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "YES":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -14830,11 +14945,9 @@ async def ____off(ctx):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["economy_system"]
-                if status == "YES":
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                economy_status = data["economy_system"]
+                if economy_status == "YES":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
@@ -17222,12 +17335,11 @@ async def verify(ctx):
         if server_language == "Thai":
             guild = collection.find_one({"guild_id":ctx.guild.id})
             if not guild is None:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    status = data["verification_system"] 
-                    vfchannel = data["verification_channel_id"]
-                    give = data["verification_role_give_id"]
-                    remove = data["verification_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["verification_system"] 
+                vfchannel = data["verification_channel_id"]
+                give = data["verification_role_give_id"]
+                remove = data["verification_role_remove_id"]
                 if status == "YES":
                     if vfchannel != "None":
                         channel_id = int(vfchannel)
@@ -17241,7 +17353,7 @@ async def verify(ctx):
                             else:
                                 fontfile = 'arial.ttf'
 
-                            chars = 'abcdefghifkmnopqrstwxyzABCDEFGHJKMNOP12345678910'
+                            chars = 'abcdefghfkmnopqrstwxyzABCDEFGHIJKLMNOP12345678910'
                             text = ''
                             for i in range(6):
                                 text = text + random.choice(chars)
@@ -17265,15 +17377,19 @@ async def verify(ctx):
 
                             try:
                                 answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                answer = answer.content
-                                if answer == text:
+                                answeruser = answer.content
+                                if answeruser == text:
+                                    await asyncio.sleep(5)
+                                    await answer.delete()
                                     await message.delete()
                                     embed = discord.Embed(
-                                    description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
-                                    colour =  0xB9E7A5
+                                        description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
+                                        colour =  0xB9E7A5
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                    await ctx.send(embed=embed)
+                                    message = await ctx.send(embed=embed)
+                                    time.sleep(5)
+                                    await message.delete()
 
                                     if give != "None":
                                         try:
@@ -17303,21 +17419,29 @@ async def verify(ctx):
                         
                                 else:
                                     await message.delete()
+                                    await asyncio.sleep(5)
+                                    await answer.delete()
                                     embed = discord.Embed(
                                         description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                         colour =  0x983925
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                    await ctx.send(embed=embed)
+                                    message = await ctx.send(embed=embed)
+                                    time.sleep(5)
+                                    await message.delete()
                         
                             except asyncio.TimeoutError:
                                 await message.delete()
+                                await asyncio.sleep(5)
+                                await answer.delete()
                                 embed = discord.Embed(
                                     description = f":x: คุณใช้เวลานานเกินไป {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                     colour =  0x983925
                                 )
                                 embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                await ctx.send(embed=embed)      
+                                message = await ctx.send(embed=embed) 
+                                time.sleep(5)
+                                await message.delete()     
 
                         else:
                             embed = discord.Embed(
@@ -17325,7 +17449,7 @@ async def verify(ctx):
                                 colour =  0x983925
                             )
                             embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                            await ctx.send(embed=embed)  
+                            await ctx.send(embed=embed)
                             
                     else:
                         embed = discord.Embed(
@@ -17357,121 +17481,134 @@ async def verify(ctx):
         if server_language == "English":
             guild = collection.find_one({"guild_id":ctx.guild.id})
             if not guild is None:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "YES":
-                        if data["verification_channel_id"] != "None":
-                            channel_id = int(data["verification_channel_id"])
-                            channel = client.get_channel(channel_id)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                status = data["verification_system"] 
+                vfchannel = data["verification_channel_id"]
+                give = data["verification_role_give_id"]
+                remove = data["verification_role_remove_id"]
+                if status == "YES":
+                    if vfchannel != "None":
+                        channel_id = int(vfchannel)
+                        channel = client.get_channel(channel_id)
 
-                            if int(ctx.channel.id) == data["verification_channel_id"]:
-                                if not Path('arial.ttf').exists():
-                                    dirname = os.path.dirname(os.path.abspath(__file__))
-                                    fontfile = os.path.join(dirname, 'arial.ttf')
-            
-                                else:
-                                    fontfile = 'arial.ttf'
+                        if int(ctx.channel.id) == data["verification_channel_id"]:
+                            if not Path('arial.ttf').exists():
+                                dirname = os.path.dirname(os.path.abspath(__file__))
+                                fontfile = os.path.join(dirname, 'arial.ttf')
+        
+                            else:
+                                fontfile = 'arial.ttf'
 
-                                chars = 'abcdefghifklmnopqrstwxyzABCDEFGHIJKLMNOP12345678910'
-                                text = ''
-                                for i in range(6):
-                                    text = text + random.choice(chars)
-                                img = Image.new('RGB', (200, 50))
+                            chars = 'abcdefghfkmnopqrstwxyzABCDEFGHIJKLMNOP12345678910'
+                            text = ''
+                            for i in range(6):
+                                text = text + random.choice(chars)
+                            img = Image.new('RGB', (200, 50))
 
-                                font = ImageFont.truetype(fontfile, 40)
-                                imgdraw = ImageDraw.Draw(img)
-                                imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
-                                img.save('image/verify.png')
-                                file = discord.File("image/verify.png", filename="verify.png")
+                            font = ImageFont.truetype(fontfile, 40)
+                            imgdraw = ImageDraw.Draw(img)
+                            imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
+                            img.save('image/verify.png')
+                            file = discord.File("image/verify.png", filename="verify.png")
 
-                                embed = discord.Embed(
-                                    colour  = 0x00FFFF,
-                                    title = "Captcha"
-                                )
-                                embed.set_image(url = "attachment://verify.png")
-                                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar_url}") 
+                            embed = discord.Embed(
+                                colour  = 0x00FFFF,
+                                title = "Captcha"
+                            )
+                            embed.set_image(url = "attachment://verify.png")
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar_url}") 
 
-                                message = await ctx.send(embed=embed , file=file)
+                            message = await ctx.send(embed=embed , file=file)
 
-                                try:
-                                    answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                    answer = answer.content
-                                    if answer == text:
-                                        embed = discord.Embed(
-                                        description = f":white_check_mark: You have been verified",
-                                        colour =  0xB9E7A5
-                                        )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                            try:
+                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                answer = answer.content
+                                if answer == text:
+                                    await asyncio.sleep(5)
+                                    await answer.delete()
+                                    await message.delete()
+                                    embed = discord.Embed(
+                                    description = f":white_check_mark: You have been verified",
+                                    colour =  0xB9E7A5
+                                    )
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    message = await ctx.send(embed=embed)
+                                    await asyncio.sleep(5)
+                                    await message.delete()
 
-                                        await message.edit(embed=embed)
+                                    if give != "None":
+                                        try:
+                                            role = give
+                                            role = int(role)
+                                            role = ctx.guild.get_role(role)
+                                            await ctx.author.add_roles(role)
 
-                                        if data["verification_role_give_id"] != "None":
-                                            try:
-                                                role = data["verification_role_give_id"]
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
-
-                                            except Exception:
-                                                pass
-
-                                        else: 
+                                        except Exception as e:
                                             pass
 
-                                        if data["verification_role_remove_id"] != "None":
-                                            try:
-                                                role = data["verification_role_remove_id"]
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                    else: 
+                                        pass
 
-                                            except Exception:
-                                                pass
-                            
-                                        else:
-                                            pass  
-                            
+                                    if remove != "None":
+                                        try:
+                                            role = remove
+                                            role = int(role)
+                                            role = ctx.guild.get_role(role)
+                                            await ctx.author.add_roles(role)
+
+                                        except Exception:
+                                            pass
+                        
                                     else:
-                                        embed = discord.Embed(
-                                            description = f":x: Incorrect captcha please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
-                                            colour =  0x983925
-                                        )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                        await message.edit(embed=embed)
-                            
-                                except asyncio.TimeoutError:
+                                        pass  
+                        
+                                else:
+                                    await message.delete()
+                                    await asyncio.sleep(5)
+                                    await answer.delete()
                                     embed = discord.Embed(
-                                            description = f":x: timeout please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
-                                            colour =  0x983925
-                                        )
+                                        description = f":x: Incorrect captcha please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
+                                        colour =  0x983925
+                                    )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                     await message.edit(embed=embed)
-
-                            else:
+                        
+                            except asyncio.TimeoutError:
+                                await message.delete()
                                 embed = discord.Embed(
-                                    description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
-                                    colour =  0x983925
-                                )
+                                        description = f":x: timeout please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
+                                        colour =  0x983925
+                                    )
                                 embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                await ctx.send(embed=embed)  
-                                
+                                message = await ctx.send(embed=embed) 
+                                await asyncio.sleep(5)
+                                await message.delete()     
+
                         else:
                             embed = discord.Embed(
-                                title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
-                                description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                                description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                 colour =  0x983925
                             )
-                            await ctx.send(embed=embed)          
-
+                            embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                            await ctx.send(embed=embed)  
+                            
                     else:
                         embed = discord.Embed(
                             title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                             description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
                             colour =  0x983925
-                            )   
-                        await ctx.send(embed=embed)   
-            
+                        )
+                        await ctx.send(embed=embed)          
+
+                else:
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                        )   
+                    await ctx.send(embed=embed)   
+        
             else:
                 embed = discord.Embed(
                     title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
@@ -17841,10 +17978,8 @@ async def _remove(ctx, role: discord.Role):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                print(results)
-                for data in results:
-                    remove_role_id = data["verification_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["verification_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -17870,9 +18005,8 @@ async def _remove(ctx, role: discord.Role):
                     await message.add_reaction('✅')
             
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["verification_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["verification_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -17920,10 +18054,8 @@ async def _remove(ctx, role: discord.Role):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find_one({"guild_id":ctx.guild.id})
-                print(results)
-                for data in results:
-                    remove_role_id = data["verification_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["verification_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -17949,9 +18081,8 @@ async def _remove(ctx, role: discord.Role):
                     await message.add_reaction('✅')
             
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    remove_role_id = data["verification_role_remove_id"]
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                remove_role_id = data["verification_role_remove_id"]
                 if remove_role_id == "None": 
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
                     embed = discord.Embed(
@@ -18083,58 +18214,58 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_channel_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]
+                if verifychannel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title = "ตั้งค่าห้องยืนยันตัวตน",
-                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                    )
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องยืนยันตัวตน",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title= "ตั้งค่าห้องยืนยันตัวตน",
-                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                    )
-                    
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่าห้องยืนยันตัวตน",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+                
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_channel_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                data = collection.find({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]
+                if verifychannel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title = "ตั้งค่าห้องยืนยันตัวตน",
-                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
-                    )
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "ตั้งค่าห้องยืนยันตัวตน",
+                    description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title= "ตั้งค่าห้องยืนยันตัวตน",
-                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
-                    )
-                
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')  
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "ตั้งค่าห้องยืนยันตัวตน",
+                    description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                )
+            
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')  
 
         if server_language == "English":
             server = collection.find_one({"guild_id":ctx.guild.id})
@@ -18159,58 +18290,58 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_channel_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                data = collection.find({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]
+                if verifychannel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title = "Verification channel",
-                        description= f"channel have been set to {channel.mention}"
-                    )
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "Verification channel",
+                    description= f"channel have been set to {channel.mention}"
+                )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title= "Verification channel",
-                        description= f"channel have been updated to {channel.mention}"
-                    )
-                    
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "Verification channel",
+                    description= f"channel have been updated to {channel.mention}"
+                )
+                
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
             else:
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_channel_id"] == "None":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                data = collection.find({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]
+                if verifychannel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title = "Verification channel",
-                        description= f"channel have been set to {channel.mention}"
-                    )
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title = "Verification channel",
+                    description= f"channel have been set to {channel.mention}"
+                )
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
 
-                        embed = discord.Embed(
-                        colour= 0x00FFFF,
-                        title= "Verification channel",
-                        description= f"channel have been updated to {channel.mention}"
-                    )
-                
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')       
+                    embed = discord.Embed(
+                    colour= 0x00FFFF,
+                    title= "Verification channel",
+                    description= f"channel have been updated to {channel.mention}"
+                )
+            
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')       
 
 @setverify.error
 async def setverify_error(ctx, error):
@@ -19007,8 +19138,10 @@ async def botvote(ctx):
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        print(language)
         for data in language:
             server_language = data["Language"]
+            print(server_language)
         
         if server_language == "Thai":
             embed = discord.Embed(
@@ -19098,68 +19231,108 @@ async def setting(ctx):
         if server_language == "Thai":
             data = collection.find_one({"guild_id":ctx.guild.id})
             if data is None:
-                newserver = {"guild_id":ctx.guild.id,
-                "welcome_id":"None",
-                "leave_id":"None",
-                "webhook_url":"None",
-                "webhook_channel_id":"None",
-                "webhook_status":"None",
-                "introduce_channel_id":"None",
-                "introduce_frame":"None",
-                "introduce_role_give_id":"None",
-                "introduce_role_remove_id":"None",
-                "introduce_status":"YES",
-                "level_system":"NO",
-                "economy_system":"NO",
-                "currency":"$",
-                "verification_system":"NO",
-                "verification_channel_id":"None",
-                "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
-                }
-                collection.insert_one(newserver)
-                embed = discord.Embed(
-                    title = "การตั้งค่าของ Server",
-                    description = "```Database ID : Not assigned```",
-                    colour= 0x00FFFF
-                )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
-                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
-                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
-                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed =discord.Emebed(
+                    title = "nop",
+                    colour = "#!@$@",
+                    description = "NON",
 
-                await ctx.send(embed=embed)
+                )
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
 
             else:
                 server = collection.find_one({"guild_id":ctx.guild.id})
-                for data in server:
-                    database_id = data["_id"]
-                    welcome_channel_id = data["welcome_id"]
-                    leave_channel_id = data["leave_id"]
-                    webhook_id = server["webhook_channel_id"]
-                    introduce_id = server["introduce_channel_id"]
-                    verification_id = server["verification_channel_id"]
-                    webhook_stat = server["webhook_status"]
-                    economy_stat = server["economy_system"]
-                    welcome_channel = server["welcome_id"]
-                    welcome_channel = server["welcome_id"]
-                    welcome_channel = server["welcome_id"]
-                    welcome_channel = server["welcome_id"]
+                database_id = server["_id"]
+                welcome_channel_id = server["welcome_id"]
+                leave_channel_id = server["leave_id"]
+                webhook_id = server["webhook_channel_id"]
+                introduce_id = server["introduce_channel_id"]
+                verification_id = server["verification_channel_id"]
+                webhook_stat = server["webhook_status"]
+                economy_stat = server["economy_system"]
+                verification_stat = server["verification_system"]
+                introduce_stat = server["introduce_status"]
+                level_stat = server["level_system"]
+                introduce_give = server["introduce_role_give_id"]
+                introduce_remove = server["introduce_role_remove_id"]
+                verify_give = server["verification_role_give_id"]
+                verify_remove = server["verification_role_remove_id"]
+                server_currency = server["currency"]
+                intro_frame = server["introduce_frame"]
                 
+                #check for role introduce_give//
+                if introduce_give != "None":
+                    introduce_give = ctx.guild.get_role(int(introduce_give))
+                
+                else:
+                    introduce_give = "None"
+
+                #check for role introduce_remove//    
+                if introduce_remove != "None":
+                    introduce_remove = ctx.guild.get_role(int(introduce_remove))
+                
+                else:
+                    introduce_remove = "None"
+                
+                #check for role verify give//  
+                if verify_give != "None":
+                    verify_give = ctx.guild.get_role(int(verify_give))
+                
+                else:
+                    verify_give = "None"
+                
+                #check for role verify remove//  
+                if verify_remove != "None":
+                    verify_remove = ctx.guild.get_role(int(verify_remove))
+                
+                else:
+                    verify_remove = "None"
+                
+                #check welcome channel
+                if welcome_channel_id != "None":
+                    welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
+                
+                else:
+                    welcome_channel_id = "None"
+                
+                #check leave channel
+                if leave_channel_id != "None":
+                    leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
+                
+                else:
+                    leave_channel_id = "None"
+                
+                #check webhook channel
+                if webhook_id != "None":
+                    webhook_id = ctx.guild.get_channel(int(webhook_id))
+                
+                else:
+                    webhook_id = "None"
+                
+                #check introduce_id channel
+                if introduce_id != "None":
+                    introduce_id = ctx.guild.get_channel(int(introduce_id))
+                
+                else:
+                    introduce_id = "None"
+                
+                #check verify id channel
+                if verification_id != "None":
+                    verification_id = ctx.guild.get_channel(int(verification_id))
+                
+                else:
+                    verification_id = "None"
+
                 embed = discord.Embed(
                     title = "การตั้งค่าของ Server",
-                    description = "```Database ID : Not assigned```",
+                    description = f"```Database ID : {database_id}```",
                     colour= 0x00FFFF
                 )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}```" ,inline=True)
                 embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
-                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
-                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : {introduce_give}\nลบยศเเนะนําตัว : {introduce_remove}\nให้ยศยืนยันตัวตน : {verify_give}\nลบยศยืนยันตัวตน : {verify_remove}```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}```",inline=True)
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}```",inline=False)
                 embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -19202,17 +19375,103 @@ async def setting(ctx):
                 embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
             
             else:
+                server = collection.find_one({"guild_id":ctx.guild.id})
+                database_id = server["_id"]
+                welcome_channel_id = server["welcome_id"]
+                leave_channel_id = server["leave_id"]
+                webhook_id = server["webhook_channel_id"]
+                introduce_id = server["introduce_channel_id"]
+                verification_id = server["verification_channel_id"]
+                webhook_stat = server["webhook_status"]
+                economy_stat = server["economy_system"]
+                verification_stat = server["verification_system"]
+                introduce_stat = server["introduce_status"]
+                level_stat = server["level_system"]
+                introduce_give = server["introduce_role_give_id"]
+                introduce_remove = server["introduce_role_remove_id"]
+                verify_give = server["verification_role_give_id"]
+                verify_remove = server["verification_role_remove_id"]
+                server_currency = server["currency"]
+                intro_frame = server["introduce_frame"]
+                
+                #check for role introduce_give//
+                if introduce_give != "None":
+                    introduce_give = ctx.guild.get_role(int(introduce_give))
+                
+                else:
+                    introduce_give = "None"
+
+                #check for role introduce_remove//    
+                if introduce_remove != "None":
+                    introduce_remove = ctx.guild.get_role(int(introduce_remove))
+                
+                else:
+                    introduce_remove = "None"
+                
+                #check for role verify give//  
+                if verify_give != "None":
+                    verify_give = ctx.guild.get_role(int(verify_give))
+                
+                else:
+                    verify_give = "None"
+                
+                #check for role verify remove//  
+                if verify_remove != "None":
+                    verify_remove = ctx.guild.get_role(int(verify_remove))
+                
+                else:
+                    verify_remove = "None"
+                
+                #check welcome channel
+                if welcome_channel_id != "None":
+                    welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
+                
+                else:
+                    welcome_channel_id = "None"
+                
+                #check leave channel
+                if leave_channel_id != "None":
+                    leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
+                
+                else:
+                    leave_channel_id = "None"
+                
+                #check webhook channel
+                if webhook_id != "None":
+                    webhook_id = ctx.guild.get_channel(int(webhook_id))
+                
+                else:
+                    webhook_id = "None"
+                
+                #check introduce_id channel
+                if introduce_id != "None":
+                    introduce_id = ctx.guild.get_channel(int(introduce_id))
+                
+                else:
+                    introduce_id = "None"
+                
+                #check verify id channel
+                if verification_id != "None":
+                    verification_id = ctx.guild.get_channel(int(verification_id))
+                
+                else:
+                    verification_id = "None"
+
                 embed = discord.Embed(
                     title = "การตั้งค่าของ Server",
-                    description = "```Database ID : Not assigned```",
+                    description = f"```{database_id}```",
                     colour= 0x00FFFF
                 )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None \n ห้องเเจ้งเตือนคนออก : None \n ห้องคุยกับคนเเปลกหน้า : None \n  ห้องเเนะนําตัว : None \n ห้องยืนยันตัวตน : None```" ,inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None \n ระบบเลเวล : NO \n ระบบเศรษฐกิจ : NO \n ระบบยืนยันตัวตน : NO \n ระบบเเนะนําตัว : YES```",inline=True)
-                embed.add_field(name = "ชื่อ",value= f"{ctx.author.name}",inline=True)
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}```" ,inline=True)
+                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : {introduce_give}\nลบยศเเนะนําตัว : {introduce_remove}\nให้ยศยืนยันตัวตน : {verify_give}\nลบยศยืนยันตัวตน : {verify_remove}```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}```",inline=True)
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}```",inline=False)
+                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                await ctx.send(embed=embed)
-
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
 
 @client.command()
 async def test(ctx):
