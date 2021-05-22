@@ -155,7 +155,6 @@ else:
             ]
         )
 
-
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
@@ -5546,6 +5545,7 @@ async def helpsetup(ctx):
                 description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
+            embed.add_field(name=f'``{COMMAND_PREFIX}setting``', value ='ดูการตั้งค่าของเซิฟเวอร์', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
@@ -5571,6 +5571,7 @@ async def helpsetup(ctx):
                 description=f'{ctx.author.mention}, The command prefix is ``{COMMAND_PREFIX}``',
                 color=0x00FFFF   
                 )
+            embed.add_field(name=f'``{COMMAND_PREFIX}setting``', value ='see server setting', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}setup``', value ='set up your server to our database', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}welcomeset #text-channel``', value='set up a channel to notify if new member join', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}leaveset #text-channel``', value ='set up a channel to notify if member left', inline = True)
@@ -5688,6 +5689,11 @@ async def helpinfo(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='ดูรูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search หารูปโปรไฟล์ของสมาชิก และ ตัวเอง',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='ดูรูปโปรไฟล์ของเซิฟเวอร์',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gethttp``',value='ค้นหา proxy HTTP',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gethttps``',value='ค้นหา proxy HTTPS',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getproxy``',value='ค้นหา proxy',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getsock4``',value='ค้นหา proxy Sock4',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getsock5``',value='ค้นหา proxy Sock5',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
         
             message = await ctx.send(embed=embed)
@@ -5713,6 +5719,11 @@ async def helpinfo(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}avatar @member``',value='View your profile picture or a member profile picture',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}searchavatar @member``',value='search your profile picture or a member profile picture',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}guildicon``',value='View server icon',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gethttp``',value='search for proxy HTTP',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}gethttps``',value='search for proxy HTTPS',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getproxy``',value='search for proxy',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getsock4``',value='search for proxy Sock4',inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}getsock5``',value='search for proxy Sock5',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
         
             message = await ctx.send(embed=embed)
