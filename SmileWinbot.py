@@ -194,7 +194,6 @@ intents.members = True
 client = discord.Client()
 client = commands.AutoShardedBot(command_prefix = COMMAND_PREFIX,  case_insensitive=True ,intents=intents)
 start_time = datetime.datetime.utcnow()
-music = DiscordUtils.Music()
 client.remove_command('help')
 cluster = MongoClient(mongodb)
 
@@ -225,6 +224,12 @@ async def on_ready():
     print("")
     print("CONSOLE : ")
     print("")
+    channel = client.get_channel(id = int(logchannel))
+    embed = discord.Embed(
+        title = f"Bot is online",
+        colour = 0x56FF2D
+    )
+    await channel.send(embed=embed)
 
 @client.group(invoke_without_command=True)
 async def setlanguage(ctx):
@@ -3424,7 +3429,7 @@ async def on_command_error(ctx, error):
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
 
-            if isinstance(commands.BotMissingPermissions):
+            if isinstance(error, commands.BotMissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
                     title = f"⚠️บอทไม่มีสิทธิ คุณต้องให้สิทธิเเอดมินกับบอทก่อนใช้คําสั่งนี้"
@@ -3443,7 +3448,7 @@ async def on_command_error(ctx, error):
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
             
-            elif isinstance(commands.BotMissingPermissions):
+            elif isinstance(error, commands.BotMissingPermissions):
                 embed = discord.Embed(
                     colour = 0x983925,
                     title = f"⚠️Bot don't have enough permission to do that please give administrator permission to the bot"
@@ -5392,7 +5397,9 @@ async def helpeconomy(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}slot (amount)``', value ='เล่นพนัน slot', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}rob @member``', value ='ขโมยเงินจากสมาชิก', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}addcredit (amount) @member``', value ='เพิ่มตังให้สมาชิก', inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}work``', value ='ทํางาน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}resetmoney @member``', value ='รีเซ็ทเงินของสมาชิก', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}work``', value ='ทํางานหาเงิน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}beg``', value ='ขอทาน', inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5412,6 +5419,9 @@ async def helpeconomy(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}slot (amount)``', value ='Slot machine', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}rob @member``', value ='steal money', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}addcredit (amount) @member``', value ='add money to user', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}resetmoney @member``', value ='reset a member balance', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}work``', value ='work to earn money', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}beg``', value ='beg for money', inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5445,6 +5455,7 @@ async def helpbot(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='ส่ง เวลาทำงานของบอท', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'ส่งลิงค์เชิญบอท',inline = True )
+            embed.add_field(name=f'``{COMMAND_PREFIX}botvote``', value = 'โหวตให้บอท',inline = True )
             embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}support (text)``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
@@ -5463,6 +5474,7 @@ async def helpbot(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}ping``', value='send bot ping', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}uptime``', value ='send bot uptime', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}botinvite``', value = 'send bot invite link',inline = True )
+            embed.add_field(name=f'``{COMMAND_PREFIX}botvote``', value = 'Vote for bot',inline = True )
             embed.add_field(name=f'``{COMMAND_PREFIX}credit``',value='developer credit',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}botinfo``', value = 'information about bot',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}support (text)``', value = 'send support if error occur',inline = True)
@@ -10830,10 +10842,10 @@ async def quote(ctx):
             embed = discord.Embed(
                 colour = 0xffe852,
                 title = "คําคม",
-                description = f"```{quoterandom}```"
+                description = f"```fix\n{quoterandom}```"
             )
             
-            embed.set_thumbnail(url="https://i.imgur.com/xG1k658.png")
+            embed.set_thumbnail(url="https://i.imgur.com/HxNtxtt.png")
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -17087,6 +17099,140 @@ async def work(ctx):
                 await message.add_reaction('💸')
 
 @client.command()
+async def beg(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"]
+                        
+                        money = (random.randint(500,2500))
+                        usernew_wallet = user_wallet + money
+                        work = ["ขอทาน"]
+                        num = (random.randint(0,5))
+                        ranwork = work[num]
+                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":usernew_wallet}})
+                        embed = discord.Embed(
+                            title = f"",
+                            description = f"{ctx.author} ได้ {ranwork} เเละได้รับเงิน {money}{currency}",
+                            colour = 0xB9E7A5
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                else:
+                    embed = discord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')       
+                    
+            else:
+                embed = discord.Embed(
+                    title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                    description = f"ใช้คําสั่ง {COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                    colour = 0x983925
+                    )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+        if server_language == "English":
+            guild = collection.find_one({"guild_id":ctx.guild.id})
+            if not guild is None:
+                status = collection.find({"guild_id":ctx.guild.id})
+                for data in status:
+                    currency = data["currency"]
+                    status = data["economy_system"]
+                if status == "YES":
+                    user = collectionmoney.find_one({"user_id":ctx.author.id})
+                    if user is None:
+                        embed = discord.Embed(
+                                title = f"{ctx.author.name} don't have a balance",
+                                description = f"use {COMMAND_PREFIX}openbal to open balance",
+                                colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        usermoney = collectionmoney.find({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                        for data in usermoney:
+                            user_wallet = data["wallet"]
+                        
+                        money = (random.randint(500,2500))
+                        usernew_wallet = user_wallet + money
+                        work = ["beg"]
+                        num = (random.randint(0,5))
+                        ranwork = work[num]
+                        collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":usernew_wallet}})
+                        embed = discord.Embed(
+                            title = f"",
+                            description = f"{ctx.author} have {ranwork} and earned {money}{currency}",
+                            colour = 0xB9E7A5
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                else:
+                    embed = discord.Embed(
+                        title = "Command is disable",
+                        description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')     
+                    
+            else:
+                embed = discord.Embed(
+                    title = "Command is disable",
+                    description = f"This command is disable please use {COMMAND_PREFIX}economy on",
+                    colour = 0x983925
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message  = await ctx.send(embed=embed)
+                await message.add_reaction('💸')
+
+@client.command()
 @commands.has_permissions(administrator=True)
 async def resetmoney(ctx , member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -17390,16 +17536,17 @@ async def verify(ctx):
                                 answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
                                 answeruser = answer.content
                                 if answeruser == text:
-                                    await asyncio.sleep(5)
-                                    await answer.delete()
                                     await message.delete()
+                                    await asyncio.sleep(1)
+                                    await answer.delete()
+                                
                                     embed = discord.Embed(
                                         description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
                                         colour =  0xB9E7A5
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                     message = await ctx.send(embed=embed)
-                                    time.sleep(5)
+                                    await asyncio.sleep(3)
                                     await message.delete()
 
                                     if give != "None":
@@ -17430,7 +17577,7 @@ async def verify(ctx):
                         
                                 else:
                                     await message.delete()
-                                    await asyncio.sleep(5)
+                                    await asyncio.sleep(1)
                                     await answer.delete()
                                     embed = discord.Embed(
                                         description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
@@ -17438,12 +17585,11 @@ async def verify(ctx):
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                     message = await ctx.send(embed=embed)
-                                    time.sleep(5)
+                                    await asyncio.sleep(3)
                                     await message.delete()
                         
                             except asyncio.TimeoutError:
                                 await message.delete()
-                                await asyncio.sleep(5)
                                 await answer.delete()
                                 embed = discord.Embed(
                                     description = f":x: คุณใช้เวลานานเกินไป {COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
@@ -17451,7 +17597,7 @@ async def verify(ctx):
                                 )
                                 embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                 message = await ctx.send(embed=embed) 
-                                time.sleep(5)
+                                await asyncio.sleep(3)
                                 await message.delete()     
 
                         else:
@@ -17536,8 +17682,8 @@ async def verify(ctx):
                                 answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
                                 answer = answer.content
                                 if answer == text:
-                                    await asyncio.sleep(5)
                                     await answer.delete()
+                                    await asyncio.sleep(1)
                                     await message.delete()
                                     embed = discord.Embed(
                                     description = f":white_check_mark: You have been verified",
@@ -17545,7 +17691,7 @@ async def verify(ctx):
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                     message = await ctx.send(embed=embed)
-                                    await asyncio.sleep(5)
+                                    await asyncio.sleep(3)
                                     await message.delete()
 
                                     if give != "None":
@@ -17576,24 +17722,28 @@ async def verify(ctx):
                         
                                 else:
                                     await message.delete()
-                                    await asyncio.sleep(5)
+                                    await asyncio.sleep(1)
                                     await answer.delete()
                                     embed = discord.Embed(
                                         description = f":x: Incorrect captcha please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                         colour =  0x983925
                                     )
                                     embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-                                    await message.edit(embed=embed)
+                                    message = await ctx.send(embed=embed)
+                                    await asyncio.sleep(3)
+                                    await message.delete()
+
                         
                             except asyncio.TimeoutError:
                                 await message.delete()
+                                await answer.delete()
                                 embed = discord.Embed(
                                         description = f":x: timeout please try again use {COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                         colour =  0x983925
                                     )
                                 embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
                                 message = await ctx.send(embed=embed) 
-                                await asyncio.sleep(5)
+                                await asyncio.sleep(3)
                                 await message.delete()     
 
                         else:
@@ -18252,7 +18402,7 @@ async def setverify(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
 
             else:
-                data = collection.find({"guild_id":ctx.guild.id})
+                data = collection.find_one({"guild_id":ctx.guild.id})
                 verifychannel = data["verification_channel_id"]
                 if verifychannel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
@@ -18301,7 +18451,7 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                data = collection.find({"guild_id":ctx.guild.id})
+                data = collection.find_one({"guild_id":ctx.guild.id})
                 verifychannel = data["verification_channel_id"]
                 if verifychannel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
@@ -18328,7 +18478,7 @@ async def setverify(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
 
             else:
-                data = collection.find({"guild_id":ctx.guild.id})
+                data = collection.find_one({"guild_id":ctx.guild.id})
                 verifychannel = data["verification_channel_id"]
                 if verifychannel == "None":
                     collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id}})
@@ -18737,58 +18887,57 @@ async def ___on___(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status== "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการเปิดใช้งานระบบนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการเปิดใช้งานระบบนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
         if server_language == "English":
             status = "YES"
@@ -18815,58 +18964,57 @@ async def ___on___(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "YES"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The level system have been activated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The level system have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
 @___on___.error
 async def verificationon_error(ctx, error):
@@ -18957,58 +19105,57 @@ async def __off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                            )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
                         )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "ตั้งค่ายืนยันตัวตน",
-                            description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่ายืนยันตัวตน",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
         if server_language == "English":
             status = "NO"
@@ -19035,58 +19182,57 @@ async def __off(ctx):
                 "verification_role_remove_id":"None"
                 }
                 collection.insert_one(newserver)
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The Verification system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The Verification system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
-                
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The Verification system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The Verification system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
             else:
-                status = "NO"
-                results = collection.find({"guild_id":ctx.guild.id})
-                for data in results:
-                    if data["verification_system"] == "NO":
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The Verification system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verification_status = data["verification_system"]
+                if verification_status == "NO":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The Verification system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
-                    else:
-                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
-                            colour= 0x00FFFF,
-                            title = "Verification system",
-                            description= f"The Verification system have been deactivated"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "Verification system",
+                        description= f"The Verification system have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('✅')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
 
 @__off.error
 async def verificationoff_error(ctx, error):
@@ -19509,119 +19655,54 @@ async def test(ctx):
             await ctx.send("Bot is online")
 
 @client.command()
-async def join(ctx):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-    if ctx.author.voice is None:
-        return await ctx.send('You are not connected to a voice channel')
+async def checklink(ctx, website):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
     else:
-        if voice == None:
-            await ctx.author.voice.channel.connect()
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
 
-@client.command()
-async def leave(ctx):
-    await ctx.voice_client.disconnect()
+        if server_language == "Thai":
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://sitecheck.sucuri.net/api/v3/?scan={website}") as r:
+                    response = await r.json()
+                    certissuer = response["tls"]["cert_issuer"]
+                    certexpire = response["tls"]["cert_expires"]
+                    certauthority = response["tls"]["cert_authority"]
+                    embed = discord.Embed(
+                        title
+                        description
+                    )
 
-@client.command()
-async def play(ctx, *, url):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-    if ctx.author.voice is None:
-        return await ctx.send('You are not connected to a voice channel')
-    else:
-        if voice == None:
-            await ctx.author.voice.channel.connect()
-            player = music.get_player(guild_id=ctx.guild.id)
-            if not player:
-                player = music.create_player(ctx, ffmpeg_error_betterfix=True)
-            if not ctx.voice_client.is_playing():
-                await player.queue(url, search=True)
-                song = await player.play()
-                await ctx.send(f"Playing {song.name}")
-            else:
-                song = await player.queue(url, search=True)
-                await ctx.send(f"Queued {song.name}")
-        
-        else:
-            player = music.get_player(guild_id=ctx.guild.id)
-            if not player:
-                player = music.create_player(ctx, ffmpeg_error_betterfix=True)
-            if not ctx.voice_client.is_playing():
-                await player.queue(url, search=True)
-                song = await player.play()
-                await ctx.send(f"Playing {song.name}")
-            else:
-                song = await player.queue(url, search=True)
-                await ctx.send(f"Queued {song.name}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✔️')
 
-@client.command()
-async def pause(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song = await player.pause()
-    await ctx.send(f"Paused {song.name}")
+        if server_language == "English":
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://sitecheck.sucuri.net/api/v3/?scan={website}") as r:
+                    response = await r.json()
+                    certissuer = response["tls"]["cert_issuer"]
+                    certexpire = response["tls"]["cert_expires"]
+                    certauthority = response["tls"]["cert_authority"]
+                    embed = discord.Embed(
+                        title
+                        description
+                    )
 
-@client.command()
-async def resume(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song = await player.resume()
-    await ctx.send(f"Resumed {song.name}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✔️')
 
-@client.command()
-async def stop(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    await player.stop()
-    await ctx.send("Stopped")
 
-@client.command()
-async def loop(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song = await player.toggle_song_loop()
-    if song.is_looping:
-        await ctx.send(f"Enabled loop for {song.name}")
-    else:
-        await ctx.send(f"Disabled loop for {song.name}")
-
-@client.command()
-async def queue(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    i = 0
-    z = -1
-    des = []
-    for song in player.current_queue():
-        i  = i+1
-        data = f"{i}. {song.name}"
-
-    embed = discord.Embed(
-        title = "queue",
-        description = data
-    )
-
-    await ctx.send(embed=embed)
-
-@client.command()
-async def np(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song = player.now_playing()
-    await ctx.send(song.name)
-
-@client.command()
-async def skip(ctx):
-    player = music.get_player(guild_id=ctx.guild.id)
-    data = await player.skip(force=True)
-    if len(data) == 2:
-        await ctx.send(f"Skipped from {data[0].name} to {data[1].name}")
-    else:
-        await ctx.send(f"Skipped {data[0].name}")
-
-@client.command()
-async def volume(ctx, vol):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song, volume = await player.change_volume(float(vol) / 100) # volume should be a float between 0 to 1
-    await ctx.send(f"Changed volume for {song.name} to {volume*100}%")
-
-@client.command()
-async def remove(ctx, index):
-    player = music.get_player(guild_id=ctx.guild.id)
-    song = await player.remove_from_queue(int(index))
-    await ctx.send(f"Removed {song.name} from queue")
 
 
 ###########################################################
