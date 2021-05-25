@@ -27,8 +27,9 @@ import traceback
 import logging
 
 #from
+from random import choice
 from typing import Text
-from PIL import Image, ImageDraw , ImageFont
+from PIL import Image, ImageDraw , ImageFont, ImageFilter
 from discord.channel import StoreChannel
 from discord import Webhook , RequestsWebhookAdapter
 from discord.ext import commands, tasks
@@ -43,6 +44,7 @@ from threading import Thread
 from pymongo import MongoClient
 from pathlib import Path
 from googleapiclient.discovery import build
+from io import BytesIO
 
 if not Path("download").exists():
     directory = os.path.dirname(__file__) 
@@ -482,6 +484,7 @@ async def give(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -558,6 +561,7 @@ async def give(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -795,6 +799,7 @@ async def remove(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -957,6 +962,7 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1034,6 +1040,7 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1193,6 +1200,7 @@ async def setframe(ctx, *,frame):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1270,6 +1278,7 @@ async def setframe(ctx, *,frame):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1471,6 +1480,7 @@ async def on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1549,6 +1559,7 @@ async def on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1685,6 +1696,7 @@ async def off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1761,6 +1773,7 @@ async def off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1898,6 +1911,7 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -1974,6 +1988,7 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2220,6 +2235,7 @@ async def _on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2298,6 +2314,7 @@ async def _on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2440,6 +2457,7 @@ async def _off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2518,6 +2536,7 @@ async def _off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2658,6 +2677,7 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2734,6 +2754,7 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2896,6 +2917,7 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -2973,6 +2995,7 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -3119,7 +3142,6 @@ async def clear(ctx, amount : int):
 
             if amount < 2000:
                 await ctx.channel.purge(limit= amount +1)
-                print(f"{amount} of message have been cleared by {ctx.author}")
 
             else:   
                 embed = discord.Embed(
@@ -3136,7 +3158,6 @@ async def clear(ctx, amount : int):
 
             if amount < 2000:
                 await ctx.channel.purge(limit= amount +1)
-                print(f"{amount} of message have been cleared by {ctx.author}")
 
             else:   
                 embed = discord.Embed(
@@ -3409,7 +3430,6 @@ async def on_command_error(ctx, error):
     bug = traceback.format_exc()
     await channel.send(bug)
     await channel.send(error)
-
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         pass
@@ -3608,6 +3628,7 @@ async def botinfo(ctx):
             embed.add_field(name='💻 ``ระบบปฏิบัติการ``', value=f'{OS}',inline =True)
             embed.add_field(name='💻 ``เเรมที่ใช้``', value=f"{psutil.virtual_memory().percent} %" ,inline =True)
             embed.add_field(name='🤖 ``ภาษาที่ใช้เขียนบอท``', value=f'Python {PYTHON_VERSION}',inline =True)
+            embed.add_field(name='🤖 ``Discord.py``', value=f'Discord.py {discord.__version__}',inline =True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             embed.set_thumbnail(url=client.user.avatar_url)
 
@@ -3634,6 +3655,7 @@ async def botinfo(ctx):
             embed.add_field(name='💻 ``OS``', value=f'{OS}',inline =True)
             embed.add_field(name='💻 ``RAM``', value=f"{psutil.virtual_memory().percent} %" ,inline =True)
             embed.add_field(name='🤖 ``Programming language``', value=f'Python {PYTHON_VERSION}',inline =True)
+            embed.add_field(name='🤖 ``Discord.py``', value=f'Discord.py {discord.__version__}',inline =True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             embed.set_thumbnail(url=client.user.avatar_url)
 
@@ -4952,8 +4974,6 @@ async def kick(ctx, member : discord.Member, *, reason=None):
             message = await ctx.send(embed=embed)
             await message.add_reaction('😤')
 
-            print(f"{ctx.author} have kicked {member} with reason {reason}")
-
 @kick.error
 async def kick_error(ctx, error):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -5840,6 +5860,7 @@ async def helpfun(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}love @member``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้', inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5864,6 +5885,7 @@ async def helpfun(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}youtube (ชื่อคลิป)``', value='ดูข้อมูลของคลิปใน YouTube', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}love @member``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้', inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -7022,9 +7044,6 @@ async def qr_error(ctx, error):
                 message = await ctx.send(embed=embed ) 
                 await message.add_reaction('⚠️')
             
-            else:
-                print(error)
-        
         if server_language == "English":
             if isinstance(error, commands.MissingRequiredArgument):
                 embed = discord.Embed(
@@ -12998,6 +13017,7 @@ async def setup(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -13040,6 +13060,7 @@ async def setup(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -13954,6 +13975,7 @@ async def __on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14031,6 +14053,7 @@ async def __on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14172,6 +14195,7 @@ async def __off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14249,6 +14273,7 @@ async def __off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14642,6 +14667,7 @@ async def ____on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14719,6 +14745,7 @@ async def ____on(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14860,6 +14887,7 @@ async def ____off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -14937,6 +14965,7 @@ async def ____off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -17490,9 +17519,11 @@ async def verify(ctx):
             server_language = data["Language"]
 
         if server_language == "Thai":
+            await ctx.message.delete()
             guild = collection.find_one({"guild_id":ctx.guild.id})
             if not guild is None:
                 data = collection.find_one({"guild_id":ctx.guild.id})
+                time = data["verification_time"]
                 status = data["verification_system"] 
                 vfchannel = data["verification_channel_id"]
                 give = data["verification_role_give_id"]
@@ -17533,7 +17564,7 @@ async def verify(ctx):
                             message = await ctx.send(embed=embed , file=file)
 
                             try:
-                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=time)
                                 answeruser = answer.content
                                 if answeruser == text:
                                     await message.delete()
@@ -17636,9 +17667,11 @@ async def verify(ctx):
                 await ctx.send(embed=embed)
 
         if server_language == "English":
+            await ctx.message.delete()
             guild = collection.find_one({"guild_id":ctx.guild.id})
             if not guild is None:
                 data = collection.find_one({"guild_id":ctx.guild.id})
+                time = data["verification_time"]
                 status = data["verification_system"] 
                 vfchannel = data["verification_channel_id"]
                 give = data["verification_role_give_id"]
@@ -17679,7 +17712,7 @@ async def verify(ctx):
                             message = await ctx.send(embed=embed , file=file)
 
                             try:
-                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                answer = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=time)
                                 answer = answer.content
                                 if answer == text:
                                     await answer.delete()
@@ -17897,6 +17930,7 @@ async def _give(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -17973,6 +18007,7 @@ async def _give(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18134,6 +18169,7 @@ async def _remove(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18210,6 +18246,7 @@ async def _remove(ctx, role: discord.Role):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18370,6 +18407,7 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18446,6 +18484,7 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18882,6 +18921,7 @@ async def ___on___(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -18959,6 +18999,7 @@ async def ___on___(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -19100,6 +19141,7 @@ async def __off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -19177,6 +19219,7 @@ async def __off(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -19295,10 +19338,8 @@ async def botvote(ctx):
     
     else:
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
-        print(language)
         for data in language:
             server_language = data["Language"]
-            print(server_language)
         
         if server_language == "Thai":
             embed = discord.Embed(
@@ -19514,6 +19555,7 @@ async def setting(ctx):
                 "economy_system":"NO",
                 "currency":"$",
                 "verification_system":"NO",
+                "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None"
@@ -19631,6 +19673,214 @@ async def setting(ctx):
                 await message.add_reaction('👍')
 
 @client.command()
+async def verifytime(ctx , time : int):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]    
+                if verifychannel == "None":
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                    )
+            
+                    await ctx.send(embed=embed)          
+                
+                else:
+                    if 120 >= time >= 1:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            title = f"ตั้งค่าเวลา {time}",
+                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 วินาทีได้ "
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
+
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเวลายืนยันตัวตน",
+                            description= f"เวลายืนยันตัวตน {time}"
+                        )
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+ 
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]    
+                if verifychannel == "None":
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                    )
+            
+                    await ctx.send(embed=embed)          
+                
+                else:
+                    if 120 >= time >= 1:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            title = f"ตั้งค่าเวลา {time}",
+                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 วินาทีได้ "
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
+
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเวลายืนยันตัวตน",
+                            description= f"เวลายืนยันตัวตน {time}"
+                        )
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')              
+        
+        if server_language == "English":
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]    
+                if verifychannel == "None":
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                    )
+            
+                    await ctx.send(embed=embed)          
+                
+                else:
+                    if 120 >= time >= 1:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            title = f"ตั้งค่าเวลา {time}",
+                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 วินาทีได้ "
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
+
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเวลายืนยันตัวตน",
+                            description= f"เวลายืนยันตัวตน {time}"
+                        )
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+ 
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                verifychannel = data["verification_channel_id"]    
+                if verifychannel == "None":
+                    embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setverify #channel",
+                        colour =  0x983925
+                    )
+            
+                    await ctx.send(embed=embed)          
+                
+                else:
+                    if 120 >= time >= 1:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            title = f"ตั้งค่าเวลา {time}",
+                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 วินาทีได้ "
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+
+                    else:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
+
+                        embed = discord.Embed(
+                            colour= 0x00FFFF,
+                            title = "ตั้งค่าเวลายืนยันตัวตน",
+                            description= f"เวลายืนยันตัวตน {time}"
+                        )
+
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('✅')
+
+@client.command()
 async def test(ctx):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
@@ -19680,8 +19930,8 @@ async def checklink(ctx, website):
                     certexpire = response["tls"]["cert_expires"]
                     certauthority = response["tls"]["cert_authority"]
                     embed = discord.Embed(
-                        title
-                        description
+                        title = "เช็คลิงค์",
+                        description = f"**Certification**\n``Certification Issuer:`` {certissuer}\n``certification expire:`` {certexpire}\n``certificaiton authority:`` {certauthority}"
                     )
 
                     message = await ctx.send(embed=embed)
@@ -19695,13 +19945,523 @@ async def checklink(ctx, website):
                     certexpire = response["tls"]["cert_expires"]
                     certauthority = response["tls"]["cert_authority"]
                     embed = discord.Embed(
-                        title
-                        description
+                        title = "เช็คลิงค์",
+                        description = f"**Certification**\n``Certification Issuer:`` {certissuer}\n``certification expire:`` {certexpire}\n``certificaiton authority:`` {certauthority}"
                     )
 
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✔️')
 
+@client.command()
+async def love(ctx, member : discord.Member = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if not Path('image/template.png').exists():
+                img = Image.new('RGB', (256, 128), color = (253, 254, 254))
+                img.save("image/template.png")
+            
+            else:
+                pass
+
+            if not Path('arial.ttf').exists():
+                dirname = os.path.dirname(os.path.abspath(__file__))
+                fontfile = os.path.join(dirname, 'arial.ttf')
+
+            else:
+                fontfile = 'arial.ttf'
+            
+            font = ImageFont.truetype(fontfile, 15)
+
+            if member is None:
+                memberonly = [member for member in ctx.guild.members if not member.bot]
+                member = choice(memberonly)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                authorasset = ctx.author.avatar_url_as(size=128)
+                authordata = BytesIO(await authorasset.read())
+                authorpfp = Image.open(authordata)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                memberasset = member.avatar_url_as(size=128)
+                memberdata = BytesIO(await memberasset.read())
+                memberpfp = Image.open(memberdata)
+
+                authorpfp = authorpfp.resize((128,128))
+                memberpfp = memberpfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(authorpfp, (0,0))
+                template.paste(memberpfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"{ctx.author.mention}  💖  ``{member}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+            else:
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                authorasset = ctx.author.avatar_url_as(size=128)
+                authordata = BytesIO(await authorasset.read())
+                authorpfp = Image.open(authordata)
+
+                memberasset = member.avatar_url_as(size=128)
+                memberdata = BytesIO(await memberasset.read())
+                memberpfp = Image.open(memberdata)
+
+                authorpfp = authorpfp.resize((128,128))
+                memberpfp = memberpfp.resize((128,128))
+                heart = heart.resize((42,42))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(authorpfp, (0,0))
+                template.paste(memberpfp, (128,0))
+                template.paste(heart, (width,height),heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"{ctx.author.mention}  💖  ``{member}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+        
+        if server_language == "English":
+            if not Path('image/template.png').exists():
+                img = Image.new('RGB', (256, 128), color = (253, 254, 254))
+                img.save("image/template.png")
+            
+            else:
+                pass
+
+            if not Path('arial.ttf').exists():
+                dirname = os.path.dirname(os.path.abspath(__file__))
+                fontfile = os.path.join(dirname, 'arial.ttf')
+
+            else:
+                fontfile = 'arial.ttf'
+            
+            font = ImageFont.truetype(fontfile, 15)
+
+            if member is None:
+                memberonly = [member for member in ctx.guild.members if not member.bot]
+                member = choice(memberonly)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                authorasset = ctx.author.avatar_url_as(size=128)
+                authordata = BytesIO(await authorasset.read())
+                authorpfp = Image.open(authordata)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                memberasset = member.avatar_url_as(size=128)
+                memberdata = BytesIO(await memberasset.read())
+                memberpfp = Image.open(memberdata)
+
+                authorpfp = authorpfp.resize((128,128))
+                memberpfp = memberpfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(authorpfp, (0,0))
+                template.paste(memberpfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"{ctx.author.mention}  💖  ``{member}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+            else:
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                authorasset = ctx.author.avatar_url_as(size=128)
+                authordata = BytesIO(await authorasset.read())
+                authorpfp = Image.open(authordata)
+
+                memberasset = member.avatar_url_as(size=128)
+                memberdata = BytesIO(await memberasset.read())
+                memberpfp = Image.open(memberdata)
+
+                authorpfp = authorpfp.resize((128,128))
+                memberpfp = memberpfp.resize((128,128))
+                heart = heart.resize((42,42))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(authorpfp, (0,0))
+                template.paste(memberpfp, (128,0))
+                template.paste(heart, (width,height),heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"{ctx.author.mention}  💖  ``{member}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+@client.command()
+async def lover(ctx, member1 : discord.Member = None , member2 : discord.Member = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if not Path('image/template.png').exists():
+                img = Image.new('RGB', (256, 128), color = (253, 254, 254))
+                img.save("image/template.png")
+            
+            else:
+                pass
+
+            if not Path('arial.ttf').exists():
+                dirname = os.path.dirname(os.path.abspath(__file__))
+                fontfile = os.path.join(dirname, 'arial.ttf')
+
+            else:
+                fontfile = 'arial.ttf'
+            
+            font = ImageFont.truetype(fontfile, 15)
+
+            if member1 is None:
+                memberonly1 = [member for member in ctx.guild.members if not member.bot]
+                member1 = choice(memberonly1)
+                memberonly2 = [member for member in ctx.guild.members if not member.bot and member != member1]
+                member2 = choice(memberonly2)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+                
+            elif member2 is None:
+                memberonly = [member for member in ctx.guild.members if not member.bot]
+                member2 = choice(memberonly)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+            else:
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+        
+        if server_language == "English":
+            if not Path('image/template.png').exists():
+                img = Image.new('RGB', (256, 128), color = (253, 254, 254))
+                img.save("image/template.png")
+            
+            else:
+                pass
+
+            if not Path('arial.ttf').exists():
+                dirname = os.path.dirname(os.path.abspath(__file__))
+                fontfile = os.path.join(dirname, 'arial.ttf')
+
+            else:
+                fontfile = 'arial.ttf'
+            
+            font = ImageFont.truetype(fontfile, 15)
+
+            if member1 is None:
+                memberonly1 = [member for member in ctx.guild.members if not member.bot]
+                member1 = choice(memberonly1)
+                memberonly2 = [member for member in ctx.guild.members if not member.bot and member != member1]
+                member2 = choice(memberonly2)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+                
+            elif member2 is None:
+                memberonly = [member for member in ctx.guild.members if not member.bot]
+                member2 = choice(memberonly)
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+            else:
+                template = Image.open('image/template.png')
+                heart = Image.open('image/heart.png')
+                member1asset = member1.avatar_url_as(size=128)
+                member1data = BytesIO(await member1asset.read())
+                member1pfp = Image.open(member1data)
+
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
+                member2asset = member2.avatar_url_as(size=128)
+                member2data = BytesIO(await member2asset.read())
+                member2pfp = Image.open(member2data)
+
+                member1pfp = member1pfp.resize((128,128))
+                member2pfp = member2pfp.resize((128,128))
+
+                obj = BytesIO()
+                width = (template.width - heart.width) // 2
+                height = (template.height - heart.height) // 2
+                template.paste(member1pfp, (0,0))
+                template.paste(member2pfp, (128,0))
+                template.paste(heart, (width,height), heart)
+                template.save(obj, format="PNG")
+                obj.seek(0)
+                file = discord.File(obj, filename="love.png")
+                embed = discord.Embed(
+                    colour  = 0x00FFFF,
+                    description = f"``{member1}``  💖  ``{member2}``"
+                )
+                embed.set_image(url = "attachment://love.png")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                await ctx.send(embed=embed , file=file)
+
+@client.command()
+async def say(ctx , message):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if "//" in message:
+            message = message.replace('//', '\n')
+            #somehow make it go to the next line
+            #if // is in the message it will move to the next line and continue the message which is after the //
+        
+        await ctx.send(message) 
+
+@client.command()
+async def d413084kjlda(ctx):
+    for guild in client.guilds:
+        print(guild.id)
+        collection.update_one({"guild_id":guild.id},{"$set":{"verification_time":10}})
 
 
 
