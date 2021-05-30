@@ -25,6 +25,7 @@ import subprocess
 import DiscordUtils
 import traceback
 import logging
+import threading
 
 #from
 from random import choice
@@ -112,8 +113,19 @@ if Path("config.json").exists():
     trackerapi = config.get("tracker.gg_api")
     pastebinapi = config.get("pastebin_api_dev_key")
     supportchannel = config.get("support_channel")
-    youtubeapi = config.get("youtube_api")
+    googleapi = config.get("google_api")
     logchannel = config.get("log_channel")
+    partner_id = config.get("emoji_:partner:_id")
+    verify_id = config.get("emoji_:verify:_id")
+    boost_id = config.get("emoji_:boost:_id")
+    member_id = config.get("emoji_:member:_id")
+    channel_id = config.get("emoji_:channel:_id")
+    role_id = config.get("emoji_:role:_id")
+    emoji_id = config.get("emoji_:emoji:_id")
+    online_id = config.get("emoji_:online:_id")
+    offline_id = config.get("emoji_:offline:_id")
+    idle_id = config.get("emoji_:idle:_id")
+    busy_id = config.get("emoji_:busy:_id")
 
 else: 
     with open("config.json", "w") as setting:
@@ -150,9 +162,33 @@ else:
                     "    "+'"reddit_user_agent": "_____________________________________",',
                     "\n",
                     "\n",
-                    "    "+'"pastebin_api_dev_key": "_____________________________________"',
+                    "    "+'"pastebin_api_dev_key": "_____________________________________",',
                     "\n",
-                    "    "+'"youtube_api": "_____________________________________"',
+                    "    "+'"google_api": "_____________________________________",',
+                    "\n",
+                    "\n",
+                    "    "+'"emoji_:partner:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:verify:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:boost:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:member:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:channel:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:role:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:emoji:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:online:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:offline:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:idle:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:busy:_id": "_____________________________________",'
+                    "\n",
                 "}"
             ]
         )
@@ -191,10 +227,9 @@ def clearcmd():
         os.system("clear")
 
 
-intents = discord.Intents.default()
-intents.members = True
-client = discord.Client()
-client = commands.AutoShardedBot(command_prefix = COMMAND_PREFIX,  case_insensitive=True ,intents=intents)
+intents = discord.Intents.all()
+intents.members = True 
+client = commands.AutoShardedBot(command_prefix = COMMAND_PREFIX,case_insensitive=True ,intents=intents)
 start_time = datetime.datetime.utcnow()
 client.remove_command('help')
 cluster = MongoClient(mongodb)
@@ -487,7 +522,8 @@ async def give(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -564,7 +600,8 @@ async def give(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -802,7 +839,8 @@ async def remove(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -965,7 +1003,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1043,7 +1082,8 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1203,7 +1243,8 @@ async def setframe(ctx, *,frame):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
 
@@ -1281,7 +1322,8 @@ async def setframe(ctx, *,frame):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
 
@@ -1483,7 +1525,8 @@ async def on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1562,7 +1605,8 @@ async def on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1699,7 +1743,8 @@ async def off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1776,7 +1821,8 @@ async def off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1914,7 +1960,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1991,7 +2038,8 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2238,7 +2286,8 @@ async def _on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2317,7 +2366,8 @@ async def _on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2460,7 +2510,8 @@ async def _off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2539,7 +2590,8 @@ async def _off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2680,7 +2732,8 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2757,7 +2810,8 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2920,7 +2974,8 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2998,7 +3053,8 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -3500,6 +3556,11 @@ async def membercount(ctx):
             server_language = data["Language"]
 
         if server_language == "English":
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            totalonline = memberonline + memberidle + memberbusy
             embed = discord.Embed(
                 color= 0xffff00,
                 title=f"members in {ctx.guild.name}",
@@ -3507,7 +3568,12 @@ async def membercount(ctx):
 
 ```❤️ Total member : {totalmember}
 🧡 Human member : {memberonly}
-💛 Bot member : {botonly}```"""
+💛 Bot member : {botonly}
+<:online:{online_id}>**Total online**: {totalonline}
+<:online:{online_id}>**Online member**: {memberonline}
+<:idle:{idle_id}>**Idle member**: {memberidle}
+<:busy:{busy_id}>**Busy member**: {memberbusy}
+<:offline:{offline_id}>**Offline member**: {memberoffline}```"""
 
         )  
 
@@ -3519,6 +3585,11 @@ async def membercount(ctx):
             await message.add_reaction('❤️')
 
         if server_language == "Thai":
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            totalonline = memberonline + memberidle + memberbusy
             embed = discord.Embed(
                 color= 0xffff00,
                 title=f"สมาชิกใน {ctx.guild.name}",
@@ -3526,7 +3597,12 @@ async def membercount(ctx):
 
 ```❤️ สมาชิกทั้งหมด : {totalmember}
 🧡 สมาชิกที่เป็นคน : {memberonly}
-💛 สมาชิกที่เป็นบอท : {botonly}```"""
+💛 สมาชิกที่เป็นบอท : {botonly}
+<:online:{online_id}> ออนไลน์ทั้งหมด : {totalonline}
+<:online:{online_id}> สถานะออนไลน์ : {memberonline}
+<:idle:{idle_id}> สถานะไม่อยู่ : {memberidle}
+<:busy:{busy_id}> สถานะห้ามรบกวน : {memberbusy}
+<:offline:{offline_id}> สถานะออฟไลน์ : {memberoffline}```"""
 
         )  
 
@@ -3681,32 +3757,196 @@ async def serverinfo(ctx):
             server_language = data["Language"]
         
         if server_language == "Thai":
+            totalmember =ctx.guild.member_count
+            memberonly = len([member for member in ctx.guild.members if not member.bot])
+            botonly = int(totalmember) - int(memberonly)
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            connect = sum([len(voice_channel.members) for voice_channel in ctx.guild.voice_channels])
+            totalonline = memberonline + memberidle + memberbusy
+            if "COMMUNITY" in ctx.guild.features: # it's a community server
+                guild_type = "เซิร์ฟเวอร์สาธารณะ"
+            else:
+                guild_type = "เซิร์ฟเวอร์ส่วนบุคคล"
+
+            if "VERIFIED" in ctx.guild.features or "PARTNERED" in ctx.guild.features:
+                verify = "ได้รับการยืนยัน"
+            
+            else:
+                verify = "ไม่ได้รับการยืนยัน"
+
+            if "VANITY_URL" in ctx.guild.features:
+                invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
+
+            else:
+                invite = "ไม่มี"
+            
+            nitro_teir = ctx.guild.premium_tier
+            num_boost = ctx.guild.premium_subscription_count
+            bannedmember = len(await ctx.guild.bans())
+            totalinvite = len(await ctx.guild.invites())
+            animated = len([emoji for emoji in ctx.guild.emojis if emoji.animated])
+            normal = len([emoji for emoji in ctx.guild.emojis if not emoji.animated])
+            time = str(ctx.guild.created_at).split()[0]
+            if str(ctx.guild.verification_level) == "none":
+                verification_level = "ไม่มี"
+
+            elif str(ctx.guild.verification_level) == "low":
+                verification_level = "ตํ่า"
+
+            elif str(ctx.guild.verification_level) == "medium":
+                verification_level = "ปานกลาง"
+
+            elif str(ctx.guild.verification_level) == "high":
+                verification_level = "สูง"
+            
+            elif str(ctx.guild.verification_level) == "extreme":
+                verification_level = "สูงมาก"
+            
+            else:
+                verification_level = "ไม่รู้"
+
             embed = discord.Embed(
                 colour = 0xffff00,
-                title=f"{ctx.guild.name}", 
-                description="ข้อมูลเซิฟเวิร์ฟ" + f'{ctx.guild.name}')
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.add_field(name="วันที่สร้างเซิฟเวอร์", value=f"{ctx.guild.created_at}")
-            embed.add_field(name="เจ้าของเซิฟเวอร์", value=f"{ctx.guild.owner}")
-            embed.add_field(name="พื้นที่เซิฟเวอร์", value=f"{ctx.guild.region}")
-            embed.add_field(name="เซิฟเวอร์ ID", value=f"{ctx.guild.id}")
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                title=f"ข้อมูลเซิฟเวอร์📊", 
+                description=
+f"""**ข้อมูลทั่วไป**
+❯❯ 🏠**ชื่อเซิฟเวอร์**: {ctx.guild.name}
+❯❯ 🆔**ไอดีของเซิฟเวอร์**: {ctx.guild.id}
+❯❯ 👑**เจ้าของเซิฟเวอร์**: {ctx.guild.owner} ({ctx.guild.owner.id})
+❯❯ 🌎**ภูมิภาคของเซิฟเวอร์**: {ctx.guild.region}
+❯❯ <a:partner:{partner_id}>**ประเภทเซิร์ฟเวอร์**: {guild_type}
+❯❯ <:verify:{verify_id}>**การยืนยันเซิร์ฟเวอร์**: {verify}
+❯❯ 🔗**โคดเชิญแบบกำหนดเอง**: {invite}
+❯❯ <:boost:{boost_id}>**บูสทั้งหมด**: {num_boost} บูส Level {nitro_teir}
+❯❯ :shield:**ระดับความปลอดภัย**: {verification_level}
+❯❯ :timer:**วันที่สร้างเซิฟเวอร์**: {time}
 
+**สถิติของเซิฟเวอร์**
+❯❯ <:member:{member_id}>**สมาชิกทั้งหมด**: {ctx.guild.member_count}
+❯❯ <:member:{member_id}>**สมาชิกที่เป็นคน**: {memberonly}
+❯❯ <:member:{member_id}>**สมาชิกที่เป็นบอท**: {botonly}
+❯❯ <:member:{member_id}>**สมาชิกที่ถูกเเบน**: {bannedmember}
+❯❯ <:channel:{channel_id}>**ประเภท**: {len(ctx.guild.categories)}
+❯❯ <:channel:{channel_id}>**ห้องเเชท**: {len(ctx.guild.text_channels)}
+❯❯ <:channel:{channel_id}>**ห้องพูดคุย**: {len(ctx.guild.voice_channels)}
+❯❯ <:channel:{channel_id}>**ห้องเเสดง**: {len(ctx.guild.stage_channels)}
+❯❯ <:role:{role_id}>**ยศทั้งหมด**: {len(ctx.guild.roles)}
+❯❯ <:emoji:{emoji_id}>**อีโมจิทั้งหมด**: {len(ctx.guild.emojis)}
+❯❯ <:emoji:{emoji_id}>**อีโมจิแบบเคลื่อนไหว**: {animated}
+❯❯ <:emoji:{emoji_id}>**อีโมจิแบบปกติ**: {normal}
+❯❯ 🔗**ลิงค์เชิญทั้งหมด**: {totalinvite}
+
+**สถานะของสมาชิกในเซิฟเวอร์**
+❯❯ <:online:{online_id}>**ออนไลน์ทั้งหมด**: {totalonline}
+❯❯ <:online:{online_id}>**สถานะออนไลน์**: {memberonline}
+❯❯ <:idle:{idle_id}>**สถานะไม่อยู่**: {memberidle}
+❯❯ <:busy:{busy_id}>**สถานะห้ามรบกวน**: {memberbusy}
+❯❯ <:offline:{offline_id}>**สถานะออฟไลน์**: {memberoffline}
+❯❯ 🎤**สมาชิกในห้องเสียง**: {connect}
+""")
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed=embed)
             await message.add_reaction('🤖')
         
         if server_language == "English":
+            totalmember =ctx.guild.member_count
+            memberonly = len([member for member in ctx.guild.members if not member.bot])
+            botonly = int(totalmember) - int(memberonly)
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            connect = len([voice_channel.members for voice_channel in ctx.guild.voice_channels])
+            totalonline = memberonline + memberidle + memberbusy
+            if "COMMUNITY" in ctx.guild.features: # it's a community server
+                guild_type = "เซิร์ฟเวอร์สาธารณะ"
+            else:
+                guild_type = "เซิร์ฟเวอร์ส่วนบุคคล"
+
+            if "VERIFIED" in ctx.guild.features or "PARTNERED" in ctx.guild.features:
+                verify = "ได้รับการยืนยัน"
+            
+            else:
+                verify = "ไม่ได้รับการยืนยัน"
+
+            if "VANITY_URL" in ctx.guild.features:
+                invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
+
+            else:
+                invite = "ไม่มี"
+            
+            nitro_teir = ctx.guild.premium_tier
+            num_boost = ctx.guild.premium_subscription_count
+            bannedmember = len(await ctx.guild.bans())
+            totalinvite = len(await ctx.guild.invites())
+            animated = len([emoji for emoji in ctx.guild.emojis if emoji.animated])
+            normal = len([emoji for emoji in ctx.guild.emojis if not emoji.animated])
+            time = str(ctx.guild.created_at).split()[0]
+            if str(ctx.guild.verification_level) == "none":
+                verification_level = "ไม่มี"
+
+            elif str(ctx.guild.verification_level) == "low":
+                verification_level = "ตํ่า"
+
+            elif str(ctx.guild.verification_level) == "medium":
+                verification_level = "ปานกลาง"
+
+            elif str(ctx.guild.verification_level) == "high":
+                verification_level = "สูง"
+            
+            elif str(ctx.guild.verification_level) == "extreme":
+                verification_level = "สูงมาก"
+            
+            else:
+                verification_level = "ไม่รู้"
+
             embed = discord.Embed(
                 colour = 0xffff00,
-                title=f"{ctx.guild.name}", 
-                description="Server info" + f'{ctx.guild.name}')
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.add_field(name="Creation date", value=f"{ctx.guild.created_at}")
-            embed.add_field(name="Server owner", value=f"{ctx.guild.owner}")
-            embed.add_field(name="Region", value=f"{ctx.guild.region}")
-            embed.add_field(name="Server ID", value=f"{ctx.guild.id}")
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                title=f"ข้อมูลเซิฟเวอร์📊", 
+                description=
+f"""**ข้อมูลทั่วไป**
+❯❯ 🏠**ชื่อเซิฟเวอร์**: {ctx.guild.name}
+❯❯ 🆔**ไอดีของเซิฟเวอร์**: {ctx.guild.id}
+❯❯ 👑**เจ้าของเซิฟเวอร์**: {ctx.guild.owner} ({ctx.guild.owner.id})
+❯❯ 🌎**ภูมิภาคของเซิฟเวอร์**: {ctx.guild.region}
+❯❯ <a:partner:{partner_id}>**ประเภทเซิร์ฟเวอร์**: {guild_type}
+❯❯ <:verify:{verify_id}>**การยืนยันเซิร์ฟเวอร์**: {verify}
+❯❯ 🔗**โคดเชิญแบบกำหนดเอง**: {invite}
+❯❯ <:boost:{boost_id}>**บูสทั้งหมด**: {num_boost} บูส Level {nitro_teir}
+❯❯ :shield:**ระดับความปลอดภัย**: {verification_level}
+❯❯ :timer:**วันที่สร้างเซิฟเวอร์**: {time}
 
+**สถิติของเซิฟเวอร์**
+❯❯ <:member:{member_id}>**สมาชิกทั้งหมด**: {ctx.guild.member_count}
+❯❯ <:member:{member_id}>**สมาชิกที่เป็นคน**: {memberonly}
+❯❯ <:member:{member_id}>**สมาชิกที่เป็นบอท**: {botonly}
+❯❯ <:member:{member_id}>**สมาชิกที่ถูกเเบน**: {bannedmember}
+❯❯ <:channel:{channel_id}>**ประเภท**: {len(ctx.guild.categories)}
+❯❯ <:channel:{channel_id}>**ห้องเเชท**: {len(ctx.guild.text_channels)}
+❯❯ <:channel:{channel_id}>**ห้องพูดคุย**: {len(ctx.guild.voice_channels)}
+❯❯ <:channel:{channel_id}>**ห้องเเสดง**: {len(ctx.guild.stage_channels)}
+❯❯ <:role:{role_id}>**ยศทั้งหมด**: {len(ctx.guild.roles)}
+❯❯ <:emoji:{emoji_id}>**อีโมจิทั้งหมด**: {len(ctx.guild.emojis)}
+❯❯ <:emoji:{emoji_id}>**อีโมจิแบบเคลื่อนไหว**: {animated}
+❯❯ <:emoji:{emoji_id}>**อีโมจิแบบปกติ**: {normal}
+❯❯ 🔗**ลิงค์เชิญทั้งหมด**: {totalinvite}
+
+**สถานะของสมาชิกในเซิฟเวอร์**
+❯❯ <:online:{online_id}>**ออนไลน์ทั้งหมด**: {totalonline}
+❯❯ <:online:{online_id}>**สถานะออนไลน์**: {memberonline}
+❯❯ <:idle:{idle_id}>**สถานะไม่อยู่**: {memberidle}
+❯❯ <:busy:{busy_id}>**สถานะห้ามรบกวน**: {memberbusy}
+❯❯ <:offline:{offline_id}>**สถานะออฟไลน์**: {memberoffline}
+❯❯ 🎤**สมาชิกในห้องเสียง**: {connect}
+""")
+            embed.timestamp = datetime.datetime.utcnow()
+            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed=embed)
             await message.add_reaction('🤖')
 
@@ -3790,7 +4030,7 @@ async def ping(ctx):
                 title = 'Smilewin bot ping',
                 description = f"""
 ```⌛ Ping : {round(client.latency * 1000)}ms
-⌛ Discord Latency : {latency * 1000}ms```
+⌛ Discord Latency : {round(latency * 1000)}ms```
         
         """, 
 
@@ -3811,7 +4051,7 @@ async def ping(ctx):
                 title = 'Smilewin bot ping',
                 description = f"""
 ```⌛ ปิงของบอท : {round(client.latency * 1000)}ms
-⌛ เวลาในการตอบสนอง Discord : {latency * 1000}ms```
+⌛ เวลาในการตอบสนอง Discord : {round(latency * 1000)}ms```
         
         """, 
 
@@ -3861,7 +4101,7 @@ https://hastebin.com/{r['key']}```"""
             await message.add_reaction('📒')
             print(f"{ctx.author} have made a hastebinlink : https://hastebin.com/{r['key']}")
         
-        if server_language == "Thai":
+        if server_language == "English":
             embed = discord.Embed(
                 colour = 0x00FFFF,
                 title = f'Hastebin link ของ {ctx.author}',
@@ -3956,7 +4196,7 @@ async def pastebin(ctx, *,message):
                 description = f"""
 ```📒 นี้คือลิงค์ Pastebin ของคุณ : 
 
-{r.text}```"""
+{r}```"""
             )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -3964,7 +4204,7 @@ async def pastebin(ctx, *,message):
 
             message = await ctx.send(embed = embed)
             await message.add_reaction('📒')
-            print(f"{ctx.author} have made a Pastebinlink : {r.text}")
+            print(f"{ctx.author} have made a Pastebinlink : {r}")
         
         if server_language == "English":
             embed = discord.Embed(
@@ -3973,7 +4213,7 @@ async def pastebin(ctx, *,message):
                 description = f"""
 ```📒 This is your Pastebin link : 
 
-{r.text}```"""
+{r}```"""
             )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -3981,7 +4221,7 @@ async def pastebin(ctx, *,message):
 
             message = await ctx.send(embed = embed)
             await message.add_reaction('📒')
-            print(f"{ctx.author} have made a Pastebinlink : {r.text}")
+            print(f"{ctx.author} have made a Pastebinlink : {r}")
 
 @pastebin.error
 async def pastebin_error(ctx, error):
@@ -4694,20 +4934,21 @@ async def btc(ctx):
         await message.add_reaction('👍')
     
     else:
-        r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR,THB')
-        r = r.json()
-        usd = r['USD']
-        eur = r['EUR']
-        thb = r['THB']
-        embed = discord.Embed(
-            colour = 0xffff00,
-            title = "Bitcoin",
-            description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
-        embed.set_author(name='Bitcoin', icon_url='https://i.imgur.com/3gVaQ4z.png')
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        embed.timestamp = datetime.datetime.utcnow()
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,EUR,THB") as r:
+                r = await r.json()
+                usd = r['USD']
+                eur = r['EUR']
+                thb = r['THB']
+                embed = discord.Embed(
+                    colour = 0xffff00,
+                    title = "Bitcoin",
+                    description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
+                embed.set_author(name='Bitcoin', icon_url='https://i.imgur.com/3gVaQ4z.png')
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-        await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
 @client.command(aliases=['ethereum'])
 async def eth(ctx):
@@ -4723,20 +4964,21 @@ async def eth(ctx):
         await message.add_reaction('👍')
     
     else:
-        r = requests.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR,THB')
-        r = r.json()
-        usd = r['USD']
-        eur = r['EUR']
-        thb = r['THB']  
-        embed = discord.Embed(
-            colour = 0xffff00,
-            title = "Ethereum",
-            description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
-        embed.set_author(name='Ethereum', icon_url='https://i.imgur.com/vsWBny2.png')
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        embed.timestamp = datetime.datetime.utcnow()
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,EUR,THB') as r:
+                r = await r.json()
+                usd = r['USD']
+                eur = r['EUR']
+                thb = r['THB']  
+                embed = discord.Embed(
+                    colour = 0xffff00,
+                    title = "Ethereum",
+                    description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
+                embed.set_author(name='Ethereum', icon_url='https://i.imgur.com/vsWBny2.png')
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-        await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
 @client.command()
 async def ascii(ctx, *, text):
@@ -4756,49 +4998,53 @@ async def ascii(ctx, *, text):
         for data in language:
             server_language = data["Language"]
         
-        if server_language == "Thai": 
-            r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
-            if len('```'+r+'```') > 2000:
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    description = f" ⚠️``{ctx.author}`` ตัวอักษรมากเกินไป ``"
-                )
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
+        if server_language == "Thai":
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}') as r:
+                    response = await r.text()
+                    if len(f'```{response}```') > 2000:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` ตัวอักษรมากเกินไป ``"
+                        )
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+                    
+                    else:
             
-            else:
-    
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = "🎨 ASCII ",
-                    description = (f"```{r}```")
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "🎨 ASCII ",
+                            description = (f"```{response}```")
 
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('🎨')
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('🎨')
         
         if server_language == "English": 
-            r = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}').text
-            if len('```'+r+'```') > 2000:
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    description = f" ⚠️``{ctx.author}`` Too much letter ``"
-                )
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}') as r:
+                    response = await r.text()
+                    if len(f'```{response}```') > 2000:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` Too much letter ``"
+                        )
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+                    
+                    else:
             
-            else:
-    
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = "🎨 ASCII ",
-                    description = (f"```{r}```")
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = "🎨 ASCII ",
+                            description = (f"```{response}```")
 
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('🎨')
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('🎨')
 
 @ascii.error
 async def ascii_error(ctx, error):
@@ -5266,58 +5512,59 @@ async def covid19th(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get('https://covid19.th-stat.com/api/open/today')
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://covid19.th-stat.com/api/open/today') as r:
+                r = await r.json()
 
-        newconfirm = r['NewConfirmed']
-        newdeath = r['NewDeaths']
-        recover = r['Recovered']
-        death = r['Deaths']
-        source = r['Source']
-        update = r['UpdateDate']
-        confirm = r['Confirmed']
-        hospital = r['Hospitalized']
-        hospitalnew = r['NewHospitalized']
+                newconfirm = r['NewConfirmed']
+                newdeath = r['NewDeaths']
+                recover = r['Recovered']
+                death = r['Deaths']
+                source = r['Source']
+                update = r['UpdateDate']
+                confirm = r['Confirmed']
+                hospital = r['Hospitalized']
+                hospitalnew = r['NewHospitalized']
 
-        if server_language == "Thai":
+                if server_language == "Thai":
 
-            embed = discord.Embed(
-                title="💊 ข้อมูล COVID-19 ประเทศไทย",
-                description=f"อัพเดตล่าลุดเมื่อ {update}",
-                color=0x00FFFF
-            )
+                    embed = discord.Embed(
+                        title="💊 ข้อมูล COVID-19 ประเทศไทย",
+                        description=f"อัพเดตล่าลุดเมื่อ {update}",
+                        color=0x00FFFF
+                    )
 
-            embed.add_field(name='🤒 ผู้ป่วยสะสม',value=f"{confirm} คน")
-            embed.add_field(name='😷 ผู้ป่วยรายใหม่',value=f"{newconfirm} คน")
-            embed.add_field(name='🏠 ผู้ป่วยรักษาหายแล้ว',value=f"{recover} คน")
-            embed.add_field(name='🏠 ผู้ป่วยที่เข้าโรงพยาบาลทั้งหมด',value=f"{hospital} คน")
-            embed.add_field(name='🏠 ผู้ป่วยที่อยู่เข้าโรงพยาบาลใหม่',value=f"{hospitalnew} คน")
-            embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตทั้งหมด',value=f"{death} คน")
-            embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตใหม่',value=f"{newdeath} คน")
-            embed.set_footer(text=f'''ข้อมูลจาก {source}''')
+                    embed.add_field(name='🤒 ผู้ป่วยสะสม',value=f"{confirm} คน")
+                    embed.add_field(name='😷 ผู้ป่วยรายใหม่',value=f"{newconfirm} คน")
+                    embed.add_field(name='🏠 ผู้ป่วยรักษาหายแล้ว',value=f"{recover} คน")
+                    embed.add_field(name='🏠 ผู้ป่วยที่เข้าโรงพยาบาลทั้งหมด',value=f"{hospital} คน")
+                    embed.add_field(name='🏠 ผู้ป่วยที่อยู่เข้าโรงพยาบาลใหม่',value=f"{hospitalnew} คน")
+                    embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตทั้งหมด',value=f"{death} คน")
+                    embed.add_field(name='☠️ ผู้ป่วยเสียชีวิตใหม่',value=f"{newdeath} คน")
+                    embed.set_footer(text=f'''ข้อมูลจาก {source}''')
 
-            message= await ctx.send(embed=embed)
-            await message.add_reaction('💊')
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('💊')
         
-        if server_language == "English":
+                if server_language == "English":
 
-            embed = discord.Embed(
-                title="💊 Thailand COVID-19 status",
-                description=f"lastest update: {update}",
-                color=0x00FFFF
-            )
+                    embed = discord.Embed(
+                        title="💊 Thailand COVID-19 status",
+                        description=f"lastest update: {update}",
+                        color=0x00FFFF
+                    )
 
-            embed.add_field(name='🤒 Total confirm cases',value=f"{confirm} คน")
-            embed.add_field(name='😷 New cases',value=f"{newconfirm} คน")
-            embed.add_field(name='🏠 Total recover patients',value=f"{recover} คน")
-            embed.add_field(name='🏠 Total hospitalize',value=f"{hospital} คน")
-            embed.add_field(name='🏠 New hospitalize',value=f"{hospitalnew} คน")
-            embed.add_field(name='☠️ Total death',value=f"{death} คน")
-            embed.add_field(name='☠️ New death',value=f"{newdeath} คน")
-            embed.set_footer(text=f'''Source : {source}''')
+                    embed.add_field(name='🤒 Total confirm cases',value=f"{confirm} คน")
+                    embed.add_field(name='😷 New cases',value=f"{newconfirm} คน")
+                    embed.add_field(name='🏠 Total recover patients',value=f"{recover} คน")
+                    embed.add_field(name='🏠 Total hospitalize',value=f"{hospital} คน")
+                    embed.add_field(name='🏠 New hospitalize',value=f"{hospitalnew} คน")
+                    embed.add_field(name='☠️ Total death',value=f"{death} คน")
+                    embed.add_field(name='☠️ New death',value=f"{newdeath} คน")
+                    embed.set_footer(text=f'''Source : {source}''')
 
-            message= await ctx.send(embed=embed)
-            await message.add_reaction('💊')
+                    message= await ctx.send(embed=embed)
+                    await message.add_reaction('💊')
 
 @client.command()
 async def help(ctx):
@@ -5587,6 +5834,7 @@ async def helpsetup(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}setrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากเเนะนําตัว', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}setverify #text-channel``', value =f'ตั้งค่าห้องยืนยันตัวตน (captcha) *พิม {COMMAND_PREFIX}vfy เพื่องยืนยันตัวตน', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}verifyrole give/remove @role``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากยืนยันตัวตน', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}verifytime (time)``', value =f'ตั้งค่าเวลาในการยืนยันตัวตน (ห้ามเกิน 120 วินาที)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}verification on/off``', value =f'ตั้งค่าที่จะ ให้/ลบหลังจากยืนยันตัวตน', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}chat on/off``', value ='เปิด / ปิดใช้งานห้องคุยกับคนเเปลกหน้า', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
@@ -5655,7 +5903,6 @@ async def helpgame(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (username)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (user)``', value = 'ดูเเรงค์เเละmmrของคนๆนั้น',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5677,7 +5924,6 @@ async def helpgame(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}pubgnow``', value = 'People playing PUBG at this time',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}gtanow``', value = 'People playing gtanow at this time',inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}apexstat (user)``', value = 'see a user apex in-game stat',inline = True)
-            embed.add_field(name=f'``{COMMAND_PREFIX}rb6rank (username)``', value = 'see a user rank and mmr in rb6',inline = True)
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
@@ -5926,6 +6172,7 @@ async def helpgeneral(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}calculator (equation)``', value= 'คํานวนคณิตศาสตร์ + - * / ^ ', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}say (message)``', value= 'ส่งข้อความผ่านบอท (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
@@ -5951,6 +6198,7 @@ async def helpgeneral(ctx):
             embed.add_field(name=f'``{COMMAND_PREFIX}enbinary (message)``', value= 'เเปลคําพูดเป็น binary (0101)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}debinary (binnary)``', value= 'เเปลbinary เป็นคําพูด', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}calculator (equation)``', value= 'คํานวนคณิตศาสตร์ + - * / ^ ', inline = True)
+            embed.add_field(name=f'``{COMMAND_PREFIX}say (message)``', value= 'ส่งข้อความผ่านบอท (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
             embed.add_field(name=f'``{COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
@@ -6131,24 +6379,25 @@ async def covid19(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get(f'https://disease.sh/v3/covid-19/all')
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://disease.sh/v3/covid-19/all') as r:
+                r = await r.json()
 
-        case = r['cases']
-        todaycase = r['todayCases']
-        totaldeath = r['deaths']
-        todaydeath = r['todayDeaths']
-        recover = r['recovered']
-        todayRecover = r['todayRecovered']      
-        activecase = r['active']
+                case = r['cases']
+                todaycase = r['todayCases']
+                totaldeath = r['deaths']
+                todaydeath = r['todayDeaths']
+                recover = r['recovered']
+                todayRecover = r['todayRecovered']      
+                activecase = r['active']
 
-        case = humanize.intcomma(case)
-        todaycase = humanize.intcomma(todaycase)
-        totaldeath = humanize.intcomma(totaldeath)
-        todaydeath = humanize.intcomma(todaydeath)
-        recover = humanize.intcomma(recover)
-        todayRecover = humanize.intcomma(todayRecover)
-        activecase = humanize.intcomma(activecase)
+                case = humanize.intcomma(case)
+                todaycase = humanize.intcomma(todaycase)
+                totaldeath = humanize.intcomma(totaldeath)
+                todaydeath = humanize.intcomma(todaydeath)
+                recover = humanize.intcomma(recover)
+                todayRecover = humanize.intcomma(todayRecover)
+                activecase = humanize.intcomma(activecase)
 
         if server_language == "Thai": 
             embed = discord.Embed(
@@ -6194,7 +6443,6 @@ async def covid19(ctx):
             message = await ctx.send(embed=embed)
             await message.add_reaction('💊')
             
-
 @client.command()
 async def lmgtfy(ctx, *, message):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -6328,10 +6576,9 @@ async def credit(ctx):
                 title= '💻 เครดิตคนทําบอท',
                 description=
                 """
-        ```ดิสคอร์ด : REACT#1120
-        เซิฟดิสคอร์ด : https://discord.com/invite/R8RYXyB4Cg
-        Github : https://github.com/reactxsw
-                ```
+```ดิสคอร์ด : REACT#1120
+เซิฟดิสคอร์ด : https://discord.com/invite/R8RYXyB4Cg
+Github : https://github.com/reactxsw```
                 """,
                 colour=0x00FFFF  
             )
@@ -6344,10 +6591,9 @@ async def credit(ctx):
                 title= '💻 Developer',
                 description=
                 """
-        ```Discord : REACT#1120
-        Discord server : https://discord.com/invite/R8RYXyB4Cg
-        Github : https://github.com/reactxsw
-                ```
+```Discord : REACT#1120
+Discord server : https://discord.com/invite/R8RYXyB4Cg
+Github : https://github.com/reactxsw```
                 """,
                 colour=0x00FFFF  
             )
@@ -6892,18 +7138,19 @@ async def meme(ctx):
         await message.add_reaction('👍')
     
     else:
-        r = requests.get('https://some-random-api.ml/meme')
-        r = r.json()
-        url  = r['image']
-        cap = r['caption']
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://some-random-api.ml/meme') as r:
+                r = await r.json()
+                url  = r['image']
+                cap = r['caption']
 
-        embed=  discord.Embed(
-            colour = 0x00FFFF,
-            title = f"{cap}"
-        )
-        embed.set_image(url=url)
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('😂')
+                embed=  discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"{cap}"
+                )
+                embed.set_image(url=url)
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('😂')
 
 @client.command()
 async def geoip(ctx, *, ip):
@@ -6924,8 +7171,9 @@ async def geoip(ctx, *, ip):
             server_language = data["Language"]
 
         ip = str(ip)
-        r = requests.get(f'http://extreme-ip-lookup.com/json/{ip}')
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'http://extreme-ip-lookup.com/json/{ip}') as r:
+                r = await r.json()
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -8040,19 +8288,20 @@ async def anal(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/anal")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "Anal"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/anal") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "Anal"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8069,19 +8318,20 @@ async def anal(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/anal")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "Anal"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/anal") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "Anal"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8194,19 +8444,20 @@ async def smallboob(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/smallboobs")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "smallboobs"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/smallboobs") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "smallboobs"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8223,19 +8474,20 @@ async def smallboob(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/smallboobs")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "smallboobs"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/smallboobs") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "smallboobs"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8269,19 +8521,20 @@ async def gsolo(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/solog")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "Girl solo"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/solog") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "Girl solo"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8298,19 +8551,20 @@ async def gsolo(ctx):
 
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/solog")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "Girl solo"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/solog") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "Girl solo"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️') 
             
             else:
                 embed = discord.Embed(
@@ -8344,19 +8598,20 @@ async def erofeet(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/erofeet")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "erofeet"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/erofeet") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "erofeet"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8373,19 +8628,20 @@ async def erofeet(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/erofeet")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "erofeet"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/erofeet") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "erofeet"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8419,19 +8675,20 @@ async def feet(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/feetg")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "feet"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/feetg") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "feet"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8448,19 +8705,20 @@ async def feet(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/feetg")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "feet"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/feetg") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "feet"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8494,19 +8752,20 @@ async def pussy(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "pussy"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/pussy_jpg") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "pussy"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8523,19 +8782,20 @@ async def pussy(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/pussy_jpg")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "pussy"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/pussy_jpg") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "pussy"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8568,21 +8828,22 @@ async def hentai(ctx):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "hentai"
+            if ctx.channel.is_nsfw():
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/Random_hentai_gif") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "hentai"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
-            
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
+
             else:
                 embed = discord.Embed(
                     colour = 0x983925,
@@ -8598,19 +8859,20 @@ async def hentai(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/Random_hentai_gif")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "hentai"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/Random_hentai_gif") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "hentai"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8644,19 +8906,20 @@ async def eroyuri(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/eroyuri")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "eroyuri"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/eroyuri") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "eroyuri"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
 
             else:
                 embed = discord.Embed(
@@ -8673,19 +8936,20 @@ async def eroyuri(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/eroyuri")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "eroyuri"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/eroyuri") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "eroyuri"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
                 
             else:
                 embed = discord.Embed(
@@ -8719,19 +8983,20 @@ async def yuri(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/yuri")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "yuri"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/yuri") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "yuri"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8748,19 +9013,20 @@ async def yuri(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/yuri")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "yuri"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/yuri") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "yuri"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8794,19 +9060,20 @@ async def solo(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/solo")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "solo"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/solo") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "solo"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8823,19 +9090,20 @@ async def solo(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/solo")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "solo"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/solo") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "solo"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8869,19 +9137,20 @@ async def classic(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/classic")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "classic"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/classic") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "classic"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8898,19 +9167,20 @@ async def classic(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw(): 
-                r = requests.get("https://nekos.life/api/v2/img/classic")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "classic"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/classic") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "classic"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -8944,19 +9214,20 @@ async def boobs(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/boobs")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "boobs"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/boobs") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "boobs"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
         
             else:
                 embed = discord.Embed(
@@ -8973,19 +9244,20 @@ async def boobs(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/boobs")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "boobs"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/boobs") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "boobs"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
         
             else:
                 embed = discord.Embed(
@@ -9019,19 +9291,20 @@ async def tits(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/tits")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "tits"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/tits") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "tits"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
 
             else:
                 embed = discord.Embed(
@@ -9048,19 +9321,20 @@ async def tits(ctx):
 
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/tits")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "tits"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/tits") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "tits"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
 
             else:
                 embed = discord.Embed(
@@ -9094,20 +9368,21 @@ async def blowjob(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/blowjob")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "blowjob"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/blowjob") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "tits"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
-        
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
+
             else:
                 embed = discord.Embed(
                     colour = 0x983925,
@@ -9123,19 +9398,20 @@ async def blowjob(ctx):
 
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/blowjob")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "blowjob"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/blowjob") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "tits"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)   
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
         
             else:
                 embed = discord.Embed(
@@ -9169,20 +9445,21 @@ async def lewd(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "lewd"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/nsfw_neko_gif") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "lewd"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}") 
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)  
-                await message.add_reaction('❤️') 
-            
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
+
             else:
                 embed = discord.Embed(
                     colour = 0x983925,
@@ -9198,19 +9475,20 @@ async def lewd(ctx):
 
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/nsfw_neko_gif")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "lewd"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/nsfw_neko_gif") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "lewd"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}") 
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)  
-                await message.add_reaction('❤️') 
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -9244,20 +9522,21 @@ async def lesbian(ctx):
         
         if server_language == "Thai":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/les")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "lesbian"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/les") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "lesbian"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('❤️')
-            
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
+
             else:
                 embed = discord.Embed(
                     colour = 0x983925,
@@ -9273,19 +9552,20 @@ async def lesbian(ctx):
         
         if server_language == "English":
             if ctx.channel.is_nsfw():
-                r = requests.get("https://nekos.life/api/v2/img/les")
-                r = r.json()
-                embed = discord.Embed(
-                    colour = 0xFC7EF5,
-                    title = "lesbian"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/les") as r:
+                        r = await r.json()
+                        embed = discord.Embed(
+                            colour = 0xFC7EF5,
+                            title = "lesbian"
 
-                )   
-                url = r['url']
-                embed.set_image(url=url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('❤️')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
             
             else:
                 embed = discord.Embed(
@@ -9300,7 +9580,7 @@ async def lesbian(ctx):
                 await message.add_reaction('✨')
 
 @client.command()  
-async def feed(ctx):
+async def feed(ctx, member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         embed = discord.Embed(
@@ -9312,23 +9592,86 @@ async def feed(ctx):
         message = await ctx.send(embed=embed)
         await message.add_reaction('👍')
 
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/feed")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "feed"
+    else:
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/feed") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "feed"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed)   
+                    await message.add_reaction('❤️')
+
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/feed") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "feed"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)   
+                    await message.add_reaction('❤️')
 
 @client.command()
-async def tickle(ctx):
+async def tickle(ctx, member: discord.Member = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/tickle") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "tickle"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)   
+                    await message.add_reaction('❤️')
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/tickle") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "tickle"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)   
+                    await message.add_reaction('❤️')
+
+@client.command()
+async def slap(ctx, member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         embed = discord.Embed(
@@ -9341,78 +9684,39 @@ async def tickle(ctx):
         await message.add_reaction('👍')
 
     else:  
-        r = requests.get("https://nekos.life/api/v2/img/tickle")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "tickle"
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/slap") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "slap"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed)   
+                    await message.add_reaction('❤️')
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/slap") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "slap"
 
-@client.command()
-async def slap(ctx):
-    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
-    if languageserver is None:
-        embed = discord.Embed(
-            title = "Language setting / ตั้งค่าภาษา",
-            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
-
-    else:  
-        r = requests.get("https://nekos.life/api/v2/img/slap")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "slap"
-
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
+                    message = await ctx.send(f"{member.mention}",embed=embed)   
+                    await message.add_reaction('❤️')
 
 @client.command()
-async def hug(ctx):
-    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
-    if languageserver is None:
-        embed = discord.Embed(
-            title = "Language setting / ตั้งค่าภาษา",
-            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-        )
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
-
-    else: 
-        r = requests.get("https://nekos.life/api/v2/img/hug")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "hug"
-
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
-
-@client.command()
-async def smug(ctx):
+async def hug(ctx, member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         embed = discord.Embed(
@@ -9425,22 +9729,40 @@ async def smug(ctx):
         await message.add_reaction('👍')
 
     else: 
-        r = requests.get("https://nekos.life/api/v2/img/smug")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "smug"
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/hug") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "hug"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('❤️')
+        
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/hug") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "hug"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)   
+                    await message.add_reaction('❤️')
 
 @client.command()
-async def pat(ctx):
+async def smug(ctx, member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         embed = discord.Embed(
@@ -9453,22 +9775,40 @@ async def pat(ctx):
         await message.add_reaction('👍')
 
     else: 
-        r = requests.get("https://nekos.life/api/v2/img/pat")
-        r = r.json()
-        embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "pat"
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/smug") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "smug"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed)
-        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('❤️')
+        
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/smug") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "smug"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)   
+                    await message.add_reaction('❤️')
 
 @client.command()
-async def kiss(ctx):
+async def pat(ctx, member: discord.Member = None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
         embed = discord.Embed(
@@ -9481,19 +9821,83 @@ async def kiss(ctx):
         await message.add_reaction('👍')
 
     else: 
-        r = requests.get("https://nekos.life/api/v2/img/kiss")
-        r = r.json()
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/pat") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "pat"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('❤️')
+        
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/pat") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "pat"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)  
+                    await message.add_reaction('❤️')
+
+@client.command()
+async def kiss(ctx, member: discord.Member = None):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0xFC7EF5,
-            title = "kiss"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-        )   
-        url = r['url']
-        embed.set_image(url=url)
+        )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        message = await ctx.send(embed=embed)  
-        await message.add_reaction('❤️')
+    else: 
+        if member is None:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/kiss") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "kiss"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)  
+                    await message.add_reaction('❤️')
+        
+        else:
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/kiss") as r:
+                    r = await r.json()
+                    embed = discord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "kiss"
+
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(f"{member.mention}",embed=embed)  
+                    await message.add_reaction('❤️')
 
 @client.command()
 async def weather(ctx, *, city):
@@ -9515,33 +9919,34 @@ async def weather(ctx, *, city):
 
         if server_language == "Thai":
             try:
-                r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
-                r = r.json()
-                temperature = (float(r['main']['temp']) -273.15)
-                feellike = (float(r['main']['feels_like']) -273.15)
-                highesttemp = (float(r['main']['temp_max']) -273.15)
-                lowesttemp = (float(r['main']['temp_min']) -273.15)
-                humidity = float(r['main']['humidity'])
-                windspeed = float(r['wind']['speed'])
-                
-                day = r['weather'][0]['description']
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}') as r:
+                        r = await r.json()
+                        temperature = (float(r['main']['temp']) -273.15)
+                        feellike = (float(r['main']['feels_like']) -273.15)
+                        highesttemp = (float(r['main']['temp_max']) -273.15)
+                        lowesttemp = (float(r['main']['temp_min']) -273.15)
+                        humidity = float(r['main']['humidity'])
+                        windspeed = float(r['wind']['speed'])
+                        
+                        day = r['weather'][0]['description']
 
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"สภาพอากาศในจังหวัด {city}",
-                    description = f"""```
-อุณหภูมิตอนนี้ : {temperature}°C
-อุณหภูมิสูงสุดของวัน : {highesttemp}°C
-อุณหภูมิตํ่าสุดของวัน : {lowesttemp}°C
-อุณหภูมิรู้สึกเหมือน : {feellike}
-ความชื้น : {humidity}%
-ความเร็วลม : {windspeed}mph
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"สภาพอากาศในจังหวัด {city}",
+                            description = f"""```
+อุณหภูมิตอนนี้ : {round(temperature,1)}°C
+อุณหภูมิสูงสุดของวัน : {round(highesttemp,1)}°C
+อุณหภูมิตํ่าสุดของวัน : {round(lowesttemp,1)}°C
+อุณหภูมิรู้สึกเหมือน : {round(feellike,1)}°C
+ความชื้น : {round(humidity)}%
+ความเร็วลม : {round(windspeed,2)}mph
 สภาพอากาศ : {day}```
-                    """
-                    
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                await ctx.send(embed=embed)
+                            """
+                            
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        await ctx.send(embed=embed)
 
             except:
                 embed = discord.Embed(
@@ -9555,33 +9960,34 @@ async def weather(ctx, *, city):
         
         if server_language == "English":
             try:
-                r = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}')
-                r = r.json()
-                temperature = (float(r['main']['temp']) -273.15)
-                feellike = (float(r['main']['feels_like']) -273.15)
-                highesttemp = (float(r['main']['temp_max']) -273.15)
-                lowesttemp = (float(r['main']['temp_min']) -273.15)
-                humidity = float(r['main']['humidity'])
-                windspeed = float(r['wind']['speed'])
-                
-                day = r['weather'][0]['description']
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweathermapAPI}') as r:
+                        r = await r.json()
+                        temperature = (float(r['main']['temp']) -273.15)
+                        feellike = (float(r['main']['feels_like']) -273.15)
+                        highesttemp = (float(r['main']['temp_max']) -273.15)
+                        lowesttemp = (float(r['main']['temp_min']) -273.15)
+                        humidity = float(r['main']['humidity'])
+                        windspeed = float(r['wind']['speed'])
+                        
+                        day = r['weather'][0]['description']
 
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"weather in {city}",
-                    description = f"""```
-Temperature now : {temperature}°C
-Highest temperature today : {highesttemp}°C
-Lowest temperature today : {lowesttemp}°C
-Feel like : {feellike}
-Humidity : {humidity}%
-windspeed : {windspeed}mph
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"weather in {city}",
+                            description = f"""```
+Temperature now : {round(temperature,1)}°C
+Highest temperature today : {round(highesttemp,1)}°C
+Lowest temperature today : {round(lowesttemp,1)}°C
+Feel like : {round(feellike,1)}°C
+Humidity : {round(humidity)}%
+windspeed : {round(windspeed,2)}mph
 Weather : {day}```
                     """
                     
                 )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                await ctx.send(embed=embed)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        await ctx.send(embed=embed)
 
             except:
                 embed = discord.Embed(
@@ -9651,9 +10057,10 @@ async def bird(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/birb")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/birb") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9693,9 +10100,10 @@ async def panda(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/panda")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/panda") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9735,9 +10143,10 @@ async def cat(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/cat")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/cat") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9777,9 +10186,10 @@ async def dog(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/dog")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/dog") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9819,9 +10229,10 @@ async def fox(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/fox")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/fox") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9861,9 +10272,10 @@ async def koala(ctx):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get("https://some-random-api.ml/img/koala")
-        r = r.json()
-        url = r['link']
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://some-random-api.ml/img/koala") as r:
+                r = await r.json()
+                url = r['link']
 
         if server_language == "Thai":
             embed = discord.Embed(
@@ -9903,8 +10315,9 @@ async def country(ctx, *, country):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get(f"https://restcountries.eu/rest/v2/name/{country}?fullText=true")
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://restcountries.eu/rest/v2/name/{country}?fullText=true") as r:
+                r = await r.json()
 
         name = r[0]['name']
         population = r[0]['population']
@@ -10117,229 +10530,6 @@ async def pingweb(ctx, website = None):
                     message = await ctx.send(embed=embed )
 
 @client.command()
-async def rb6rank(ctx , username):
-    url = f"https://r6.tracker.network/profile/pc/{username}"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            soupObject = BeautifulSoup(await response.text(), "html.parser")
-            try:
-                div = soupObject.find_all('div', class_='trn-defstat__value')[0]
-                div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
-                div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
-                div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
-                div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
-                platform = "PC"
-                try:
-                    div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
-                                
-                except:
-                    ranking = None
-            
-            except:
-                try:
-                    url = f"https://r6.tracker.network/profile/xbox/{username}"
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(url) as response:
-                            soupObject = BeautifulSoup(await response.text(), "html.parser")
-                            div = soupObject.find_all('div', class_='trn-defstat__value')[0]
-                            div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
-                            div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
-                            div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
-                            div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
-                            platform = "XBOX"
-                            try:
-                                div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
-                                
-                            except:
-                                ranking = None
-                            
-                except:
-                    try:
-                        url = f"https://r6.tracker.network/profile/psn/{username}"
-                        async with aiohttp.ClientSession() as session:
-                            async with session.get(url) as response:
-                                soupObject = BeautifulSoup(await response.text(), "html.parser")
-                                div = soupObject.find_all('div', class_='trn-defstat__value')[0]
-                                div1 = soupObject.find_all('div', class_='trn-defstat__value')[1]
-                                div2 = soupObject.find_all('div', class_='trn-defstat__value')[2]
-                                div3 = soupObject.find_all('div', class_='trn-defstat__value')[3]
-                                div4 = soupObject.find_all('div', class_='trn-text--dimmed')[2]
-                                platform = "PSN"
-                                try:
-                                    div5 = soupObject.find_all('div', class_='trn-text--primary')[0]
-                                
-                                except:
-                                    ranking = None
-                                
-                    except:
-                        embed = discord.Embed(
-                            colour = 0x983925,
-                            description = f" ⚠️ไม่สามารถค้นหาชื่อของตัวละครได้โปรดเช็คตัวสะกด")
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed ) 
-                        await message.add_reaction('⚠️')
-            
-            level = div.contents
-            highestmmr = div1.contents
-            rank = div2.contents
-            avgmmr = div3.contents
-            mmr = div4.contents
-            try:
-                ranking = div5.contents
-            except:
-                ranking = None
-            
-            space = " "
-
-            try:
-                ranking = space.join(ranking)
-                level = space.join(level)
-                highestmmr = space.join(highestmmr)
-                rank = space.join(rank)  
-                avgmmr =space.join(avgmmr)
-                mmr = space.join(mmr)
-                ranking = None
-
-            except:
-                level = None
-                highestmmr = None
-                rank = None
-                avgmmr = None
-                mmr = None
-
-            embed = discord.Embed(
-                colour = 0x1e1e1f,
-                title = f"{username}",
-                description = f"ข้อมูลเเรงค์ของ {username} ใน {platform}"
-            )     
-
-            try:
-                if "," in mmr:
-                    mmr = mmr[:-3]
-                    mmrint = mmr.replace(',', '')
-                    mmrint = int(mmrint)
-
-                if mmrint <= 1100:
-
-                    imageurl = "https://i.imgur.com/wSCcUKn.png"
-            
-                elif mmrint >= 1200 and mmrint < 1300: # bronze 4
-
-                    imageurl = "https://i.imgur.com/FwXHG5a.png"
-
-                elif mmrint >= 1300 and mmrint < 1400: # bronze 3
-
-                    imageurl = "https://i.imgur.com/HSaFvGT.png"
-            
-                elif mmrint >= 1400 and mmrint < 1500: # bronze 2
-
-                    imageurl = "https://i.imgur.com/UQfxmme.png"
-
-                elif mmrint >= 1500 and mmrint < 1600: # bronze 1
-
-                    imageurl = "https://i.imgur.com/FC4eexb.png"
-
-                elif mmrint >= 1600 and mmrint < 1700: # copper 5
-
-                    imageurl = "https://i.imgur.com/KaFUckV.png"
-            
-                elif mmrint >= 1700 and mmrint < 1800: # copper 4
-
-                    imageurl = "https://i.imgur.com/Ae1TVw1.png"
-            
-                elif mmrint >= 1800 and mmrint < 1900: # copper 3
-
-                    imageurl = "https://i.imgur.com/wUyjfJU.png"
-            
-                elif mmrint >= 1900 and mmrint < 2000: # copper 2
-
-                    imageurl = "https://i.imgur.com/Wuh4Yyh.png"
-
-                elif mmrint >= 2000 and mmrint < 2100: # copper 1
-
-                    imageurl = "https://i.imgur.com/8EwVqaf.png"
-
-                elif mmrint >= 2100 and mmrint < 2200: # silver 5
-
-                    imageurl = "https://i.imgur.com/papk0fC.png"
-            
-                elif mmrint >= 2200 and mmrint < 2300: # silver 4
-
-                    imageurl = "https://i.imgur.com/dA1fkCP.png"
-            
-                elif mmrint >= 2300 and mmrint < 2400: # silver 3
-
-                    imageurl = "https://i.imgur.com/ECXMkOM.png"
-            
-                elif mmrint >= 2400 and mmrint < 2500: # silver 2
-
-                    imageurl = "https://i.imgur.com/wXsdvT2.png"
-
-                elif mmrint >= 2500 and mmrint < 2600: # silver 1
-
-                    imageurl = "https://i.imgur.com/iGPlsPP.png"
-            
-                elif mmrint >= 2600 and mmrint < 2800: # gold 3
-
-                    imageurl = "https://i.imgur.com/aZKtpwt.png"
-            
-                elif mmrint >= 2800 and mmrint < 3000: # gold 2
-
-                    imageurl = "https://i.imgur.com/3q4UzA0.png"
-            
-                elif mmrint >= 3000 and mmrint < 3200: # gold 1
-
-                    imageurl = "https://i.imgur.com/ysYFyJN.png"
-            
-                elif mmrint >= 3200 and mmrint < 3600: # platinum 3
-
-                    imageurl = "https://i.imgur.com/qOTqbzM.png"
-
-                elif mmrint >= 3600 and mmrint < 4000: # platinum 2
-
-                    imageurl = "https://i.imgur.com/8x83kyv.png"
-            
-                elif mmrint >= 4000 and mmrint < 4400: # platinum 1
-
-                    imageurl = "https://i.imgur.com/HFOlYzY.png"
-
-                elif mmrint >= 4000 and mmrint < 4400: # diamond
-
-                    imageurl = "https://i.imgur.com/ZRq9KjK.png"
-
-                elif mmrint >= 5000:
-
-                    imageurl = "https://i.imgur.com/d36RkX2.png"
-                
-            except:
-
-                imageurl = "https://i.imgur.com/yzkK5um.png"
-
-            embed.add_field(name='**'+"Rank"+'**',value=f"{rank}")
-            embed.add_field(name='**'+"MMR"+'**',value=f"{mmr}")
-            embed.add_field(name='**'+"MMR เฉลี่ย"+'**',value=f"{avgmmr}")
-            embed.add_field(name='**'+"MMR สูงสุด"+'**',value=f"{highestmmr}")
-            embed.add_field(name='**'+"อันดับ"+'**',value=f"{ranking}")
-            embed.add_field(name='**'+"Level"+'**',value=f"{level}")
-            embed.set_thumbnail(url=imageurl)
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('🎮')
-
-@rb6rank.error
-async def rb6rank_error(ctx, error):
-    embed = discord.Embed(
-            title = "Language setting / ตั้งค่าภาษา",
-            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-        )
-    embed.set_footer(text=f"┗Requested by {ctx.author}")
-    message = await ctx.send(embed=embed)
-    await message.add_reaction('👍')
-
-@client.command()
 async def iphonex(ctx , image=None):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
@@ -10356,9 +10546,10 @@ async def iphonex(ctx , image=None):
 
         if image is None:
             image = ctx.author.avatar_url
-
-        r = requests.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}")
-        r = r.json()
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}") as r:
+                r = await r.json()
 
         url = r['message']
 
@@ -10394,8 +10585,9 @@ async def phcomment(ctx , * ,text, username = None , image=None):
         if username is None:
             username = ctx.author
 
-        r = requests.get(f"https://nekobot.xyz/api/imagegen?type=phcomment&image={image}&text={text}&username={username}")
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://nekobot.xyz/api/imagegen?type=phcomment&image={image}&text={text}&username={username}") as r:
+                r = await r.json()
 
         url = r['message']
 
@@ -10894,32 +11086,36 @@ async def calculator(ctx , *,equation):
         if server_language == "Thai":
         
             url = f"https://api.mathjs.org/v4/?expr={equation}"
-            req = requests.get(url)
-            result = BeautifulSoup(req.text, "html.parser")
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as req:
+                    result = BeautifulSoup(await req.text(), "html.parser")
 
             embed = discord.Embed(
                 colour = 0x00FFFF,
                 title = "เครื่องคิดเลข",
-                description = f"""```
-        โจทย์ : {equation}
-        คําตอบ : {result}
-        ```""")
+                description = f"""
+```
+โจทย์ : {equation}
+คําตอบ : {result}
+```""")
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             await ctx.send(embed=embed)
         
         if server_language == "English":
         
             url = f"https://api.mathjs.org/v4/?expr={equation}"
-            req = requests.get(url)
-            result = BeautifulSoup(req.text, "html.parser")
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as req:
+                    result = BeautifulSoup(await req.text(), "html.parser")
 
             embed = discord.Embed(
                 colour = 0x00FFFF,
-                title = "Calculato",
-                description = f"""```
-        Equation : {equation}
-        Answer : {result}
-        ```""")
+                title = "Calculator",
+                description = f"""
+```
+Equation : {equation}
+Answer : {result}
+```""")
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             await ctx.send(embed=embed)
 
@@ -11081,8 +11277,9 @@ async def github(ctx, *, user=None):
                 await message.add_reaction('⚠️')
             
             try:
-                r = requests.get(url)
-                r = r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as r:
+                        r = await r.json()
 
                 username = r['login']
                 avatar =  r['avatar_url']
@@ -11136,8 +11333,9 @@ Bio : {bio}
                 await message.add_reaction('⚠️')
             
             try:
-                r = requests.get(url)
-                r = r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as r:
+                        r = await r.json()
 
                 username = r['login']
                 avatar =  r['avatar_url']
@@ -11239,8 +11437,9 @@ async def _8ball(ctx, *,question):
         for data in language:
             server_language = data["Language"]
 
-        r = requests.get(f"https://8ball.delegator.com/magic/JSON/{question}")
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://8ball.delegator.com/magic/JSON/{question}") as r:
+                r = await r.json()
 
         answer = r['magic']['answer']
         ask = r['magic']['question']
@@ -12136,8 +12335,9 @@ async def enbinary(ctx, *, text):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            r = requests.get(f"https://some-random-api.ml/binary?text={text}")
-            r = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://some-random-api.ml/binary?text={text}") as r:
+                    r = await r.json()
 
             binary = r['binary']
 
@@ -12154,8 +12354,9 @@ Binary : {binary}```"""
             await message.add_reaction('💻')
         
         if server_language == "English":
-            r = requests.get(f"https://some-random-api.ml/binary?text={text}")
-            r = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://some-random-api.ml/binary?text={text}") as r:
+                    r = await r.json()
 
             binary = r['binary']
 
@@ -12190,8 +12391,9 @@ async def debinary(ctx, *,text):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            r = requests.get(f"https://some-random-api.ml/binary?decode={text}")
-            r = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://some-random-api.ml/binary?decode={text}") as r:
+                    r = await r.json()
 
             binary = r['text']
 
@@ -12208,8 +12410,9 @@ Normal text : {binary}```"""
             await message.add_reaction('💻')
         
         if server_language == "Thai":
-            r = requests.get(f"https://some-random-api.ml/binary?decode={text}")
-            r = r.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(f"https://some-random-api.ml/binary?decode={text}") as r:
+                    r = await r.json()
 
             binary = r['text']
 
@@ -12250,367 +12453,380 @@ async def introduction(ctx):
             channel = data["introduce_channel_id"] 
             give = data["introduce_role_give_id"]
             remove = data["introduce_role_remove_id"]
+            introduction_channel = client.get_channel(int(channel))
+            if introduction_channel:
+                if status == "YES":
+                    if frame == "None":
+                        frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
 
-            if status == "YES":
-                if frame == "None":
-                    frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+                        if channel == "None":
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[1] ชื่อ")
+                    
+                                embed.set_footer(text="คำถามที่ [1/3]")
+                                message = await ctx.send(embed=embed)
 
-                    if channel == "None":
-                        try:
+                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                name = username.content
+                                await asyncio.sleep(1) 
+                                await username.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[2] อายุ")
+                    
+                                embed.set_footer(text="คำถามที่ [2/3]")
+                                await message.edit(embed=embed)
+
+                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                age = userage.content
+                                await asyncio.sleep(1) 
+                                await userage.delete()  
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+                    
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[3] เพศ")
+                    
+                                embed.set_footer(text="คำถามที่ [3/3]")
+                                await message.edit(embed=embed)
+
+                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                sex = usersex.content
+                                await asyncio.sleep(1) 
+                                await usersex.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
+                                description = (f"""```
+    {frame}
+    ชื่อ : {name}
+    อายุ : {age}
+    เพศ : {sex}
+    {frame}```""")
+                    )
+                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.timestamp = datetime.datetime.utcnow()
+                            embed.set_footer(text = ctx.author.id)
                             await message.delete()
+                            await ctx.send(ctx.author.mention)
+                            await ctx.send(embed=embed)
+                            
+                            if not give == "None":
+                                try:
+                                    role = give
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.add_roles(role)
 
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
+                                except Exception:
+                                    pass
+                    
+                            if not remove == "None":
+                                try:
+                                    role = remove
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.remove_roles(role)
 
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()  
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await ctx.send(ctx.author.mention)
-                        await ctx.send(embed=embed)
+                                except Exception:
+                                    pass
                         
-                        if not give == "None":
+                        else:
+            
+                            channel = channel
+                            introduction_channel = client.get_channel(id=int(channel))
                             try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[1] ชื่อ")
                     
+                                embed.set_footer(text="คำถามที่ [1/3]")
+                                message = await ctx.send(embed=embed)
+
+                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                name = username.content
+                                await asyncio.sleep(1) 
+                                await username.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[2] อายุ")
+                    
+                                embed.set_footer(text="คำถามที่ [2/3]")
+                                await message.edit(embed=embed)
+
+                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                age = userage.content
+                                await asyncio.sleep(1) 
+                                await userage.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+                    
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[3] เพศ")
+                    
+                                embed.set_footer(text="คำถามที่ [3/3]")
+                                await message.edit(embed=embed)
+
+                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                sex = usersex.content
+                                await asyncio.sleep(1) 
+                                await usersex.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                description = (f"""```
+    {frame}
+    ชื่อ : {name}
+    อายุ : {age}
+    เพศ : {sex}
+    {frame}```""")
+                    )
+                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.timestamp = datetime.datetime.utcnow()
+                            embed.set_footer(text = ctx.author.id)
+                            await message.delete()
+                            if introduction_channel:
+                                await introduction_channel.send(ctx.author.mention)
+                                await introduction_channel.send(embed=embed)
+
+                            else:
+                                await ctx.send(ctx.author.mention)
+                                await ctx.send(embed=embed)
+
                     else:
-        
-                        channel = channel
-                        channel = client.get_channel(id=int(channel))
-                        try:
+                        frame = frame
+
+                        if channel == "None":
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[1] ชื่อ")
+                    
+                                embed.set_footer(text="คำถามที่ [1/3]")
+                                message = await ctx.send(embed=embed)
+
+                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                name = username.content
+                                await asyncio.sleep(1) 
+                                await username.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[2] อายุ")
+                    
+                                embed.set_footer(text="คำถามที่ [2/3]")
+                                await message.edit(embed=embed)
+
+                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                age = userage.content
+                                await asyncio.sleep(1) 
+                                await userage.delete()  
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+                    
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[3] เพศ")
+                    
+                                embed.set_footer(text="คำถามที่ [3/3]")
+                                await message.edit(embed=embed)
+
+                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                sex = usersex.content
+                                await asyncio.sleep(1) 
+                                await usersex.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
+                                description = (f"""```
 {frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
 {frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await channel.send(ctx.author.mention)
-                        await channel.send(embed=embed)
+                    )
+                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.timestamp = datetime.datetime.utcnow()
+                            embed.set_footer(text = ctx.author.id)
+                            await message.delete()
+                            await ctx.send(ctx.author.mention)
+                            await ctx.send(embed=embed)
+                            
+                            if not give == "None":
+                                try:
+                                    role = give
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.add_roles(role)
 
+                                except Exception:
+                                    pass
                     
-                
+                            if not remove == "None":
+                                try:
+                                    role = remove
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.remove_roles(role)
+
+                                except Exception:
+                                    pass
+                        
+                        else:
+            
+                            channel = channel
+                            introduction_channel = client.get_channel(id=int(channel))
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[1] ชื่อ")
+                    
+                                embed.set_footer(text="คำถามที่ [1/3]")
+                                message = await ctx.send(embed=embed)
+
+                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                name = username.content
+                                await asyncio.sleep(1) 
+                                await username.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[2] อายุ")
+                    
+                                embed.set_footer(text="คำถามที่ [2/3]")
+                                await message.edit(embed=embed)
+
+                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                age = userage.content
+                                await asyncio.sleep(1) 
+                                await userage.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+                    
+                            try:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                    description = "┗[3] เพศ")
+                    
+                                embed.set_footer(text="คำถามที่ [3/3]")
+                                await message.edit(embed=embed)
+
+                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                                sex = usersex.content
+                                await asyncio.sleep(1) 
+                                await usersex.delete()
+
+                            except asyncio.TimeoutError:
+                                await message.delete()
+
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                description = (f"""```
+{frame}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{frame}```""")
+                    )
+                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.timestamp = datetime.datetime.utcnow()
+                            embed.set_footer(text = ctx.author.id)
+                            await message.delete()
+                            if introduction_channel:
+                                await introduction_channel.send(ctx.author.mention)
+                                await introduction_channel.send(embed=embed)
+                            
+                            else:
+                                await ctx.send(ctx.author.mention)
+                                await ctx.send(embed=embed)
+                                
+                            if not give == "None":
+                                try:
+                                    role = give
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.add_roles(role)
+
+                                except Exception:
+                                    pass
+                    
+                            if not remove == "None":
+                                try:
+                                    role = remove
+                                    role = int(role)
+                                    role = ctx.guild.get_role(role)
+                                    await ctx.author.remove_roles(role)
+
+                                except Exception:
+                                    pass              
+
                 else:
-                    frame = frame
-
-                    if channel == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()  
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await ctx.send(ctx.author.mention)
-                        await ctx.send(embed=embed)
-                        
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass
-                    
-                    else:
-        
-                        channel = channel
-                        channel = client.get_channel(id=int(channel))
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await channel.send(ctx.author.mention)
-                        await channel.send(embed=embed)
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass              
+                    embed =discord.Embed(
+                        colour = 0x983925,
+                        description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX}introduce on เพื่อเปิดใช้งาน"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+                    await asyncio.sleep(3) 
+                    await message.delete() 
 
             else:
-                embed =discord.Embed(
-                    colour = 0x983925,
-                    description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX}introduce on เพื่อเปิดใช้งาน"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-                await asyncio.sleep(3) 
-                await message.delete()  
+                pass
 
         if server_language == "English":
             data = collection.find_one({"guild_id":ctx.guild.id})
@@ -12619,7 +12835,7 @@ async def introduction(ctx):
             channel = data["introduce_channel_id"] 
             give = data["introduce_role_give_id"]
             remove = data["introduce_role_remove_id"]
-
+            introduction_channel = client.get_channel(int(channel))
             if status == "YES":
                 if frame == "None":
                     frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
@@ -12716,7 +12932,7 @@ Sex : {sex}
                     else:
         
                         channel = channel
-                        channel = client.get_channel(id=int(channel))
+                        introduction_channel = client.get_channel(id=int(channel))
                         try:
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
@@ -12782,8 +12998,14 @@ Sex : {sex}
                         embed.timestamp = datetime.datetime.utcnow()
                         embed.set_footer(text = ctx.author.id)
                         await message.delete()
-                        await channel.send(ctx.author.mention)
-                        await channel.send(embed=embed)
+                        if introduction_channel:
+                            await introduction_channel.send(ctx.author.mention)
+                            await introduction_channel.send(embed=embed)
+                        
+                        else:
+                            await ctx.send(ctx.author.mention)
+                            await ctx.send(embed=embed)
+
       
                 else:
                     frame = frame
@@ -12878,9 +13100,9 @@ Sex : {sex}
                                 pass
                     
                     else:
-        
+                        
                         channel = channel
-                        channel = client.get_channel(id=int(channel))
+                        introduction_channel = client.get_channel(id=int(channel))
                         try:
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
@@ -12946,8 +13168,14 @@ Sex : {sex}
                         embed.timestamp = datetime.datetime.utcnow()
                         embed.set_footer(text = ctx.author.id)
                         await message.delete()
-                        await channel.send(ctx.author.mention)
-                        await channel.send(embed=embed)
+                        if introduction_channel:
+                            await introduction_channel.send(ctx.author.mention)
+                            await introduction_channel.send(embed=embed)
+                        
+                        else:
+                            await ctx.send(ctx.author.mention)
+                            await ctx.send(embed=embed)
+                            
                         if not give == "None":
                             try:
                                 role = give
@@ -13020,7 +13248,8 @@ async def setup(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 embed = discord.Embed(
@@ -13063,7 +13292,8 @@ async def setup(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 embed = discord.Embed(
@@ -13131,104 +13361,268 @@ async def setup_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def roleall(ctx, role: discord.Role):
-    i = 0
-    embed = discord.Embed(
-        title = "ให้ยศสมาชิกทุกคน",
-        colour = 0x00FFFF,
-        description = f"กําลังดําเนินการให้ยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
-    )
-    message = await ctx.send(embed=embed)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    for user in ctx.guild.members:
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            i = 0
+            embed = discord.Embed(
+                title = "ให้ยศสมาชิกทุกคน",
+                colour = 0x00FFFF,
+                description = f"กําลังดําเนินการให้ยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
+            )
+            message = await ctx.send(embed=embed)
 
-        try:
-            await user.add_roles(role)
-            time.sleep(0.5)
-            i +=1
+            for user in ctx.guild.members:
 
-        except:
-            pass
-    embed = discord.Embed(
-        title = "ให้ยศสมาชิกทุกคน",
-        colour = 0x00FFFF,
-        description = f"ให้ยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
-    )
-    await message.edit(embed=embed)
+                try:
+                    await user.add_roles(role)
+                    time.sleep(0.5)
+                    i +=1
+
+                except:
+                    pass
+            embed = discord.Embed(
+                title = "ให้ยศสมาชิกทุกคน",
+                colour = 0x00FFFF,
+                description = f"ให้ยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
+            )
+            await message.edit(embed=embed)
+        
+        if server_language == "English":
+            i = 0
+            embed = discord.Embed(
+                title = "give role to all members",
+                colour = 0x00FFFF,
+                description = f"Progressing to give role {role} to {ctx.guild.member_count} members"
+            )
+            message = await ctx.send(embed=embed)
+
+            for user in ctx.guild.members:
+
+                try:
+                    await user.add_roles(role)
+                    time.sleep(0.5)
+                    i +=1
+
+                except:
+                    pass
+            embed = discord.Embed(
+                title = "give role to all members",
+                colour = 0x00FFFF,
+                description = f"successfully give role {role} to {i} members"
+            )
+            await message.edit(embed=embed)
 
 @roleall.error
 async def roleall_error(ctx ,error):
-    if isinstance(error, commands.MissingRequiredArgument):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}roleall @role``"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์เเอดมิน",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}roleall @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์เเอดมิน",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️') 
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify what role to give ``{COMMAND_PREFIX}roleall @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``admin`` to be able to use this command"
+                )
+            
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def removeroleall(ctx, role: discord.Role):
-    i = 0
-    embed = discord.Embed(
-        title = "ลบยศสมาชิกทุกคน",
-        colour = 0x00FFFF,
-        description = f"กําลังดําเนินการลบยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
-    )
-    message = await ctx.send(embed=embed)
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-    for user in ctx.guild.members:
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            i = 0
+            embed = discord.Embed(
+                title = "ลบยศสมาชิกทุกคน",
+                colour = 0x00FFFF,
+                description = f"กําลังดําเนินการลบยศ {role} กับสมาชิกทั้งหมด {ctx.guild.member_count}คน"
+            )
+            message = await ctx.send(embed=embed)
 
-        try:
-            await user.remove_roles(role)
-            time.sleep(0.5)
-            i +=1
+            for user in ctx.guild.members:
 
-        except:
-            pass
-    embed = discord.Embed(
-        title = "ลบยศสมาชิกทุกคน",
-        colour = 0x00FFFF,
-        description = f"ลบยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
-    )
-    await message.edit(embed=embed)
+                try:
+                    await user.remove_roles(role)
+                    time.sleep(0.5)
+                    i +=1
+
+                except:
+                    pass
+            embed = discord.Embed(
+                title = "ลบยศสมาชิกทุกคน",
+                colour = 0x00FFFF,
+                description = f"ลบยศ {role} สมาชิกทั้งหมด {i}คนสําเร็จ"
+            )
+            await message.edit(embed=embed)
+        
+        if server_language == "English":
+            i = 0
+            embed = discord.Embed(
+                title = "remove role from all members",
+                colour = 0x00FFFF,
+                description = f"Progressing to remove role {role} from {ctx.guild.member_count} members"
+            )
+            message = await ctx.send(embed=embed)
+
+            for user in ctx.guild.members:
+
+                try:
+                    await user.remove_roles(role)
+                    time.sleep(0.5)
+                    i +=1
+
+                except:
+                    pass
+            embed = discord.Embed(
+                title = "remove role from all members",
+                colour = 0x00FFFF,
+                description = f"successfully remove role {role} from {i} members"
+            )
+            await message.edit(embed=embed)
 
 @roleall.error
-async def reomveroleall_error(ctx ,error):
-    if isinstance(error, commands.MissingRequiredArgument):
+async def removeroleall_error(ctx ,error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
         embed = discord.Embed(
-            colour = 0x983925,
-            description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}removeroleall @role``"
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️')
-
-    if isinstance(error, commands.MissingPermissions):
-        embed = discord.Embed(
-            colour = 0x983925,
-            title = "คุณไม่มีสิทธิ์เเอดมิน",
-            description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-        )
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
         
-        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ยศที่จะให้ ``{COMMAND_PREFIX}removeroleall @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-        message = await ctx.send(embed=embed ) 
-        await message.add_reaction('⚠️') 
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์เเอดมิน",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+                
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️') 
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    description = f" ⚠️``{ctx.author}`` need to specify what role to remove ``{COMMAND_PREFIX}removeroleall @role``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``admin`` to be able to use this command"
+                )
+            
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
 
 @client.command()
 async def support(ctx, * , message):
@@ -13978,7 +14372,8 @@ async def __on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14056,7 +14451,8 @@ async def __on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14198,7 +14594,8 @@ async def __off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14276,7 +14673,8 @@ async def __off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14393,7 +14791,7 @@ async def youtube(ctx, *, keywords):
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
             server_language = data["Language"]
-        apikey = youtubeapi
+        apikey = googleapi
         youtube = build('youtube', 'v3', developerKey=apikey)
         snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
         
@@ -14407,8 +14805,10 @@ async def youtube(ctx, *, keywords):
 
         clip_url = "http://www.youtube.com/watch?v="+ video_id
 
-        r = requests.get(f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={apikey}")
-        r = r.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={apikey}") as r:
+                r = await r.json()
+
         stat = r["items"][0]
         view = stat["statistics"]["viewCount"]
         like = stat["statistics"]["likeCount"]
@@ -14509,7 +14909,7 @@ async def ytsearch(ctx, *, keywords):
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
             server_language = data["Language"]
-        apikey = youtubeapi
+        apikey = googleapi
         youtube = build('youtube', 'v3', developerKey=apikey)
         snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
         i = 1
@@ -14670,7 +15070,8 @@ async def ____on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14748,7 +15149,8 @@ async def ____on(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14890,7 +15292,8 @@ async def ____off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14968,7 +15371,8 @@ async def ____off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -17933,7 +18337,8 @@ async def _give(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
@@ -18010,7 +18415,8 @@ async def _give(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
@@ -18172,7 +18578,8 @@ async def _remove(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18249,7 +18656,8 @@ async def _remove(ctx, role: discord.Role):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18410,7 +18818,8 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18487,7 +18896,8 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18629,8 +19039,9 @@ async def gethttp(ctx):
         
         if server_language == "Thai":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/http.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18639,8 +19050,9 @@ async def gethttp(ctx):
         
         if server_language == "English":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/http.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18667,8 +19079,9 @@ async def gethttps(ctx):
         
         if server_language == "Thai":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/https.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18677,8 +19090,9 @@ async def gethttps(ctx):
         
         if server_language == "English":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/https.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/https.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18705,8 +19119,9 @@ async def getproxy(ctx):
         
         if server_language == "Thai":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/proxy.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18715,8 +19130,9 @@ async def getproxy(ctx):
         
         if server_language == "English":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/proxy.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18743,8 +19159,9 @@ async def getsock4(ctx):
 
         if server_language == "Thai":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/sock4.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18753,8 +19170,9 @@ async def getsock4(ctx):
         
         if server_language == "English":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks4.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/sock4.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18781,8 +19199,9 @@ async def getsock5(ctx):
         
         if server_language == "Thai":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/sock5.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18791,8 +19210,9 @@ async def getsock5(ctx):
         
         if server_language == "English":
             url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt"
-            r = requests.get(url)
-            r = r.text
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url) as r:
+                    r = await r.text()
             with open("data/sock5.txt", "w") as file:
                 file.write(r)
             file.close()
@@ -18924,7 +19344,8 @@ async def ___on___(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19002,7 +19423,8 @@ async def ___on___(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19144,7 +19566,8 @@ async def __off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19222,7 +19645,8 @@ async def __off(ctx):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19429,13 +19853,13 @@ async def setting(ctx):
         if server_language == "Thai":
             data = collection.find_one({"guild_id":ctx.guild.id})
             if data is None:
-                embed =discord.Emebed(
-                    title = "nop",
-                    colour = "#!@$@",
-                    description = "NON",
-
-                )
-                message = await ctx.send(embed=embed)
+                embed = discord.Embed(
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่า",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setup",
+                        colour =  0x983925
+                    )
+            
+                message = await ctx.send(embed=embed)     
                 await message.add_reaction('👍')
 
             else:
@@ -19540,39 +19964,15 @@ async def setting(ctx):
         if server_language == "English":
             data = collection.find_one({"guild_id":ctx.guild.id})
             if data is None:
-                newserver = {"guild_id":ctx.guild.id,
-                "welcome_id":"None",
-                "leave_id":"None",
-                "webhook_url":"None",
-                "webhook_channel_id":"None",
-                "webhook_status":"None",
-                "introduce_channel_id":"None",
-                "introduce_frame":"None",
-                "introduce_role_give_id":"None",
-                "introduce_role_remove_id":"None",
-                "introduce_status":"YES",
-                "level_system":"NO",
-                "economy_system":"NO",
-                "currency":"$",
-                "verification_system":"NO",
-                "verification_time":10,
-                "verification_channel_id":"None",
-                "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
-                }
-                collection.insert_one(newserver)
                 embed = discord.Embed(
-                    title = "การตั้งค่าของ Server",
-                    description = "```Database ID : Not assigned```",
-                    colour= 0x00FFFF
-                )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : None\nห้องเเจ้งเตือนคนออก : None\nห้องคุยกับคนเเปลกหน้า : None\nห้องเเนะนําตัว : None\nห้องยืนยันตัวตน : None```" ,inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)
-                embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=True)
-                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : None\nลบยศเเนะนําตัว : None\nลบยศยืนยันตัวตน : None\nลบยศยืนยันตัวตน : None```",inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : None\nระบบเลเวล : NO\nระบบเศรษฐกิจ : NO\nระบบยืนยันตัวตน : NO\nระบบเเนะนําตัว : YES```",inline=True)  
-                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : $\nกรอบเเนะนําตัว : None```",inline=False)
+                        title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่า",
+                        description = f"ใช้คําสั่ง {COMMAND_PREFIX}setup",
+                        colour =  0x983925
+                    )
             
+                message = await ctx.send(embed=embed)     
+                await message.add_reaction('👍')
+
             else:
                 server = collection.find_one({"guild_id":ctx.guild.id})
                 database_id = server["_id"]
@@ -19658,7 +20058,7 @@ async def setting(ctx):
 
                 embed = discord.Embed(
                     title = "การตั้งค่าของ Server",
-                    description = f"```{database_id}```",
+                    description = f"```Database ID : {database_id}```",
                     colour= 0x00FFFF
                 )
                 embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}```" ,inline=True)
@@ -19711,7 +20111,8 @@ async def verifytime(ctx , time : int):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19726,11 +20127,11 @@ async def verifytime(ctx , time : int):
                     await ctx.send(embed=embed)          
                 
                 else:
-                    if 120 >= time >= 1:
+                    if 1 > time >= 120:
                         embed = discord.Embed(
                             colour = 0x983925,
                             title = f"ตั้งค่าเวลา {time}",
-                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 วินาทีได้ "
+                            description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 หรือน้อยกว่า 1 วินาทีได้ "
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -19762,7 +20163,7 @@ async def verifytime(ctx , time : int):
                     await ctx.send(embed=embed)          
                 
                 else:
-                    if 120 >= time >= 1:
+                    if 1 > time >= 120:
                         embed = discord.Embed(
                             colour = 0x983925,
                             title = f"ตั้งค่าเวลา {time}",
@@ -19806,7 +20207,8 @@ async def verifytime(ctx , time : int):
                 "verification_time":10,
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
-                "verification_role_remove_id":"None"
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -20432,6 +20834,478 @@ async def lover(ctx, member1 : discord.Member = None , member2 : discord.Member 
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 await ctx.send(embed=embed , file=file)
 
+@client.group(invoke_without_command=True)
+async def logvoice(ctx):
+    server = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if server is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "คุณต้องระบุ ON / OFF"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+        if server_language == "English":
+            embed = discord.Embed(
+                colour = 0x00FFFF,
+                description = "you need to specify ON / OFF"
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('✅')
+
+@logvoice.command(aliases=['on'])
+@commands.has_permissions(administrator=True)
+async def logvoiceon(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+
+            status = "YES"
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเเนะนําตัว",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+    
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเเนะนําตัว",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าเเนะนําตัว",
+                        description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+        if server_language == "English":
+
+            status = "YES"
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+    
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been activated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+@logvoiceon.error
+async def logvoiceon_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+        
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+@logvoice.command(aliases=['off'])
+@commands.has_permissions(administrator=True)
+async def logvoiceoff(ctx):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            status = "NO"
+            server = collection.find({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+    
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+        if server_language == "English":
+            status = "NO"
+            server = collection.find({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+    
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                intro_status = data["introduce_status"]
+                if intro_status == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        description= f"The command have been deactivated"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+@logvoiceoff.error
+async def logvoiceoff_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
 @client.command()
 async def say(ctx , message):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -20450,20 +21324,75 @@ async def say(ctx , message):
         for data in language:
             server_language = data["Language"]
 
-        if "//" in message:
-            message = message.replace('//', '\n')
-            #somehow make it go to the next line
-            #if // is in the message it will move to the next line and continue the message which is after the //
-        
-        await ctx.send(message) 
+        if server_language == "Thai":
+            if "//" in message:
+                message = message.replace('//', '\n')
+                #somehow make it go to the next line
+                #if // is in the message it will move to the next line and continue the message which is after the //
+            
+            await ctx.send(message) 
+
+        if server_language == "English":
+            if "//" in message:
+                message = message.replace('//', '\n')
+                #somehow make it go to the next line
+                #if // is in the message it will move to the next line and continue the message which is after the //
+            
+            await ctx.send(message) 
 
 @client.command()
-async def d413084kjlda(ctx):
+async def checkchannel(ctx, channel_id):
+    channel = client.get_channel(int(channel_id))# you can use guild.get_xx too
+    if channel:
+        print("yes")
+    else:
+        print("no")# doesnt exist
+
+@client.command()
+async def servers(ctx, n: int=10):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+
+        if server_language == "Thai":
+            servers = list(client.guilds)
+            n = min(n, len(servers))
+            embed = discord.Embed(
+                title=f"Top {n} servers",
+                colour = 0x00FFFF
+                )
+            for server in sorted(servers, key=lambda x: x.member_count, reverse=True)[:n]:
+                embed.add_field(name=server.name, value=f"{server.member_count} members", inline=False)
+            await ctx.send(embed=embed)
+        
+        if server_language == "English":
+            servers = list(client.guilds)
+            n = min(n, len(servers))
+            embed = discord.Embed(
+                title=f"Top {n} servers",
+                colour = 0x00FFFF
+                )
+            for server in sorted(servers, key=lambda x: x.member_count, reverse=True)[:n]:
+                embed.add_field(name=server.name, value=f"{server.member_count} members", inline=False)
+            await ctx.send(embed=embed)
+
+@client.command()
+async def esketti(ctx):
     for guild in client.guilds:
         print(guild.id)
-        collection.update_one({"guild_id":guild.id},{"$set":{"verification_time":10}})
-
-
+        collection.update_one({"guild_id":guild.id},{"$set":{"log_system":"NO"}})
 
 ###########################################################
 #              /\                                         #
