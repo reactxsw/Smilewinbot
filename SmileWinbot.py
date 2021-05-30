@@ -12454,379 +12454,375 @@ async def introduction(ctx):
             give = data["introduce_role_give_id"]
             remove = data["introduce_role_remove_id"]
             introduction_channel = client.get_channel(int(channel))
-            if introduction_channel:
-                if status == "YES":
-                    if frame == "None":
-                        frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+            if status == "YES":
+                if frame == "None":
+                    frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
 
-                        if channel == "None":
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[1] ชื่อ")
-                    
-                                embed.set_footer(text="คำถามที่ [1/3]")
-                                message = await ctx.send(embed=embed)
-
-                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                name = username.content
-                                await asyncio.sleep(1) 
-                                await username.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[2] อายุ")
-                    
-                                embed.set_footer(text="คำถามที่ [2/3]")
-                                await message.edit(embed=embed)
-
-                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                age = userage.content
-                                await asyncio.sleep(1) 
-                                await userage.delete()  
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-                    
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[3] เพศ")
-                    
-                                embed.set_footer(text="คำถามที่ [3/3]")
-                                await message.edit(embed=embed)
-
-                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                sex = usersex.content
-                                await asyncio.sleep(1) 
-                                await usersex.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
+                    if channel == "None":
+                        try:
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
-                                description = (f"""```
-    {frame}
-    ชื่อ : {name}
-    อายุ : {age}
-    เพศ : {sex}
-    {frame}```""")
-                    )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                            embed.timestamp = datetime.datetime.utcnow()
-                            embed.set_footer(text = ctx.author.id)
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[1] ชื่อ")
+                
+                            embed.set_footer(text="คำถามที่ [1/3]")
+                            message = await ctx.send(embed=embed)
+
+                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            name = username.content
+                            await asyncio.sleep(1) 
+                            await username.delete()
+
+                        except asyncio.TimeoutError:
                             await message.delete()
-                            await ctx.send(ctx.author.mention)
-                            await ctx.send(embed=embed)
-                            
-                            if not give == "None":
-                                try:
-                                    role = give
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.add_roles(role)
 
-                                except Exception:
-                                    pass
-                    
-                            if not remove == "None":
-                                try:
-                                    role = remove
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.remove_roles(role)
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[2] อายุ")
+                
+                            embed.set_footer(text="คำถามที่ [2/3]")
+                            await message.edit(embed=embed)
 
-                                except Exception:
-                                    pass
+                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            age = userage.content
+                            await asyncio.sleep(1) 
+                            await userage.delete()  
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+                
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[3] เพศ")
+                
+                            embed.set_footer(text="คำถามที่ [3/3]")
+                            await message.edit(embed=embed)
+
+                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            sex = usersex.content
+                            await asyncio.sleep(1) 
+                            await usersex.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            description = (f"""```
+{frame}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{frame}```""")
+                )
+                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                        embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_footer(text = ctx.author.id)
+                        await message.delete()
+                        await ctx.send(ctx.author.mention)
+                        await ctx.send(embed=embed)
                         
-                        else:
-            
-                            channel = channel
-                            introduction_channel = client.get_channel(id=int(channel))
+                        if not give == "None":
                             try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[1] ชื่อ")
-                    
-                                embed.set_footer(text="คำถามที่ [1/3]")
-                                message = await ctx.send(embed=embed)
+                                role = give
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.add_roles(role)
 
-                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                name = username.content
-                                await asyncio.sleep(1) 
-                                await username.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
+                            except Exception:
+                                pass
+                
+                        if not remove == "None":
                             try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[2] อายุ")
+                                role = remove
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.remove_roles(role)
+
+                            except Exception:
+                                pass
                     
-                                embed.set_footer(text="คำถามที่ [2/3]")
-                                await message.edit(embed=embed)
-
-                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                age = userage.content
-                                await asyncio.sleep(1) 
-                                await userage.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-                    
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[3] เพศ")
-                    
-                                embed.set_footer(text="คำถามที่ [3/3]")
-                                await message.edit(embed=embed)
-
-                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                sex = usersex.content
-                                await asyncio.sleep(1) 
-                                await usersex.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                description = (f"""```
-    {frame}
-    ชื่อ : {name}
-    อายุ : {age}
-    เพศ : {sex}
-    {frame}```""")
-                    )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                            embed.timestamp = datetime.datetime.utcnow()
-                            embed.set_footer(text = ctx.author.id)
-                            await message.delete()
-                            if introduction_channel:
-                                await introduction_channel.send(ctx.author.mention)
-                                await introduction_channel.send(embed=embed)
-
-                            else:
-                                await ctx.send(ctx.author.mention)
-                                await ctx.send(embed=embed)
-
                     else:
-                        frame = frame
-
-                        if channel == "None":
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[1] ชื่อ")
-                    
-                                embed.set_footer(text="คำถามที่ [1/3]")
-                                message = await ctx.send(embed=embed)
-
-                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                name = username.content
-                                await asyncio.sleep(1) 
-                                await username.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[2] อายุ")
-                    
-                                embed.set_footer(text="คำถามที่ [2/3]")
-                                await message.edit(embed=embed)
-
-                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                age = userage.content
-                                await asyncio.sleep(1) 
-                                await userage.delete()  
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-                    
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[3] เพศ")
-                    
-                                embed.set_footer(text="คำถามที่ [3/3]")
-                                await message.edit(embed=embed)
-
-                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                sex = usersex.content
-                                await asyncio.sleep(1) 
-                                await usersex.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
+        
+                        channel = channel
+                        introduction_channel = client.get_channel(id=int(channel))
+                        try:
                             embed = discord.Embed(
                                 colour = 0x00FFFF,
-                                description = (f"""```
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[1] ชื่อ")
+                
+                            embed.set_footer(text="คำถามที่ [1/3]")
+                            message = await ctx.send(embed=embed)
+
+                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            name = username.content
+                            await asyncio.sleep(1) 
+                            await username.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[2] อายุ")
+                
+                            embed.set_footer(text="คำถามที่ [2/3]")
+                            await message.edit(embed=embed)
+
+                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            age = userage.content
+                            await asyncio.sleep(1) 
+                            await userage.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+                
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[3] เพศ")
+                
+                            embed.set_footer(text="คำถามที่ [3/3]")
+                            await message.edit(embed=embed)
+
+                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            sex = usersex.content
+                            await asyncio.sleep(1) 
+                            await usersex.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            description = (f"""```
 {frame}
 ชื่อ : {name}
 อายุ : {age}
 เพศ : {sex}
 {frame}```""")
-                    )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                            embed.timestamp = datetime.datetime.utcnow()
-                            embed.set_footer(text = ctx.author.id)
-                            await message.delete()
+                )
+                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                        embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_footer(text = ctx.author.id)
+                        await message.delete()
+                        if introduction_channel:
+                            await introduction_channel.send(ctx.author.mention)
+                            await introduction_channel.send(embed=embed)
+
+                        else:
                             await ctx.send(ctx.author.mention)
                             await ctx.send(embed=embed)
-                            
-                            if not give == "None":
-                                try:
-                                    role = give
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.add_roles(role)
-
-                                except Exception:
-                                    pass
-                    
-                            if not remove == "None":
-                                try:
-                                    role = remove
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.remove_roles(role)
-
-                                except Exception:
-                                    pass
-                        
-                        else:
-            
-                            channel = channel
-                            introduction_channel = client.get_channel(id=int(channel))
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[1] ชื่อ")
-                    
-                                embed.set_footer(text="คำถามที่ [1/3]")
-                                message = await ctx.send(embed=embed)
-
-                                username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                name = username.content
-                                await asyncio.sleep(1) 
-                                await username.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[2] อายุ")
-                    
-                                embed.set_footer(text="คำถามที่ [2/3]")
-                                await message.edit(embed=embed)
-
-                                userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                age = userage.content
-                                await asyncio.sleep(1) 
-                                await userage.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-                    
-                            try:
-                                embed = discord.Embed(
-                                    colour = 0x00FFFF,
-                                    title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                    description = "┗[3] เพศ")
-                    
-                                embed.set_footer(text="คำถามที่ [3/3]")
-                                await message.edit(embed=embed)
-
-                                usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                                sex = usersex.content
-                                await asyncio.sleep(1) 
-                                await usersex.delete()
-
-                            except asyncio.TimeoutError:
-                                await message.delete()
-
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                    )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                            embed.timestamp = datetime.datetime.utcnow()
-                            embed.set_footer(text = ctx.author.id)
-                            await message.delete()
-                            if introduction_channel:
-                                await introduction_channel.send(ctx.author.mention)
-                                await introduction_channel.send(embed=embed)
-                            
-                            else:
-                                await ctx.send(ctx.author.mention)
-                                await ctx.send(embed=embed)
-                                
-                            if not give == "None":
-                                try:
-                                    role = give
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.add_roles(role)
-
-                                except Exception:
-                                    pass
-                    
-                            if not remove == "None":
-                                try:
-                                    role = remove
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.remove_roles(role)
-
-                                except Exception:
-                                    pass              
 
                 else:
-                    embed =discord.Embed(
-                        colour = 0x983925,
-                        description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX}introduce on เพื่อเปิดใช้งาน"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-                    await asyncio.sleep(3) 
-                    await message.delete() 
+                    frame = frame
+
+                    if channel == "None":
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[1] ชื่อ")
+                
+                            embed.set_footer(text="คำถามที่ [1/3]")
+                            message = await ctx.send(embed=embed)
+
+                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            name = username.content
+                            await asyncio.sleep(1) 
+                            await username.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[2] อายุ")
+                
+                            embed.set_footer(text="คำถามที่ [2/3]")
+                            await message.edit(embed=embed)
+
+                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            age = userage.content
+                            await asyncio.sleep(1) 
+                            await userage.delete()  
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+                
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[3] เพศ")
+                
+                            embed.set_footer(text="คำถามที่ [3/3]")
+                            await message.edit(embed=embed)
+
+                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            sex = usersex.content
+                            await asyncio.sleep(1) 
+                            await usersex.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            description = (f"""```
+{frame}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{frame}```""")
+                )
+                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                        embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_footer(text = ctx.author.id)
+                        await message.delete()
+                        await ctx.send(ctx.author.mention)
+                        await ctx.send(embed=embed)
+                        
+                        if not give == "None":
+                            try:
+                                role = give
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.add_roles(role)
+
+                            except Exception:
+                                pass
+                
+                        if not remove == "None":
+                            try:
+                                role = remove
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.remove_roles(role)
+
+                            except Exception:
+                                pass
+                    
+                    else:
+        
+                        channel = channel
+                        introduction_channel = client.get_channel(id=int(channel))
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[1] ชื่อ")
+                
+                            embed.set_footer(text="คำถามที่ [1/3]")
+                            message = await ctx.send(embed=embed)
+
+                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            name = username.content
+                            await asyncio.sleep(1) 
+                            await username.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[2] อายุ")
+                
+                            embed.set_footer(text="คำถามที่ [2/3]")
+                            await message.edit(embed=embed)
+
+                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            age = userage.content
+                            await asyncio.sleep(1) 
+                            await userage.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+                
+                        try:
+                            embed = discord.Embed(
+                                colour = 0x00FFFF,
+                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                                description = "┗[3] เพศ")
+                
+                            embed.set_footer(text="คำถามที่ [3/3]")
+                            await message.edit(embed=embed)
+
+                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                            sex = usersex.content
+                            await asyncio.sleep(1) 
+                            await usersex.delete()
+
+                        except asyncio.TimeoutError:
+                            await message.delete()
+
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            description = (f"""```
+{frame}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{frame}```""")
+                )
+                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                        embed.timestamp = datetime.datetime.utcnow()
+                        embed.set_footer(text = ctx.author.id)
+                        await message.delete()
+                        if introduction_channel:
+                            await introduction_channel.send(ctx.author.mention)
+                            await introduction_channel.send(embed=embed)
+                        
+                        else:
+                            await ctx.send(ctx.author.mention)
+                            await ctx.send(embed=embed)
+                            
+                        if not give == "None":
+                            try:
+                                role = give
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.add_roles(role)
+
+                            except Exception:
+                                pass
+                
+                        if not remove == "None":
+                            try:
+                                role = remove
+                                role = int(role)
+                                role = ctx.guild.get_role(role)
+                                await ctx.author.remove_roles(role)
+
+                            except Exception:
+                                pass              
 
             else:
-                pass
+                embed =discord.Embed(
+                    colour = 0x983925,
+                    description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX}introduce on เพื่อเปิดใช้งาน"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+                await asyncio.sleep(3) 
+                await message.delete() 
 
         if server_language == "English":
             data = collection.find_one({"guild_id":ctx.guild.id})
