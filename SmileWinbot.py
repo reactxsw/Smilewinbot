@@ -25,14 +25,14 @@ import subprocess
 import DiscordUtils
 import traceback
 import logging
-import threading
+import sys
 
 #from
 from random import choice
 from typing import Text
 from PIL import Image, ImageDraw , ImageFont, ImageFilter
 from discord.channel import StoreChannel
-from discord import Webhook , RequestsWebhookAdapter
+from discord import Webhook, AsyncWebhookAdapter
 from discord.ext import commands, tasks
 from discord.utils import get
 from datetime import date, timedelta
@@ -113,7 +113,7 @@ if Path("config.json").exists():
     trackerapi = config.get("tracker.gg_api")
     pastebinapi = config.get("pastebin_api_dev_key")
     supportchannel = config.get("support_channel")
-    googleapi = config.get("google_api")
+    youtubeapi = config.get("youtube_api")
     logchannel = config.get("log_channel")
     partner_id = config.get("emoji_:partner:_id")
     verify_id = config.get("emoji_:verify:_id")
@@ -164,7 +164,7 @@ else:
                     "\n",
                     "    "+'"pastebin_api_dev_key": "_____________________________________",',
                     "\n",
-                    "    "+'"google_api": "_____________________________________",',
+                    "    "+'"youtube_api": "_____________________________________",',
                     "\n",
                     "\n",
                     "    "+'"emoji_:partner:_id": "_____________________________________",',
@@ -211,15 +211,15 @@ status = cycle([f' REACT  | {COMMAND_PREFIX}help '
 
 #not needed delete if want
 ASCII_ART = """
- ____            _ _               _       
-/ ___| _ __ ___ (_) | _____      _(_)_ __  
-\___ \| '_ ` _ \| | |/ _ \ \ /\ / / | '_ \ 
-  __) | | | | | | | |  __/\ V  V /| | | | |
-|____/|_| |_| |_|_|_|\___| \_/\_/ |_|_| |_|
-                                 REACT#1120
+                                   ____            _ _               _       
+                                  / ___| _ __ ___ (_) | _____      _(_)_ __  
+                                  \___ \| '_ ` _ \| | |/ _ \ \ /\ / / | '_ \ 
+                                    __) | | | | | | | |  __/\ V  V /| | | | |
+                                  |____/|_| |_| |_|_|_|\___| \_/\_/ |_|_| |_|
+                                                                   REACT#1120
 """ 
 
-def clearcmd():
+async def clearcmd():
     if platform.system() == ("Windows"):
         os.system("cls")
     
@@ -229,7 +229,7 @@ def clearcmd():
 
 intents = discord.Intents.all()
 intents.members = True 
-client = commands.AutoShardedBot(command_prefix = COMMAND_PREFIX,case_insensitive=True ,intents=intents)
+client = commands.AutoShardedBot(command_prefix = COMMAND_PREFIX,case_insensitive=True ,intents=intents , strip_after_prefix=True)
 start_time = datetime.datetime.utcnow()
 client.remove_command('help')
 cluster = MongoClient(mongodb)
@@ -240,7 +240,7 @@ collectionlevel = db["Level"]
 collectionmoney = db["Money"]
 collectionlanguage = db["Language"]
 
-print(ASCII_ART)
+print(f"{ASCII_ART}")
 print("BOT STATUS : OFFLINE")
 
 @tasks.loop(seconds=1)
@@ -249,17 +249,22 @@ async def change_status():
 
 @client.event
 async def on_ready():
-    clearcmd()
-    clearcmd()
+    await clearcmd()
+    space = (" ")
+    server= (str(len(client.guilds)))
+    server_space = (27 - int(len(server)))*space
+    user = (str(len(client.users)))
+    user_space = (29 - int(len(user)))*space
     change_status.start()
-    print(ASCII_ART)
-    print(f"BOT NAME : {client.user}")
-    print(f"BOT ID : {client.user.id}")
-    print("BOT STATUS : ONLINE")
-    print("SERVER : " + str(len(client.guilds)))
-    print("USER : " + str(len(client.users)))
-    print("")
-    print("CONSOLE : ")
+    print(f"{ASCII_ART}")
+    print(f"                                   ╔══════════════════════════════════════╗")
+    print(f"                                   ║  BOT NAME : {client.user}            ║")
+    print(f"                                   ║  BOT ID : {client.user.id}         ║")
+    print(f"                                   ║  BOT STATUS : ONLINE                 ║")
+    print(f"                                   ║  SERVER : {server}{server_space}║")
+    print(f"                                   ║  USER : {user}{user_space}║")
+    print(f"                                   ║                                      ║")
+    print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
     channel = client.get_channel(id = int(logchannel))
     embed = discord.Embed(
@@ -523,7 +528,10 @@ async def give(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -601,7 +609,10 @@ async def give(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -840,7 +851,10 @@ async def remove(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1004,7 +1018,10 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1083,7 +1100,10 @@ async def setintroduce(ctx, channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1244,7 +1264,10 @@ async def setframe(ctx, *,frame):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
 
@@ -1323,7 +1346,10 @@ async def setframe(ctx, *,frame):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
 
@@ -1526,7 +1552,10 @@ async def on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1606,7 +1635,10 @@ async def on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1744,7 +1776,10 @@ async def off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1822,7 +1857,10 @@ async def off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -1920,8 +1958,6 @@ async def off_error(ctx, error):
 @client.command()
 @commands.has_permissions(administrator=True)
 async def setwebhook(ctx , channel:discord.TextChannel):
-    webhook = await channel.create_webhook(name='Smilewinbot')
-    webhook = webhook.url
     
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
@@ -1961,13 +1997,21 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
                 webhook = data["webhook_url"]
                 if webhook == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    webhook = await channel.create_webhook(name='Smilewinbot')
+                    webhookurl = webhook.url
+                    try:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    except Exception as e:
+                        print(e)
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
@@ -1979,7 +2023,12 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
     
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    webhook = await channel.create_webhook(name='Smilewinbot')
+                    webhookurl = webhook.url
+                    try:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    except Exception as e:
+                        print(e)
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
@@ -1994,7 +2043,13 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 data = collection.find_one({"guild_id":ctx.guild.id})
                 webhook = data["webhook_url"]
                 if webhook == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    webhook = await channel.create_webhook(name='Smilewinbot')
+                    webhookurl = webhook.url
+                    try:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    except Exception as e:
+                        print(e)
+                    #collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
@@ -2006,7 +2061,13 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                     await message.add_reaction('✅')
 
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    webhook = await channel.create_webhook(name='Smilewinbot')
+                    webhookurl = webhook.url
+                    try:
+                        collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
+                    except Exception as e:
+                        print(e)
+                    #collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
@@ -2039,7 +2100,10 @@ async def setwebhook(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2287,7 +2351,10 @@ async def _on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2367,7 +2434,10 @@ async def _on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2511,7 +2581,10 @@ async def _off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2591,7 +2664,10 @@ async def _off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2733,7 +2809,10 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2811,7 +2890,10 @@ async def setwelcome(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -2975,7 +3057,10 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -3054,7 +3139,10 @@ async def setleave(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -12158,9 +12246,6 @@ async def anon(ctx, *,message):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            username = "Smilewin"
-            avatar = client.user.avatar_url
-
             author = ctx.author.name
             author = author[::-1]
             letter = len(author)
@@ -12173,18 +12258,26 @@ async def anon(ctx, *,message):
             author = author[0] + author[4] + author[1] + author[3] + author[2]
 
             message = f"[{author}] : {message}"
-            payload = {"content":message,"username":username,"avatar_url":avatar}
             
             anonresults = collection.find({"webhook_status":"YES"})
             data = collection.find_one({"guild_id":ctx.guild.id})
             status = data["webhook_status"]
             webhookurl = data["webhook_url"] 
             if status == "YES" and webhookurl != "None":
+                all_webhook = []
                 for anondata in anonresults:
                     webhook = anondata["webhook_url"]
-                    requests.post(webhook,data=payload)
-                    time.sleep(0.005)
-        
+                    all_webhook.append(webhook)
+                
+                for i in range(len(all_webhook)):
+                    try:
+                        async with aiohttp.ClientSession() as session:
+                            webhook = Webhook.from_url(all_webhook[i], adapter=AsyncWebhookAdapter(session))
+                            
+                            await webhook.send(message , avatar_url = client.user.avatar_url , username = "Smilwinbot")
+                    except Exception as e:
+                        print(e)
+                    
             else:
                 if status == "YES" and webhookurl == "None":
                     embed = discord.Embed(
@@ -12217,9 +12310,6 @@ async def anon(ctx, *,message):
                     await message.add_reaction('⚠️')
         
         if server_language == "English":
-            username = "Smilewin"
-            avatar = client.user.avatar_url
-
             author = ctx.author.name
             author = author[::-1]
             letter = len(author)
@@ -12232,17 +12322,25 @@ async def anon(ctx, *,message):
             author = author[0] + author[4] + author[1] + author[3] + author[2]
 
             message = f"[{author}] : {message}"
-            payload = {"content":message,"username":username,"avatar_url":avatar}
             
             anonresults = collection.find({"webhook_status":"YES"})
             data = collection.find_one({"guild_id":ctx.guild.id})
             status = data["webhook_status"]
             webhookurl = data["webhook_url"] 
             if status == "YES" and webhookurl != "None":
+                all_webhook = []
                 for anondata in anonresults:
                     webhook = anondata["webhook_url"]
-                    requests.post(webhook,data=payload)
-                    time.sleep(0.005)
+                    all_webhook.append(webhook)
+                
+                for i in range(len(all_webhook)):
+                    try:
+                        async with aiohttp.ClientSession() as session:
+                            webhook = Webhook.from_url(all_webhook[i], adapter=AsyncWebhookAdapter(session))
+                            
+                            await webhook.send(message , avatar_url = client.user.avatar_url , username = "Smilwinbot")
+                    except Exception as e:
+                        print(e)
             
             else:
                 if status == "YES" and webhookurl == "None":
@@ -12453,376 +12551,110 @@ async def introduction(ctx):
             channel = data["introduce_channel_id"] 
             give = data["introduce_role_give_id"]
             remove = data["introduce_role_remove_id"]
-            introduction_channel = client.get_channel(int(channel))
-            if status == "YES":
-                if frame == "None":
-                    frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
-
-                    if channel == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()  
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await ctx.send(ctx.author.mention)
-                        await ctx.send(embed=embed)
-                        
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass
-                    
-                    else:
-        
-                        channel = channel
-                        introduction_channel = client.get_channel(id=int(channel))
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        if introduction_channel:
-                            await introduction_channel.send(ctx.author.mention)
-                            await introduction_channel.send(embed=embed)
-
-                        else:
-                            await ctx.send(ctx.author.mention)
-                            await ctx.send(embed=embed)
-
-                else:
-                    frame = frame
-
-                    if channel == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()  
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await ctx.send(ctx.author.mention)
-                        await ctx.send(embed=embed)
-                        
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass
-                    
-                    else:
-        
-                        channel = channel
-                        introduction_channel = client.get_channel(id=int(channel))
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[1] ชื่อ")
-                
-                            embed.set_footer(text="คำถามที่ [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[2] อายุ")
-                
-                            embed.set_footer(text="คำถามที่ [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
-                                description = "┗[3] เพศ")
-                
-                            embed.set_footer(text="คำถามที่ [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        if introduction_channel:
-                            await introduction_channel.send(ctx.author.mention)
-                            await introduction_channel.send(embed=embed)
-                        
-                        else:
-                            await ctx.send(ctx.author.mention)
-                            await ctx.send(embed=embed)
-                            
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass              
-
+            if channel != "None":
+                introduction_channel = client.get_channel(int(channel))
+            
             else:
-                embed =discord.Embed(
-                    colour = 0x983925,
-                    description = f"คําสั่งนี้ได้ถูกปิดใช้งาน ใช้คําสั่ง {COMMAND_PREFIX}introduce on เพื่อเปิดใช้งาน"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-                await asyncio.sleep(3) 
-                await message.delete() 
+                introduction_channel = ctx.channel
+            
+            if frame == "None":
+                frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
+            
+            else:
+                frame = frame
+
+            if status == "YES":
+                try:
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                        description = "┗[1] ชื่อ")
+        
+                    embed.set_footer(text="คำถามที่ [1/3]")
+                    message = await ctx.send(embed=embed)
+
+                    username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                    name = username.content
+                    await asyncio.sleep(1) 
+                    await username.delete()
+
+                except asyncio.TimeoutError:
+                    await message.delete()
+
+                try:
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                        description = "┗[2] อายุ")
+        
+                    embed.set_footer(text="คำถามที่ [2/3]")
+                    await message.edit(embed=embed)
+
+                    userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                    age = userage.content
+                    await asyncio.sleep(1) 
+                    await userage.delete()  
+
+                except asyncio.TimeoutError:
+                    await message.delete()
+        
+                try:
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
+                        description = "┗[3] เพศ")
+        
+                    embed.set_footer(text="คำถามที่ [3/3]")
+                    await message.edit(embed=embed)
+
+                    usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
+                    sex = usersex.content
+                    await asyncio.sleep(1) 
+                    await usersex.delete()
+
+                except asyncio.TimeoutError:
+                    await message.delete()
+
+                if give != "None":
+                    try:
+                        role = int(give)
+                        role = ctx.guild.get_role(role)
+                        await ctx.author.add_roles(role)
+
+                    except Exception as e:
+                        print(e)
+                else:
+                    pass
+
+                if remove != "None":
+                    try:
+                        role = remove
+                        role = int(role)
+                        role = ctx.guild.get_role(role)
+                        await ctx.author.remove_roles(role)
+
+                    except Exception as e:
+                        print(e)
+                
+                else:
+                    pass
+
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    description = (f"""```
+{frame}
+ชื่อ : {name}
+อายุ : {age}
+เพศ : {sex}
+{frame}```""")
+        )
+                embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
+                embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text = ctx.author.id)
+                await message.delete()
+                await introduction_channel.send(ctx.author.mention)
+                await introduction_channel.send(embed=embed)
 
         if server_language == "English":
             data = collection.find_one({"guild_id":ctx.guild.id})
@@ -12925,283 +12757,7 @@ Sex : {sex}
                             except Exception:
                                 pass
                     
-                    else:
-        
-                        channel = channel
-                        introduction_channel = client.get_channel(id=int(channel))
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[1] Name")
-                
-                            embed.set_footer(text="Question [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[2] Age")
-                
-                            embed.set_footer(text="Question [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[3] Gender")
-                
-                            embed.set_footer(text="Question [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-Name : {name}
-Age : {age}
-Sex : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        if introduction_channel:
-                            await introduction_channel.send(ctx.author.mention)
-                            await introduction_channel.send(embed=embed)
-                        
-                        else:
-                            await ctx.send(ctx.author.mention)
-                            await ctx.send(embed=embed)
-
-      
-                else:
-                    frame = frame
-
-                    if channel == "None":
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[1] Name")
-                
-                            embed.set_footer(text="Question [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[2] Age")
-                
-                            embed.set_footer(text="Question [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()  
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[3] Gender")
-                
-                            embed.set_footer(text="Question [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-Name : {name}
-Age : {age}
-Sex : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        await ctx.send(ctx.author.mention)
-                        await ctx.send(embed=embed)
-                        
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass
                     
-                    else:
-                        
-                        channel = channel
-                        introduction_channel = client.get_channel(id=int(channel))
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[1] Name")
-                
-                            embed.set_footer(text="Question [1/3]")
-                            message = await ctx.send(embed=embed)
-
-                            username = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            name = username.content
-                            await asyncio.sleep(1) 
-                            await username.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝 📝",
-                                description = "┗[2] Age")
-                
-                            embed.set_footer(text="Question [2/3]")
-                            await message.edit(embed=embed)
-
-                            userage = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            age = userage.content
-                            await asyncio.sleep(1) 
-                            await userage.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-                
-                        try:
-                            embed = discord.Embed(
-                                colour = 0x00FFFF,
-                                title = "Please fill in all information. 📝",
-                                description = "┗[3] Gender")
-                
-                            embed.set_footer(text="Question [3/3]")
-                            await message.edit(embed=embed)
-
-                            usersex = await client.wait_for("message", check=lambda user:user.author.id == ctx.author.id, timeout=20)
-                            sex = usersex.content
-                            await asyncio.sleep(1) 
-                            await usersex.delete()
-
-                        except asyncio.TimeoutError:
-                            await message.delete()
-
-                        embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            description = (f"""```
-{frame}
-Name : {name}
-Age : {age}
-Sex : {sex}
-{frame}```""")
-                )
-                        embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                        embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
-                        embed.timestamp = datetime.datetime.utcnow()
-                        embed.set_footer(text = ctx.author.id)
-                        await message.delete()
-                        if introduction_channel:
-                            await introduction_channel.send(ctx.author.mention)
-                            await introduction_channel.send(embed=embed)
-                        
-                        else:
-                            await ctx.send(ctx.author.mention)
-                            await ctx.send(embed=embed)
-                            
-                        if not give == "None":
-                            try:
-                                role = give
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.add_roles(role)
-
-                            except Exception:
-                                pass
-                
-                        if not remove == "None":
-                            try:
-                                role = remove
-                                role = int(role)
-                                role = ctx.guild.get_role(role)
-                                await ctx.author.remove_roles(role)
-
-                            except Exception:
-                                pass              
-
-            else:
-                embed =discord.Embed(
-                    colour = 0x983925,
-                    description = f"This command is disable please use {COMMAND_PREFIX}introduce on"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-                await asyncio.sleep(3) 
-                await message.delete()
 
 @client.command()
 @commands.has_permissions(administrator=True)
@@ -13245,7 +12801,10 @@ async def setup(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 embed = discord.Embed(
@@ -13289,7 +12848,10 @@ async def setup(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 embed = discord.Embed(
@@ -13681,19 +13243,20 @@ async def on_message(message):
                     for data in server:
                         status = data["level_system"]
                     if status == "YES":
-                        user = collectionlevel.find_one({"user_id":message.author.id})
+                        user = collectionlevel.find_one({"user_id":message.author.id, "guild_id":message.guild.id})
                         if user is None:
-                            newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":0}
+                            newuser = {"guild_id": message.guild.id, "user_id":message.author.id,"xp":0 , "level":1}
                             collectionlevel.insert_one(newuser)
                         else:
                             userlevel = collectionlevel.find({"guild_id":message.guild.id , "user_id":message.author.id})
                             for data in userlevel:
 
-                                userxp = data["xp"] + 5
+                                userxp = data["xp"] + 10
                                 collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":userxp}})
                                 currentxp = data["xp"]
                                 currentlvl = data["level"]
-                                if currentxp > 200:
+                                xp_to_lvl_up = ((50*(currentlvl**2))+(50*currentlvl))
+                                if currentxp > xp_to_lvl_up:
                                     currentlvl += 1
                                     currentxp = 0
                                     collectionlevel.update_one({"guild_id":message.guild.id , "user_id":message.author.id},{"$set":{"xp":currentxp, "level":currentlvl}})
@@ -13746,18 +13309,8 @@ async def rank(ctx , member : discord.Member=None):
                             currentlvl = data["level"]
                             stringcurrentlvl = str(currentxp)
                             liststringcurrentlvl = (list(stringcurrentlvl))
-                        if currentxp >= 10:
-                            if int(liststringcurrentlvl[1]) == 5:
-                                boxxp = int(currentxp - 5)
-                                bluebox = int(boxxp/10)
-                                whitebox = int(20 - bluebox)
-                            else:
-                                bluebox = int(currentxp/10)
-                                whitebox = int(20 - bluebox)
                         
-                        else:
-                            bluebox = 0
-                            whitebox = 20
+                        boxes = int((currentxp/(200*((1/2)*currentlvl)))*20)
 
                         ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
                         rank = 0
@@ -13770,10 +13323,10 @@ async def rank(ctx , member : discord.Member=None):
                             title = f"เลเวลของ {ctx.author.name}"
                             )
                         embed.add_field(name = "ชื่อ",value= f"{ctx.author.name}",inline=True)
-                        embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
+                        embed.add_field(name = "xp",value= f"{currentxp}/{int(200*((1/2)*currentlvl))}",inline=True)
                         embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
                         embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
-                        embed.add_field(name = "ความคืบหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
+                        embed.add_field(name = "ความคืบหน้า",value= boxes *":blue_square:"+(20-boxes)*":white_large_square:",inline=False)
                         embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message = await ctx.send(embed=embed)
@@ -13807,18 +13360,7 @@ async def rank(ctx , member : discord.Member=None):
                             stringcurrentlvl = str(currentxp)
                             liststringcurrentlvl = (list(stringcurrentlvl))
                         
-                        if currentxp >= 10:
-                            if int(liststringcurrentlvl[1]) == 5:
-                                boxxp = int(currentxp - 5)
-                                bluebox = int(boxxp/10)
-                                whitebox = int(20 - bluebox)
-                            else:
-                                bluebox = int(currentxp/10)
-                                whitebox = int(20 - bluebox)
-                        
-                        else:
-                            bluebox = 0
-                            whitebox = 20
+                        boxes = int((currentxp/(200*((1/2)*currentlvl)))*20)
 
                         ranking = collectionlevel.find({"guild_id":ctx.guild.id}).sort("xp",-1)
                         rank = 0
@@ -13831,10 +13373,10 @@ async def rank(ctx , member : discord.Member=None):
                             title = f"เลเวลของ {member.name}"
                             )
                         embed.add_field(name = "ชื่อ",value= f"{member.name}",inline=True)
-                        embed.add_field(name = "xp",value= f"{currentxp}",inline=True)
+                        embed.add_field(name = "xp",value= f"{currentxp}/{int(200*((1/2)*currentlvl))}",inline=True)
                         embed.add_field(name = "เลเวล",value= f"{currentlvl}",inline=True)
                         embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
-                        embed.add_field(name = "ความคืบหน้า",value= bluebox*":blue_square:"+whitebox*":white_large_square:",inline=False)
+                        embed.add_field(name = "ความคืบหน้า",value= boxes *":blue_square:"+(20-boxes)*":white_large_square:",inline=False)
                         embed.set_thumbnail(url=f"{member.avatar_url}")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         message = await ctx.send(embed=embed)
@@ -14369,7 +13911,10 @@ async def __on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14448,7 +13993,10 @@ async def __on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14591,7 +14139,10 @@ async def __off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14670,7 +14221,10 @@ async def __off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -14787,7 +14341,7 @@ async def youtube(ctx, *, keywords):
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
             server_language = data["Language"]
-        apikey = googleapi
+        apikey = youtubeapi
         youtube = build('youtube', 'v3', developerKey=apikey)
         snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
         
@@ -14905,7 +14459,7 @@ async def ytsearch(ctx, *, keywords):
         language = collectionlanguage.find({"guild_id":ctx.guild.id})
         for data in language:
             server_language = data["Language"]
-        apikey = googleapi
+        apikey = youtubeapi
         youtube = build('youtube', 'v3', developerKey=apikey)
         snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
         i = 1
@@ -15067,7 +14621,10 @@ async def ____on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -15146,7 +14703,10 @@ async def ____on(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -15289,7 +14849,10 @@ async def ____off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -15368,7 +14931,10 @@ async def ____off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18334,7 +17900,10 @@ async def _give(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
@@ -18412,7 +17981,10 @@ async def _give(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 results = collection.find_one({"guild_id":ctx.guild.id})
@@ -18575,7 +18147,10 @@ async def _remove(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18653,7 +18228,10 @@ async def _remove(ctx, role: discord.Role):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18815,7 +18393,10 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -18893,7 +18474,10 @@ async def setverify(ctx , channel:discord.TextChannel):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19341,7 +18925,10 @@ async def ___on___(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19420,7 +19007,10 @@ async def ___on___(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19563,7 +19153,10 @@ async def __off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19642,7 +19235,10 @@ async def __off(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -19805,7 +19401,7 @@ async def cleancmd(ctx):
             server_language = data["Language"]
         
         if server_language == "Thai":
-            clearcmd()
+            await clearcmd()
             print(ASCII_ART)
             print(f"BOT NAME : {client.user}")
             print(f"BOT ID : {client.user.id}")
@@ -19817,7 +19413,7 @@ async def cleancmd(ctx):
             print("")
         
         if server_language == "English":
-            clearcmd()
+            await clearcmd()
             print(ASCII_ART)
             print(f"BOT NAME : {client.user}")
             print(f"BOT ID : {client.user.id}")
@@ -19875,9 +19471,15 @@ async def setting(ctx):
                 introduce_remove = server["introduce_role_remove_id"]
                 verify_give = server["verification_role_give_id"]
                 verify_remove = server["verification_role_remove_id"]
+                verify_time = server["verification_time"]
                 server_currency = server["currency"]
                 intro_frame = server["introduce_frame"]
+                log_voice = server["log_voice_system"]
+                log_delete = server["log_delete_system"]
+                log_name = server["log_name_system"]
+                log_channel = server["log_channel_id"]
                 
+                verify_time = str(verify_time)
                 #check for role introduce_give//
                 if introduce_give != "None":
                     introduce_give = ctx.guild.get_role(int(introduce_give))
@@ -19907,8 +19509,20 @@ async def setting(ctx):
                     verify_remove = "None"
                 
                 #check welcome channel
+                if log_channel != "None":
+                    log_channel = ctx.guild.get_channel(int(log_channel))
+                
+                else:
+                    log_channel = "None"
+
+                #check welcome channel
                 if welcome_channel_id != "None":
                     welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
+                    if welcome_channel_id:
+                        welcome_channel_id = welcome_channel_id
+                    
+                    else:
+                        welcome_channel_id = "None"
                 
                 else:
                     welcome_channel_id = "None"
@@ -19916,6 +19530,11 @@ async def setting(ctx):
                 #check leave channel
                 if leave_channel_id != "None":
                     leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
+                    if leave_channel_id:
+                        leave_channel_id = leave_channel_id
+                    
+                    else:
+                        leave_channel_id = "None"
                 
                 else:
                     leave_channel_id = "None"
@@ -19923,6 +19542,11 @@ async def setting(ctx):
                 #check webhook channel
                 if webhook_id != "None":
                     webhook_id = ctx.guild.get_channel(int(webhook_id))
+                    if webhook_id:
+                        webhook_id = webhook_id
+                    
+                    else:
+                        webhook_id = "None"
                 
                 else:
                     webhook_id = "None"
@@ -19930,6 +19554,11 @@ async def setting(ctx):
                 #check introduce_id channel
                 if introduce_id != "None":
                     introduce_id = ctx.guild.get_channel(int(introduce_id))
+                    if introduce_id:
+                        introduce_id = introduce_id
+                    
+                    else:
+                        introduce_id = "None"
                 
                 else:
                     introduce_id = "None"
@@ -19937,6 +19566,11 @@ async def setting(ctx):
                 #check verify id channel
                 if verification_id != "None":
                     verification_id = ctx.guild.get_channel(int(verification_id))
+                    if verification_id:
+                        verification_id = verification_id
+                    
+                    else:
+                        verification_id = "None"
                 
                 else:
                     verification_id = "None"
@@ -19946,11 +19580,11 @@ async def setting(ctx):
                     description = f"```Database ID : {database_id}```",
                     colour= 0x00FFFF
                 )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
                 embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
-                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : {introduce_give}\nลบยศเเนะนําตัว : {introduce_remove}\nให้ยศยืนยันตัวตน : {verify_give}\nลบยศยืนยันตัวตน : {verify_remove}```",inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}```",inline=True)
-                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}\nลงบันทึกลบข้อความ : {log_delete}\nลงบันทึกเปลี่ยนชื่อ : {log_name}```",inline=True)
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
                 embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -19986,9 +19620,15 @@ async def setting(ctx):
                 introduce_remove = server["introduce_role_remove_id"]
                 verify_give = server["verification_role_give_id"]
                 verify_remove = server["verification_role_remove_id"]
+                verify_time = server["verification_time"]
                 server_currency = server["currency"]
                 intro_frame = server["introduce_frame"]
+                log_voice = server["log_voice_system"]
+                log_delete = server["log_delete_system"]
+                log_name = server["log_name_system"]
+                log_channel = server["log_channel_id"]
                 
+                verify_time = str(verify_time)
                 #check for role introduce_give//
                 if introduce_give != "None":
                     introduce_give = ctx.guild.get_role(int(introduce_give))
@@ -20018,8 +19658,20 @@ async def setting(ctx):
                     verify_remove = "None"
                 
                 #check welcome channel
+                if log_channel != "None":
+                    log_channel = ctx.guild.get_channel(int(log_channel))
+                
+                else:
+                    log_channel = "None"
+
+                #check welcome channel
                 if welcome_channel_id != "None":
                     welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
+                    if welcome_channel_id:
+                        welcome_channel_id = welcome_channel_id
+                    
+                    else:
+                        welcome_channel_id = "None"
                 
                 else:
                     welcome_channel_id = "None"
@@ -20027,6 +19679,11 @@ async def setting(ctx):
                 #check leave channel
                 if leave_channel_id != "None":
                     leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
+                    if leave_channel_id:
+                        leave_channel_id = leave_channel_id
+                    
+                    else:
+                        leave_channel_id = "None"
                 
                 else:
                     leave_channel_id = "None"
@@ -20034,6 +19691,11 @@ async def setting(ctx):
                 #check webhook channel
                 if webhook_id != "None":
                     webhook_id = ctx.guild.get_channel(int(webhook_id))
+                    if webhook_id:
+                        webhook_id = webhook_id
+                    
+                    else:
+                        webhook_id = "None"
                 
                 else:
                     webhook_id = "None"
@@ -20041,6 +19703,11 @@ async def setting(ctx):
                 #check introduce_id channel
                 if introduce_id != "None":
                     introduce_id = ctx.guild.get_channel(int(introduce_id))
+                    if introduce_id:
+                        introduce_id = introduce_id
+                    
+                    else:
+                        introduce_id = "None"
                 
                 else:
                     introduce_id = "None"
@@ -20048,6 +19715,11 @@ async def setting(ctx):
                 #check verify id channel
                 if verification_id != "None":
                     verification_id = ctx.guild.get_channel(int(verification_id))
+                    if verification_id:
+                        verification_id = verification_id
+                    
+                    else:
+                        verification_id = "None"
                 
                 else:
                     verification_id = "None"
@@ -20057,11 +19729,11 @@ async def setting(ctx):
                     description = f"```Database ID : {database_id}```",
                     colour= 0x00FFFF
                 )
-                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}```" ,inline=True)
+                embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
                 embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
-                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : {introduce_give}\nลบยศเเนะนําตัว : {introduce_remove}\nให้ยศยืนยันตัวตน : {verify_give}\nลบยศยืนยันตัวตน : {verify_remove}```",inline=True)
-                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}```",inline=True)
-                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}```",inline=False)
+                embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```",inline=True)
+                embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}\nลงบันทึกลบข้อความ : {log_delete}\nลงบันทึกเปลี่ยนชื่อ : {log_name}```",inline=True)
+                embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
                 embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -20108,7 +19780,10 @@ async def verifytime(ctx , time : int):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -20204,7 +19879,10 @@ async def verifytime(ctx , time : int):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -20431,6 +20109,12 @@ async def love(ctx, member : discord.Member = None):
                 authordata = BytesIO(await authorasset.read())
                 authorpfp = Image.open(authordata)
 
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
                 memberasset = member.avatar_url_as(size=128)
                 memberdata = BytesIO(await memberasset.read())
                 memberpfp = Image.open(memberdata)
@@ -20444,7 +20128,7 @@ async def love(ctx, member : discord.Member = None):
                 height = (template.height - heart.height) // 2
                 template.paste(authorpfp, (0,0))
                 template.paste(memberpfp, (128,0))
-                template.paste(heart, (width,height),heart)
+                template.paste(heart, (width,height), heart)
                 template.save(obj, format="PNG")
                 obj.seek(0)
                 file = discord.File(obj, filename="love.png")
@@ -20519,6 +20203,12 @@ async def love(ctx, member : discord.Member = None):
                 authordata = BytesIO(await authorasset.read())
                 authorpfp = Image.open(authordata)
 
+                n = random.randint(1,100)
+                love = f"{n} %"
+                heart = heart.resize((42,42))
+                draw = ImageDraw.Draw(heart)
+                draw.text((10, 10), love ,font = font)
+
                 memberasset = member.avatar_url_as(size=128)
                 memberdata = BytesIO(await memberasset.read())
                 memberpfp = Image.open(memberdata)
@@ -20532,7 +20222,7 @@ async def love(ctx, member : discord.Member = None):
                 height = (template.height - heart.height) // 2
                 template.paste(authorpfp, (0,0))
                 template.paste(memberpfp, (128,0))
-                template.paste(heart, (width,height),heart)
+                template.paste(heart, (width,height), heart)
                 template.save(obj, format="PNG")
                 obj.seek(0)
                 file = discord.File(obj, filename="love.png")
@@ -20911,7 +20601,10 @@ async def logvoiceon(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -20991,7 +20684,10 @@ async def logvoiceon(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
@@ -21129,13 +20825,16 @@ async def logvoiceoff(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
-                intro_status = data["introduce_status"]
+                intro_status = data["log_voice_system"]
                 if intro_status == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
@@ -21147,7 +20846,7 @@ async def logvoiceoff(ctx):
                     await message.add_reaction('✅')
     
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
@@ -21159,9 +20858,9 @@ async def logvoiceoff(ctx):
                     await message.add_reaction('✅')
             else:
                 data = collection.find_one({"guild_id":ctx.guild.id})
-                intro_status = data["introduce_status"]
+                intro_status = data["log_voice_system"]
                 if intro_status == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
@@ -21173,7 +20872,7 @@ async def logvoiceoff(ctx):
                     await message.add_reaction('✅')
 
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
@@ -21207,13 +20906,16 @@ async def logvoiceoff(ctx):
                 "verification_channel_id":"None",
                 "verification_role_give_id":"None",
                 "verification_role_remove_id":"None",
-                "log_voice_system":"NO"
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
                 }
                 collection.insert_one(newserver)
                 data = collection.find_one({"guild_id":ctx.guild.id})
-                intro_status = data["introduce_status"]
+                intro_status = data["log_voice_system"]
                 if intro_status == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been deactivated"
@@ -21235,9 +20937,9 @@ async def logvoiceoff(ctx):
                     await message.add_reaction('✅')
             else:
                 data = collection.find_one({"guild_id":ctx.guild.id})
-                intro_status = data["introduce_status"]
+                intro_status = data["log_voice_system"]
                 if intro_status == "None":
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been deactivated"
@@ -21248,7 +20950,7 @@ async def logvoiceoff(ctx):
                     await message.add_reaction('✅')
 
                 else:
-                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
                     embed = discord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been deactivated"
@@ -21303,6 +21005,350 @@ async def logvoiceoff_error(ctx, error):
                 await message.add_reaction('⚠️')
 
 @client.command()
+@commands.has_permissions(administrator=True)
+async def setlog(ctx, channel:discord.TextChannel):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["log_channel_id"]
+                if introduce_channel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["log_channel_id"]
+                if introduce_channel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "ตั้งค่าห้องเเนะนําตัว",
+                        description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+        if server_language == "English":
+
+            server = collection.find_one({"guild_id":ctx.guild.id})
+            if server is None:
+                newserver = {"guild_id":ctx.guild.id,
+                "welcome_id":"None",
+                "leave_id":"None",
+                "webhook_url":"None",
+                "webhook_channel_id":"None",
+                "webhook_status":"None",
+                "introduce_channel_id":"None",
+                "introduce_frame":"None",
+                "introduce_role_give_id":"None",
+                "introduce_role_remove_id":"None",
+                "introduce_status":"YES",
+                "level_system":"NO",
+                "economy_system":"NO",
+                "currency":"$",
+                "verification_system":"NO",
+                "verification_time":10,
+                "verification_channel_id":"None",
+                "verification_role_give_id":"None",
+                "verification_role_remove_id":"None",
+                "log_voice_system":"NO",
+                "log_delete_system":"NO",
+                "log_name_system":"NO",
+                "log_channel_id":"None"
+                }
+                collection.insert_one(newserver)
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["log_channel_id"]
+                if introduce_channel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for introduction",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for introduction",
+                        description= f"Channel have been updated to {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+            else:
+                data = collection.find_one({"guild_id":ctx.guild.id})
+                introduce_channel = data["log_channel_id"]
+                if introduce_channel == "None":
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title = "channel for introduction",
+                        description= f"Channel have been set to {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+
+                else:
+                    collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
+                    embed = discord.Embed(
+                        colour= 0x00FFFF,
+                        title= "channel for introduction",
+                        description= f"Channel have been updated to {channel.mention}"
+                    )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+    
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('✅')
+@setlog.error
+async def setlog_error(ctx, error):
+    languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    if languageserver is None:
+        embed = discord.Embed(
+            title = "Language setting / ตั้งค่าภาษา",
+            description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+        )
+        embed.set_footer(text=f"┗Requested by {ctx.author}")
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👍')
+    else:
+        language = collectionlanguage.find({"guild_id":ctx.guild.id})
+        for data in language:
+            server_language = data["Language"]
+        
+        if server_language == "Thai":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                    description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "ระบุห้องที่จะตั้ง",
+                    description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{COMMAND_PREFIX}setintroduce #channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+        if server_language == "English":
+            if isinstance(error, commands.MissingPermissions):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "You don't have permission",
+                    description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                )
+
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+    
+            if isinstance(error, commands.MissingRequiredArgument):
+                embed = discord.Embed(
+                    colour = 0x983925,
+                    title = "Specify a channel",
+                    description = f" ⚠️``{ctx.author}`` need to specify a channel ``{COMMAND_PREFIX}setintroduce #channel``"
+                )
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed ) 
+                await message.add_reaction('⚠️')
+
+@client.event
+async def on_voice_state_update(member, before, after):
+    languageserver = collectionlanguage.find_one({"guild_id":member.guild.id})
+    if not languageserver is None:
+        language = collectionlanguage.find_one({"guild_id":member.guild.id})
+        server_language = language["Language"]
+        
+        if server_language == "Thai":
+            data = collection.find_one({"guild_id":member.guild.id})
+            if not data is None:
+                logchannel = data["log_channel_id"]
+                logstatus = data["log_voice_system"]
+                if not logchannel == "None":
+                    channel = client.get_channel(id = int(logchannel))
+                    if channel:
+                        if logstatus == "YES":
+                            if before.channel is None:
+                                embed = discord.Embed(
+                                    colour = 0x56FF2D,
+                                    description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                            
+                            elif before.channel is not None and after.channel is not None:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                            
+                            else:
+                                embed = discord.Embed(
+                                    colour = 0x983925,
+                                    description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                    else:
+                        pass
+                else:
+                    pass
+            else:
+                pass        
+            
+        if server_language == "English":
+            data = collection.find_one({"guild_id":member.guild.id})
+            if not data is None:
+                logchannel = data["log_channel_id"]
+                logstatus = data["log_voice_system"]
+                if not logchannel == "None":
+                    channel = client.get_channel(id = int(logchannel))
+                    if channel:
+                        if logstatus == "YES":
+                            if before.channel is None:
+                                embed = discord.Embed(
+                                    colour = 0x56FF2D,
+                                    description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                            
+                            elif before.channel is not None and after.channel is not None:
+                                embed = discord.Embed(
+                                    colour = 0x00FFFF,
+                                    description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                            
+                            else:
+                                embed = discord.Embed(
+                                    colour = 0x983925,
+                                    description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
+                                )
+                                embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                embed.set_footer(text=f"{member}" + f"  ⮞ ")
+                                embed.timestamp = datetime.datetime.utcnow()
+                                await channel.send(embed=embed)
+                    else:
+                        pass
+                else:
+                    pass
+            else:
+                pass
+
+@client.command()
 async def say(ctx , message):
     languageserver = collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if languageserver is None:
@@ -21338,6 +21384,12 @@ async def say(ctx , message):
 
 @client.command()
 async def checkchannel(ctx, channel_id):
+    channel = ctx.guild.get_channel(int(channel_id))# you can use guild.get_xx too
+    if channel:
+        print("yes")
+    else:
+        print("no")# doesnt exist
+    
     channel = client.get_channel(int(channel_id))# you can use guild.get_xx too
     if channel:
         print("yes")
@@ -21384,11 +21436,24 @@ async def servers(ctx, n: int=10):
                 embed.add_field(name=server.name, value=f"{server.member_count} members", inline=False)
             await ctx.send(embed=embed)
 
+async def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+@client.command()
+@commands.is_owner()
+async def restart(ctx):
+    await clearcmd()
+    await ctx.send("Restarting...")
+    print("restarting...")
+    await asyncio.sleep(5)
+    await restart_program()
+
 @client.command()
 async def esketti(ctx):
     for guild in client.guilds:
         print(guild.id)
-        collection.update_one({"guild_id":guild.id},{"$set":{"log_system":"NO"}})
+        collection.update_one({"guild_id":guild.id},{"$set":{"log_channel_id":"None"}})
 
 ###########################################################
 #              /\                                         #
