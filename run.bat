@@ -1,1 +1,1 @@
-python SmileWinbot.py
+python main.py
