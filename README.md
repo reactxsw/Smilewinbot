@@ -5,8 +5,10 @@ A discord bot made with python for my discord server
 </p>
 
 <h1>Things needed</h1>
-<p>lavalink : https://github.com/freyacodes/Lavalink</p>
+<p>Lavalink 13 : https://github.com/freyacodes/Lavalink</p>
 <p>Java 16 : https://www.oracle.com/java/technologies/javase-downloads.html</p>
 <p>Python 3.9 : https://www.python.org/</p>
-<p>Your fucking brain</p>
 </p>
+
+<h>How to install</h1>
+
