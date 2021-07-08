@@ -11,6 +11,6 @@ A discord bot made with python for my discord server
 </p>
 
 <h2>How to install</h2>
-1. Download everythings in <a class="download" href="#download>Here</a>
-1. Download everythings in <a class="download" href="#download>Here</a>
-2. 1. Download everythings in <a class="download" href="#download>Here</a>
+1. Download everythings in "Things needed"
+2. Run install.bat
+3. 
