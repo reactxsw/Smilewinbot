@@ -10,5 +10,5 @@ A discord bot made with python for my discord server
 <p>Python 3.9 : https://www.python.org/</p>
 </p>
 
-<h>How to install</h1>
+<h2>How to install</h2>
 
