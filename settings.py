@@ -52,6 +52,7 @@ if Path("config.json").exists():
     TOKEN = config.get("bot_token")
     COMMAND_PREFIX = config.get("bot_prefix")
     openweathermapAPI = config.get("openweathermap_api")
+    faceitapi = config.get("faceit_serverside_api")
     reddit = asyncpraw.Reddit(
         client_id=config.get("reddit_client_id"),
         client_secret=config.get("reddit_client_secret"),
@@ -76,6 +77,21 @@ if Path("config.json").exists():
     offline_id = config.get("emoji_:offline:_id")
     idle_id = config.get("emoji_:idle:_id")
     busy_id = config.get("emoji_:busy:_id")
+    faceitlogo = config.get("emoji_:faceitlogo:_id")
+    faceitlvl1 = config.get("emoji_:faceitlvl1:_id")
+    faceitlvl2 = config.get("emoji_:faceitlvl2:_id")
+    faceitlvl3 = config.get("emoji_:faceitlvl3:_id")
+    faceitlvl4 = config.get("emoji_:faceitlvl4:_id")
+    faceitlvl5 = config.get("emoji_:faceitlvl5:_id")
+    faceitlvl6 = config.get("emoji_:faceitlvl6:_id")
+    faceitlvl7 = config.get("emoji_:faceitlvl7:_id")
+    faceitlvl8 = config.get("emoji_:faceitlvl8:_id")
+    faceitlvl9 = config.get("emoji_:faceitlvl9:_id")
+    faceitlvl10 = config.get("emoji_:faceitlvl10:_id")
+    faceitsea = config.get("emoji_:faceitsea:_id")
+    faceiteu = config.get("emoji_:faceiteu:_id")
+    faceitas = config.get("emoji_:faceitas:_id")
+    faceitus = config.get("emoji_:faceitus:_id")
 
 else: 
     with open("config.json", "w") as setting:
@@ -137,7 +153,37 @@ else:
                     "\n",
                     "    "+'"emoji_:idle:_id": "_____________________________________",',
                     "\n",
-                    "    "+'"emoji_:busy:_id": "_____________________________________"'
+                    "    "+'"emoji_:busy:_id": "_____________________________________"',
+                    "\n",
+                    "    "+'"emoji_:faceitlogo:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl1:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl2:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl3:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl4:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl5:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl6:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl7:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl8:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl9:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitlvl10:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitsea:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitus:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceitas:_id": "_____________________________________",',
+                    "\n",
+                    "    "+'"emoji_:faceiteu:_id": "_____________________________________",',
                     "\n",
                 "}"
             ]
