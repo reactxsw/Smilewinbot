@@ -35,7 +35,80 @@ class BotSetup(commands.Cog):
                     "log_channel_id":"None"
                     }
         return newserver
+    
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def setreact(self,ctx , emoji , role: discord.Role , * , text):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            embed = discord.Embed(
+                title = "Language setting / ตั้งค่าภาษา",
+                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+
+        else:
+            embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    description = text
+                )
+            message = await ctx.send(embed=embed)
+            await message.add_reaction(emoji)
+
+            newrole = {"guild_id":ctx.guild.id,
+            "emoji":emoji,
+            "message_id":message.id,
+            "message":text,
+            "role_give_id":role.id,
+            }
+            await settings.collectionrole.insert_one(newrole)
+
+    @setreact.error
+    async def setreact(self,ctx, error):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            embed = discord.Embed(
+                title = "Language setting / ตั้งค่าภาษา",
+                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
         
+        else:
+            server_language = languageserver["Language"]
+
+            if server_language == "Thai":
+                if isinstance(error, commands.MissingPermissions):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "คุณไม่มีสิทธิ์ตั้งค่า",
+                        description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
+                    )
+
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+
+            
+            if server_language == "English":
+                if isinstance(error, commands.MissingPermissions):
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = "You don't have permission",
+                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
+                    )
+
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️')
+
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
     async def setrole(self,ctx):
@@ -74,7 +147,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
 
     @setrole.error
-    async def setrole_error(ctx, error):
+    async def setrole_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -216,7 +289,7 @@ class BotSetup(commands.Cog):
                         message = await ctx.send(embed=embed)
                         await message.add_reaction('✅')
     @give.error
-    async def give_error(ctx, error):
+    async def give_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -1171,7 +1244,7 @@ class BotSetup(commands.Cog):
 
     @level.command(aliases=['on'])
     @commands.has_permissions(administrator=True)
-    async def __on(self,ctx):
+    async def levelon(self,ctx):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -1271,7 +1344,7 @@ class BotSetup(commands.Cog):
                         message = await ctx.send(embed=embed)
                         await message.add_reaction('✅')
 
-    @__on.error
+    @levelon.error
     async def levelon_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -1315,9 +1388,9 @@ class BotSetup(commands.Cog):
 
     @level.command(aliases=['off'])
     @commands.has_permissions(administrator=True)
-    async def __off(self,ctx):
-        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if languageserver is None:
+    async def leveloff(self,ctx):
+        language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if language is None:
             embed = discord.Embed(
                 title = "Language setting / ตั้งค่าภาษา",
                 description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
@@ -1326,10 +1399,9 @@ class BotSetup(commands.Cog):
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed=embed)
             await message.add_reaction('👍')
-        
-        else:
-            server_language = languageserver["Language"]
 
+        else:
+            server_language = language["Language"]
             if server_language == "Thai":
                 status = "NO"
                 server = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -1416,7 +1488,7 @@ class BotSetup(commands.Cog):
                         message = await ctx.send(embed=embed)
                         await message.add_reaction('✅')
 
-    @__off.error
+    @leveloff.error
     async def leveloff_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -2895,7 +2967,7 @@ class BotSetup(commands.Cog):
                         message = await ctx.send(embed=embed)
                         await message.add_reaction('✅')
     @setwebhook.error
-    async def setwebhook_error(ctx, error):
+    async def setwebhook_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -2960,7 +3032,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def chat(ctx):
+    async def chat(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -3290,7 +3362,7 @@ class BotSetup(commands.Cog):
                         message = await ctx.send(embed=embed)
                         await message.add_reaction('✅')
     @_off.error
-    async def chatoff_error(ctx, error):
+    async def chatoff_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -4405,79 +4477,6 @@ class BotSetup(commands.Cog):
                         title = "specify what role to remove",
                         description = f" ⚠️``{ctx.author}`` need to specify what role to remove after verification``{settings.COMMAND_PREFIX}setrole remove @role``"
                     )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def setreactrole(self,ctx , emoji = None , role: discord.Role=None , * , text):
-        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if languageserver is None:
-            embed = discord.Embed(
-                title = "Language setting / ตั้งค่าภาษา",
-                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👍')
-
-        else:
-            embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    description = text
-                )
-            message = await ctx.send(embed=embed)
-            await message.add_reaction(emoji)
-
-            newrole = {"guild_id":ctx.guild.id,
-            "emoji":emoji,
-            "message_id":message.id,
-            "message":text,
-            "role_give_id":role.id,
-            }
-            await settings.collectionrole.insert_one(newrole)
-
-    @setreactrole.error
-    async def setreactrole(self,ctx, error):
-        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if languageserver is None:
-            embed = discord.Embed(
-                title = "Language setting / ตั้งค่าภาษา",
-                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👍')
-        
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "คุณไม่มีสิทธิ์ตั้งค่า",
-                        description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-            
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "You don't have permission",
-                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
-                    )
-
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                     message = await ctx.send(embed=embed ) 
