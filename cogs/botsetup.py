@@ -38,7 +38,7 @@ class BotSetup(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setreact(self,ctx , emoji , role: discord.Role , * , text):
+    async def setreactrole(self,ctx , emoji , role: discord.Role , * , text):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -66,8 +66,8 @@ class BotSetup(commands.Cog):
             }
             await settings.collectionrole.insert_one(newrole)
 
-    @setreact.error
-    async def setreact(self,ctx, error):
+    @setreactrole.error
+    async def setreactrole(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
