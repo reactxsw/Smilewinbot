@@ -5,7 +5,7 @@ import aiohttp
 from discord.ext import commands
 
 
-class MyCog(commands.Cog): 
+class Anime(commands.Cog): 
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
 
@@ -330,4 +330,4 @@ class MyCog(commands.Cog):
                         await message.add_reaction('❤️')
 
 def setup(bot: commands.Bot):
-    bot.add_cog(MyCog(bot))
+    bot.add_cog(Anime(bot))
