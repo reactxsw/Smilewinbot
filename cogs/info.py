@@ -238,6 +238,7 @@ Repository : {repo}```"""
 
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
+
     @commands.command(aliases=['cv19th','covidthai','covid19thai'])
     async def covid19th(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -585,17 +586,10 @@ Repository : {repo}```"""
                     re = await r.json()
             
             items = re["items"][0]
-            try:
-                rating = items["contentDetails"]["contentRating"]
-                content = rating["ytRating"]
-                if content == "ytAgeRestricted":
-                    Age_restriction = True
-
-                else:
-                    Age_restriction = False
-            
-            except:
-                Age_restriction = False
+            Age_restriction = False
+            rating = items["contentDetails"]["contentRating"]
+            if rating["ytrating"] and rating["ytRating"] == "ytAgeRestricted":
+                Age_restriction = True
         
             if server_language == "Thai":
                 if Age_restriction is True:
