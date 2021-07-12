@@ -103,34 +103,25 @@ class Info(commands.Cog):
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
                 
-                try:
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(url) as r:
-                            r = await r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as r:
+                        r = await r.json()
+                            
+                    if not r["message"] == "Not Found":
+                        username = r['login']
+                        avatar =  r['avatar_url']
+                        githuburl = r['html_url']
+                        name = r['name']
+                        location = r['location']
+                        email = r['email']
+                        company = r['company']
+                        bio = r['bio']
+                        repo = r['public_repos']
 
-                    username = r['login']
-                    avatar =  r['avatar_url']
-                    githuburl = r['html_url']
-                    name = r['name']
-                    location = r['location']
-                    email = r['email']
-                    company = r['company']
-                    bio = r['bio']
-                    repo = r['public_repos']
-
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"💻 ข้อมูล Github ของ {username}",
-                    description = f"""```
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"💻 ข้อมูล Github ของ {username}",
+                            description = f"""```
 ชื่อ Github : {username}
 ลิงค์ Github : {githuburl}
 ชื่อ : {name}
@@ -138,14 +129,22 @@ class Info(commands.Cog):
 อีเมล : {email}
 บริษัท : {company}
 Bio : {bio}
-จํานวนงานที่ลง : {repo}
-        ```"""
+จํานวนงานที่ลง : {repo}```"""
             )
-                embed.set_thumbnail(url = avatar)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed)
-                
-                await message.add_reaction("💻")
+                        embed.set_thumbnail(url = avatar)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message = await ctx.send(embed=embed)
+                        
+                        await message.add_reaction("💻")
+
+                    else:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
 
             if server_language == "English":
                 url = f"https://api.github.com/users/{user}"
@@ -159,34 +158,25 @@ Bio : {bio}
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
                 
-                try:
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(url) as r:
-                            r = await r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as r:
+                        r = await r.json()
+                            
+                    if not r["message"] == "Not Found":
+                        username = r['login']
+                        avatar =  r['avatar_url']
+                        githuburl = r['html_url']
+                        name = r['name']
+                        location = r['location']
+                        email = r['email']
+                        company = r['company']
+                        bio = r['bio']
+                        repo = r['public_repos']
 
-                    username = r['login']
-                    avatar =  r['avatar_url']
-                    githuburl = r['html_url']
-                    name = r['name']
-                    location = r['location']
-                    email = r['email']
-                    company = r['company']
-                    bio = r['bio']
-                    repo = r['public_repos']
-
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        description = f" ⚠️Unable to find the github profile please check your spelling")
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"💻 ข้อมูล Github ของ {username}",
-                    description = f"""```
+                        embed = discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"💻 ข้อมูล Github ของ {username}",
+                            description = f"""```
 Github username: {username}
 Github link : {githuburl}
 Name : {name}
@@ -194,14 +184,22 @@ Location : {location}
 Email : {email}
 Company : {company}
 Bio : {bio}
-Repository : {repo}
-        ```"""
+Repository : {repo}```"""
                 )
-                embed.set_thumbnail(url = avatar)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                message = await ctx.send(embed=embed)
-                
-                await message.add_reaction("💻")
+                        embed.set_thumbnail(url = avatar)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message = await ctx.send(embed=embed)
+                        
+                        await message.add_reaction("💻")
+
+                    else:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️Unable to find the github profile please check your spelling")
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
 
     @github.error
     async def github_error(self,ctx, error):
