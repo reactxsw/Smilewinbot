@@ -118,19 +118,6 @@ async def on_ready():
     )
     await channel.send(embed=embed)
 
-async def restart_program():
-        python = sys.executable
-        os.execl(python, python, * sys.argv)
-
-@bot.command()
-@commands.is_owner()
-async def restartbot(ctx):
-    await clearcmd()
-    await ctx.send("Restarting...")
-    await asyncio.sleep(5)
-    await restart_program()
-    await clearcmd()
-
 @bot.command()
 @commands.is_owner()
 async def reloadcogs(ctx):
