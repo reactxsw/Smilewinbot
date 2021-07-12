@@ -938,7 +938,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except discord.MissingPermissions:
+                    except discord.Forbidden:
                         pass
 
                 embed = discord.Embed(
@@ -964,7 +964,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except discord.MissingPermissions:
+                    except discord.Forbidden:
                         pass
                 embed = discord.Embed(
                     title = "give role to all members",
@@ -1068,7 +1068,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except discord.MissingPermissions:
+                    except discord.Forbidden:
                         pass
 
                 embed = discord.Embed(
@@ -1094,7 +1094,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except discord.MissingPermissions:
+                    except discord.Forbidden:
                         pass
                 embed = discord.Embed(
                     title = "remove role from all members",
