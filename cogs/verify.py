@@ -107,7 +107,7 @@ class Verify(commands.Cog):
                             role = ctx.guild.get_role(role)
                             await ctx.author.add_roles(role)
 
-                        except discord.MissingPermissions:
+                        except discord.Forbidden:
                             pass
 
                     if remove != "None":
@@ -117,7 +117,7 @@ class Verify(commands.Cog):
                             role = ctx.guild.get_role(role)
                             await ctx.author.remove_roles(role)
 
-                        except discord.MissingPermissions:
+                        except discord.Forbidden:
                             pass
 
                     embed = discord.Embed(
@@ -225,7 +225,7 @@ Sex : {sex}
                                     role = ctx.guild.get_role(role)
                                     await ctx.author.add_roles(role)
 
-                                except discord.MissingPermissions:
+                                except discord.Forbidden:
                                     pass
                     
                             if not remove == "None":
@@ -235,7 +235,7 @@ Sex : {sex}
                                     role = ctx.guild.get_role(role)
                                     await ctx.author.remove_roles(role)
 
-                                except discord.MissingPermissions:
+                                except discord.Forbidden:
                                     pass
 
     @commands.command(aliases =["vfy"])
@@ -322,7 +322,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except discord.MissingPermissions:
+                                            except :
                                                 pass
 
                                         if remove != "None":
@@ -332,7 +332,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except discord.MissingPermissions:
+                                            except :
                                                 pass
                             
                                     else:
@@ -462,7 +462,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except discord.MissingPermissions:
+                                            except discord.Forbidden:
                                                 pass
 
                                         else: 
@@ -475,7 +475,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except discord.MissingPermissions:
+                                            except discord.Forbidden:
                                                 pass
                             
                                         else:
