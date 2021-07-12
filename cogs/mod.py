@@ -486,7 +486,7 @@ class Mod(commands.Cog):
                     message = await ctx.send(embed = embed)
                     await message.add_reaction('✅')
 
-                except:
+                except discord.Forbidden:
                     embed = discord.Embed(
                         colour = 0x983925,
                         description = f"ไม่สามารถให้ยศ{role} กับ {user.name} ได้"
@@ -505,7 +505,7 @@ class Mod(commands.Cog):
                     message = await ctx.send(embed = embed)
                     await message.add_reaction('✅')
 
-                except:
+                except discord.Forbidden:
                     embed = discord.Embed(
                         colour = 0x983925,
                         description = f"unable to give role {role} to {user.name}"
@@ -603,7 +603,7 @@ class Mod(commands.Cog):
                     message = await ctx.send(embed = embed)
                     await message.add_reaction('✅')
 
-                except:
+                except discord.Forbidden:
                     embed = discord.Embed(
                         colour = 0x983925,
                         description = f"ไม่สามารถเอายศ {role} ของ {user.name} ออกได้"
@@ -622,7 +622,7 @@ class Mod(commands.Cog):
                     message = await ctx.send(embed = embed)
                     await message.add_reaction('✅')
 
-                except:
+                except discord.Forbidden:
                     embed = discord.Embed(
                         colour = 0x983925,
                         description = f"unable to remove role {role} from {user.name}"
