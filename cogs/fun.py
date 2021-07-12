@@ -37,7 +37,7 @@ class Fun(commands.Cog):
                 title =random_sub.title
                 url = random_sub.url
 
-                if submission.over_18:
+                if random_sub.over_18:
                     if ctx.channel.is_nsfw():
                         embed = discord.Embed(
                             colour = 0x00FFFF,
