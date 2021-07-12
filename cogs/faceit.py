@@ -26,7 +26,7 @@ class Faceit(commands.Cog):
     def distance(self,a, b):
         if a == b:
             return 0
-        elif a < 0 and b < 0 or a > 0 and b > 0:
+        if a < 0 and b < 0 or a > 0 and b > 0:
             return ((abs(abs(a) - abs(b))) if a < b else -(abs(abs(a) - abs(b))))
 
         else:
