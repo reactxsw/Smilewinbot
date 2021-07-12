@@ -50,10 +50,7 @@ class Faceit(commands.Cog):
             await message.add_reaction('👍')
         
         else:
-            if nickname is None:
-                return
-            
-            else:
+            if not nickname is None:
                 urlnick = f"{self.base_url}/players?nickname={nickname}"
                 async with aiohttp.ClientSession(headers = self.headers) as session:
                     async with session.get(urlnick) as rnick:
