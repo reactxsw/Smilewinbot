@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import settings
 
-
 class Level(commands.Cog): 
 
     def __init__(self, bot: commands.AutoShardedBot):
@@ -10,8 +9,9 @@ class Level(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message(self , message):
+        await self.bot.wait_until_ready()
         if message.guild:
-            if not message.content.startswith('/r '):
+            if not message.content.startswith('/r'):
                 guild_id = message.guild.id
                 user_id = message.author.id
                 channel = message.channel
@@ -183,119 +183,97 @@ class Level(commands.Cog):
 
             server = await settings.collection.find_one({"guild_id":ctx.guild.id})
 
-            first = []
-            second = []
-            third = [] 
-            fourth = []
-            fifth = []
-            sixth = []
-            seventh = [] 
-            eighth = []
-            ninth = []
-            tenth = []
+            first = ["1"," - "," - "]
+            second = ["2"," - "," - "]
+            third = ["3"," - "," - "]
+            fourth = ["4"," - "," - "]
+            fifth = ["5"," - "," - "]
+            sixth = ["6"," - "," - "]
+            seventh = ["7"," - "," - "]
+            eighth = ["8"," - "," - "]
+            ninth = ["9"," - "," - "]
+            tenth = ["10"," - "," - "]
 
             if server_language == "Thai":
                 status = server["level_system"]
                 if status != "NO":
                     ranking = settings.collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
-                
+
                     i = 1
-                    for data in ranking:
+                    for data in await ranking.to_list(length=500000):
                         try:
                             member =ctx.guild.get_member(data["user_id"])
                             member_lvl = data["level"]
-                            member_name = member.name
                             if i == 1:
-                                first.append(i)
-                                first.append(member_name)
-                                first.append(member_lvl)
+                                first[0] = (i)
+                                first[1] = (member)
+                                first[2] = (member_lvl)
                             
                             if i == 2:
-                                second.append(i)
-                                second.append(member_name)
-                                second.append(member_lvl)
+                                second[0] = (i)
+                                second[1] = (member)
+                                second[2] = (member_lvl)
                             
                             if i == 3:
-                                third.append(i)
-                                third.append(member_name)
-                                third.append(member_lvl)
+                                third[0] = (i)
+                                third[1] = (member)
+                                third[2] = (member_lvl)
                             
                             if i == 4:
-                                fourth.append(i)
-                                fourth.append(member_name)
-                                fourth.append(member_lvl)
+                                fourth[0] = (i)
+                                fourth[1] = (member)
+                                fourth[2] = (member_lvl)
                             
                             if i == 5:
-                                fifth.append(i)
-                                fifth.append(member_name)
-                                fifth.append(member_lvl)
+                                fifth[0] = (i)
+                                fifth[1] = (member)
+                                fifth[2] = (member_lvl)
                             
                             if i == 6:
-                                sixth.append(i)
-                                sixth.append(member_name)
-                                sixth.append(member_lvl)
+                                sixth[0] = (i)
+                                sixth[1] = (member)
+                                sixth[2] = (member_lvl)
                             
                             if i == 7:
-                                seventh.append(i)
-                                seventh.append(member_name)
-                                seventh.append(member_lvl)
+                                seventh[0] = (i)
+                                seventh[1] = (member)
+                                seventh[2] = (member_lvl)
 
                             if i == 8:
-                                eighth.append(i)
-                                eighth.append(member_name)
-                                eighth.append(member_lvl)
+                                eighth[0] = (i)
+                                eighth[1] = (member)
+                                eighth[2] = (member_lvl)
                             
                             if i == 9:
-                                ninth.append(i)
-                                ninth.append(member_name)
-                                ninth.append(member_lvl)
+                                ninth[0] = (i)
+                                ninth[1] = (member)
+                                ninth[2] = (member_lvl)
                             
                             if i == 10:
-                                tenth.append(i)
-                                tenth.append(member_name)
-                                tenth.append(member_lvl)
+                                tenth[0] = (i)
+                                tenth[1] = (member)
+                                tenth[2] = (member_lvl)
                             
                             i = i + 1 
 
-                        except:
-                            pass
+                        except IndexError:
+                            break
+
                         if i == 11:
                             break
                     
                     description = f"""
-
-```py    
-╔═════════════════════════════════
-║อันดับ {first[0]} : {first[1]}
-║เลเวล :{first[2]}
-║═════════════════════════════════
-║อันดับ {second[0]} : {second[1]}
-║เลเวล :{second[2]}
-║═════════════════════════════════
-║อันดับ {third[0]} : {third[1]}
-║เลเวล :{third[2]}
-║═════════════════════════════════
-║อันดับ {fourth[0]} : {fourth[1]}
-║เลเวล :{fourth[2]}
-║═════════════════════════════════
-║อันดับ {fifth[0]} : {fifth[1]}
-║เลเวล :{fifth[2]}
-║═════════════════════════════════
-║อันดับ {sixth[0]} : {sixth[1]}
-║เลเวล :{sixth[2]}
-║═════════════════════════════════
-║อันดับ {seventh[0]} : {seventh[1]}
-║เลเวล :{seventh[2]}
-║═════════════════════════════════
-║อันดับ {eighth[0]} : {eighth[1]}
-║เลเวล :{eighth[2]}
-║═════════════════════════════════
-║อันดับ {ninth[0]} : {ninth[1]}
-║เลเวล :{ninth[2]}
-║═════════════════════════════════
-║อันดับ {tenth[0]} : {tenth[1]}
-║เลเวล :{tenth[2]}
-╚═════════════════════════════════```"""
+> อันดับ {first[0]} : {first[1]} เลเวล :{first[2]}
+> อันดับ {second[0]} : {second[1]} เลเวล :{second[2]}
+> อันดับ {third[0]} : {third[1]} เลเวล :{third[2]}
+> อันดับ {fourth[0]} : {fourth[1]} เลเวล :{fourth[2]}
+> อันดับ {fifth[0]} : {fifth[1]} เลเวล :{fifth[2]}
+> อันดับ {sixth[0]} : {sixth[1]} เลเวล :{sixth[2]}
+> อันดับ {seventh[0]} : {seventh[1]} เลเวล :{seventh[2]}
+> อันดับ {eighth[0]} : {eighth[1]} เลเวล :{eighth[2]}
+> อันดับ {ninth[0]} : {ninth[1]} เลเวล :{ninth[2]}
+> อันดับ {tenth[0]} : {tenth[1]} เลเวล :{tenth[2]}
+"""
                     
                     embed = discord.Embed(
                         title="เเรงค์เลเวลในเซิฟเวอร์",
@@ -321,105 +299,82 @@ class Level(commands.Cog):
                 status = server["level_system"]
                 if status != "NO":
                     ranking = settings.collectionlevel.find({"guild_id":ctx.guild.id}).sort("level",-1)
-                
+
                     i = 1
-                    for data in ranking:
+                    for data in await ranking.to_list(length=500000):
                         try:
                             member =ctx.guild.get_member(data["user_id"])
                             member_lvl = data["level"]
-                            member_name = member.name
                             if i == 1:
-                                first.append(i)
-                                first.append(member_name)
-                                first.append(member_lvl)
+                                first[0] = (i)
+                                first[1] = (member)
+                                first[2] = (member_lvl)
                             
                             if i == 2:
-                                second.append(i)
-                                second.append(member_name)
-                                second.append(member_lvl)
+                                second[0] = (i)
+                                second[1] = (member)
+                                second[2] = (member_lvl)
                             
                             if i == 3:
-                                third.append(i)
-                                third.append(member_name)
-                                third.append(member_lvl)
+                                third[0] = (i)
+                                third[1] = (member)
+                                third[2] = (member_lvl)
                             
                             if i == 4:
-                                fourth.append(i)
-                                fourth.append(member_name)
-                                fourth.append(member_lvl)
+                                fourth[0] = (i)
+                                fourth[1] = (member)
+                                fourth[2] = (member_lvl)
                             
                             if i == 5:
-                                fifth.append(i)
-                                fifth.append(member_name)
-                                fifth.append(member_lvl)
+                                fifth[0] = (i)
+                                fifth[1] = (member)
+                                fifth[2] = (member_lvl)
                             
                             if i == 6:
-                                sixth.append(i)
-                                sixth.append(member_name)
-                                sixth.append(member_lvl)
+                                sixth[0] = (i)
+                                sixth[1] = (member)
+                                sixth[2] = (member_lvl)
                             
                             if i == 7:
-                                seventh.append(i)
-                                seventh.append(member_name)
-                                seventh.append(member_lvl)
+                                seventh[0] = (i)
+                                seventh[1] = (member)
+                                seventh[2] = (member_lvl)
 
                             if i == 8:
-                                eighth.append(i)
-                                eighth.append(member_name)
-                                eighth.append(member_lvl)
+                                eighth[0] = (i)
+                                eighth[1] = (member)
+                                eighth[2] = (member_lvl)
                             
                             if i == 9:
-                                ninth.append(i)
-                                ninth.append(member_name)
-                                ninth.append(member_lvl)
+                                ninth[0] = (i)
+                                ninth[1] = (member)
+                                ninth[2] = (member_lvl)
                             
                             if i == 10:
-                                tenth.append(i)
-                                tenth.append(member_name)
-                                tenth.append(member_lvl)
+                                tenth[0] = (i)
+                                tenth[1] = (member)
+                                tenth[2] = (member_lvl)
                             
                             i = i + 1 
 
-                        except:
-                            pass
+                        except IndexError:
+                            break
+
                         if i == 11:
                             break
                     
                     description = f"""
-
-```py    
-╔═════════════════════════════════
-║อันดับ {first[0]} : {first[1]}
-║เลเวล :{first[2]}
-║═════════════════════════════════
-║อันดับ {second[0]} : {second[1]}
-║เลเวล :{second[2]}
-║═════════════════════════════════
-║อันดับ {third[0]} : {third[1]}
-║เลเวล :{third[2]}
-║═════════════════════════════════
-║อันดับ {fourth[0]} : {fourth[1]}
-║เลเวล :{fourth[2]}
-║═════════════════════════════════
-║อันดับ {fifth[0]} : {fifth[1]}
-║เลเวล :{fifth[2]}
-║═════════════════════════════════
-║อันดับ {sixth[0]} : {sixth[1]}
-║เลเวล :{sixth[2]}
-║═════════════════════════════════
-║อันดับ {seventh[0]} : {seventh[1]}
-║เลเวล :{seventh[2]}
-║═════════════════════════════════
-║อันดับ {eighth[0]} : {eighth[1]}
-║เลเวล :{eighth[2]}
-║═════════════════════════════════
-║อันดับ {ninth[0]} : {ninth[1]}
-║เลเวล :{ninth[2]}
-║═════════════════════════════════
-║อันดับ {tenth[0]} : {tenth[1]}
-║เลเวล :{tenth[2]}
-╚═════════════════════════════════```"""
-                    
+> อันดับ {first[0]} : {first[1]} เลเวล :{first[2]}
+> อันดับ {second[0]} : {second[1]} เลเวล :{second[2]}
+> อันดับ {third[0]} : {third[1]} เลเวล :{third[2]}
+> อันดับ {fourth[0]} : {fourth[1]} เลเวล :{fourth[2]}
+> อันดับ {fifth[0]} : {fifth[1]} เลเวล :{fifth[2]}
+> อันดับ {sixth[0]} : {sixth[1]} เลเวล :{sixth[2]}
+> อันดับ {seventh[0]} : {seventh[1]} เลเวล :{seventh[2]}
+> อันดับ {eighth[0]} : {eighth[1]} เลเวล :{eighth[2]}
+> อันดับ {ninth[0]} : {ninth[1]} เลเวล :{ninth[2]}
+> อันดับ {tenth[0]} : {tenth[1]} เลเวล :{tenth[2]}
+"""                    
                     embed = discord.Embed(
                         title="เเรงค์เลเวลในเซิฟเวอร์",
                         colour=0x00FFFF,
