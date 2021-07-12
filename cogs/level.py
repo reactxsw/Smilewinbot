@@ -16,14 +16,8 @@ class Level(commands.Cog):
                 user_id = message.author.id
                 channel = message.channel
                 data = await settings.collection.find_one({"guild_id":guild_id})
-                if data is None:
-                    return
-                
-                else:
-                    if message.author.bot:
-                        return
-
-                    else:
+                if not data is None:
+                    if not message.author.bot:
                         status = data["level_system"]
                         if status == "YES":
                             user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
