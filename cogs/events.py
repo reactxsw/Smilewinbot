@@ -11,6 +11,7 @@ class Events(commands.Cog):
     
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload): 
+        await self.bot.wait_until_ready()
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
             data = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
@@ -33,6 +34,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
+        await self.bot.wait_until_ready()
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
             data = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
@@ -43,10 +45,14 @@ class Events(commands.Cog):
                 emoji = data["emoji"]
                 role = data["role_give_id"]
                 if str(payload.emoji) == str(emoji):
-                    role = data["role_give_id"]
-                    role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
                     member = self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
-                    await member.remove_roles(role)
+                    if role in [role.id for role in member.roles]:
+                        role = data["role_give_id"]
+                        role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
+                        await member.remove_roles(role)
+                    
+                    else:
+                        pass
 
                 else:
                     pass
@@ -56,6 +62,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,member, before, after):
+        await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one({"guild_id":member.guild.id})
         if not languageserver is None:
             server_language = languageserver["Language"]
@@ -159,19 +166,18 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self,member):
+        await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one({"guild_id":member.guild.id})
         if not languageserver is None:
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
                 data = await settings.collection.find_one({"guild_id":member.guild.id})
-                if data is None:
-                    pass
-
-                else:
+                if not data is None:
                     welcome = data["welcome_id"] 
                     if not welcome == "None":
-                        try:
+                        channel = self.bot.get_channel(id = int(welcome))
+                        if channel:
                             embed = discord.Embed(
                                 colour = 0x99e68b,
                                 title =f'ยินดีต้อนรับเข้าสู่ {member.guild.name}',
@@ -183,26 +189,19 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
-                            print(f"{member.name} have joined the server {member.guild.name}")      
                             channel = self.bot.get_channel(id = int(welcome))
                             await channel.send(embed=embed)
-
-                        except Exception:
-                            pass
                     
                     else:
                         return
-
     
             if server_language == "English":
                 data = await settings.collection.find_one({"guild_id":member.guild.id})
-                if data is None:
-                    pass
-
-                else:
+                if not data is None:
                     welcome = data["welcome_id"] 
                     if not welcome == "None":
-                        try:
+                        channel = self.bot.get_channel(id = int(welcome))
+                        if channel:
                             embed = discord.Embed(
                                     colour = 0x99e68b,
                                     title =f'Welcome to {member.guild.name}',
@@ -213,13 +212,9 @@ class Events(commands.Cog):
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
-
-                            print(f"{member.name} have joined the server {member.guild.name}")      
+                            
                             channel = self.bot.get_channel(id = int(welcome))
                             await channel.send(embed=embed)
-
-                        except Exception:
-                            pass
                     
                     else:
                         return
@@ -229,19 +224,18 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self,member):
+        await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one({"guild_id":member.guild.id})
         if not languageserver is None:
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
                 data = await settings.collection.find_one({"guild_id":member.guild.id})
-                if data is None:
-                    pass
-
-                else:
+                if not data is None:
                     welcome = data["leave_id"] 
                     if not welcome == "None":
-                        try:
+                        channel = self.bot.get_channel(id = int(data["leave_id"]))
+                        if channel:
                             embed = discord.Embed(
                                 colour=0x983925, 
                                 title = "Member leave",
@@ -253,43 +247,32 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
-                            print(f"{member.name} have left the server {member.guild.name}")      
                             channel = self.bot.get_channel(id = int(data["leave_id"]))
                             await channel.send(embed=embed)
-
-                        except Exception:
-                            pass
-                
                     else:
                         return
             
             if server_language == "English":
                 data = await settings.collection.find_one({"guild_id":member.guild.id})
-                if data is None:
-                    pass
-
-                else:
+                if not data is None:
                     welcome = data["leave_id"] 
                     if not welcome == "None":
-                        try:
+                        channel = self.bot.get_channel(id = int(data["leave_id"]))
+                        if channel:
                             embed = discord.Embed(
-                                    colour=0x983925, 
-                                    title = "Member leave",
-                                    description= f"{member.name} have left the server"
+                                colour=0x983925, 
+                                title = "Member leave",
+                                description= f"{member.name} have left the server"
                                 )
 
                             embed.set_thumbnail(url=f"{member.avatar_url}")
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
-
-                            print(f"{member.name} have left the server {member.guild.name}")      
+ 
                             channel = self.bot.get_channel(id = int(data["leave_id"]))
                             await channel.send(embed=embed)
 
-                        except Exception:
-                            pass
-                    
                     else:
                         return
         
@@ -298,9 +281,10 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self,guild):
+        await self.bot.wait_until_ready()
         channel = self.bot.get_channel(id = int(settings.logchannel))
         embed = discord.Embed(
-            title = f"Bot have joined a new server {guild.name}",
+            title = f"Bot have joined a new server {guild.name} with {guild.member_count} members",
             colour = 0x00FFFF
         )
         await channel.send(embed=embed)    
@@ -325,12 +309,13 @@ class Events(commands.Cog):
 
                 message = await channel.send(embed=embed)
                 await message.add_reaction('🙏')
-                print(f"Bot have joined a new server {guild.name}")
+                print(f"Bot have joined a new server {guild.name} with {guild.member_count} members")
 
             break
 
     @commands.Cog.listener()
     async def on_guild_remove(self,guild):
+        await self.bot.wait_until_ready()
         channel = self.bot.get_channel(id = int(settings.logchannel))
         embed = discord.Embed(
             title = f"Bot have left {guild.name}",
