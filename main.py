@@ -78,8 +78,9 @@ async def loadcogs():
                 bot.load_extension(f"cogs.{filename[:-3]}")
                 print(f"Successfully loaded {filename}")
             
-            except:
+            except Exception as e:
                 print(f"Failed to load {filename}")
+                print(e)
                 traceback.print_exc()
     
 async def unloadcogs():
@@ -89,8 +90,9 @@ async def unloadcogs():
                 bot.unload_extension(f"cogs.{filename[:-3]}")
                 print(f"Successfully unloaded {filename}")
             
-            except:
+            except Exception as e:
                 print(f"Failed to unload {filename}")
+                print(e)
                 traceback.print_exc()
 
 @bot.event
@@ -125,11 +127,7 @@ async def restart_program():
         os.execl(python, python, * sys.argv)
     
 async def clearcmd():
-    if platform.system() == ("Windows"):
-        os.system("cls")
-    
-    else:
-        os.system("clear")
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 @bot.command()
 @commands.is_owner()
