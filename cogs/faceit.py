@@ -28,9 +28,8 @@ class Faceit(commands.Cog):
             return 0
         if a < 0 and b < 0 or a > 0 and b > 0:
             return ((abs(abs(a) - abs(b))) if a < b else -(abs(abs(a) - abs(b))))
-
-        else:
-            return math.copysign((abs(a) + abs(b)),b)
+            
+        return math.copysign((abs(a) + abs(b)),b)
 
     @commands.command()
     async def faceitcsgo(self,ctx, nickname=None):
