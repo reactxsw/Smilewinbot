@@ -127,7 +127,7 @@ async def restart_program():
         os.execl(python, python, * sys.argv)
     
 async def clearcmd():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'Windows' else 'clear')
 
 @bot.command()
 @commands.is_owner()
