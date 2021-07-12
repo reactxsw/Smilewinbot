@@ -1,20 +1,11 @@
-import aiohttp
-import discord
-from discord.ext.commands.core import command
-import settings
-import humanize
-import requests
-import datetime
-import bs4
-from bs4 import BeautifulSoup,element
-from bs4 import BeautifulSoup as bs4
+import aiohttp , discord , settings , humanize , datetime ,bs4
+from bs4 import BeautifulSoup
 from discord.ext import commands
-
 
 class GameInfo(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
-    
+        
     @commands.command()
     async def dota2now(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -497,73 +488,92 @@ Higest player online {playerall}``` """
             await message.add_reaction('👍')
         
         else:
-            server_language = languageserver["Language"]
-
-            url = f"https://public-api.tracker.gg/v2/apex/standard/profile/origin/{username}"
             headers = {
                 'TRN-Api-Key': settings.trackerapi
             }
-            try:
-                r = requests.get(url, headers=headers)
+            server_language = languageserver["Language"]
+
+            url = f"https://public-api.tracker.gg/v2/apex/standard/profile/origin/{username}"
+            async with aiohttp.ClientSession(headers = headers) as session:
+                async with session.get(url) as r:
+                    r = await r.json()
+
+                if server_language == "Thai":
+                    if not r["errors"]:
+                        platform = r["data"]["platformInfo"]["platformSlug"]
+                        username = r["data"]["platformInfo"]["platformUserId"]
+                        avatar = r["data"]["platformInfo"]["avatarUrl"]
+                        level = r["data"]["segments"][0]["stats"]["level"]["value"]
+                        kills = r["data"]["segments"][0]["stats"]["kills"]["value"]
+
+                        level = int(level)
+                        kills = int(kills)
+                        kills = humanize.intcomma(kills)
+                        embed= discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"🎮 Stat เกม apex legend ของ {username}",
+                            description =f"""```
+💻 เพลตฟอร์ม : {platform}
+👀 ชื่อในเกม : {username}
+📁 เลเวลในเกม : {level}
+🔫 ฆ่าทั้งหมด : {kills}```
+                        """)
+
+                        embed.set_thumbnail(url=avatar)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('🎮')
+
+                    else:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` ไม่พบผู้เล่น ``{username}``"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
             
-            except:
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    description = f" ⚠️``{ctx.author}`` ไม่พบผู้เล่น ``{username}``"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                if server_language == "English":
+                    if not r["errors"]:
+                        platform = r["data"]["platformInfo"]["platformSlug"]
+                        username = r["data"]["platformInfo"]["platformUserId"]
+                        avatar = r["data"]["platformInfo"]["avatarUrl"]
+                        level = r["data"]["segments"][0]["stats"]["level"]["value"]
+                        kills = r["data"]["segments"][0]["stats"]["kills"]["value"]
 
-                message = await ctx.send(embed=embed ) 
-                await message.add_reaction('⚠️')
-
-            r = r.json()
-
-            platform = r["data"]["platformInfo"]["platformSlug"]
-            username = r["data"]["platformInfo"]["platformUserId"]
-            avatar = r["data"]["platformInfo"]["avatarUrl"]
-            level = r["data"]["segments"][0]["stats"]["level"]["value"]
-            kills = r["data"]["segments"][0]["stats"]["kills"]["value"]
-
-            level = int(level)
-            kills = int(kills)
-            kills = humanize.intcomma(kills)
-
-            if server_language == "Thai":
-                embed= discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"🎮 Stat เกม apex legend ของ {username}",
-                    description =f"""```
-    💻 เพลตฟอร์ม : {platform}
-    👀 ชื่อในเกม : {username}
-    📁 เลเวลในเกม : {level}
-    🔫 ฆ่าทั้งหมด : {kills}```
+                        level = int(level)
+                        kills = int(kills)
+                        kills = humanize.intcomma(kills)
+                        embed= discord.Embed(
+                            colour = 0x00FFFF,
+                            title = f"🎮 apex legend stat of {username}",
+                            description =f"""```
+💻 Platform : {platform}
+👀 Username : {username}
+📁 Level : {level}
+🔫 Kills : {kills}```
                 """)
 
-                embed.set_thumbnail(url=avatar)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('🎮')
-            
-            if server_language == "English":
-                embed= discord.Embed(
-                    colour = 0x00FFFF,
-                    title = f"🎮 apex legend stat of {username}",
-                    description =f"""```
-    💻 Platform : {platform}
-    👀 Username : {username}
-    📁 Level : {level}
-    🔫 Kills : {kills}```
-                """)
+                        embed.set_thumbnail(url=avatar)
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        
+                        message = await ctx.send(embed=embed)
+                        await message.add_reaction('🎮')
 
-                embed.set_thumbnail(url=avatar)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('🎮')
+                    else:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` Player not found ``{username}``"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
 
     @apexstat.error
-    async def apexstat_error(ctx, error):
+    async def apexstat_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
