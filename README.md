@@ -15,6 +15,6 @@ A discord bot made with python for my discord server
 <p>1. Download everythings in <a href="#need">here</a></p>
 <p>2. Run install.bat</p>
 <h3> How to run</h3>
-LOL ? if you don't know how then don't use it
+https://www.wikihow.com/Begin-Running
 
 
