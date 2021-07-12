@@ -5,10 +5,8 @@ from discord.client import Client
 from discord.ext.commands.core import command
 import humanize
 import settings
-import time
 import math
 import aiohttp
-import requests
 import flag
 from discord.ext import commands
 
@@ -26,13 +24,13 @@ class Faceit(commands.Cog):
         }
     
     def distance(self,a, b):
-        if (a == b):
+        if a == b:
             return 0
-        elif (a < 0) and (b < 0) or (a > 0) and (b > 0):
-            if (a < b):
+        elif a < 0 and b < 0 or a > 0 and b > 0:
+            if a < b:
                 return (abs(abs(a) - abs(b)))
-            else:
-                return -(abs(abs(a) - abs(b)))
+                
+            return -(abs(abs(a) - abs(b)))
         else:
             return math.copysign((abs(a) + abs(b)),b)
 
