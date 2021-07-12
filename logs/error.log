@@ -1,0 +1,86 @@
+
+2021-07-02 16:54:01: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r helpnsfw,command: helpnsfw}
+2021-07-02 16:54:04: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r helpnsfw,command: helpnsfw}
+2021-07-03 04:04:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r userinfo,command: userinfo}
+2021-07-03 05:27:53: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r myid,command: None}
+2021-07-03 05:32:24: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r membercoount,command: None}
+2021-07-03 06:02:18: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r channelinfo,command: channelinfo}
+2021-07-03 21:31:57: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setting,command: setting}
+2021-07-03 21:33:18: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setting,command: setting}
+2021-07-03 21:34:02: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setting,command: setting}
+2021-07-04 01:08:28: [brainfuck#5929 | 373434208397426700] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r playhttps://www.youtube.com/watch?v=0psmX7MLKcE,command: None}
+2021-07-04 08:36:23: [REACT#1120 | 394447088970104833] in [842787162381353030 | test]{Error:NoneType: None,userinput: /r leaderboard,command: leaderboard}
+2021-07-04 08:37:18: [REACT#1120 | 394447088970104833] in [842787162381353030 | test]{Error:NoneType: None,userinput: /r leaderboard,command: leaderboard}
+2021-07-04 08:46:05: [REACT#1120 | 394447088970104833] in [842787162381353030 | test]{Error:NoneType: None,userinput: /r leaderboard,command: leaderboard}
+2021-07-04 09:00:26: [REACT#1120 | 394447088970104833] in [842787162381353030 | test]{Error:NoneType: None,userinput: /r language thai,command: None}
+2021-07-04 21:05:51: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r geoip 198.128.536,command: geoip}
+2021-07-04 21:05:58: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r geoip 198.128.536.444,command: geoip}
+2021-07-05 05:11:34: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r gold,command: gold}
+2021-07-05 05:14:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r gold,command: gold}
+2021-07-05 05:16:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r gold,command: gold}
+2021-07-05 21:54:54: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r play https://youtu.be/taaT4pC-jnc,command: None}
+2021-07-06 01:12:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r leave,command: None}
+2021-07-06 01:13:09: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r leave,command: None}
+2021-07-09 18:26:11: [DododaCoco#5182 | 627461620737769478] in [852519395770892299 | Destiny Clan]{Error:NoneType: None,userinput: /r ind,command: introduction}
+2021-07-09 18:28:51: [DododaCoco#5182 | 627461620737769478] in [852519395770892299 | Destiny Clan]{Error:NoneType: None,userinput: /r ind,command: introduction}
+2021-07-09 19:04:07: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r unloadcogs,command: None}
+2021-07-09 19:04:18: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r unloadcog,command: None}
+2021-07-09 20:11:02: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:13:26: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:13:59: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:14:41: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:14:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:16:51: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:19:02: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:21:50: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:24:03: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:24:03: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:24:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:27:59: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:29:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:31:11: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:32:35: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:36:11: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:36:11: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:37:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:37:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:38:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:38:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:38:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:39:45: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:41:16: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:41:59: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:46:37: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 20:52:57: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-09 22:12:16: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r reloadcog,command: None}
+2021-07-10 01:26:51: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-10 01:30:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitcsgo -xREACTx-,command: faceitcsgo}
+2021-07-10 08:07:21: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r faceitpubg -xREACTx-,command: faceitpubg}
+2021-07-11 22:24:39: [REACT#1120 | 394447088970104833] in [847811283884965889 | TH-Asia SCUM Server High Loot&Car PVE & PVP No Robot]{Error:NoneType: None,userinput: /r setreactrole <:sanic:863801740843286538> <@&863800611157049384>,command: None}
+2021-07-11 23:56:10: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 00:00:29: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 00:00:43: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 00:08:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 00:14:18: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setintroduce,command: setintroduce}
+2021-07-12 02:18:21: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 02:20:20: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 02:20:24: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r reactrole,command: None}
+2021-07-12 02:20:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r hi,command: None}
+2021-07-12 02:20:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r hi,command: None}
+2021-07-12 02:23:47: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r reactrole,command: None}
+2021-07-12 02:23:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 02:24:16: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r kick,command: kick}
+2021-07-12 02:27:33: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 02:30:44: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 02:37:29: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 02:45:39: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreactrole,command: None}
+2021-07-12 02:47:39: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 02:48:13: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: None}
+2021-07-12 02:48:13: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r setreact,command: setreact}
+2021-07-12 13:04:52: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r play https://open.spotify.com/track/6z56u8jPSSroDFrJVD5cMf,command: play}
+2021-07-12 17:01:14: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r pingweb hahahaha,command: pingweb}
+2021-07-12 17:06:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r pingweb ahahah,command: pingweb}
+2021-07-12 17:07:21: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r pingweb https://ahahah,command: pingweb}
+2021-07-12 17:09:34: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r pingweb https://ahahah.com/,command: pingweb}
+2021-07-12 17:09:41: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r pingweb dsadadas,command: pingweb}
+2021-07-12 17:22:55: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: /r github 341034h3 rg3108 f031 f1,command: github}
