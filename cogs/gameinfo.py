@@ -1,4 +1,9 @@
-import aiohttp , discord , settings , humanize , datetime ,bs4
+import aiohttp 
+import discord 
+import settings 
+import humanize 
+import datetime 
+import bs4
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
