@@ -10,7 +10,6 @@ import logging
 import asyncio
 import sys
 import traceback
-import asyncpraw
 
 #from
 from discord.channel import StoreChannel
@@ -26,8 +25,7 @@ handler = logging.FileHandler(filename='logs/botlog.log', encoding='utf-8', mode
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-
-os.system("title Smilewin#0644")
+intent = discord.Intents.all()
 
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
@@ -57,7 +55,7 @@ async def clearcmd():
     else:
         os.system("clear")
 
-bot = commands.AutoShardedBot(command_prefix = settings.COMMAND_PREFIX,case_insensitive=True ,intents=discord.Intents.all() , strip_after_prefix=True)
+bot = commands.AutoShardedBot(command_prefix = commands.when_mentioned_or(settings.COMMAND_PREFIX),case_insensitive=True ,intents=intent , strip_after_prefix=True)
 bot.remove_command('help')
 
 start_time = datetime.datetime.utcnow()
@@ -78,10 +76,10 @@ async def loadcogs():
         if filename.endswith(".py") and not filename.startswith("_"):
             try:
                 bot.load_extension(f"cogs.{filename[:-3]}")
-                print(f"Successfully loaded {filename}.py")
+                print(f"Successfully loaded {filename}")
             
             except:
-                print(f"Failed to load {filename}.py")
+                print(f"Failed to load {filename}")
                 traceback.print_exc()
     
 async def unloadcogs():
@@ -89,7 +87,7 @@ async def unloadcogs():
         if filename.endswith(".py") and not filename.startswith("_"):
             try:
                 bot.unload_extension(f"cogs.{filename[:-3]}")
-                print(f"Successfully loaded {filename}")
+                print(f"Successfully unloaded {filename}")
             
             except:
                 print(f"Failed to unload {filename}")
@@ -99,7 +97,6 @@ async def unloadcogs():
 async def on_ready():
     await loadcogs()
     await checkMongo()
-    await clearcmd()
     space = (" ")
     server= (str(len(bot.guilds)))
     server_space = (27 - int(len(server)))*space
@@ -134,20 +131,14 @@ async def clearcmd():
     else:
         os.system("clear")
 
-
-
 @bot.command()
 @commands.is_owner()
-async def restart(ctx):
+async def restartbot(ctx):
     await clearcmd()
     await ctx.send("Restarting...")
     await asyncio.sleep(5)
     await restart_program()
-
-@bot.command()
-async def howmanycommand(ctx):
-    for command in bot.commands:
-        print(command)
+    await clearcmd()
 
 @bot.command()
 @commands.is_owner()
@@ -156,21 +147,32 @@ async def reloadcogs(ctx):
     await unloadcogs()
     await asyncio.sleep(2)
     await loadcogs()
+    await clearcmd()
 
 @bot.command()
 async def cleancmd(ctx):
     await clearcmd()
-    print(ASCII_ART)
-    print(f"BOT NAME : {bot.user}")
-    print(f"BOT ID : {bot.user.id}")
-    print("BOT STATUS : ONLINE")
-    print("SERVER : " + str(len(bot.guilds)))
-    print("USER : " + str(len(bot.users)))
-    print("")
-    print("CONSOLE : ")
+    space = (" ")
+    server= (str(len(bot.guilds)))
+    server_space = (27 - int(len(server)))*space
+    user = (str(len(bot.users)))
+    user_space = (29 - int(len(user)))*space
+    change_status.start()
+    print(f"{ASCII_ART}")
+    print(f"                                   ╔══════════════════════════════════════╗")
+    print(f"                                   ║  BOT NAME : {bot.user}            ║")
+    print(f"                                   ║  BOT ID : {bot.user.id}         ║")
+    print(f"                                   ║  BOT STATUS : ONLINE                 ║")
+    print(f"                                   ║  SERVER : {server}{server_space}║")
+    print(f"                                   ║  USER : {user}{user_space}║")
+    print(f"                                   ║                                      ║")
+    print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
 
-    
+@bot.event
+async def on_connect():
+    print("Connected to discord API")
+
 def main():
     try:
         bot.run(settings.TOKEN , bot = True,reconnect=True)
@@ -178,4 +180,5 @@ def main():
         print(e)
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
