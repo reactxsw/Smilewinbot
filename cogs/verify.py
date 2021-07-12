@@ -102,23 +102,24 @@ class Verify(commands.Cog):
                         await message.delete()
 
                     if give != "None":
-                        try:
-                            role = int(give)
-                            role = ctx.guild.get_role(role)
-                            await ctx.author.add_roles(role)
+                        role = int(give)
+                        role = ctx.guild.get_role(role)
+                        if role:
+                            try:
+                                await ctx.author.add_roles(role)
 
-                        except discord.Forbidden:
-                            pass
+                            except discord.Forbidden:
+                                pass
 
                     if remove != "None":
-                        try:
-                            role = remove
-                            role = int(role)
-                            role = ctx.guild.get_role(role)
-                            await ctx.author.remove_roles(role)
+                        role = int(remove)
+                        role = ctx.guild.get_role(role)
+                        if role:
+                            try:
+                                await ctx.author.remove_roles(role)
 
-                        except discord.Forbidden:
-                            pass
+                            except discord.Forbidden:
+                                pass
 
                     embed = discord.Embed(
                         colour = 0x00FFFF,
@@ -219,24 +220,24 @@ Sex : {sex}
                             await ctx.send(embed=embed)
                             
                             if not give == "None":
-                                try:
-                                    role = give
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.add_roles(role)
+                                role = int(give)
+                                role = ctx.guild.get_role(role)
+                                if role:
+                                    try:
+                                        await ctx.author.add_roles(role)
 
-                                except discord.Forbidden:
-                                    pass
+                                    except discord.Forbidden:
+                                        pass
                     
                             if not remove == "None":
-                                try:
-                                    role = remove
-                                    role = int(role)
-                                    role = ctx.guild.get_role(role)
-                                    await ctx.author.remove_roles(role)
+                                role = int(remove)
+                                role = ctx.guild.get_role(role)
+                                if role:
+                                    try:
+                                        await ctx.author.remove_roles(role)
 
-                                except discord.Forbidden:
-                                    pass
+                                    except discord.Forbidden:
+                                        pass
 
     @commands.command(aliases =["vfy"])
     async def verify(self,ctx):
@@ -316,24 +317,24 @@ Sex : {sex}
                                         await message.delete()
 
                                         if give != "None":
-                                            try:
-                                                role = give
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                            role = int(give)
+                                            role = ctx.guild.get_role(role)
+                                            if role:
+                                                try:
+                                                    await ctx.author.add_roles(role)
 
-                                            except :
-                                                pass
+                                                except discord.Forbidden:
+                                                    pass
 
                                         if remove != "None":
-                                            try:
-                                                role = remove
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                            role = int(remove)
+                                            role = ctx.guild.get_role(role)
+                                            if role:
+                                                try:
+                                                    await ctx.author.remove_roles(role)
 
-                                            except :
-                                                pass
+                                                except discord.Forbidden:
+                                                    pass
                             
                                     else:
                                         await message.delete()
@@ -456,30 +457,24 @@ Sex : {sex}
                                         await message.delete()
 
                                         if give != "None":
-                                            try:
-                                                role = give
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                            role = int(give)
+                                            role = ctx.guild.get_role(role)
+                                            if role:
+                                                try:
+                                                    await ctx.author.add_roles(role)
 
-                                            except discord.Forbidden:
-                                                pass
-
-                                        else: 
-                                            pass
+                                                except discord.Forbidden:
+                                                    pass
 
                                         if remove != "None":
-                                            try:
-                                                role = remove
-                                                role = int(role)
-                                                role = ctx.guild.get_role(role)
-                                                await ctx.author.add_roles(role)
+                                            role = int(remove)
+                                            role = ctx.guild.get_role(role)
+                                            if role:
+                                                try:
+                                                    await ctx.author.remove_roles(role)
 
-                                            except discord.Forbidden:
-                                                pass
-                            
-                                        else:
-                                            pass  
+                                                except discord.Forbidden:
+                                                    pass
                             
                                     else:
                                         await message.delete()
