@@ -501,7 +501,7 @@ https://hastebin.com/{r['key']}```"""
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')            
 
-                except:
+                except discord.InvalidArgument:
                     embed = discord.Embed(
                         colour = 0x983925,
                         title= "ไม่สามารถส่งข้อความไปยังwebhook",
@@ -530,7 +530,7 @@ https://hastebin.com/{r['key']}```"""
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
                     
-                except:
+                except discord.InvalidArgument:
                     embed = discord.Embed(
                         colour = 0x983925,
                         title= "Unable to send to webhook",
