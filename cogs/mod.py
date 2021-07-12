@@ -460,7 +460,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def giverole(ctx, user: discord.Member, role: discord.Role):
+    async def giverole(self,ctx, user: discord.Member, role: discord.Role):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -514,7 +514,7 @@ class Mod(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @giverole.error
-    async def giverole_error(ctx, error):
+    async def giverole_error(self,ctx, error):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -577,7 +577,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def removerole(ctx, user: discord.Member, role: discord.Role):
+    async def removerole(self,ctx, user: discord.Member, role: discord.Role):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -631,7 +631,7 @@ class Mod(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @removerole.error
-    async def removerole_error(ctx, error):
+    async def removerole_error(self,ctx, error):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -694,7 +694,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def changenick(ctx, user: discord.Member, Change):
+    async def changenick(self,ctx, user: discord.Member, Change):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -731,7 +731,7 @@ class Mod(commands.Cog):
 
 
     @changenick.error
-    async def changenick_error(ctx, error):
+    async def changenick_error(self,ctx, error):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -794,7 +794,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def clear(ctx, amount : int):
+    async def clear(self,ctx, amount : int):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             embed = discord.Embed(
@@ -938,8 +938,9 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except:
+                    except discord.MissingPermissions:
                         pass
+
                 embed = discord.Embed(
                     title = "ให้ยศสมาชิกทุกคน",
                     colour = 0x00FFFF,
@@ -963,7 +964,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except:
+                    except discord.MissingPermissions:
                         pass
                 embed = discord.Embed(
                     title = "give role to all members",
@@ -1067,8 +1068,9 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except:
+                    except discord.MissingPermissions:
                         pass
+
                 embed = discord.Embed(
                     title = "ลบยศสมาชิกทุกคน",
                     colour = 0x00FFFF,
@@ -1092,7 +1094,7 @@ class Mod(commands.Cog):
                         time.sleep(0.5)
                         i +=1
 
-                    except:
+                    except discord.MissingPermissions:
                         pass
                 embed = discord.Embed(
                     title = "remove role from all members",
@@ -1163,105 +1165,6 @@ class Mod(commands.Cog):
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def disconnect(self,ctx, member : discord.Member):
-        language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if language is None:
-            embed = discord.Embed(
-                title = "Language setting / ตั้งค่าภาษา",
-                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👍')
-
-        else:
-            server_language = language["Language"]
-            
-            if server_language == "Thai":
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    title = f'สมาชิก {member} ได้ถูกดีดออกจาก voice chat โดย {ctx.author}'
-                )
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('😤')
-                await member.move_to(channel=None)
-            
-            if server_language == "English":
-                embed = discord.Embed(
-                    colour = 0x983925,
-                    title = f'{member} have been disconnected from voice chat by {ctx.author}'
-                )
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('😤')
-                await member.move_to(channel=None)
-
-    @disconnect.error
-    async def disconnect_error(self,ctx, error):
-        language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
-        if language is None:
-            embed = discord.Embed(
-                title = "Language setting / ตั้งค่าภาษา",
-                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
-
-            )
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👍')
-
-        else:
-            server_language = language["Language"]
-            
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "ชื่อสมาชิกที่จะdisconnect",
-                        description = f" ⚠️``{ctx.author}`` จะต้องใส่ชื่อของสมาชิกที่จะเเบน ``{settings.COMMAND_PREFIX}disconnect [@user]``"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-        
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "คุณไม่มีสิทธิ์ย้ายสมาชิก",
-                        description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
-                        )
-                    
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-            
-            if server_language == "English":
-                if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` need to specify a member to move ``{settings.COMMAND_PREFIX}disconnect @member``"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
-
-                if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = "You don't have permission",
-                        description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
 
     @commands.command()
     @commands.has_permissions(administrator=True)
