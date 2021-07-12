@@ -12,7 +12,7 @@ class Fun(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases = ['subreddit','reddit'])
-    async def sreddit(ctx, subreddit):
+    async def sreddit(self,ctx, subreddit):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -90,7 +90,7 @@ class Fun(commands.Cog):
                 title =random_sub.title
                 url = random_sub.url
 
-                if submission.over_18:
+                if random_sub.over_18:
                     if ctx.channel.is_nsfw():
                         embed = discord.Embed(
                             colour = 0x00FFFF,
@@ -132,7 +132,7 @@ class Fun(commands.Cog):
                     await message.add_reaction('✨')
 
     @sreddit.error
-    async def sreddit_error(ctx, error):
+    async def sreddit_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -368,7 +368,7 @@ class Fun(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @commands.command()
-    async def meme(ctx):
+    async def meme(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
