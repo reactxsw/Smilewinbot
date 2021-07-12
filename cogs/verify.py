@@ -107,10 +107,8 @@ class Verify(commands.Cog):
                             role = ctx.guild.get_role(role)
                             await ctx.author.add_roles(role)
 
-                        except Exception as e:
-                            print(e)
-                    else:
-                        pass
+                        except discord.MissingPermissions:
+                            pass
 
                     if remove != "None":
                         try:
@@ -119,11 +117,8 @@ class Verify(commands.Cog):
                             role = ctx.guild.get_role(role)
                             await ctx.author.remove_roles(role)
 
-                        except Exception as e:
-                            print(e)
-                    
-                    else:
-                        pass
+                        except discord.MissingPermissions:
+                            pass
 
                     embed = discord.Embed(
                         colour = 0x00FFFF,
@@ -230,7 +225,7 @@ Sex : {sex}
                                     role = ctx.guild.get_role(role)
                                     await ctx.author.add_roles(role)
 
-                                except Exception:
+                                except discord.MissingPermissions:
                                     pass
                     
                             if not remove == "None":
@@ -240,7 +235,7 @@ Sex : {sex}
                                     role = ctx.guild.get_role(role)
                                     await ctx.author.remove_roles(role)
 
-                                except Exception:
+                                except discord.MissingPermissions:
                                     pass
 
     @commands.command(aliases =["vfy"])
@@ -327,11 +322,8 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except Exception as e:
+                                            except discord.MissingPermissions:
                                                 pass
-
-                                        else: 
-                                            pass
 
                                         if remove != "None":
                                             try:
@@ -340,11 +332,8 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except Exception:
+                                            except discord.MissingPermissions:
                                                 pass
-                            
-                                        else:
-                                            pass  
                             
                                     else:
                                         await message.delete()
@@ -473,7 +462,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except Exception as e:
+                                            except discord.MissingPermissions:
                                                 pass
 
                                         else: 
@@ -486,7 +475,7 @@ Sex : {sex}
                                                 role = ctx.guild.get_role(role)
                                                 await ctx.author.add_roles(role)
 
-                                            except Exception:
+                                            except discord.MissingPermissions:
                                                 pass
                             
                                         else:
