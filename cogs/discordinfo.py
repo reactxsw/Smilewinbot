@@ -18,7 +18,76 @@ class DiscordInfo(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def membercount(ctx):
+    async def channelinfo(self,ctx,channel:discord.TextChannel=None):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            embed = discord.Embed(
+                title = "Language setting / ตั้งค่าภาษา",
+                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            if channel is None:
+                channel = ctx.channel
+
+            if server_language == "Thai":
+                embed = discord.Embed(
+                    title = "ข้อมูลช่องเเชท",
+                    colour = 0xfed000
+                )
+                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```", inline = True)
+                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```", inline = True)
+                embed.add_field(name = "หัวข้อช่องเเชท",value=f"```{channel.topic}```", inline = False)
+                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```", inline = True)
+                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```", inline = True)
+                embed.add_field(name = "วันที่สร้างเซิฟเวอร์",value="```"+channel.created_at.strftime("%Y/%m/%d %I:%M %p")+"```", inline = False)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                await ctx.send(embed=embed)
+
+            if server_language == "English":
+                embed = discord.Embed(
+                    title = "ข้อมูลช่องเเชท",
+                    colour = 0xfed000
+                )
+                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```", inline = True)
+                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```", inline = True)
+                embed.add_field(name = "หัวข้อช่องเเชท",value=f"```{channel.topic}```", inline = False)
+                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```", inline = True)
+                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```", inline = True)
+                embed.add_field(name = "วันที่สร้างเซิฟเวอร์",value="```"+channel.created_at.strftime("%Y/%m/%d %I:%M %p")+"```", inline = False)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                await ctx.send(embed=embed)
+                
+    @commands.command()
+    async def myid(self,ctx):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            embed = discord.Embed(
+                title = "Language setting / ตั้งค่าภาษา",
+                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
+
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            if server_language == "Thai":
+                await ctx.send(f"{ctx.author.mention},\nYour user ID: {ctx.author.id}\nThis server ID: {ctx.guild.id}")
+            
+            if server_language == "English":
+                await ctx.send(f"{ctx.author.mention},\nYour user ID: {ctx.author.id}\nThis server ID: {ctx.guild.id}")
+
+    @commands.command()
+    async def membercount(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -36,12 +105,12 @@ class DiscordInfo(commands.Cog):
             totalmember =ctx.guild.member_count
             memberonly = len([member for member in ctx.guild.members if not member.bot])
             botonly = int(totalmember) - int(memberonly)
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            totalonline = memberonline + memberidle + memberbusy
             if server_language == "Thai":
-                memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-                memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-                memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-                memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
-                totalonline = memberonline + memberidle + memberbusy
                 embed = discord.Embed(
                     color= 0xffff00,
                     title=f"สมาชิกใน {ctx.guild.name}",
@@ -49,12 +118,12 @@ class DiscordInfo(commands.Cog):
 
 ```❤️ สมาชิกทั้งหมด : {totalmember}
 🧡 สมาชิกที่เป็นคน : {memberonly}
-💛 สมาชิกที่เป็นบอท : {botonly}
-<:online:{settings.online_id}> ออนไลน์ทั้งหมด : {totalonline}
-<:online:{settings.online_id}> สถานะออนไลน์ : {memberonline}
-<:idle:{settings.idle_id}> สถานะไม่อยู่ : {memberidle}
-<:busy:{settings.busy_id}> สถานะห้ามรบกวน : {memberbusy}
-<:offline:{settings.offline_id}> สถานะออฟไลน์ : {memberoffline}```"""
+💛 สมาชิกที่เป็นบอท : {botonly}```
+> <:online:{settings.online_id}> ออนไลน์ทั้งหมด : ``{totalonline}``
+> <:online:{settings.online_id}> สถานะออนไลน์ : ``{memberonline}``
+> <:idle:{settings.idle_id}> สถานะไม่อยู่ : ``{memberidle}``
+> <:busy:{settings.busy_id}> สถานะห้ามรบกวน : ``{memberbusy}``
+> <:offline:{settings.offline_id}> สถานะออฟไลน์ : ``{memberoffline}``"""
 
             )  
 
@@ -65,11 +134,6 @@ class DiscordInfo(commands.Cog):
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('❤️')
             if server_language == "English":
-                memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-                memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-                memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-                memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
-                totalonline = memberonline + memberidle + memberbusy
                 embed = discord.Embed(
                     color= 0xffff00,
                     title=f"members in {ctx.guild.name}",
@@ -77,12 +141,12 @@ class DiscordInfo(commands.Cog):
 
 ```❤️ Total member : {totalmember}
 🧡 Human member : {memberonly}
-💛 Bot member : {botonly}
-<:online:{settings.online_id}>**Total online**: {totalonline}
-<:online:{settings.online_id}>**Online member**: {memberonline}
-<:idle:{settings.idle_id}>**Idle member**: {memberidle}
-<:busy:{settings.busy_id}>**Busy member**: {memberbusy}
-<:offline:{settings.offline_id}>**Offline member**: {memberoffline}```"""
+💛 Bot member : {botonly}```
+> <:online:{settings.online_id}>**Total online**: ``{totalonline}``
+> <:online:{settings.online_id}>**Online member**: ``{memberonline}``
+> <:idle:{settings.idle_id}>**Idle member**: ``{memberidle}``
+> <:busy:{settings.busy_id}>**Busy member**: ``{memberbusy}``
+> <:offline:{settings.offline_id}>**Offline member**: ``{memberoffline}``"""
 
             )  
 
@@ -157,17 +221,24 @@ class DiscordInfo(commands.Cog):
         
         else:
             server_language = languageserver["Language"]
-            
+            totalmember =ctx.guild.member_count
+            memberonly = len([member for member in ctx.guild.members if not member.bot])
+            botonly = int(totalmember) - int(memberonly)
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            connect = sum([len(voice_channel.members) for voice_channel in ctx.guild.voice_channels])
+            totalonline = memberonline + memberidle + memberbusy
+            nitro_teir = ctx.guild.premium_tier
+            num_boost = ctx.guild.premium_subscription_count
+            bannedmember = len(await ctx.guild.bans())
+            totalinvite = len(await ctx.guild.invites())
+            animated = len([emoji for emoji in ctx.guild.emojis if emoji.animated])
+            normal = len([emoji for emoji in ctx.guild.emojis if not emoji.animated])
+            time = str(ctx.guild.created_at).split()[0]
+
             if server_language == "Thai":
-                totalmember =ctx.guild.member_count
-                memberonly = len([member for member in ctx.guild.members if not member.bot])
-                botonly = int(totalmember) - int(memberonly)
-                memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-                memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-                memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-                memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
-                connect = sum([len(voice_channel.members) for voice_channel in ctx.guild.voice_channels])
-                totalonline = memberonline + memberidle + memberbusy
                 if "COMMUNITY" in ctx.guild.features: # it's a community server
                     guild_type = "เซิร์ฟเวอร์สาธารณะ"
                 else:
@@ -185,13 +256,6 @@ class DiscordInfo(commands.Cog):
                 else:
                     invite = "ไม่มี"
                 
-                nitro_teir = ctx.guild.premium_tier
-                num_boost = ctx.guild.premium_subscription_count
-                bannedmember = len(await ctx.guild.bans())
-                totalinvite = len(await ctx.guild.invites())
-                animated = len([emoji for emoji in ctx.guild.emojis if emoji.animated])
-                normal = len([emoji for emoji in ctx.guild.emojis if not emoji.animated])
-                time = str(ctx.guild.created_at).split()[0]
                 if str(ctx.guild.verification_level) == "none":
                     verification_level = "ไม่มี"
 
@@ -256,15 +320,6 @@ f"""**ข้อมูลทั่วไป**
             await message.add_reaction('🤖')
         
         if server_language == "English":
-            totalmember =ctx.guild.member_count
-            memberonly = len([member for member in ctx.guild.members if not member.bot])
-            botonly = int(totalmember) - int(memberonly)
-            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
-            connect = len([voice_channel.members for voice_channel in ctx.guild.voice_channels])
-            totalonline = memberonline + memberidle + memberbusy
             if "COMMUNITY" in ctx.guild.features: # it's a community server
                 guild_type = "เซิร์ฟเวอร์สาธารณะ"
             else:
@@ -282,13 +337,6 @@ f"""**ข้อมูลทั่วไป**
             else:
                 invite = "ไม่มี"
             
-            nitro_teir = ctx.guild.premium_tier
-            num_boost = ctx.guild.premium_subscription_count
-            bannedmember = len(await ctx.guild.bans())
-            totalinvite = len(await ctx.guild.invites())
-            animated = len([emoji for emoji in ctx.guild.emojis if emoji.animated])
-            normal = len([emoji for emoji in ctx.guild.emojis if not emoji.animated])
-            time = str(ctx.guild.created_at).split()[0]
             if str(ctx.guild.verification_level) == "none":
                 verification_level = "ไม่มี"
 
@@ -441,6 +489,9 @@ f"""**ข้อมูลทั่วไป**
         
         else:
             server_language = languageserver["Language"]
+            if member is None:
+                member = ctx.author
+
             roles = [role for role in member.roles]
             
             if server_language == "Thai":
@@ -596,49 +647,25 @@ f"""**ข้อมูลทั่วไป**
                 member = ctx.author
 
             if server_language == "Thai": 
-                try:
-                    embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = f"หารูปของสมาชิก: {member}",
-                        description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
-                    
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"หารูปของสมาชิก: {member}",
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
                 
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = f"ไม่สามารถหาภาพของสมาชิก{member}ได้"
-
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("✅")
             
             if server_language == "English": 
-                try:
-                    embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = f"search for {member} profile picture",
-                        description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
-                    
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
+                embed = discord.Embed(
+                    colour = 0x00FFFF,
+                    title = f"search for {member} profile picture",
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
                 
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        title = f"unable to find {member} profile picture"
-
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction("✅")
+                
     @commands.command()
     async def credit(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -654,7 +681,7 @@ f"""**ข้อมูลทั่วไป**
         
         else:
             server_language = languageserver["Language"]
-            
+             
             if server_language == "Thai":
                 embed = discord.Embed(
                     title= '💻 เครดิตคนทําบอท',
@@ -779,7 +806,7 @@ f"""**ข้อมูลทั่วไป**
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                server = settings.collection.find_one({"guild_id":ctx.guild.id})
+                server = await settings.collection.find_one({"guild_id":ctx.guild.id})
                 if server is None:
                     embed = discord.Embed(
                             title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่า",
@@ -810,106 +837,68 @@ f"""**ข้อมูลทั่วไป**
                     server_currency = server["currency"]
                     intro_frame = server["introduce_frame"]
                     log_voice = server["log_voice_system"]
-                    log_delete = server["log_delete_system"]
-                    log_name = server["log_name_system"]
                     log_channel = server["log_channel_id"]
-                    
                     verify_time = str(verify_time)
-                    #check for role introduce_give//
                     if introduce_give != "None":
                         introduce_give = ctx.guild.get_role(int(introduce_give))
-                    
                     else:
-                        introduce_give = "None"
-
-                    #check for role introduce_remove//    
+                        introduce_give = "None"   
                     if introduce_remove != "None":
                         introduce_remove = ctx.guild.get_role(int(introduce_remove))
-                    
                     else:
                         introduce_remove = "None"
-                    
-                    #check for role verify give//  
                     if verify_give != "None":
                         verify_give = ctx.guild.get_role(int(verify_give))
-                    
                     else:
                         verify_give = "None"
-                    
-                    #check for role verify remove//  
                     if verify_remove != "None":
-                        verify_remove = ctx.guild.get_role(int(verify_remove))
-                    
+                        verify_remove = ctx.guild.get_role(int(verify_remove))                 
                     else:
                         verify_remove = "None"
-                    
-                    #check welcome channel
                     if log_channel != "None":
                         log_channel = ctx.guild.get_channel(int(log_channel))
-                    
                     else:
                         log_channel = "None"
-
-                    #check welcome channel
                     if welcome_channel_id != "None":
                         welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
                         if welcome_channel_id:
                             welcome_channel_id = welcome_channel_id
-                        
                         else:
                             welcome_channel_id = "None"
-                    
                     else:
                         welcome_channel_id = "None"
-                    
-                    #check leave channel
                     if leave_channel_id != "None":
                         leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
                         if leave_channel_id:
-                            leave_channel_id = leave_channel_id
-                        
+                            leave_channel_id = leave_channel_id 
                         else:
                             leave_channel_id = "None"
-                    
                     else:
                         leave_channel_id = "None"
-                    
-                    #check webhook channel
                     if webhook_id != "None":
                         webhook_id = ctx.guild.get_channel(int(webhook_id))
                         if webhook_id:
                             webhook_id = webhook_id
-                        
                         else:
                             webhook_id = "None"
-                    
                     else:
                         webhook_id = "None"
-                    
-                    #check introduce_id channel
                     if introduce_id != "None":
                         introduce_id = ctx.guild.get_channel(int(introduce_id))
                         if introduce_id:
-                            introduce_id = introduce_id
-                        
+                            introduce_id = introduce_id               
                         else:
-                            introduce_id = "None"
-                    
+                            introduce_id = "None"  
                     else:
                         introduce_id = "None"
-                    
-                    #check verify id channel
                     if verification_id != "None":
                         verification_id = ctx.guild.get_channel(int(verification_id))
                         if verification_id:
                             verification_id = verification_id
-                        
                         else:
                             verification_id = "None"
-                    
                     else:
                         verification_id = "None"
-
                     embed = discord.Embed(
                         title = "การตั้งค่าของ Server",
                         description = f"```Database ID : {database_id}```",
@@ -918,7 +907,7 @@ f"""**ข้อมูลทั่วไป**
                     embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
                     embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
                     embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```",inline=True)
-                    embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}\nลงบันทึกลบข้อความ : {log_delete}\nลงบันทึกเปลี่ยนชื่อ : {log_name}```",inline=True)
+                    embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}```",inline=True)
                     embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
                     embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -958,106 +947,68 @@ f"""**ข้อมูลทั่วไป**
                     server_currency = server["currency"]
                     intro_frame = server["introduce_frame"]
                     log_voice = server["log_voice_system"]
-                    log_delete = server["log_delete_system"]
-                    log_name = server["log_name_system"]
                     log_channel = server["log_channel_id"]
-                    
                     verify_time = str(verify_time)
-                    #check for role introduce_give//
                     if introduce_give != "None":
                         introduce_give = ctx.guild.get_role(int(introduce_give))
-                    
                     else:
-                        introduce_give = "None"
-
-                    #check for role introduce_remove//    
+                        introduce_give = "None"   
                     if introduce_remove != "None":
                         introduce_remove = ctx.guild.get_role(int(introduce_remove))
-                    
                     else:
                         introduce_remove = "None"
-                    
-                    #check for role verify give//  
                     if verify_give != "None":
                         verify_give = ctx.guild.get_role(int(verify_give))
-                    
                     else:
                         verify_give = "None"
-                    
-                    #check for role verify remove//  
                     if verify_remove != "None":
-                        verify_remove = ctx.guild.get_role(int(verify_remove))
-                    
+                        verify_remove = ctx.guild.get_role(int(verify_remove))                 
                     else:
                         verify_remove = "None"
-                    
-                    #check welcome channel
                     if log_channel != "None":
                         log_channel = ctx.guild.get_channel(int(log_channel))
-                    
                     else:
                         log_channel = "None"
-
-                    #check welcome channel
                     if welcome_channel_id != "None":
                         welcome_channel_id = ctx.guild.get_channel(int(welcome_channel_id))
                         if welcome_channel_id:
                             welcome_channel_id = welcome_channel_id
-                        
                         else:
                             welcome_channel_id = "None"
-                    
                     else:
                         welcome_channel_id = "None"
-                    
-                    #check leave channel
                     if leave_channel_id != "None":
                         leave_channel_id = ctx.guild.get_channel(int(leave_channel_id))
                         if leave_channel_id:
-                            leave_channel_id = leave_channel_id
-                        
+                            leave_channel_id = leave_channel_id 
                         else:
                             leave_channel_id = "None"
-                    
                     else:
                         leave_channel_id = "None"
-                    
-                    #check webhook channel
                     if webhook_id != "None":
                         webhook_id = ctx.guild.get_channel(int(webhook_id))
                         if webhook_id:
                             webhook_id = webhook_id
-                        
                         else:
                             webhook_id = "None"
-                    
                     else:
                         webhook_id = "None"
-                    
-                    #check introduce_id channel
                     if introduce_id != "None":
                         introduce_id = ctx.guild.get_channel(int(introduce_id))
                         if introduce_id:
-                            introduce_id = introduce_id
-                        
+                            introduce_id = introduce_id               
                         else:
-                            introduce_id = "None"
-                    
+                            introduce_id = "None"  
                     else:
                         introduce_id = "None"
-                    
-                    #check verify id channel
                     if verification_id != "None":
                         verification_id = ctx.guild.get_channel(int(verification_id))
                         if verification_id:
                             verification_id = verification_id
-                        
                         else:
                             verification_id = "None"
-                    
                     else:
                         verification_id = "None"
-
                     embed = discord.Embed(
                         title = "การตั้งค่าของ Server",
                         description = f"```Database ID : {database_id}```",
@@ -1066,7 +1017,7 @@ f"""**ข้อมูลทั่วไป**
                     embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
                     embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
                     embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```",inline=True)
-                    embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}\nลงบันทึกลบข้อความ : {log_delete}\nลงบันทึกเปลี่ยนชื่อ : {log_name}```",inline=True)
+                    embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}```",inline=True)
                     embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
                     embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
