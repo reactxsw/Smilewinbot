@@ -27,10 +27,8 @@ class Faceit(commands.Cog):
         if a == b:
             return 0
         elif a < 0 and b < 0 or a > 0 and b > 0:
-            if a < b:
-                return (abs(abs(a) - abs(b)))
-                
-            return -(abs(abs(a) - abs(b)))
+            return ((abs(abs(a) - abs(b))) if a < b else -(abs(abs(a) - abs(b))))
+
         else:
             return math.copysign((abs(a) + abs(b)),b)
 
