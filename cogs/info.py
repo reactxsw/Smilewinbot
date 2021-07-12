@@ -1,3 +1,4 @@
+from discord import colour
 from discord.ext.commands.core import command
 import settings
 import discord
@@ -15,7 +16,7 @@ class Info(commands.Cog):
         self.bot = bot
     
     @commands.command(aliases=['bitcoin'])
-    async def btc(ctx):
+    async def btc(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -45,7 +46,7 @@ class Info(commands.Cog):
                     await ctx.send(embed=embed)
 
     @commands.command(aliases=['ethereum'])
-    async def eth(ctx):
+    async def eth(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -420,53 +421,84 @@ Repository : {repo}
                     r = await r.json()
 
             if server_language == "Thai":
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title =f"💻 IP {ip}"
+                if r["status"] == "success":
+                    embed = discord.Embed(
+                        colour = 0xfed000,
+                        title =f":satellite_orbital: ・ɢᴇᴏ ʟᴏᴄᴀᴛɪᴏɴ ↷",
+                        description = f"""
+```xl
+• 𝗥𝗘𝗦𝗨𝗟𝗧𝗦 ↷
+  ประเภทของ IP : {r["ipType"]}
+  ประเทศ : {r["country"]}
+  โค้ดประเทศ : {r["countryCode"]}
+  จังหวัด : {r["city"]}
+  ทวีป : {r["continent"]}
+  ค่ายเน็ท : {r["isp"]}
+  ภูมิภาค : {r["region"]}
+  ชื่อองค์กร : {r["org"]}
+  ชื่อบริษัท : {r["businessName"]}
+  เว็บไซต์บริษัท : {r["businessWebsite"]}
+  Logitude : {r["lon"]}
+  Latitude : {r["lat"]}
+``````xl
+• IP ที่ค้นหา : {r['query']}```
+                    """
                 )
-                embed.add_field(name="IP",value=f":{r['query']}")
-                embed.add_field(name="ประเภทของ IP",value=f":{r['ipType']}")
-                embed.add_field(name="ประเทศ",value=f":{r['country']}")
-                embed.add_field(name="code ประเทศ",value=f":{r['countryCode']}")
-                embed.add_field(name="จังหวัด",value=f":{r['city']}")
-                embed.add_field(name="ทวีป",value=f":{r['continent']}")
-                embed.add_field(name="ค่ายเน็ท",value=f":{r['isp']}")
-                embed.add_field(name="ภูมิภาค",value=f":{r['region']}")
-                embed.add_field(name="ชื่อองค์กร",value=f":{r['org']}")
-                embed.add_field(name="ชื่อบริษัท",value=f":{r['businessName']}")
-                embed.add_field(name="เว็บไซต์บริษัท",value=f":{r['businessWebsite']}")
-                embed.add_field(name="ค่า logitude",value=f":{r['lon']}")
-                embed.add_field(name="ค่า latitude",value=f":{r['lat']}")
+                    embed.add_field(name=":file_cabinet: ᴀᴘɪ ꜱᴛᴀᴛᴜꜱ",value=f"[ꜱᴛᴀᴛᴜꜱ ꜱᴜᴄᴄᴇꜱꜱ](http://extreme-ip-lookup.com/json/{ip})")
+                    embed.add_field(name=":desktop: ᴀᴘɪ ᴜꜱᴇᴅ",value=f"[ᴇxᴛʀᴇᴍᴇ-ɪᴘ](http://extreme-ip-lookup.com/json/)")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('💻')
 
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('💻')
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"ไม่พบ IP",
+                        description = f"""
+```xl                        
+• IP ที่ค้นหา : {ip}```"""
+                    )
 
             if server_language == "English":
-                embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    title =f"💻 IP {ip}"
+                if r["status"] == "success":
+                    embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        title =f":satellite_orbital: ・ɢᴇᴏ ʟᴏᴄᴀᴛɪᴏɴ ↷",
+                        description = f"""
+```xl
+• 𝗥𝗘𝗦𝗨𝗟𝗧𝗦 ↷
+  type of IP : {r["ipType"]}
+  country : {r["country"]}
+  country code : {r["countryCode"]}
+  city : {r["city"]}
+  continent : {r["continent"]}
+  ISP : {r["isp"]}
+  region : {r["region"]}
+  organization : {r["org"]}
+  business name : {r["businessName"]}
+  business website : {r["businessWebsite"]}
+  Logitude : {r["lon"]}
+  Latitude : {r["lat"]}
+``````xl
+• IP search : {r['query']}```
+                    """
                 )
-                embed.add_field(name="IP",value=f":{r['query']}")
-                embed.add_field(name="type of IP",value=f":{r['ipType']}")
-                embed.add_field(name="country",value=f":{r['country']}")
-                embed.add_field(name="country code",value=f":{r['countryCode']}")
-                embed.add_field(name="city",value=f":{r['city']}")
-                embed.add_field(name="continent",value=f":{r['continent']}")
-                embed.add_field(name="isp",value=f":{r['isp']}")
-                embed.add_field(name="region",value=f":{r['region']}")
-                embed.add_field(name="organization",value=f":{r['org']}")
-                embed.add_field(name="businessName",value=f":{r['businessName']}")
-                embed.add_field(name="businessWebsite",value=f":{r['businessWebsite']}")
-                embed.add_field(name="logitude",value=f":{r['lon']}")
-                embed.add_field(name="latitude",value=f":{r['lat']}")
+                    embed.add_field(name=":file_cabinet: ᴀᴘɪ ꜱᴛᴀᴛᴜꜱ",value=f"[ꜱᴛᴀᴛᴜꜱ ꜱᴜᴄᴄᴇꜱꜱ](http://extreme-ip-lookup.com/json/{ip})")
+                    embed.add_field(name=":desktop: ᴀᴘɪ ᴜꜱᴇᴅ",value=f"[ᴇxᴛʀᴇᴍᴇ-ɪᴘ](http://extreme-ip-lookup.com/json/)")
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction('💻')
-
+                    message = await ctx.send(embed=embed)
+                    await message.add_reaction('💻')
+                else:
+                    embed = discord.Embed(
+                        colour = 0x983925,
+                        title = f"IP not found",
+                        description = f"""
+```xl                        
+• IP search : {ip}```"""
+                    )
+                    
     @geoip.error
     async def geoip_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -487,7 +519,7 @@ Repository : {repo}
                 if isinstance(error, commands.MissingRequiredArgument):
                     embed = discord.Embed(
                         colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` กรุณาระบุ IP ที่ต้องการที่จะค้นหา ``{settings.COMMAND_PREFIX}geoip [IP]``"
+                        description = f" ⚠️``{ctx.author}`` กรุณาระบุ IP ที่ต้องการที่จะค้นหา ``{settings.COMMAND_PREFIX}geoip (IP)``"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -498,7 +530,7 @@ Repository : {repo}
                 if isinstance(error, commands.MissingRequiredArgument):
                     embed = discord.Embed(
                         colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` need to specify an IP to search for ``{settings.COMMAND_PREFIX}geoip [IP]``"
+                        description = f" ⚠️``{ctx.author}`` need to specify an IP to search for ``{settings.COMMAND_PREFIX}geoip (IP)``"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -954,7 +986,36 @@ language : {language}```""")
                 else:
                     try:
                         r = requests.get(website).status_code
-                    except:
+                        if r == 404:
+                            embed = discord.Embed(
+                                colour = 0x983925,
+                                title = f"สถานะของเว็บไซต์ {website}",
+                                description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed ) 
+                            await message.add_reaction('⚠️') 
+
+                        else:
+                            embed = discord.Embed(
+                                colour = 0x75ff9f,
+                                title = f"สถานะของเว็บไซต์ {website}",
+                                description = f"```เว็บไซต์ออนไลน์ปกติ```"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message = await ctx.send(embed=embed )
+
+                    except requests.exceptions.MissingSchema:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{settings.COMMAND_PREFIX}pingweb (website)``"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+                    
+                    except requests.exceptions.ConnectionError:
                         embed = discord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{settings.COMMAND_PREFIX}pingweb (website)``"
@@ -964,24 +1025,6 @@ language : {language}```""")
                         message = await ctx.send(embed=embed ) 
                         await message.add_reaction('⚠️')
                         
-                    if r == 404:
-                        embed = discord.Embed(
-                            colour = 0x983925,
-                            title = f"สถานะของเว็บไซต์ {website}",
-                            description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed ) 
-                        await message.add_reaction('⚠️') 
-
-                    else:
-                        embed = discord.Embed(
-                            colour = 0x75ff9f,
-                            title = f"สถานะของเว็บไซต์ {website}",
-                            description = f"```เว็บไซต์ออนไลน์ปกติ```"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        message = await ctx.send(embed=embed )
             
             if server_language == "English": 
                 if website is None: 
@@ -997,7 +1040,36 @@ language : {language}```""")
                 else:
                     try:
                         r = requests.get(website).status_code
-                    except:
+                        if r == 404:
+                            embed = discord.Embed(
+                                colour = 0x983925,
+                                title = f"Status of {website}",
+                                description = f" ⚠️`` Website is offline```")
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                            message = await ctx.send(embed=embed ) 
+                            await message.add_reaction('⚠️') 
+
+                        else:
+                            embed = discord.Embed(
+                                colour = 0x75ff9f,
+                                title = f"Status of {website}",
+                                description = f"``` Website is online```"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message = await ctx.send(embed=embed )
+
+                    except requests.exceptions.MissingSchema:
+                        embed = discord.Embed(
+                            colour = 0x983925,
+                            description = f" ⚠️``{ctx.author}`` Unable to find the website ``{settings.COMMAND_PREFIX}pingweb (website)``"
+                        )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                        message = await ctx.send(embed=embed ) 
+                        await message.add_reaction('⚠️')
+                    
+                    except requests.exceptions.ConnectionError:
                         embed = discord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` Unable to find the website ``{settings.COMMAND_PREFIX}pingweb (website)``"
@@ -1007,25 +1079,6 @@ language : {language}```""")
                         message = await ctx.send(embed=embed ) 
                         await message.add_reaction('⚠️')
                         
-                    if r == 404:
-                        embed = discord.Embed(
-                            colour = 0x983925,
-                            title = f"Status of {website}",
-                            description = f" ⚠️`` Website is offline```")
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed ) 
-                        await message.add_reaction('⚠️') 
-
-                    else:
-                        embed = discord.Embed(
-                            colour = 0x75ff9f,
-                            title = f"Status of {website}",
-                            description = f"``` Website is online```"
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        message = await ctx.send(embed=embed )
-
     @commands.command()
     async def weather(self,ctx, *, city):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
@@ -1043,10 +1096,10 @@ language : {language}```""")
             server_language = languageserver["Language"]
 
             if server_language == "Thai":
-                try:
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={settings.openweathermapAPI}') as r:
-                            r = await r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={settings.openweathermapAPI}') as r:
+                        r = await r.json()
+                        if not r["cod"] == "404":
                             temperature = (float(r['main']['temp']) -273.15)
                             feellike = (float(r['main']['feels_like']) -273.15)
                             highesttemp = (float(r['main']['temp_max']) -273.15)
@@ -1067,27 +1120,27 @@ language : {language}```""")
 ความชื้น : {round(humidity)}%
 ความเร็วลม : {round(windspeed,2)}mph
 สภาพอากาศ : {day}```
-                                """
-                                
-                            )
+                            """
+                            
+                        )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
                             await ctx.send(embed=embed)
 
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{settings.COMMAND_PREFIX}weather (city)``"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        else:
+                            embed = discord.Embed(
+                                colour = 0x983925,
+                                description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{settings.COMMAND_PREFIX}weather (city)``"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+                            message = await ctx.send(embed=embed ) 
+                            await message.add_reaction('⚠️')
             
             if server_language == "English":
-                try:
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={settings.openweathermapAPI}') as r:
-                            r = await r.json()
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={settings.openweathermapAPI}') as r:
+                        r = await r.json()
+                        if not r["cod"] == "404":
                             temperature = (float(r['main']['temp']) -273.15)
                             feellike = (float(r['main']['feels_like']) -273.15)
                             highesttemp = (float(r['main']['temp_max']) -273.15)
@@ -1114,15 +1167,15 @@ Weather : {day}```
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
                             await ctx.send(embed=embed)
 
-                except:
-                    embed = discord.Embed(
-                        colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` Cannot find this city ``{settings.COMMAND_PREFIX}weather (city)``"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        else:
+                            embed = discord.Embed(
+                                colour = 0x983925,
+                                description = f" ⚠️``{ctx.author}`` Cannot find this city ``{settings.COMMAND_PREFIX}weather (city)``"
+                            )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                    message = await ctx.send(embed=embed ) 
-                    await message.add_reaction('⚠️')
+                            message = await ctx.send(embed=embed ) 
+                            await message.add_reaction('⚠️')
 
     @weather.error
     async def weather_error(self,ctx, error):
@@ -1210,26 +1263,64 @@ Weather : {day}```
 
     @commands.command()
     async def gold(self, ctx):
-        url = "https://xn--42cah7d0cxcvbbb9x.com/"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                soupObject = BeautifulSoup(await response.text(), "html.parser")
-                table = soupObject.find_all('td', class_="em bg-em g-u")
-                date = soupObject.find('td',class_="span bg-span txtd al-r")
-                time = soupObject.find('td', class_ = "em bg-span txtd al-r")
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            embed = discord.Embed(
+                title = "Language setting / ตั้งค่าภาษา",
+                description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
-                gold_bar_buy = table[0]
-                gold_bar_sell = table[1]
-                gold_jewelry_buy = table[2]
-                gold_jewelry_sell = table[3]
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            if server_language == "Thai":
+                url = "https://xn--42cah7d0cxcvbbb9x.com/"
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url) as response:
+                        soupObject = BeautifulSoup(await response.text(), "html.parser")
+                        table = soupObject.find_all('td', class_="em bg-em g-n")
+                        date = soupObject.find('td',class_="span bg-span txtd al-r")
+                        time = soupObject.find('td', class_ = "em bg-span txtd al-r")
 
-                date = date.contents[0]
-                time = time.contents[0]
-                gold_bar_buy = gold_bar_buy.contents[0]
-                gold_bar_sell = gold_bar_sell.contents[0]
-                gold_jewelry_buy = gold_jewelry_buy.contents[0]
-                gold_jewelry_sell = gold_jewelry_sell.contents[0]
-                date_and_time = (f"{date} {time}")
+                        gold_bar_buy = table[0]
+                        gold_bar_sell = table[1]
+                        gold_jewelry_buy = table[2]
+                        gold_jewelry_sell = table[3]
+
+                        date = date.contents[0]
+                        time = time.contents[0]
+                        gold_bar_buy = gold_bar_buy.contents[0]
+                        gold_bar_sell = gold_bar_sell.contents[0]
+                        gold_jewelry_buy = gold_jewelry_buy.contents[0]
+                        gold_jewelry_sell = gold_jewelry_sell.contents[0]
+                        date_and_time = (f"{date} {time}")
+
+                embed = discord.Embed(
+                    title = "ราคาทอง",
+                    colour = 0xfed000,
+                    description = f"""
+**ทองเเท่งคําเเท่ง**                   
+```xl
+ราคาขายออก {gold_bar_sell} ฿
+ราคารับซื้อ {gold_bar_buy} ฿
+```
+**ทองรูปพรรณ**
+```xl
+ราคาขายออก {gold_jewelry_sell} ฿
+ราคารับซื้อ {gold_jewelry_buy} ฿
+```
+อัพเดทล่าสุด {date_and_time}
+          
+                    """
+                )
+                await ctx.send(embed=embed)
+            
+            else:
+                pass
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Info(bot))
