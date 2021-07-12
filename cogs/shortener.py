@@ -1,4 +1,3 @@
-from cogs.level import Level
 import settings
 import discord
 import requests
@@ -79,7 +78,7 @@ class Shortener(commands.Cog):
                             await message.add_reaction('🎨')
 
     @ascii.error
-    async def ascii_error(ctx, error):
+    async def ascii_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -131,7 +130,9 @@ class Shortener(commands.Cog):
         
         else:
             server_language = languageserver["Language"]
-            r = requests.post("https://hastebin.com/documents", data=message).json()
+            async with aiohttp.ClientSession() as session:
+                    async with session.post("https://hastebin.com/documents", data=message) as r:
+                        r = await r.json()
             
             if server_language == "Thai":
                 embed = discord.Embed(
@@ -228,12 +229,13 @@ https://hastebin.com/{r['key']}```"""
             'api_paste_code':message,
             'api_paste_name':"Smilewinbot",
             'api_paste_expire_date': 'N',
-            'api_user_key': None,
+            'api_user_key': '',
             'api_paste_format': 'python'
             }
-            r = requests.post("https://pastebin.com/api/api_post.php", data=data)
-            r = r.text
-            
+            async with aiohttp.ClientSession() as session:
+                    async with session.post("https://pastebin.com/api/api_post.php", data=data) as r:
+                        r = await r.text()
+
             if server_language == "Thai":
                 embed = discord.Embed(
                     colour = 0x00FFFF,
@@ -579,12 +581,12 @@ https://hastebin.com/{r['key']}```"""
                         webhook = anondata["webhook_url"]
                         all_webhook.append(webhook)
                     
-                    for i in range(len(all_webhook)):
+                    for i, item in enumerate(all_webhook):
                         try:
                             async with aiohttp.ClientSession() as session:
-                                webhook = Webhook.from_url(all_webhook[i], adapter=AsyncWebhookAdapter(session))
+                                webhook = Webhook.from_url(item, adapter=AsyncWebhookAdapter(session))
                                 
-                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilwinbot")
+                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
                         except Exception as e:
                             print(e)
                         
@@ -643,12 +645,12 @@ https://hastebin.com/{r['key']}```"""
                         webhook = anondata["webhook_url"]
                         all_webhook.append(webhook)
                     
-                    for i in range(len(all_webhook)):
+                    for i, item in enumerate(all_webhook):
                         try:
                             async with aiohttp.ClientSession() as session:
-                                webhook = Webhook.from_url(all_webhook[i], adapter=AsyncWebhookAdapter(session))
+                                webhook = Webhook.from_url(item, adapter=AsyncWebhookAdapter(session))
                                 
-                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilwinbot")
+                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
                         except Exception as e:
                             print(e)
                 
