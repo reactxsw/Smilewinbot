@@ -4,7 +4,6 @@ import random
 import asyncio
 from discord.ext import commands
 
-
 class Economy(commands.Cog):
 
     def __init__(self, bot: commands.AutoShardedBot):
@@ -1472,7 +1471,7 @@ class Economy(commands.Cog):
                 if not guild is None:
                     status = guild["economy_system"]
                     if status == "YES":
-                        try:
+                        if not len(currency) > 100:
                             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"currency":currency}})
                             embed = discord.Embed(
                                 colour= 0x00FFFF,
@@ -1483,15 +1482,14 @@ class Economy(commands.Cog):
 
                             message = await ctx.send(embed=embed)
                             await message.add_reaction('✅')
-                
-                        except:
+
+                        else:
                             embed = discord.Embed(
                                 colour= 0x983925,
                                 title = "ตั้งค่าค่าเงิน",
-                                description= f"ไม่สามารถตั้ง ``{currency}`` เป็นค่าเงิน"
+                                description= f"ไม่สามารถตั้ง ``{currency}`` เป็นค่าเงินเพราะยาวเกินไป"
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
-
                             message = await ctx.send(embed=embed)
                             await message.add_reaction('✅')
                     else:
@@ -1519,7 +1517,7 @@ class Economy(commands.Cog):
                 if not guild is None:
                     status = guild["economy_system"]
                     if status == "YES":
-                        try:
+                        if not len(currency) > 100:
                             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"currency":currency}})
                             embed = discord.Embed(
                                 colour= 0x00FFFF,
@@ -1531,11 +1529,11 @@ class Economy(commands.Cog):
                             message = await ctx.send(embed=embed)
                             await message.add_reaction('✅')
                 
-                        except:
+                        else:
                             embed = discord.Embed(
                                 colour= 0x983925,
                                 title = "set currency",
-                                description= f"unable to set ``{currency}`` as currency"
+                                description= f"unable to set ``{currency}`` as currency because it is too long"
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1562,7 +1560,7 @@ class Economy(commands.Cog):
                     await message.add_reaction('💸')
 
     @setcurrency.error
-    async def setcurrency_error(ctx, error):
+    async def setcurrency_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -1840,7 +1838,7 @@ class Economy(commands.Cog):
                     await message.add_reaction('💸')
 
     @commands.command()
-    async def work(ctx):
+    async def work(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -1964,7 +1962,7 @@ class Economy(commands.Cog):
                     await message.add_reaction('💸')
 
     @commands.command()
-    async def beg(ctx):
+    async def beg(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
@@ -2248,7 +2246,7 @@ class Economy(commands.Cog):
                         await message.add_reaction('💸')
 
     @resetmoney.error
-    async def resetmoney_error(ctx, error):
+    async def resetmoney_error(self,ctx, error):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             embed = discord.Embed(
