@@ -1,7 +1,7 @@
 # coding=utf-8
 #import
 import settings
-
+import subprocess
 import discord  
 import datetime  
 import os
@@ -48,17 +48,13 @@ ASCII_ART = """
                                                                    REACT#1120
 """ 
 
-async def clearcmd():
-    if platform.system() == ("Windows"):
-        os.system("cls")
-    
-    else:
-        os.system("clear")
-
 bot = commands.AutoShardedBot(command_prefix = commands.when_mentioned_or(settings.COMMAND_PREFIX),case_insensitive=True ,intents=intent , strip_after_prefix=True)
 bot.remove_command('help')
 
 start_time = datetime.datetime.utcnow()
+
+async def clearcmd():
+    subprocess.call('cls' if os.name == 'Windows' else 'clear', shell=False)
 
 @tasks.loop(seconds=5)
 async def change_status():
@@ -125,9 +121,6 @@ async def on_ready():
 async def restart_program():
         python = sys.executable
         os.execl(python, python, * sys.argv)
-    
-async def clearcmd():
-    os.system('cls' if os.name == 'Windows' else 'clear')
 
 @bot.command()
 @commands.is_owner()
