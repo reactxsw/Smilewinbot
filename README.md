@@ -16,6 +16,8 @@ A discord bot made with python for my discord server
 <p>Reddit : https://www.reddit.com/prefs/apps</p>
 <p>Openweather API : https://openweathermap.org/api</p>
 <p>Pastebin : https://pastebin.com/doc_api</p>
+<p>Faceit : https://developers.faceit.com/</p>
+<p>Tracker.gg : https://tracker.gg/developers/docs/getting-started</p>
 <h2>How to install</h2>
 <p>1. Download everythings in <a href="#need">here</a></p>
 <p>2. Run install.bat</p>
