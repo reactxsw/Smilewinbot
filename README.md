@@ -11,6 +11,11 @@ A discord bot made with python for my discord server
 <p>Lavalink 13 : https://github.com/freyacodes/Lavalink</p>
 <p>Java 16 : https://www.oracle.com/java/technologies/javase-downloads.html</p>
 <p>Python 3.9 : https://www.python.org/</p>
+<h1>API needed</h1>
+<p>MongoDB : https://www.mongodb.com/cloud/atlas/</p>
+<p>Reddit : https://www.reddit.com/prefs/apps</p>
+<p>Openweather API : https://openweathermap.org/api</p>
+<p>Pastebin : https://pastebin.com/doc_api</p>
 <h2>How to install</h2>
 <p>1. Download everythings in <a href="#need">here</a></p>
 <p>2. Run install.bat</p>
