@@ -188,4 +188,3 @@ class ServerStat(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(ServerStat(bot))
-
