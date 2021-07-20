@@ -60,6 +60,28 @@ async def clearcmd():
 async def change_status():
     await bot.change_presence(status = discord.Status.idle, activity=discord.Game(next(status)))
 
+@tasks.loop(seconds=120)
+async def serverstat():
+    await bot.wait_until_ready()
+    results = settings.collectionstatus .find({"status_system":"YES"})
+    for data in await results.to_list(length=10000):
+        guild = bot.get_guild(data["guild_id"])
+        memberonly = len([member for member in guild.members if not member.bot])
+        botonly = int(guild.member_count) - int(memberonly)
+        total_member_channel = bot.get_channel(data["status_total_id"])
+        member_channel = bot.get_channel(data["status_members_id"])
+        bot_channel = bot.get_channel(data["status_bots_id"])
+        online_channel = bot.get_channel(data["status_online_id"])
+        memberonline = len([member for member in guild.members if not member.bot and member.status is discord.Status.online])
+        if total_member_channel:
+            await total_member_channel.edit(name = f"︱👥 Total : {guild.member_count}")
+        if member_channel:
+            await member_channel.edit(name=f"︱👥 Members : {memberonly}")
+        if bot_channel:
+            await bot_channel.edit(name = f"︱👥 Bots : {botonly}")
+        if online_channel:
+            await online_channel.edit(name = f"︱🟢 Online {memberonline}")
+            
 async def checkMongo():
     try:
         await settings.client.admin.command('ismaster')
@@ -101,6 +123,7 @@ async def on_ready():
     user = (str(len(bot.users)))
     user_space = (29 - int(len(user)))*space
     change_status.start()
+    serverstat.start()
     print(f"{ASCII_ART}")
     print(f"                                   ╔══════════════════════════════════════╗")
     print(f"                                   ║  BOT NAME : {bot.user}            ║")
@@ -146,6 +169,7 @@ async def cleancmd(ctx):
     print(f"                                   ║                                      ║")
     print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
+    await ctx.send("Cmd cleared")
 
 @bot.event
 async def on_connect():
