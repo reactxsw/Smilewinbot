@@ -45,16 +45,16 @@ ASCII_ART = """
                                   \___ \| '_ ` _ \| | |/ _ \ \ /\ / / | '_ \ 
                                     __) | | | | | | | |  __/\ V  V /| | | | |
                                   |____/|_| |_| |_|_|_|\___| \_/\_/ |_|_| |_|
-                                                                   REACT#1120
+                                                                   REACT#1120 
 """ 
 
-bot = commands.AutoShardedBot(command_prefix = commands.when_mentioned_or(settings.COMMAND_PREFIX),case_insensitive=True ,intents=intent , strip_after_prefix=True)
+bot = commands.AutoShardedBot(command_prefix = ([settings.COMMAND_PREFIX, "/r"]),case_insensitive=True ,intents=intent , strip_after_prefix=True)
 bot.remove_command('help')
 
 start_time = datetime.datetime.utcnow()
 
 async def clearcmd():
-    subprocess.call('cls' if os.name == 'Windows' else 'clear', shell=False)
+    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True)
 
 @tasks.loop(seconds=5)
 async def change_status():
@@ -81,15 +81,15 @@ async def serverstat():
             await bot_channel.edit(name = f"︱👥 Bots : {botonly}")
         if online_channel:
             await online_channel.edit(name = f"︱🟢 Online {memberonline}")
-            
-async def checkMongo():
+
+async def checkMongo():                 
     try:
         await settings.client.admin.command('ismaster')
         print("Successfully connected to mongodb")
     except Exception:
         print("Unable to connect to mongodb")
 
-async def loadcogs():
+def loadcogs():
     for filename in os.listdir("cogs"):
         if filename.endswith(".py") and not filename.startswith("_"):
             try:
@@ -101,7 +101,7 @@ async def loadcogs():
                 print(e)
                 traceback.print_exc()
     
-async def unloadcogs():
+def unloadcogs():
     for filename in os.listdir("cogs"):
         if filename.endswith(".py") and not filename.startswith("_"):
             try:
@@ -115,15 +115,16 @@ async def unloadcogs():
 
 @bot.event
 async def on_ready():
-    await loadcogs()
-    await checkMongo()
     space = (" ")
     server= (str(len(bot.guilds)))
     server_space = (27 - int(len(server)))*space
     user = (str(len(bot.users)))
     user_space = (29 - int(len(user)))*space
-    change_status.start()
-    serverstat.start()
+    try:
+        change_status.start()
+        serverstat.start()
+    except RuntimeError:
+        pass
     print(f"{ASCII_ART}")
     print(f"                                   ╔══════════════════════════════════════╗")
     print(f"                                   ║  BOT NAME : {bot.user}            ║")
@@ -145,20 +146,20 @@ async def on_ready():
 @commands.is_owner()
 async def reloadcogs(ctx):
     await clearcmd()
-    await unloadcogs()
+    unloadcogs()
     await asyncio.sleep(2)
-    await loadcogs()
+    loadcogs()
     await clearcmd()
 
 @bot.command()
 async def cleancmd(ctx):
     await clearcmd()
+    await checkMongo()
     space = (" ")
     server= (str(len(bot.guilds)))
     server_space = (27 - int(len(server)))*space
     user = (str(len(bot.users)))
     user_space = (29 - int(len(user)))*space
-    change_status.start()
     print(f"{ASCII_ART}")
     print(f"                                   ╔══════════════════════════════════════╗")
     print(f"                                   ║  BOT NAME : {bot.user}            ║")
@@ -176,6 +177,7 @@ async def on_connect():
     print("Connected to discord API")
 
 def main():
+    loadcogs()
     try:
         bot.run(settings.TOKEN , bot = True,reconnect=True)
     except Exception as e:
