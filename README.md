@@ -12,6 +12,7 @@ A discord bot made with python for my discord server
 <p>Java 16 : https://www.oracle.com/java/technologies/javase-downloads.html</p>
 <p>Python 3.9 : https://www.python.org/</p>
 <h1>API needed</h1>
+<p>Discord : https://discord.com/developers/applications</p>
 <p>MongoDB : https://www.mongodb.com/cloud/atlas/</p>
 <p>Reddit : https://www.reddit.com/prefs/apps</p>
 <p>Openweather API : https://openweathermap.org/api</p>
