@@ -54,7 +54,7 @@ bot.remove_command('help')
 start_time = datetime.datetime.utcnow()
 
 async def clearcmd():
-    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True)
+    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=False)
 
 @tasks.loop(seconds=5)
 async def change_status():
