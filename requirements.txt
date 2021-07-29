@@ -4,6 +4,7 @@ asyncpraw==7.3.1
 asyncprawcore==2.2.1
 async-timeout==3.0.1
 asyncio==3.4.3
+attrs==20.3.0
 beautifulsoup4==4.9.3
 bs4==0.0.1
 discord.py==1.7.3
@@ -21,6 +22,7 @@ urllib3==1.26.2
 websocket-client==0.57.0
 captcha==0.3
 pymongo==3.11.3
+motor==2.5.0
 dnspython==2.1.0
 httplib2==0.19.1
 google-api-core==1.26.3
