@@ -51,6 +51,7 @@ if Path("config.json").exists():
     developerid = config.get("developer_user_id")
     TOKEN = config.get("bot_token")
     COMMAND_PREFIX = config.get("bot_prefix")
+    phonenumber = config.get("phone_number")
     openweathermapAPI = config.get("openweathermap_api")
     faceitapi = config.get("faceit_serverside_api")
     reddit = asyncpraw.Reddit(
@@ -197,3 +198,5 @@ collectionmoney = db["Money"]
 collectionlanguage = db["Language"]
 collectionrole = db["Role"]
 collectionstatus = db["Status"]
+collectioninvitecode = db["Invites"]
+collectioninvitestat = db[""]
