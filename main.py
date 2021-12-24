@@ -25,7 +25,8 @@ handler = logging.FileHandler(filename='logs/botlog.log', encoding='utf-8', mode
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-intent = discord.Intents.all()
+intent = discord.Intents.default()
+intent.members = True
 
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
@@ -54,16 +55,17 @@ bot.remove_command('help')
 start_time = datetime.datetime.utcnow()
 
 async def clearcmd():
-    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=False)
+    subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True)
 
 @tasks.loop(seconds=5)
 async def change_status():
+    await bot.wait_until_ready()
     await bot.change_presence(status = discord.Status.idle, activity=discord.Game(next(status)))
 
 @tasks.loop(seconds=120)
 async def serverstat():
     await bot.wait_until_ready()
-    results = settings.collectionstatus .find({"status_system":"YES"})
+    results = settings.collectionstatus.find({"status_system":"YES"})
     for data in await results.to_list(length=10000):
         guild = bot.get_guild(data["guild_id"])
         memberonly = len([member for member in guild.members if not member.bot])
@@ -115,11 +117,10 @@ def unloadcogs():
 
 @bot.event
 async def on_ready():
-    space = (" ")
     server= (str(len(bot.guilds)))
-    server_space = (27 - int(len(server)))*space
+    server_space = (27 - int(len(server)))*(" ")
     user = (str(len(bot.users)))
-    user_space = (29 - int(len(user)))*space
+    user_space = (29 - int(len(user)))*(" ")
     try:
         change_status.start()
         serverstat.start()
