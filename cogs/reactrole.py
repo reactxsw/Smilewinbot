@@ -1,4 +1,5 @@
 import discord
+from discord.embeds import Embed
 import settings
 from utils.languageembed import languageEmbed
 from discord.ext import commands
@@ -18,23 +19,34 @@ class ReactRole(commands.Cog):
             await message.add_reaction('👍')
 
         else:
-            if "//" in text:
-                text = text.replace('//','\n')
 
-            embed = discord.Embed(
-                    colour = 0x00FFFF,
-                    description = text
+            if role >= ctx.guild.me.top_role:
+                embed = discord.Embed(
+                    title = "ไม่มีสิทธ์",
+                    description = "ยศของบอทจะต้องสูงกว่ายศที่จะให้สมาชิก ตัวอย่างตามรูปด้านล่าง",
+                    colour =  0x983925,
                 )
-            message = await ctx.send(embed=embed)
-            await message.add_reaction(emoji)
+                embed.set_footer(text="ข้อความนี้จะถูกลบอัตโนมัติภายใน 15วินาที")
+                embed.set_image(url="https://i.imgur.com/4Nmh9Ml.png")
+                await ctx.send(embed = embed , delete_after=15)
+            else:
+                if "//" in text:
+                    text = text.replace('//','\n')
 
-            newrole = {"guild_id":ctx.guild.id,
-            "emoji":emoji,
-            "message_id":message.id,
-            "message":text,
-            "role_give_id":role.id,
-            }
-            await settings.collectionrole.insert_one(newrole)
+                embed = discord.Embed(
+                        colour = 0x00FFFF,
+                        description = text
+                    )
+                message = await ctx.send(embed=embed)
+                await message.add_reaction(emoji)
+
+                newrole = {"guild_id":ctx.guild.id,
+                "emoji":emoji,
+                "message_id":message.id,
+                "message":text,
+                "role_give_id":role.id,
+                }
+                await settings.collectionrole.insert_one(newrole)
 
     @setreactrole.error
     async def setreactrole_error(self,ctx, error):
