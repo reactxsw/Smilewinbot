@@ -1,4 +1,5 @@
 import discord
+from discord import colour
 import humanize
 from utils.languageembed import languageEmbed
 import settings
@@ -284,92 +285,92 @@ f"""**ข้อมูลทั่วไป**
 ❯❯ <:offline:{settings.offline_id}>**สถานะออฟไลน์**: {memberoffline}
 ❯❯ 🎤**สมาชิกในห้องเสียง**: {connect}
 """)
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('🤖')
+                embed.timestamp = datetime.datetime.utcnow()
+                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('🤖')
         
-        if server_language == "English":
-            if "COMMUNITY" in ctx.guild.features: # it's a community server
-                guild_type = "เซิร์ฟเวอร์สาธารณะ"
-            else:
-                guild_type = "เซิร์ฟเวอร์ส่วนบุคคล"
+            if server_language == "English":
+                if "COMMUNITY" in ctx.guild.features: # it's a community server
+                        guild_type = "Community server"
+                else:
+                    guild_type = "Private server"
 
-            if "VERIFIED" in ctx.guild.features or "PARTNERED" in ctx.guild.features:
-                verify = "ได้รับการยืนยัน"
-            
-            else:
-                verify = "ไม่ได้รับการยืนยัน"
+                if "VERIFIED" in ctx.guild.features or "PARTNERED" in ctx.guild.features:
+                    verify = "verified"
+                
+                else:
+                    verify = "not verified"
 
-            if "VANITY_URL" in ctx.guild.features:
-                invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
+                if "VANITY_URL" in ctx.guild.features:
+                    invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
 
-            else:
-                invite = "ไม่มี"
-            
-            if str(ctx.guild.verification_level) == "none":
-                verification_level = "ไม่มี"
+                else:
+                    invite = "None"
+                
+                if str(ctx.guild.verification_level) == "none":
+                    verification_level = "None"
 
-            elif str(ctx.guild.verification_level) == "low":
-                verification_level = "ตํ่า"
+                elif str(ctx.guild.verification_level) == "low":
+                    verification_level = "Low"
 
-            elif str(ctx.guild.verification_level) == "medium":
-                verification_level = "ปานกลาง"
+                elif str(ctx.guild.verification_level) == "medium":
+                    verification_level = "Medium"
 
-            elif str(ctx.guild.verification_level) == "high":
-                verification_level = "สูง"
-            
-            elif str(ctx.guild.verification_level) == "extreme":
-                verification_level = "สูงมาก"
-            
-            else:
-                verification_level = "ไม่รู้"
+                elif str(ctx.guild.verification_level) == "high":
+                    verification_level = "High"
+                
+                elif str(ctx.guild.verification_level) == "extreme":
+                    verification_level = "Very High"
+                
+                else:
+                    verification_level = "Don't know"
 
-            embed = discord.Embed(
-                colour = 0xffff00,
-                title=f"ข้อมูลเซิฟเวอร์📊", 
-                description=
-f"""**ข้อมูลทั่วไป**
-❯❯ 🏠**ชื่อเซิฟเวอร์**: {ctx.guild.name}
-❯❯ 🆔**ไอดีของเซิฟเวอร์**: {ctx.guild.id}
-❯❯ 👑**เจ้าของเซิฟเวอร์**: {ctx.guild.owner} ({ctx.guild.owner.id})
-❯❯ 🌎**ภูมิภาคของเซิฟเวอร์**: {ctx.guild.region}
-❯❯ <a:partner:{settings.partner_id}>**ประเภทเซิร์ฟเวอร์**: {guild_type}
-❯❯ <:verify:{settings.verify_id}>**การยืนยันเซิร์ฟเวอร์**: {verify}
-❯❯ 🔗**โคดเชิญแบบกำหนดเอง**: {invite}
-❯❯ <:boost:{settings.boost_id}>**บูสทั้งหมด**: {num_boost} บูส Level {nitro_teir}
-❯❯ :shield:**ระดับความปลอดภัย**: {verification_level}
-❯❯ :timer:**วันที่สร้างเซิฟเวอร์**: {time}
+                embed = discord.Embed(
+                    colour = 0xffff00,
+                    title=f"Server Information📊", 
+                    description=
+f"""**General Information**
+❯❯ 🏠**Server Name**: {ctx.guild.name}
+❯❯ 🆔**Server ID**: {ctx.guild.id}
+❯❯ 👑**Server Owner**: {ctx.guild.owner} ({ctx.guild.owner.id})
+❯❯ 🌎**Server Region**: {ctx.guild.region}
+❯❯ <a:partner:{settings.partner_id}>**Server type**: {guild_type}
+❯❯ <:verify:{settings.verify_id}>**Server Verification**: {verify}
+❯❯ 🔗**vanity code**: {invite}
+❯❯ <:boost:{settings.boost_id}>**Total boost**: {num_boost} Boost Level {nitro_teir}
+❯❯ :shield:**Verification Level**: {verification_level}
+❯❯ :timer:**Server creation date**: {time}
 
-**สถิติของเซิฟเวอร์**
-❯❯ <:member:{settings.member_id}>**สมาชิกทั้งหมด**: {ctx.guild.member_count}
-❯❯ <:member:{settings.member_id}>**สมาชิกที่เป็นคน**: {memberonly}
-❯❯ <:member:{settings.member_id}>**สมาชิกที่เป็นบอท**: {botonly}
-❯❯ <:member:{settings.member_id}>**สมาชิกที่ถูกเเบน**: {bannedmember}
-❯❯ <:channel:{settings.channel_id}>**ประเภท**: {len(ctx.guild.categories)}
-❯❯ <:channel:{settings.channel_id}>**ห้องเเชท**: {len(ctx.guild.text_channels)}
-❯❯ <:channel:{settings.channel_id}>**ห้องพูดคุย**: {len(ctx.guild.voice_channels)}
-❯❯ <:channel:{settings.channel_id}>**ห้องเเสดง**: {len(ctx.guild.stage_channels)}
-❯❯ <:role:{settings.role_id}>**ยศทั้งหมด**: {len(ctx.guild.roles)}
-❯❯ <:emoji:{settings.emoji_id}>**อีโมจิทั้งหมด**: {len(ctx.guild.emojis)}
-❯❯ <:emoji:{settings.emoji_id}>**อีโมจิแบบเคลื่อนไหว**: {animated}
-❯❯ <:emoji:{settings.emoji_id}>**อีโมจิแบบปกติ**: {normal}
+**Server Statistics**
+❯❯ <:member:{settings.member_id}>**Total members**: {ctx.guild.member_count}
+❯❯ <:member:{settings.member_id}>**Members**: {memberonly}
+❯❯ <:member:{settings.member_id}>**Bots**: {botonly}
+❯❯ <:member:{settings.member_id}>**Banned members**: {bannedmember}
+❯❯ <:channel:{settings.channel_id}>**Categories**: {len(ctx.guild.categories)}
+❯❯ <:channel:{settings.channel_id}>**Text channels**: {len(ctx.guild.text_channels)}
+❯❯ <:channel:{settings.channel_id}>**Voice channels**: {len(ctx.guild.voice_channels)}
+❯❯ <:channel:{settings.channel_id}>**Stage channels**: {len(ctx.guild.stage_channels)}
+❯❯ <:role:{settings.role_id}>**Total roles**: {len(ctx.guild.roles)}
+❯❯ <:emoji:{settings.emoji_id}>**Total emoji**: {len(ctx.guild.emojis)}
+❯❯ <:emoji:{settings.emoji_id}>**Animated emoji**: {animated}
+❯❯ <:emoji:{settings.emoji_id}>**Normal emoji**: {normal}
 ❯❯ 🔗**ลิงค์เชิญทั้งหมด**: {totalinvite}
 
-**สถานะของสมาชิกในเซิฟเวอร์**
-❯❯ <:online:{settings.online_id}>**ออนไลน์ทั้งหมด**: {totalonline}
-❯❯ <:online:{settings.online_id}>**สถานะออนไลน์**: {memberonline}
-❯❯ <:idle:{settings.idle_id}>**สถานะไม่อยู่**: {memberidle}
-❯❯ <:busy:{settings.busy_id}>**สถานะห้ามรบกวน**: {memberbusy}
-❯❯ <:offline:{settings.offline_id}>**สถานะออฟไลน์**: {memberoffline}
-❯❯ 🎤**สมาชิกในห้องเสียง**: {connect}
+**Server member status**
+❯❯ <:online:{settings.online_id}>**Total online**: {totalonline}
+❯❯ <:online:{settings.online_id}>**Online**: {memberonline}
+❯❯ <:idle:{settings.idle_id}>**Idle**: {memberidle}
+❯❯ <:busy:{settings.busy_id}>**Busy**: {memberbusy}
+❯❯ <:offline:{settings.offline_id}>**Offline**: {memberoffline}
+❯❯ 🎤**Voice connected**: {connect}
 """)
-            embed.timestamp = datetime.datetime.utcnow()
-            embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
-            embed.set_footer(text=f"┗Requested by {ctx.author}")
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('🤖')
+                embed.timestamp = datetime.datetime.utcnow()
+                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('🤖')
 
     @commands.command(aliases=['botstat'])
     async def botinfo(self,ctx):
@@ -394,10 +395,10 @@ f"""**ข้อมูลทั่วไป**
                 embed.timestamp = datetime.datetime.utcnow()
                 embed.add_field(name='🤖 ``ชื่อของบอท``', value=f'{self.bot.user}',inline =False)
                 embed.add_field(name='🏆 ``ผู้พัฒนาบอท``', value=f'{developer}',inline =False)
-                embed.add_field(name='📁 ``จํานวนเซิฟเวอร์``', value=f'{len(self.bot.guilds)}',inline =True)
+                embed.add_field(name='📁 ``จํานวนเซิฟเวอร์``', value=f'{humanize.intcomma(len(self.bot.guilds))}',inline =True)
                 embed.add_field(name='📁 ``จํานวนคําสั่ง``', value=f'{len(self.bot.commands)}',inline =True)
-                embed.add_field(name='📁 ``สมาชิกทั้งหมด``', value=f'{len(self.bot.users)}',inline =True)
-                embed.add_field(name='🤖 ``เครื่องหมายหน้าคำสั่ง``', value=f'{self.bot.command_prefix}',inline =True)
+                embed.add_field(name='📁 ``สมาชิกทั้งหมด``', value=f'{humanize.intcomma(len(self.bot.users))}',inline =True)
+                embed.add_field(name='🤖 ``เครื่องหมายหน้าคำสั่ง``', value=f'{settings.COMMAND_PREFIX}',inline =True)
                 embed.add_field(name='🤖 ``คําสั่งช่วยเหลือ``', value=f'{settings.COMMAND_PREFIX}help',inline =True)
                 embed.add_field(name='🤖 ``เวลาทำงาน``', value=f'{uptime}',inline =True)
                 embed.add_field(name='🤖 ``Ping ของบอท``', value=f'{round(self.bot.latency * 1000)}ms',inline =True)
@@ -421,9 +422,9 @@ f"""**ข้อมูลทั่วไป**
                 embed.timestamp = datetime.datetime.utcnow()
                 embed.add_field(name='🤖 ``Bot name``', value=f'{self.bot.user}',inline =False)
                 embed.add_field(name='🏆 ``Developer``', value=f'{developer}',inline =False)
-                embed.add_field(name='📁 ``Total servers``', value=f'{len(self.bot.guilds)}',inline =True)
+                embed.add_field(name='📁 ``Total servers``', value=f'{humanize.intcomma(len(self.bot.guilds))}',inline =True)
                 embed.add_field(name='📁 ``Total commands``', value=f'{len(self.bot.commands)}',inline =True)
-                embed.add_field(name='📁 ``Total user``', value=f'{len(self.bot.users)}',inline =True)
+                embed.add_field(name='📁 ``Total user``', value=f'{humanize.intcomma(len(self.bot.users))}',inline =True)
                 embed.add_field(name='🤖 ``Command prefix``', value=f'{settings.COMMAND_PREFIX}',inline =True)
                 embed.add_field(name='🤖 ``Help command``', value=f'{settings.COMMAND_PREFIX}help',inline =True)
                 embed.add_field(name='🤖 ``Bot uptime``', value=f'{uptime}',inline =True)
@@ -931,8 +932,8 @@ f"""**ข้อมูลทั่วไป**
                         description = f"```Database ID : {database_id}```",
                         colour= 0x00FFFF
                     )
-                    embed.add_field(name = "ตั้งค่าห้อง",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
-                    embed.add_field(name = "ID เซิฟเวอร์",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
+                    embed.add_field(name = "Channel settings",value= f"```ห้องเเจ้งเตือนคนเข้า : {welcome_channel_id}\nห้องเเจ้งเตือนคนออก : {leave_channel_id}\nห้องคุยกับคนเเปลกหน้า : {webhook_id}\nห้องเเนะนําตัว : {introduce_id}\nห้องยืนยันตัวตน : {verification_id}\nห้องลงบันทึก : {log_channel}```" ,inline=True)
+                    embed.add_field(name = "Server ID",value= f"```{ctx.guild.name}\n({ctx.guild.id})```",inline=False)
                     embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```",inline=True)
                     embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}```",inline=True)
                     embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
@@ -1025,7 +1026,7 @@ f"""**ข้อมูลทั่วไป**
                 await ctx.send("Bot is online")
 
     @commands.command()
-    async def support(self,ctx, * , message):
+    async def support(self,ctx, * , message = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -1036,35 +1037,54 @@ f"""**ข้อมูลทั่วไป**
             
             if server_language == "Thai":
                 channel = self.bot.get_channel(id = int(settings.supportchannel))
-                embed = discord.Embed(
-                    title = f"ปัญหาบอทโดย {ctx.author}",
-                    description = message,
-                    colour = 0x00FFFF,
-                )
-                await channel.send(embed=embed)
+                if not message is None: 
+                    embed = discord.Embed(
+                        title = f"ปัญหาบอทโดย {ctx.author}",
+                        description = message,
+                        colour = 0x00FFFF,
+                    )
+                    await channel.send(embed=embed)
 
-                embed = discord.Embed(
-                    title = f"ขอบคุณครับ",
-                    description = "ปัญหาได้ถูกเเจ้งเรียบร้อย",
-                    colour = 0x00FFFF,
-                )
-                await ctx.send(embed=embed)
-            
-            if server_language == "Thai":
+                    embed = discord.Embed(
+                        title = f"ขอบคุณครับ",
+                        description = "ปัญหาได้ถูกเเจ้งเรียบร้อย",
+                        colour = 0x00FFFF,
+                    )
+                    await ctx.send(embed=embed)
+
+                else:
+                    embed = discord.Embed(
+                        title = "ระบุปัญหา",
+                        description = f"{ctx.author.mention} จะต้องระบุปัญหาที่จะเเจ้งให้ทีมงานทราบ",
+                        colour = 0x983925
+                    )
+                    await ctx.send(embed=embed)
+
+            if server_language == "English":
                 channel = self.bot.get_channel(id = int(settings.supportchannel))
-                embed = discord.Embed(
-                    title = f"ปัญหาบอทโดย {ctx.author}",
-                    description = message,
-                    colour = 0x00FFFF,
-                )
-                await channel.send(embed=embed)
+                if not message is None: 
+                    embed = discord.Embed(
+                        title = f"ปัญหาบอทโดย {ctx.author}",
+                        description = message,
+                        colour = 0x00FFFF,
+                    )
+                    await channel.send(embed=embed)
 
-                embed = discord.Embed(
-                    title = f"Thank you",
-                    description = "Bot developer will fix this soon",
-                    colour = 0x00FFFF,
-                )
-                await ctx.send(embed=embed)
+                    embed = discord.Embed(
+                        title = f"Thank you",
+                        description = "Bot developer will fix this soon",
+                        colour = 0x00FFFF,
+                    )
+                    await ctx.send(embed=embed)
+                
+                else: 
+                    embed = discord.Embed(
+                        title = "Specify problem",
+                        description = f"{ctx.author.mention} Must specify the problem that will be notified to the team.",
+                        colour = 0x983925
+                    )
+                    await ctx.send(embed=embed)
+                    
 
 def setup(bot: commands.Bot):
     bot.add_cog(DiscordInfo(bot))
