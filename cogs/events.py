@@ -2,8 +2,6 @@ from typing import Text
 import discord
 import datetime
 from discord import user
-
-from discord.ext.commands.core import command
 import settings
 from discord.ext import commands
 
@@ -19,22 +17,17 @@ class Events(commands.Cog):
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
             data = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
-            if data is None:
-                pass
-
-            else:
+            if not data is None:
                 emoji = data["emoji"]
                 role = data["role_give_id"]
                 if str(payload.emoji) == str(emoji):
                     role = data["role_give_id"]
                     role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
-                    await payload.member.add_roles(role)
-
+                    if role and payload.member != self.bot.user:
+                        await payload.member.add_roles(role)
+                
                 else:
-                    pass
-
-        else:
-            pass
+                    await message.remove_reaction(payload.emoji, payload.member)
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self,payload):
@@ -294,11 +287,17 @@ class Events(commands.Cog):
         await channel.send(embed=embed)
         try:
             async for entry in guild.audit_logs(limit= 1 ,action=discord.AuditLogAction.bot_add):
-                uembed = discord.Embed(title = "-",
+                uembed = discord.Embed(
                                     colour = 0x00FFFF,
-                                    description = f"""ขอบคุณที่เชิญบอท{self.bot.user}เข้าเซิฟนะครับ {entry.user.mention}
+                                    description =
+f"""สวัสดีครับ {entry.user.name}
+ขอบคุณที่เชิญบอท{self.bot.user.name} เข้าร่วมเซิร์ฟเวอร์ {entry.user.mention}
+
+เว็บไซต์บอท : [Smilewin](https://smilewindiscord-th.web.app/)
+
+
                                     """) 
-                embed.add_field(name="🤝Partner : ",value=f"[allzone](https://allzone.online/)")
+                uembed.add_field(name="🤝Partner : ",value=f"[allzone](https://allzone.online/)")
                 await entry.user.send(embed=uembed)
         
         except discord.Forbidden:
