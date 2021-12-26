@@ -1,4 +1,3 @@
-from discord.enums import Status
 from utils.languageembed import languageEmbed
 import settings
 import discord
@@ -714,6 +713,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @commands.group(invoke_without_command=True)
+    @commands.has_permissions(administrator=True)
     async def introduce(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
