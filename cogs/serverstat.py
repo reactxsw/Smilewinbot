@@ -1,3 +1,4 @@
+from discord.ext.commands.core import command
 from utils.languageembed import languageEmbed
 import settings
 import discord
@@ -20,6 +21,7 @@ class ServerStat(commands.Cog):
         return newserver
     
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def setserverstat(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -56,6 +58,7 @@ class ServerStat(commands.Cog):
                     }})
                 
             else:
+                server_language = languageserver["Language"]
                 total = self.bot.get_channel(server["status_total_id"])
                 members = self.bot.get_channel(server["status_members_id"])
                 bots = self.bot.get_channel(server["status_bots_id"])
@@ -186,5 +189,19 @@ class ServerStat(commands.Cog):
                         onlinesvc = await ctx.guild.create_voice_channel(f"︱🟢 Online : {memberonline}", overwrites=overwrites, category=category)
                         await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_online_id":onlinesvc.id}})
 
+                if server_language == "Thai":
+                    embed = discord.Embed(
+
+                    )
+                    await ctx.send(embed = embed)
+                
+                if server_language == "English":
+                    embed = discord.Embed(
+
+                    )
+                    await ctx.send(embed = embed)
+
+
 def setup(bot: commands.Bot):
     bot.add_cog(ServerStat(bot))
+
