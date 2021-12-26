@@ -247,6 +247,9 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}level on/off``', value ='เปิด / ปิดใช้งานระบบเลเวล', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}introduce on/off``', value ='เปิด / ปิดการใช้งานคําสั่งเเนะนําตัว', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}economy on/off``', value ='เปิด / ปิดการใช้งานระบบเศรษฐกิจ', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}logvoice on/off``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog #text-channel``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์', inline = True)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -272,6 +275,10 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}introduce on/off``', value ='turn on/off introduce command', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}economy on/off``', value ='turn on/off an economy system', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}verification on/off``', value ='turn on/off an verification system', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}logvoice on/off``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog #text-channel``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์', inline = True)
+                
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -650,7 +657,6 @@ class Help(commands.Cog):
     **18+**""",value=f"""```
 {settings.COMMAND_PREFIX}porn
 {settings.COMMAND_PREFIX}gsolo
-{settings.COMMAND_PREFIX}smallboob
 {settings.COMMAND_PREFIX}classic
 {settings.COMMAND_PREFIX}pussy
 {settings.COMMAND_PREFIX}eroyuri
@@ -693,7 +699,6 @@ class Help(commands.Cog):
     **18+**""",value=f"""
 {settings.COMMAND_PREFIX}porn
 {settings.COMMAND_PREFIX}gsolo
-{settings.COMMAND_PREFIX}smallboob
 {settings.COMMAND_PREFIX}classic
 {settings.COMMAND_PREFIX}pussy
 {settings.COMMAND_PREFIX}eroyuri
