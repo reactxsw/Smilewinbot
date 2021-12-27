@@ -47,7 +47,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='Help command',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands' , inline = True)
