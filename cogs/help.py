@@ -1,8 +1,8 @@
+from os import name
 import discord
-from discord.ext.commands.core import command
-from utils.languageembed import languageEmbed
 import settings
 from discord.ext import commands
+from utils.languageembed import languageEmbed
 
 
 class Help(commands.Cog):
@@ -59,18 +59,26 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='help commands related to bot' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='help commands related to fun' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='help general commands' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='help commands related to game' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpadmin``',value='help commands related to moderator' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpsetup``',value='help commands related to setup' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpinfo``',value='help commands related to information' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpimage``',value='help commands related to image' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='help commands related to economy' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='help commands related to user' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='help commands related to NSFW' , inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='help commands related to bot')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='help commands related to fun')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='help general commands')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='help commands related to game')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpadmin``',value='help commands related to moderator')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpsetup``',value='help commands related to setup')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpinfo``',value='help commands related to information')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpimage``',value='help commands related to image')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='help commands related to economy')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='help commands related to user')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='help commands related to NSFW')
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -242,8 +250,8 @@ class Help(commands.Cog):
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='ดูการตั้งค่าของเซิฟเวอร์', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}welcomeset #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaveset #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setwelcome #text-channel``', value='ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์', inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setleave #text-channel``', value ='ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setwebhook #text-channel``', value =f'ตั้งค่าห้องที่จะใช้คําสั่ง {settings.COMMAND_PREFIX}anon (message) เพื่อคุยกับคนเเปลกหน้าโดยที่ไม่เปิดเผยตัวตนกับเซิฟเวอร์ที่เปิดใช้คําสั่งนี้', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setintroduce #text-channel``', value =f'ตั้งค่าห้องที่จะให้ส่งข้อมูลของสมาชิกหลังจากเเนะนําตัวเสร็จ *พิม {settings.COMMAND_PREFIX}ind เพื่อเเนะนําตัว', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setframe``', value ='ตั้งกรอบที่ใส่ข้อมูลของสมาชิกจากปกติเป็น ``☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆``', inline = True)
