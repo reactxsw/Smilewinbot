@@ -56,7 +56,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='Help command',
-                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands')
@@ -98,8 +98,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'เปิดบัญชีธนาคาร',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal (@member)``', value='ดูเงินของคุณหรือของสมาชิก', inline = True)
@@ -122,7 +122,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='help commands related to economy',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'Open a new balance',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal (@member)``', value='Check your balance', inline = True)
@@ -154,8 +154,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับตัวบอท',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}test``', value = 'ดูว่าบอทonline ไหม',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ping``', value='ส่ง ping ของบอท', inline = True)
@@ -175,7 +175,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='help commands related to bot',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}test``', value = 'test command to see if the bot is online',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ping``', value='send bot ping', inline = True)
@@ -203,8 +203,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งข้อมูลของสมาชิก',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rank @member``', value = 'เช็คเเรงค์ของคุณหรือสมาชิก',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
@@ -220,7 +220,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='help commands related to user',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rank @member``', value = 'see your level or member level in the server',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='level leaderboard', inline = True)
@@ -245,8 +245,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับตั้งค่า',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='ดูการตั้งค่าของเซิฟเวอร์', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setup``', value ='ลงทะเบียนเซิฟเวอร์ในฐานข้อมูล', inline = True)
@@ -277,7 +277,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='help commands related to setup',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='see server setting', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setup``', value ='set up your server to our database', inline = True)
@@ -315,8 +315,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับเกม',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}coinflip``', value='ทอยเหรียญ', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rps``', value = 'เป่ายิ้งฉับเเข่งกับบอท',inline = True)
@@ -337,8 +337,8 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับเกม',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}coinflip``', value='flip a coin', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rps``', value = 'play rock paper scissor',inline = True)
@@ -369,8 +369,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับข้อมูล',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}serverinfo``', value='ข้อมูลเกี่ยวกับเซิฟเวอร์', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}membercount``', value='จํานวนสมาชิกในเซิฟเวอร์', inline = True)
@@ -401,7 +401,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='help commands related to information',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}serverinfo``', value='info about your server', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}membercount``', value='Number of members in the server', inline = True)
@@ -441,8 +441,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวเเอดมิน',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}kick @member``', value='เเตะสมาชิก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ban @member``', value ='เเบนสมาชิก', inline = True)
@@ -465,7 +465,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวเเอดมิน',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}kick @member``', value='ban a member', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ban @member``', value ='kick a member', inline = True)
@@ -497,8 +497,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งบรรเทิง',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                 )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {settings.COMMAND_PREFIX}helpsetup', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
@@ -524,7 +524,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='คําสั่งบรรเทิง',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                 )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {settings.COMMAND_PREFIX}helpsetup', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}sreddit (subreddit)``', value='ส่งรูปจาก subreddit', inline = True)
@@ -559,8 +559,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งทั่วไป',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
@@ -586,7 +586,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='คําสั่งทั่วไป',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}hastebin (message)``', value='สร้างลิงค์ Hastebin โดยมีข้อความข้อข้างใน', inline = True)
@@ -621,8 +621,8 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับรูป',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
@@ -639,7 +639,7 @@ class Help(commands.Cog):
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับรูป',
                     description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}panda``', value='ส่งภาพเเพนด้า', inline = True)
@@ -666,8 +666,8 @@ class Help(commands.Cog):
 
                 embed=discord.Embed(
                     title='คําสั่งnsfw',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f"""
 
@@ -708,8 +708,8 @@ class Help(commands.Cog):
 
                 embed=discord.Embed(
                     title='NSFW commands',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f"""
 
