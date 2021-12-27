@@ -114,11 +114,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}beg``', value ='ขอทาน', inline = True)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -182,11 +182,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}support [text]``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -243,11 +243,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}vfy``', value='ยืนยันตัวตนโดย captcha', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -316,11 +316,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog [#text-channel]``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -392,11 +392,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}apexstat [username]``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -471,11 +471,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock4``',value='ค้นหา proxy Sock4',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock5``',value='ค้นหา proxy Sock5',inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -551,11 +551,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect [@member]``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome [@member]``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -626,11 +626,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}captcha [text]``', value='ทํา captcha จากคําที่ใส่', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}love [@member]``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -705,11 +705,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}length [text]``', value= 'นับจำนวนตัวอักษร', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}reverse [message]``', value= 'กลับหลังประโยค', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -774,11 +774,11 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
@@ -859,11 +859,11 @@ class Help(commands.Cog):
 {settings.COMMAND_PREFIX}kiss```
 """)
                 embed.add_field(name="📢หมายเหตุ",value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
