@@ -32,13 +32,15 @@ developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
-status = cycle([f' REACT  | {settings.COMMAND_PREFIX}help ' 
-              , f' R      | {settings.COMMAND_PREFIX}help ' 
-              , f' RE     | {settings.COMMAND_PREFIX}help '
-              , f' REA    | {settings.COMMAND_PREFIX}help '
-              , f' REAC   | {settings.COMMAND_PREFIX}help '
-              , f' REACT  | {settings.COMMAND_PREFIX}help ' 
-              , f' REACT! | {settings.COMMAND_PREFIX}help '])
+status = cycle([f' S       | {settings.COMMAND_PREFIX}help ' 
+              , f' Sm      | {settings.COMMAND_PREFIX}help ' 
+              , f' Smi     | {settings.COMMAND_PREFIX}help '
+              , f' Smil    | {settings.COMMAND_PREFIX}help '
+              , f' Smile   | {settings.COMMAND_PREFIX}help '
+              , f' Smilew  | {settings.COMMAND_PREFIX}help ' 
+              , f' Smilewi | {settings.COMMAND_PREFIX}help '
+              , f' Smilewin| {settings.COMMAND_PREFIX}help '
+              , f' Smilewin| {settings.COMMAND_PREFIX}help '])
 
 ASCII_ART = """
                                    ____            _ _               _       
