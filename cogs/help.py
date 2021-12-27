@@ -97,9 +97,9 @@ class Help(commands.Cog):
             
             if server_language == "Thai":
                 embed=discord.Embed(
-                    title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    title='คําสั่งต่างๆเกี่ยวกับระบบเศรษฐกิจ',
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'เปิดบัญชีธนาคาร',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal (@member)``', value='ดูเงินของคุณหรือของสมาชิก', inline = True)
@@ -120,9 +120,9 @@ class Help(commands.Cog):
             
             if server_language == "English":
                 embed=discord.Embed(
-                    title='help commands related to economy',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0x00FFFF   
+                    title='Instructions for use economy command',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'Open a new balance',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal (@member)``', value='Check your balance', inline = True)
