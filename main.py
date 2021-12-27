@@ -38,9 +38,9 @@ status = cycle([f' S       | {settings.COMMAND_PREFIX}help '
               , f' Smil    | {settings.COMMAND_PREFIX}help '
               , f' Smile   | {settings.COMMAND_PREFIX}help '
               , f' Smilew  | {settings.COMMAND_PREFIX}help ' 
-              , f' Smilewi | {settings.COMMAND_PREFIX}help ']
+              , f' Smilewi | {settings.COMMAND_PREFIX}help '
               , f' Smilewin| {settings.COMMAND_PREFIX}help '
-              , f' Smilewin| {settings.COMMAND_PREFIX}help ' )
+              , f' Smilewin| {settings.COMMAND_PREFIX}help '])
 
 ASCII_ART = """
                                    ____            _ _               _       
