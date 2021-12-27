@@ -56,7 +56,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='Help command',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands')
@@ -97,7 +97,7 @@ class Help(commands.Cog):
             
             if server_language == "Thai":
                 embed=discord.Embed(
-                    title='คําสั่งเกี่ยวกับระบบเศรษฐกิจ',
+                    title='คําสั่งต่างๆเกี่ยวกับระบบเศรษฐกิจ',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
@@ -113,6 +113,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}work``', value ='ทํางานหาเงิน', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}beg``', value ='ขอทาน', inline = True)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -120,9 +128,9 @@ class Help(commands.Cog):
             
             if server_language == "English":
                 embed=discord.Embed(
-                    title='help commands related to economy',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
-                    color=0xFED000   
+                    title='Instructions for use economy command',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'Open a new balance',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal (@member)``', value='Check your balance', inline = True)
@@ -135,6 +143,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}resetmoney @member``', value ='reset a member balance', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}work``', value ='work to earn money', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}beg``', value ='beg for money', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -165,6 +181,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}credit``',value='เครดิตคนทําบอท',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}botinfo``', value = 'ข้อมูลเกี่ยวกับตัวบอท',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}support (text)``', value = 'ส่งข้อความหา support หากพบปัญหา',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -174,7 +198,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='help commands related to bot',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}test``', value = 'test command to see if the bot is online',inline = True)
@@ -185,6 +209,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}credit``',value='developer credit',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}botinfo``', value = 'information about bot',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}support (text)``', value = 'send support if error occur',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -210,6 +242,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='ดูอันดับเลเวลของคุณในเซิฟเวอร์', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='เเนะนําตัว', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}vfy``', value='ยืนยันตัวตนโดย captcha', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -219,13 +259,21 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='help commands related to user',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rank @member``', value = 'see your level or member level in the server',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='level leaderboard', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='Introduce yourself', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}vfy``', value='captcha verification', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -267,6 +315,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}logvoice on/off``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog #text-channel``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -276,7 +332,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='help commands related to setup',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='see server setting', inline = True)
@@ -295,7 +351,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}logvoice on/off``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog #text-channel``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์', inline = True)
-                
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -328,6 +391,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}pubgnow``', value = 'จํานวนคนที่เล่น PUBG ขณะนี้',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}gtanow``', value = 'จํานวนคนที่เล่น GTA V ขณะนี้',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}apexstat (username)``', value = 'ดูข้อมูลเกม apex ของคนๆนั้น',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -350,6 +421,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}pubgnow``', value = 'People playing PUBG at this time',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}gtanow``', value = 'People playing gtanow at this time',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}apexstat (user)``', value = 'see a user apex in-game stat',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -391,6 +470,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getproxy``',value='ค้นหา proxy',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock4``',value='ค้นหา proxy Sock4',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock5``',value='ค้นหา proxy Sock5',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -400,7 +487,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='help commands related to information',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}serverinfo``', value='info about your server', inline = True)
@@ -422,6 +509,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getproxy``',value='search for proxy',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock4``',value='search for proxy Sock4',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock5``',value='search for proxy Sock5',inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -455,6 +550,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}clear (จํานวน) ``', value = 'เคลียข้อความตามจํานวน',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome @member``' ,value = 'ย้ายสมาชิกมาห้องของเรา', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -464,7 +567,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวเเอดมิน',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}kick @member``', value='ban a member', inline = True)
@@ -478,6 +581,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}clear (จํานวน) ``', value = 'clear messages',inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect @member``' ,value = 'disconnect a member', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome @member``' ,value = 'move a member to your voice chat', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -514,6 +625,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}love @member``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -523,7 +642,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='คําสั่งบรรเทิง',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                 )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}anon (message)``', value=f'พูดคุยกัคนเเปลกหน้าที่อยู่เซิฟเวอร์อื่น *ต้องตั้งค่าก่อน {settings.COMMAND_PREFIX}helpsetup', inline = True)
@@ -540,6 +659,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ytsearch (keyword)``', value='ค้นหาคลิปใน YouTube', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}captcha (text)``', value='ทํา captcha จากคําที่ใส่', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}love @member``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -577,6 +704,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -585,7 +720,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='คําสั่งทั่วไป',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}qr (message)``', value='สร้าง qr code', inline = True)
@@ -603,6 +738,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}embed (message)``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}length (text)``', value= 'นับจำนวนตัวอักษร', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}reverse (message)``', value= 'กลับหลังประโยค', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -630,6 +773,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -638,7 +789,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='คําสั่งเกี่ยวกับรูป',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}bird``', value='ส่งภาพนก', inline = True)
@@ -647,6 +798,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}dog``', value= 'ส่งภาพหมา', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}fox``', value= 'ส่งภาพสุนัขจิ้งจอก', inline = True)
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}koala``', value= 'ส่งภาพหมีโคอาล่า', inline = True)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -699,6 +858,14 @@ class Help(commands.Cog):
 {settings.COMMAND_PREFIX}pat
 {settings.COMMAND_PREFIX}kiss```
 """)
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -741,6 +908,14 @@ class Help(commands.Cog):
 {settings.COMMAND_PREFIX}pat
 {settings.COMMAND_PREFIX}kiss
 """)        
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""")
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
