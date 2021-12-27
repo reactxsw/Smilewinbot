@@ -144,7 +144,7 @@ async def on_ready():
             colour = 0x56FF2D
         )
         await channel.send(embed=embed)
-    except:
+    except Exception: 
         pass
 
 @bot.command()
@@ -155,6 +155,9 @@ async def reloadcogs(ctx):
     await asyncio.sleep(2)
     loadcogs()
     await clearcmd()
+    print("Reloaded all cogs!")
+    await ctx.send("Reloaded all cogs successfully!")
+
 
 @bot.command()
 async def cleancmd(ctx):
