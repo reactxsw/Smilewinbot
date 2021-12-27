@@ -86,10 +86,10 @@ class Level(commands.Cog):
                         embed = discord.Embed(
                             title = f"เลเวลของ {member}"
                             )
-                        embed.add_field(name = "ชื่อ",value= f"{member.name}",inline=True)
-                        embed.add_field(name = "xp",value= f"{current_xp}/{int(200*((1/2)*current_level))}",inline=True)
-                        embed.add_field(name = "เลเวล",value= f"{current_level}",inline=True)
-                        embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
+                        embed.add_field(name = "ชื่อ",value= f"{member.name}")
+                        embed.add_field(name = "xp",value= f"{current_xp}/{int(200*((1/2)*current_level))}")
+                        embed.add_field(name = "เลเวล",value= f"{current_level}")
+                        embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}")
                         embed.add_field(name = "ความคืบหน้า",value= boxes *":blue_square:"+(20-boxes)*":white_large_square:",inline=False)
                         embed.set_thumbnail(url=f"{member.avatar_url}")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -134,10 +134,10 @@ class Level(commands.Cog):
                         embed = discord.Embed(
                             title = f"เลเวลของ {member}"
                             )
-                        embed.add_field(name = "ชื่อ",value= f"{member.name}",inline=True)
-                        embed.add_field(name = "xp",value= f"{current_xp}/{int(200*((1/2)*current_level))}",inline=True)
-                        embed.add_field(name = "เลเวล",value= f"{current_level}",inline=True)
-                        embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}",inline=True)
+                        embed.add_field(name = "ชื่อ",value= f"{member.name}")
+                        embed.add_field(name = "xp",value= f"{current_xp}/{int(200*((1/2)*current_level))}")
+                        embed.add_field(name = "เลเวล",value= f"{current_level}")
+                        embed.add_field(name = "เเรงค์",value= f"{rank}/{ctx.guild.member_count}")
                         embed.add_field(name = "ความคืบหน้า",value= boxes *":blue_square:"+(20-boxes)*":white_large_square:",inline=False)
                         embed.set_thumbnail(url=f"{member.avatar_url}")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
