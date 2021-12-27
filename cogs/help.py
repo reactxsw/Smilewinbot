@@ -23,7 +23,7 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คำสั่งสำหรับใช้งานบอท',
-                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='ช่วยเหลือคําสั่งช่วยเหลือ')
@@ -56,7 +56,7 @@ class Help(commands.Cog):
             if server_language == "English":
                 embed=discord.Embed(
                     title='Help command',
-                    description=f'{ctx.author.mention}, The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands')
