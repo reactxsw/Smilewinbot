@@ -23,21 +23,30 @@ class Help(commands.Cog):
             if server_language == "Thai":
                 embed=discord.Embed(
                     title='คำสั่งสำหรับใช้งานบอท',
-                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
-                    color=0xFED000  
+                    description=f'{ctx.author.mention},เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='คําสั่งช่วยเหลือ' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='คําสั่งเกี่ยวกับตัวบอท' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='คําสั่งบรรเทิง' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='คําสั่งทั่วไป' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='คําสั่งเกี่ยวกับเกม' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpadmin``',value='คําสั่งของเเอดมิน' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpsetup``',value='คําสั่งเกี่ยวกับตั้งค่า' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpinfo``',value='คําสั่งเกี่ยวกับข้อมูล' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpimage``',value='คําสั่งเกี่ยวกับรูป' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='คําสั่งเกี่ยวกับระบบเศรษฐกิจ' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='คําสั่งข้อมูลของสมาชิกเช่น เลเวล' , inline = True)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='คําสั่ง 18 + ' , inline = True)
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='ช่วยเหลือคําสั่งช่วยเหลือ')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='ช่วยเหลือคําสั่งเกี่ยวกับตัวบอท')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='ช่วยเหลือคําสั่งบรรเทิง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='ช่วยเหลือคําสั่งทั่วไป')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='ช่วยเหลือคําสั่งเกี่ยวกับเกม')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpadmin``',value='ช่วยเหลือคําสั่งของเเอดมิน')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpsetup``',value='ช่วยเหลือคําสั่งเกี่ยวกับตั้งค่า')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpinfo``',value='ช่วยเหลือคําสั่งเกี่ยวกับข้อมูล')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpimage``',value='ช่วยเหลือคําสั่งเกี่ยวกับรูป')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='ช่วยเหลือคําสั่งเกี่ยวกับระบบเศรษฐกิจ')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='ช่วยเหลือคําสั่งข้อมูลของสมาชิกเช่น เลเวล')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='ช่วยเหลือคําสั่ง 18 +')
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
+```
+""")
+
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
