@@ -36,11 +36,11 @@ class DiscordInfo(commands.Cog):
                     title = "ข้อมูลช่องเเชท",
                     colour = 0xfed000
                 )
-                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```", inline = True)
-                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```", inline = True)
+                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```")
+                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```")
                 embed.add_field(name = "หัวข้อช่องเเชท",value=f"```{channel.topic}```", inline = False)
-                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```", inline = True)
-                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```", inline = True)
+                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```")
+                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```")
                 embed.add_field(name = "วันที่สร้างเซิฟเวอร์",value="```"+channel.created_at.strftime("%Y/%m/%d %I:%M %p")+"```", inline = False)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -51,11 +51,11 @@ class DiscordInfo(commands.Cog):
                     title = "ข้อมูลช่องเเชท",
                     colour = 0xfed000
                 )
-                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```", inline = True)
-                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```", inline = True)
+                embed.add_field(name = "ชื่อช่องเเชท",value=f"```{channel.name}```")
+                embed.add_field(name = "ID ช่องเเชท",value=f"```{channel.id}```")
                 embed.add_field(name = "หัวข้อช่องเเชท",value=f"```{channel.topic}```", inline = False)
-                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```", inline = True)
-                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```", inline = True)
+                embed.add_field(name = "ประเภท",value=f"```{(str(channel.type)).upper()}```")
+                embed.add_field(name = "หมวดหมู่ช่องเเชท",value=f"```{channel.category}```")
                 embed.add_field(name = "วันที่สร้างเซิฟเวอร์",value="```"+channel.created_at.strftime("%Y/%m/%d %I:%M %p")+"```", inline = False)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
