@@ -136,12 +136,16 @@ async def on_ready():
     print(f"                                   ║                                      ║")
     print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
-    channel = bot.get_channel(id = int(settings.logchannel))
-    embed = discord.Embed(
-        title = f"Bot is online",
-        colour = 0x56FF2D
-    )
-    await channel.send(embed=embed)
+    #If you doesn't put log channel in config.json it won't error
+    try:
+        channel = bot.get_channel(id = int(settings.logchannel))
+        embed = discord.Embed(
+            title = f"Bot is online",
+            colour = 0x56FF2D
+        )
+        await channel.send(embed=embed)
+    except:
+        pass
 
 @bot.command()
 @commands.is_owner()
