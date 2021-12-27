@@ -151,7 +151,9 @@ async def on_ready():
             colour = 0x56FF2D
         )
         await channel.send(embed=embed)
-    except Exception: 
+
+    except Exception as e: 
+        print(e)
         pass
 
 @bot.command()
