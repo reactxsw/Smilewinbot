@@ -21,7 +21,7 @@ update-checker==0.18.0
 urllib3==1.26.2
 websocket-client==0.57.0
 captcha==0.3
-pymongo==3.11.3
+pymongo==3.12.1 #motor support pymongo >= 3.12 and < 4
 motor==2.5.0
 dnspython==2.1.0
 httplib2==0.19.1
