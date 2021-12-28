@@ -44,20 +44,20 @@ class Game(commands.Cog):
                     if str(reaction.emoji) == "✌️":
                         answer = "scissor"
 
-                    rps = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
                     responses = {
-                        "https://i.imgur.com/hdG222Q.jpg":{
+                        "https://i.imgur.com/zkxuAGQ.png":{
                             "rock":"😮 เสมอ",
                             "paper":"😄 คุณชนะ",
                             "scissor":"😭 คุณเเพ้"
                         },
-                        "https://i.imgur.com/O3ZLDRr.jpg":{
+                        "https://i.imgur.com/paMpgkb.png":{
                             "rock":"😭 คุณเเพ้",
                             "paper":"😮 คุณเสมอ",
                             "scissor":"😄 คุณชนะ"
                         }
                         ,
-                        "https://i.imgur.com/dZOVJ4r.jpg":{
+                        "https://i.imgur.com/aNkWXXy.png":{
                             "rock":"😄 คุณชนะ",
                             "paper":"😭 คุณเเพ้",
                             "scissor":"😮 คุณเสมอ"
@@ -107,20 +107,20 @@ class Game(commands.Cog):
                     if str(reaction.emoji) == "✌️":
                         answer = "scissor"
 
-                    rps = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
                     responses = {
-                        "https://i.imgur.com/hdG222Q.jpg":{
+                        "https://i.imgur.com/zkxuAGQ.png":{
                             "rock":"😮 Draw",
                             "paper":"😄 You won",
                             "scissor":"😭 You lose"
                         },
-                        "https://i.imgur.com/O3ZLDRr.jpg":{
+                        "https://i.imgur.com/paMpgkb.png":{
                             "rock":"😭 You lose",
                             "paper":"😮 Draw",
                             "scissor":"😄 You won"
                         }
                         ,
-                        "https://i.imgur.com/dZOVJ4r.jpg":{
+                        "https://i.imgur.com/aNkWXXy.png":{
                             "rock":"😄 You won",
                             "paper":"😭 You lose",
                             "scissor":"😮 Draw"
@@ -142,7 +142,7 @@ class Game(commands.Cog):
                         title = "🕑 Out of time" ,
                     )
 
-                    embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+                    embed.set_image(url ="https://i.imgur.com/9mQV5cF.jpg")
 
                     await message.edit(embed=embed)
 
