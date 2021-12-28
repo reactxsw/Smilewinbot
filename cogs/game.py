@@ -96,7 +96,7 @@ class Game(commands.Cog):
                 await message.add_reaction('✊')
                 await message.add_reaction('✋')
                 await message.add_reaction('✌️')
-
+                answer = "none"
                 try:
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
 
