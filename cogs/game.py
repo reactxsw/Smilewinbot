@@ -26,7 +26,7 @@ class Game(commands.Cog):
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
-                embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
+                embed.set_image(url = 'https://i.imgur.com/09sTceV.gif')
                 embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('✊')
@@ -38,13 +38,10 @@ class Game(commands.Cog):
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
 
                     if str(reaction.emoji) == "✊":
-                        #rock , paper , scissor
                         answer = "rock"
                     if str(reaction.emoji) == "✋":
-                        #rock , paper , scissor
                         answer = "paper"
                     if str(reaction.emoji) == "✌️":
-                        #rock , paper , scissor
                         answer = "scissor"
                 
                 except asyncio.TimeoutError:
@@ -53,11 +50,11 @@ class Game(commands.Cog):
                         title = "🕑 หมดเวลา" ,
                     )
 
-                    embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+                    embed.set_image(url ="https://i.imgur.com/9mQV5cF.jpg")
 
                     await message.edit(embed=embed)
 
-                responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
+                responses = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
                 botresponse = random.choice(responses)
 
                 if botresponse == responses[0]:
