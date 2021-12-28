@@ -534,7 +534,7 @@ Repository : {repo}```"""
             items = re["items"][0]
             Age_restriction = False
             rating = items["contentDetails"]["contentRating"]
-            if rating["ytrating"] and rating["ytRating"] == "ytAgeRestricted":
+            if "ytrating" in rating and rating["ytRating"] == "ytAgeRestricted":
                 Age_restriction = True
         
             if server_language == "Thai":
@@ -545,12 +545,12 @@ Repository : {repo}```"""
                             colour = 0x00FFFF , 
                             description = f"[ดูคลิปนี้]({clip_url})"
                         )
-                        embed.add_field(name ="ชื่อช่อง" , value = f"{channel_title}", inline = True)
-                        embed.add_field(name ="วิวทั้งหมด" , value = f"{view}", inline = True)
-                        embed.add_field(name ="คอมเม้นทั้งหมด" , value = f"{comment}", inline = True)
-                        embed.add_field(name ="ไลค์" , value = f"{like}", inline = True)
-                        embed.add_field(name ="ดิสไลค์" , value = f"{dislike}", inline = True)
-                        embed.add_field(name ="คำอธิบาย" , value = f"{description}", inline = True)
+                        embed.add_field(name ="ชื่อช่อง" , value = f"{channel_title}")
+                        embed.add_field(name ="วิวทั้งหมด" , value = f"{view}")
+                        embed.add_field(name ="คอมเม้นทั้งหมด" , value = f"{comment}")
+                        embed.add_field(name ="ไลค์" , value = f"{like}")
+                        embed.add_field(name ="ดิสไลค์" , value = f"{dislike}")
+                        embed.add_field(name ="คำอธิบาย" , value = f"{description}")
                         
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         embed.set_image(url=thumbnail)
@@ -576,12 +576,12 @@ Repository : {repo}```"""
                             colour = 0x00FFFF , 
                             description = f"[ดูคลิปนี้]({clip_url})"
                         )
-                    embed.add_field(name ="ชื่อช่อง" , value = f"{channel_title}", inline = True)
-                    embed.add_field(name ="วิวทั้งหมด" , value = f"{view}", inline = True)
-                    embed.add_field(name ="คอมเม้นทั้งหมด" , value = f"{comment}", inline = True)
-                    embed.add_field(name ="ไลค์" , value = f"{like}", inline = True)
-                    embed.add_field(name ="ดิสไลค์" , value = f"{dislike}", inline = True)
-                    embed.add_field(name ="คำอธิบาย" , value = f"{description}", inline = True)
+                    embed.add_field(name ="ชื่อช่อง" , value = f"{channel_title}")
+                    embed.add_field(name ="วิวทั้งหมด" , value = f"{view}")
+                    embed.add_field(name ="คอมเม้นทั้งหมด" , value = f"{comment}")
+                    embed.add_field(name ="ไลค์" , value = f"{like}")
+                    embed.add_field(name ="ดิสไลค์" , value = f"{dislike}")
+                    embed.add_field(name ="คำอธิบาย" , value = f"{description}")
                     
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     embed.set_image(url=thumbnail)
@@ -597,12 +597,12 @@ Repository : {repo}```"""
                             colour = 0x00FFFF , 
                             description = f"[click here]({clip_url})"
                         )
-                        embed.add_field(name ="Channel" , value = f"{channel_title}", inline = True)
-                        embed.add_field(name ="View" , value = f"{view}", inline = True)
-                        embed.add_field(name ="Comment" , value = f"{comment}", inline = True)
-                        embed.add_field(name ="Like" , value = f"{like}", inline = True)
-                        embed.add_field(name ="Dislike" , value = f"{dislike}", inline = True)
-                        embed.add_field(name ="Description" , value = f"{description}", inline = True)
+                        embed.add_field(name ="Channel" , value = f"{channel_title}")
+                        embed.add_field(name ="View" , value = f"{view}")
+                        embed.add_field(name ="Comment" , value = f"{comment}")
+                        embed.add_field(name ="Like" , value = f"{like}")
+                        embed.add_field(name ="Dislike" , value = f"{dislike}")
+                        embed.add_field(name ="Description" , value = f"{description}")
                         
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
                         embed.set_image(url=thumbnail)
@@ -627,12 +627,12 @@ Repository : {repo}```"""
                             colour = 0x00FFFF , 
                             description = f"[click here]({clip_url})"
                         )
-                    embed.add_field(name ="Channel" , value = f"{channel_title}", inline = True)
-                    embed.add_field(name ="View" , value = f"{view}", inline = True)
-                    embed.add_field(name ="Comment" , value = f"{comment}", inline = True)
-                    embed.add_field(name ="Like" , value = f"{like}", inline = True)
-                    embed.add_field(name ="Dislike" , value = f"{dislike}", inline = True)
-                    embed.add_field(name ="Description" , value = f"{description}", inline = True)
+                    embed.add_field(name ="Channel" , value = f"{channel_title}")
+                    embed.add_field(name ="View" , value = f"{view}")
+                    embed.add_field(name ="Comment" , value = f"{comment}")
+                    embed.add_field(name ="Like" , value = f"{like}")
+                    embed.add_field(name ="Dislike" , value = f"{dislike}")
+                    embed.add_field(name ="Description" , value = f"{description}")
                     
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     embed.set_image(url=thumbnail)
