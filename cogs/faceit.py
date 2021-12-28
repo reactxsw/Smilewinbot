@@ -86,77 +86,86 @@ class Faceit(commands.Cog):
                 rcmatch = stat["lifetime"]["Recent Results"]
                 rcmatch = ["W" if m=="1" else "L" for m in rcmatch]
                 totallose = int(totalmatch) - int(totalwin)
- 
-                if csgolvl == 1:
-                    downlevelicon = ""
-                    levelicon = f"<:faceitlvl1:{settings.faceitlvl1}>"
-                    uplevelicon = f"<:faceitlvl2:{settings.faceitlvl2}>"
-                    upelo = 801 - csgoelo
-                    downelo = ""
 
-                elif csgolvl == 2:
-                    downlevelicon = f"<:faceitlvl1:{settings.faceitlvl1}>"
-                    levelicon = f"<:faceitlvl2:{settings.faceitlvl2}>"
-                    uplevelicon = f"<:faceitlvl3:{settings.faceitlvl3}>"
-                    upelo = 951 - csgoelo
-                    downelo = self.distance(800,csgoelo)
+                faceitdict = {
+                    1: {
+                        "downlevelicon":"",
+                        "levelicon":f"<:faceitlvl1:{settings.faceitlvl1}>",
+                        "uplevelicon":f"<:faceitlvl2:{settings.faceitlvl2}>",
+                        "upelo": 801 - csgoelo,
+                        "downelo": ""
+                    },
+                    2: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl1}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl2}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl3}>",
+                        "upelo": 951 - csgoelo,
+                        "downelo": self.distance(800,csgoelo)
+                    },
+                    3: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl2}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl3}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl4}>",
+                        "upelo": 1101 - csgoelo,
+                        "downelo": self.distance(950,csgoelo)
+                    },
+                    4: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl3}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl4}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl5}>",
+                        "upelo": 1251 - csgoelo,
+                        "downelo": self.distance(1100,csgoelo)
+                    },
+                    5: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl4}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl5}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl6}>",
+                        "upelo": 1401 - csgoelo,
+                        "downelo": self.distance(1250,csgoelo)
+                    },
+                    6: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl5}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl6}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl7}>",
+                        "upelo": 1551 - csgoelo,
+                        "downelo": self.distance(1400,csgoelo)
+                    },
+                    7: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl6}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl7}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl8}>",
+                        "upelo": 1701 - csgoelo,
+                        "downelo": self.distance(1550,csgoelo)
+                    },
+                    8: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl7}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl8}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl9}>",
+                        "upelo": 1851 - csgoelo,
+                        "downelo": self.distance(1700,csgoelo)
+                    },
+                    9: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl8}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl9}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl10}>",
+                        "upelo": 2001 - csgoelo,
+                        "downelo": self.distance(1850,csgoelo)
+                    },
+                    10: {
+                        "downlevelicon":f"<:faceitlvl1:{settings.faceitlvl9}>",
+                        "levelicon":f"<:faceitlvl2:{settings.faceitlvl10}>",
+                        "uplevelicon":f"<:faceitlvl3:{settings.faceitlvl4}>",
+                        "upelo": "∞",
+                        "downelo": self.distance(2000,csgoelo)
+                    }
+                }
+                downelo = faceitdict[csgolvl]["downelo"]   
+                upelo = faceitdict[csgolvl]["upelo"]   
+                levelicon = faceitdict[csgolvl]["levelicon"]   
+                downlevelicon = faceitdict[csgolvl]["downlevelicon"]   
+                uplevelicon = faceitdict[csgolvl]["uplevelicon"]  
+
                 
-                elif csgolvl == 3:
-                    downlevelicon = f"<:faceitlvl2:{settings.faceitlvl2}>"
-                    levelicon = f"<:faceitlvl3:{settings.faceitlvl3}>"
-                    uplevelicon = f"<:faceitlvl4:{settings.faceitlvl4}>"
-                    upelo = 1101 - csgoelo
-                    downelo = self.distance(950,csgoelo)
-                
-                elif csgolvl == 4:
-                    downlevelicon = f"<:faceitlvl3:{settings.faceitlvl3}>"
-                    levelicon = f"<:faceitlvl4:{settings.faceitlvl4}>"
-                    uplevelicon = f"<:faceitlvl5:{settings.faceitlvl5}>"
-                    upelo = 1251 - csgoelo
-                    downelo = self.distance(1100,csgoelo)
-                
-                elif csgolvl == 5:
-                    downlevelicon = f"<:faceitlvl4:{settings.faceitlvl4}>"
-                    levelicon = f"<:faceitlvl5:{settings.faceitlvl5}>"
-                    uplevelicon = f"<:faceitlvl6:{settings.faceitlvl6}>"
-                    upelo = 1401 - csgoelo
-                    downelo = self.distance(1250,csgoelo)
-                
-                elif csgolvl == 6:
-                    downlevelicon = f"<:faceitlvl5:{settings.faceitlvl5}>"
-                    levelicon = f"<:faceitlvl6:{settings.faceitlvl6}>"
-                    uplevelicon = f"<:faceitlvl7:{settings.faceitlvl7}>"
-                    upelo = 1551 - csgoelo
-                    downelo = self.distance(1400,csgoelo)
-                
-                elif csgolvl == 7:
-                    downlevelicon = f"<:faceitlvl6:{settings.faceitlvl6}>"
-                    levelicon = f"<:faceitlvl7:{settings.faceitlvl7}>"
-                    uplevelicon = f"<:faceitlvl8:{settings.faceitlvl8}>"
-                    upelo = 1701 - csgoelo
-                    downelo = self.distance(1550,csgoelo)
-                
-                elif csgolvl == 8:
-                    downlevelicon = f"<:faceitlvl7:{settings.faceitlvl7}>"
-                    levelicon = f"<:faceitlvl8:{settings.faceitlvl8}>"
-                    uplevelicon = f"<:faceitlvl9:{settings.faceitlvl9}>"
-                    upelo = 1851 - csgoelo
-                    downelo = self.distance(1700,csgoelo)
-                
-                elif csgolvl == 9:
-                    downlevelicon = f"<:faceitlvl8:{settings.faceitlvl8}>"
-                    levelicon = f"<:faceitlvl9:{settings.faceitlvl9}>"
-                    uplevelicon = f"<:faceitlvl10:{settings.faceitlvl10}>"
-                    upelo = 2001 - csgoelo
-                    downelo = self.distance(1850,csgoelo)
-                
-                else:
-                    downlevelicon = f"<:faceitlvl9:{settings.faceitlvl9}>"
-                    levelicon = f"<:faceitlvl10:{settings.faceitlvl10}>"
-                    uplevelicon = ""
-                    upelo = "∞"
-                    downelo = self.distance(2000,csgoelo)
-                    
                 if region.lower() == "us":
                     regionicon = f"<:faceitus:{settings.faceitus}>"
                 
