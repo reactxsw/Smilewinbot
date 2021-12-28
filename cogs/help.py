@@ -45,7 +45,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
 
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -78,7 +78,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -188,7 +188,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -216,7 +216,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -249,7 +249,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -273,7 +273,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -322,7 +322,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -358,7 +358,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -398,7 +398,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -428,7 +428,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -477,7 +477,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -516,7 +516,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -557,7 +557,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -588,7 +588,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -632,7 +632,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -666,7 +666,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -711,7 +711,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -745,7 +745,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -780,7 +780,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -805,7 +805,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -865,7 +865,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -915,7 +915,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
