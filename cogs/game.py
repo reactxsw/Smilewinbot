@@ -22,7 +22,7 @@ class Game(commands.Cog):
 
             if server_language == "Thai":
                 embed = discord.Embed(
-                    colour =0x00FFFF,
+                    colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
@@ -60,7 +60,7 @@ class Game(commands.Cog):
                 if botresponse == responses[0]:
                     if answer == "rock":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😮 คุณเสมอ"
                         )
@@ -70,7 +70,7 @@ class Game(commands.Cog):
 
                     elif answer == "paper":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😄 คุณชนะ"
                         )
@@ -79,7 +79,7 @@ class Game(commands.Cog):
                     
                     else:
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😭 คุณเเพ้"
                         )
@@ -89,7 +89,7 @@ class Game(commands.Cog):
                 elif botresponse == responses[1]:
                     if answer == "rock":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😭 คุณเเพ้"
                         )
@@ -99,7 +99,7 @@ class Game(commands.Cog):
 
                     elif answer == "paper":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😮 คุณเสมอ"
                         )
@@ -108,7 +108,7 @@ class Game(commands.Cog):
                     
                     else:
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😄 คุณชนะ"
                         )
@@ -118,7 +118,7 @@ class Game(commands.Cog):
                 else:
                     if answer == "rock":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😄 คุณชนะ"
                         )
@@ -128,7 +128,7 @@ class Game(commands.Cog):
 
                     elif answer == "paper":
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😭 คุณเเพ้"
                         )
@@ -137,7 +137,7 @@ class Game(commands.Cog):
                     
                     else:
                         embed = discord.Embed(
-                        colour = 0x00FFFF,
+                        colour = 0xFED000,
                         title = "เกมเป่ายิ้งฉุบ",
                         description = "😮 คุณเสมอ"
                         )
@@ -146,7 +146,7 @@ class Game(commands.Cog):
 
             if server_language == "English":
                 embed = discord.Embed(
-                    colour =0x00FFFF,
+                    colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
@@ -176,7 +176,7 @@ class Game(commands.Cog):
                     if botresponse == responses[0]:
                         if answer == "rock":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😮 Draw"
                             )
@@ -186,7 +186,7 @@ class Game(commands.Cog):
 
                         elif answer == "paper":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😄 You won"
                             )
@@ -195,7 +195,7 @@ class Game(commands.Cog):
                         
                         else:
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😭 You lose"
                             )
@@ -205,7 +205,7 @@ class Game(commands.Cog):
                     elif botresponse == responses[1]:
                         if answer == "rock":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😭 You lose"
                             )
@@ -215,7 +215,7 @@ class Game(commands.Cog):
 
                         elif answer == "paper":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😮 Draw"
                             )
@@ -224,7 +224,7 @@ class Game(commands.Cog):
                         
                         else:
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😄 You won"
                             )
@@ -234,7 +234,7 @@ class Game(commands.Cog):
                     else:
                         if answer == "rock":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😄 You won"
                             )
@@ -244,7 +244,7 @@ class Game(commands.Cog):
 
                         elif answer == "paper":
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😭 You lose"
                             )
@@ -253,7 +253,7 @@ class Game(commands.Cog):
                         
                         else:
                             embed = discord.Embed(
-                            colour = 0x00FFFF,
+                            colour = 0xFED000,
                             title = "Rock paper scissor",
                             description = "😮 Draw"
                             )
@@ -287,7 +287,7 @@ class Game(commands.Cog):
 
                 if flip == responses[0]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "ทอยเหรียญ",
                         description = f"คุณ ``{ctx.author}`` ทอยได้ก้อย"
                 
@@ -299,7 +299,7 @@ class Game(commands.Cog):
         
                 if flip == responses[1]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "ทอยเหรียญ",
                         description = f"คุณ ``{ctx.author}`` ทอยได้หัว"
                 
@@ -314,7 +314,7 @@ class Game(commands.Cog):
 
                 if flip == responses[0]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "Coin flip",
                         description = f"คุณ ``{ctx.author}`` got tail"
                 
@@ -326,7 +326,7 @@ class Game(commands.Cog):
         
                 if flip == responses[1]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "Coin flip",
                         description = f"``{ctx.author}`` got head"
                 
