@@ -124,25 +124,12 @@ def unloadcogs():
 
 @bot.event
 async def on_ready():
-    server= (str(len(bot.guilds)))
-    server_space = (27 - int(len(server)))*(" ")
-    user = (str(len(bot.users)))
-    user_space = (29 - int(len(user)))*(" ")
     try:
         change_status.start()
         serverstat.start()
     except RuntimeError:
         pass
-    print(f"{ASCII_ART}")
-    print(f"                                   ╔══════════════════════════════════════╗")
-    print(f"                                   ║  BOT NAME : {bot.user}            ║")
-    print(f"                                   ║  BOT ID : {bot.user.id}         ║")
-    print(f"                                   ║  BOT STATUS : ONLINE                 ║")
-    print(f"                                   ║  SERVER : {server}{server_space}║")
-    print(f"                                   ║  USER : {user}{user_space}║")
-    print(f"                                   ║                                      ║")
-    print(f"                                   ╚══════════════════════════════════════╝")  
-    print("")
+    print_ascii_art()
     #If you doesn't put log channel in config.json it won't error
     try:
         channel = bot.get_channel(id = int(settings.logchannel))
@@ -154,27 +141,11 @@ async def on_ready():
     except Exception: 
         pass
 
-@bot.command()
-@commands.is_owner()
-async def reloadcogs(ctx):
-    await clearcmd()
-    unloadcogs()
-    await asyncio.sleep(2)
-    loadcogs()
-    await clearcmd()
-    print("Reloaded all cogs!")
-    await ctx.send("Reloaded all cogs successfully!")
-
-
-@bot.command()
-async def cleancmd(ctx):
-    await clearcmd()
-    await checkMongo()
-    space = (" ")
+def print_ascii_art():
     server= (str(len(bot.guilds)))
-    server_space = (27 - int(len(server)))*space
+    server_space = (27 - int(len(server)))*(" ")
     user = (str(len(bot.users)))
-    user_space = (29 - int(len(user)))*space
+    user_space = (29 - int(len(user)))*(" ")
     print(f"{ASCII_ART}")
     print(f"                                   ╔══════════════════════════════════════╗")
     print(f"                                   ║  BOT NAME : {bot.user}            ║")
@@ -185,6 +156,27 @@ async def cleancmd(ctx):
     print(f"                                   ║                                      ║")
     print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
+
+
+@bot.command(aliases=["reload"])
+@commands.is_owner()
+async def reloadcogs(ctx):
+    await clearcmd()
+    unloadcogs()
+    await asyncio.sleep(2)
+    loadcogs()
+    await clearcmd()
+    await asyncio.sleep(0.2)
+    print_ascii_art()
+    print("Reloaded all cogs!")
+    await ctx.send("Reloaded all cogs successfully!")
+
+
+@bot.command()
+async def cleancmd(ctx):
+    await clearcmd()
+    await checkMongo()
+    print_ascii_art()
     await ctx.send("Cmd cleared")
 
 @bot.event
