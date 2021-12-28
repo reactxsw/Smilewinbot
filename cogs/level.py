@@ -2,51 +2,71 @@ import discord
 from discord.ext import commands
 from utils.languageembed import languageEmbed
 import settings
+import requests
+
+response = requests.get("https://raw.githubusercontent.com/DevSpen/scam-links/master/src/links.txt").text
+scram_link = response.splitlines()
+
+
+async def update_level(self , message):
+    # level system
+    if message.guild:
+        if not message.content.startswith('/r'):
+            guild_id = message.guild.id
+            user_id = message.author.id
+            channel = message.channel
+            data = await settings.collection.find_one({"guild_id":guild_id})
+            if not data is None:
+                if not message.author.bot:
+                    status = data["level_system"]
+                    if status == "YES":
+                        user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
+                        if user is None:
+                            new_user = {"guild_id": message.guild.id, "user_id":user_id,"xp":0 , "level":1}
+                            await settings.collectionlevel.insert_one(new_user)
+
+                        else:
+                            user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
+                            current_xp = user["xp"]
+                            current_level = user["level"]
+                            new_xp = user["xp"] + 10
+                            need_xp = ((50*(current_level**2))+(50*current_level))
+                            if new_xp > need_xp:
+                                current_level = current_level + 1
+                                current_xp = current_xp - need_xp
+                                await settings.collectionlevel.update_one({"guild_id":guild_id , "user_id":user_id},{"$set":{"xp":current_xp, "level":current_level}})
+                                await channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {current_level}")
+                            
+                            else:
+                                pass
+                    else:
+                        pass
+        else:
+            pass
+    
+    else:
+        pass
+    print("run level")
 
 class Level(commands.Cog): 
 
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
     
-    @commands.Cog.listener()
-    async def on_message(self , message):
-        await self.bot.wait_until_ready()
-        if message.guild:
-            if not message.content.startswith('/r'):
-                guild_id = message.guild.id
-                user_id = message.author.id
-                channel = message.channel
-                data = await settings.collection.find_one({"guild_id":guild_id})
-                if not data is None:
-                    if not message.author.bot:
-                        status = data["level_system"]
-                        if status == "YES":
-                            user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
-                            if user is None:
-                                new_user = {"guild_id": message.guild.id, "user_id":user_id,"xp":0 , "level":1}
-                                await settings.collectionlevel.insert_one(new_user)
-
-                            else:
-                                user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
-                                current_xp = user["xp"]
-                                current_level = user["level"]
-                                new_xp = user["xp"] + 10
-                                need_xp = ((50*(current_level**2))+(50*current_level))
-                                if new_xp > need_xp:
-                                    current_level = current_level + 1
-                                    current_xp = current_xp - need_xp
-                                    await settings.collectionlevel.update_one({"guild_id":guild_id , "user_id":user_id},{"$set":{"xp":current_xp, "level":current_level}})
-                                    await channel.send(f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {current_level}")
-                                
-                                else:
-                                    pass
-                        else:
-                            pass
-            else:
-                pass
         
-        else:
-            pass
+        print("run leveling")
+
+        # scraming link detection
+        # msg_content = message.content
+        # if message.author.bot:
+        #     return
+        
+        # msg_split = msg_content.split()
+        # for msg in msg_split:
+        #     if msg in scram_link:
+        #         await message.delete()
+        #         await message.channel.send(f"{message.author.mention} Don't send scam links here!")
+        #         return
     
     @commands.command()
     async def rank(self , ctx , member : discord.Member=None):
