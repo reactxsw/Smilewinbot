@@ -1,4 +1,3 @@
-from io import IncrementalNewlineDecoder
 from os import name
 import discord
 import settings
