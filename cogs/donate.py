@@ -88,7 +88,7 @@ class Invite(commands.Cog):
                 if isinstance(error, commands.MissingRequiredArgument):
                     embed = discord.Embed(
                         colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{settings.COMMAND_PREFIX}weather (city)``"
+                        description = f" ⚠️``{ctx.author}`` จะต้องใส่ลิงค์อั่งเปาที่จะบริจาค ``{settings.COMMAND_PREFIX}donate [link]``"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -99,7 +99,7 @@ class Invite(commands.Cog):
                 if isinstance(error, commands.MissingRequiredArgument):
                     embed = discord.Embed(
                         colour = 0x983925,
-                        description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{settings.COMMAND_PREFIX}weather (city)``"
+                        description = f" ⚠️``{ctx.author}`` จะต้องใส่ลิงค์อั่งเปาที่จะบริจาค ``{settings.COMMAND_PREFIX}donate [link]``"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
