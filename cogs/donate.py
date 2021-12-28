@@ -45,7 +45,7 @@ class Invite(commands.Cog):
                                             embed = discord.Embed(
                                                 title = "ขอบคุณครับ",
                                                 description = f"บริจาคเงินจํานวน {amount_redeem} ให้บอท smilewin",
-                                                Color = ""
+                                                Color = 0xFED000
                                             )
                                             await ctx.send(embed=embed)
                                             print(f"รับเงินสําเร็จจาก {gift_owner} จํานวน {amount_redeem}")
@@ -54,14 +54,14 @@ class Invite(commands.Cog):
                                             embed = discord.Embed(
                                                 title = "",
                                                 description = "",
-                                                Color = ""
+                                                Color = 0xFED000
                                             )
                                             await ctx.send(embed=embed)  
                             else:
                                 embed = discord.Embed(
                                     title = "",
                                     description = "",
-                                    Color = ""
+                                    Color = 0xFED000
                                 )
                                 await ctx.send(embed=embed)
                                 print("ไม่พบอั่งเปา")
@@ -69,7 +69,7 @@ class Invite(commands.Cog):
             embed = discord.Embed(
                 title = "",
                 description = "",
-                Color = ""
+                Color = 0xFED000
             )
             await ctx.send(embed=embed)
             print("ลิงค์อั่งเปาไม่ถูกต้อง")
