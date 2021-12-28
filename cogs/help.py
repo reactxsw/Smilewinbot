@@ -1,3 +1,4 @@
+from io import IncrementalNewlineDecoder
 from os import name
 import discord
 import settings
@@ -45,7 +46,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
 
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -78,7 +79,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -120,7 +121,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", inline=False)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -132,12 +133,12 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'Open a new balance')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal [@member]``', value='Check your balance')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}deposit [amount]``', value ='Deposit money to the bank')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}withdraw [amount]``', value = 'Withdraw money from the bank')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pay [@member]``', value ='Pay money to user in the server')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}slot [amount]``', value ='Slot machine')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}openbal``', value = 'open a new balance account')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}bal [@member]``', value='check your balance')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}deposit [amount]``', value ='deposit money to the bank')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}withdraw [amount]``', value = 'withdraw money from the bank')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pay [@member]``', value ='pay money to user in the server')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}slot [amount]``', value ='slot machine')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}rob [@member]``', value ='steal money')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}addcredit [amount] [@member]``', value ='add money to user')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}resetmoney [@member]``', value ='reset a member balance')
@@ -150,7 +151,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -188,7 +189,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -216,7 +217,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -249,7 +250,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -262,9 +263,9 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}rank <@member>``', value = 'see your level or member level in the server')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='level leaderboard')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='Introduce yourself')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}rank <@member>``', value = 'show your level or member level in the server')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='show leaderboard')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='introduce yourself')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}vfy``', value='captcha verification')
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] = required
@@ -273,7 +274,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -322,7 +323,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -335,7 +336,7 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='see server setting')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}setting``', value ='show server setting')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setup``', value ='set up your server to our database')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}welcomeset [#text-channel]``', value='set up a channel to notify if new member join')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaveset [#text-channel]``', value ='set up a channel to notify if member left')
@@ -358,7 +359,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -398,7 +399,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -428,7 +429,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -477,7 +478,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -516,7 +517,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
@@ -557,7 +558,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -588,7 +589,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -632,7 +633,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -666,7 +667,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -711,7 +712,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -745,7 +746,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -780,7 +781,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -805,7 +806,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -865,7 +866,7 @@ class Help(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -915,7 +916,7 @@ class Help(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""")
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
