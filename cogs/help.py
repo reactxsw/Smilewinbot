@@ -71,7 +71,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='help commands related to economy')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='help commands related to user')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='help commands related to NSFW')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -143,14 +143,14 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}resetmoney [@member]``', value ='reset a member balance')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}work``', value ='work to earn money')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}beg``', value ='beg for money')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", inline=False)
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -209,7 +209,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}credit``',value='developer credit')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}botinfo``', value = 'information about bot')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}support [text]``', value = 'send support if error occur')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -266,7 +266,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}leaderboard``', value='show leaderboard')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ind``', value='introduce yourself')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}vfy``', value='captcha verification')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -351,7 +351,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}logvoice on/off``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setlog [#text-channel]``', value ='เปิด / ปิดการใช้งานระบบเเจ้งเตือนการเข้าห้องเสียง')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}setserverstat``', value ='เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -421,7 +421,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}pubgnow``', value = 'People playing PUBG at this time')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}gtanow``', value = 'People playing gtanow at this time')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}apexstat [user]``', value = 'see a user apex in-game stat')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -509,7 +509,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getproxy``',value='search for proxy')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock4``',value='search for proxy Sock4')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}getsock5``',value='search for proxy Sock5')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -581,7 +581,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}clear [จํานวน] ``', value = 'clear messages')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect [@member]``' ,value = 'disconnect a member')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome [@member]``' ,value = 'move a member to your voice chat')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -659,7 +659,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}ytsearch [keyword]``', value='ค้นหาคลิปใน YouTube')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}captcha [text]``', value='ทํา captcha จากคําที่ใส่')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}love [@member]``', value='ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -738,7 +738,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}embed [message]``', value= 'สร้าง embed (ใส่//เพื่อเริ่มบรรทัดต่อไป)')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}length [text]``', value= 'นับจำนวนตัวอักษร')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}reverse [message]``', value= 'กลับหลังประโยค')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -798,7 +798,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}dog``', value= 'Send a picture of a dog')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}fox``', value= 'Send a picture of a fox')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}koala``', value= 'Send a picture of a koala')
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
@@ -908,7 +908,7 @@ class Help(commands.Cog):
 {settings.COMMAND_PREFIX}pat
 {settings.COMMAND_PREFIX}kiss
 """)        
-                embed.add_field(name="📢หมายเหตุ",value="""```
+                embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
 <> = optional``````
