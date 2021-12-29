@@ -11,6 +11,7 @@ from utils.languageembed import languageEmbed
 
 
 scram_link = requests.get("https://raw.githubusercontent.com/DevSpen/scam-links/master/src/links.txt").text.splitlines()
+scram_link2 = requests.get("https://raw.githubusercontent.com/matomo-org/referrer-spam-list/master/spammers.txt").text.splitlines()
 
 async def get_link_bypassing(url):
     async with aiohttp.ClientSession() as session:
@@ -26,19 +27,17 @@ async def check_scram_link(self,message):
         #bypassing bit.ly and take a url out of it
         b_link = await get_link_bypassing(link.group("url"))
         domain = await get_domain_name_from_url(b_link)
-        if domain in scram_link:
+        if domain in scram_link or domain in scram_link2:
             await message.delete()
             await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
 
         print(domain)
-        if domain in scram_link:
-            await message.delete()
-            await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
     else:
-        for content in message.content.split():
-            if content in scram_link:
-                await message.delete()
-                await message.channel.send(f"{message.author.mention} Please do not send the scam links!")
+        pass
+        # for content in message.content.split():
+        #     if content in scram_link or content in scram_link2:
+        #         await message.delete()
+        #         await message.channel.send(f"{message.author.mention} Please do not send the scam links!")
 
     
     print("run link")
