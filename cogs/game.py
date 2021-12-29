@@ -22,7 +22,7 @@ class Game(commands.Cog):
 
             if server_language == "Thai":
                 embed = discord.Embed(
-                    colour =0x00FFFF,
+                    colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
@@ -43,6 +43,34 @@ class Game(commands.Cog):
                         answer = "paper"
                     if str(reaction.emoji) == "✌️":
                         answer = "scissor"
+
+                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
+                    responses = {
+                        "https://i.imgur.com/zkxuAGQ.png":{
+                            "rock":"😮 เสมอ",
+                            "paper":"😄 คุณชนะ",
+                            "scissor":"😭 คุณเเพ้"
+                        },
+                        "https://i.imgur.com/paMpgkb.png":{
+                            "rock":"😭 คุณเเพ้",
+                            "paper":"😮 คุณเสมอ",
+                            "scissor":"😄 คุณชนะ"
+                        }
+                        ,
+                        "https://i.imgur.com/aNkWXXy.png":{
+                            "rock":"😄 คุณชนะ",
+                            "paper":"😭 คุณเเพ้",
+                            "scissor":"😮 คุณเสมอ"
+                        }
+                    }
+                    botresponse = random.choice(rps)
+                    embed = discord.Embed(
+                        colour = 0xFED000,
+                        title = "Rock paper scissor",
+                        description = responses[botresponse][answer]
+                    )
+                    embed.set_image(url=botresponse)
+                    await message.edit(embed=embed)
                 
                 except asyncio.TimeoutError:
                     embed = discord.Embed(
@@ -54,211 +82,58 @@ class Game(commands.Cog):
 
                     await message.edit(embed=embed)
 
-                responses = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
-                botresponse = random.choice(responses)
 
-                if botresponse == responses[0]:
-                    if answer == "rock":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
-                        )
-                        embed.set_image(url=responses[0])
-
-                        await message.edit(embed=embed)
-
-                    elif answer == "paper":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
-                        )
-                        embed.set_image(url=responses[0])
-                        await message.edit(embed=embed)
-                    
-                    else:
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
-                        )
-                        embed.set_image(url=responses[0])
-                        await message.edit(embed=embed)
-
-                elif botresponse == responses[1]:
-                    if answer == "rock":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
-                        )
-                        embed.set_image(url=responses[1])
-
-                        await message.edit(embed=embed)
-
-                    elif answer == "paper":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
-                        )
-                        embed.set_image(url=responses[1])
-                        await message.edit(embed=embed)
-                    
-                    else:
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
-                        )
-                        embed.set_image(url=responses[1])
-                        await message.edit(embed=embed)
-                
-                else:
-                    if answer == "rock":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😄 คุณชนะ"
-                        )
-                        embed.set_image(url=responses[2])
-
-                        await message.edit(embed=embed)
-
-                    elif answer == "paper":
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😭 คุณเเพ้"
-                        )
-                        embed.set_image(url=responses[2])
-                        await message.edit(embed=embed)
-                    
-                    else:
-                        embed = discord.Embed(
-                        colour = 0x00FFFF,
-                        title = "เกมเป่ายิ้งฉุบ",
-                        description = "😮 คุณเสมอ"
-                        )
-                        embed.set_image(url=responses[2])
-                        await message.edit(embed=embed)
 
             if server_language == "English":
                 embed = discord.Embed(
-                    colour =0x00FFFF,
+                    colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
-                embed.set_image(url = 'https://i.imgur.com/ZvX4DrC.gif')
+                embed.set_image(url = 'https://i.imgur.com/09sTceV.gif')
                 embed.set_footer(text=f"⏳ click on emoji in 10 seconds")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('✊')
                 await message.add_reaction('✋')
                 await message.add_reaction('✌️')
-
+                answer = "none"
                 try:
                     reaction, user = await self.bot.wait_for('reaction_add', timeout=10, check=lambda reaction, user: user.id == ctx.author.id)
 
                     if str(reaction.emoji) == "✊":
-                        #rock , paper , scissor
                         answer = "rock"
                     if str(reaction.emoji) == "✋":
-                        #rock , paper , scissor
                         answer = "paper"
                     if str(reaction.emoji) == "✌️":
-                        #rock , paper , scissor
                         answer = "scissor"
 
-                    responses = ['https://i.imgur.com/hdG222Q.jpg', 'https://i.imgur.com/O3ZLDRr.jpg' ,'https://i.imgur.com/dZOVJ4r.jpg']
-                    botresponse = random.choice(responses)
-
-                    if botresponse == responses[0]:
-                        if answer == "rock":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😮 Draw"
-                            )
-                            embed.set_image(url=responses[0])
-
-                            await message.edit(embed=embed)
-
-                        elif answer == "paper":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😄 You won"
-                            )
-                            embed.set_image(url=responses[0])
-                            await message.edit(embed=embed)
-                        
-                        else:
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😭 You lose"
-                            )
-                            embed.set_image(url=responses[0])
-                            await message.edit(embed=embed)
-
-                    elif botresponse == responses[1]:
-                        if answer == "rock":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😭 You lose"
-                            )
-                            embed.set_image(url=responses[1])
-
-                            await message.edit(embed=embed)
-
-                        elif answer == "paper":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😮 Draw"
-                            )
-                            embed.set_image(url=responses[1])
-                            await message.edit(embed=embed)
-                        
-                        else:
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😄 You won"
-                            )
-                            embed.set_image(url=responses[1])
-                            await message.edit(embed=embed)
-                    
-                    else:
-                        if answer == "rock":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😄 You won"
-                            )
-                            embed.set_image(url=responses[2])
-
-                            await message.edit(embed=embed)
-
-                        elif answer == "paper":
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😭 You lose"
-                            )
-                            embed.set_image(url=responses[2])
-                            await message.edit(embed=embed)
-                        
-                        else:
-                            embed = discord.Embed(
-                            colour = 0x00FFFF,
-                            title = "Rock paper scissor",
-                            description = "😮 Draw"
-                            )
-                            embed.set_image(url=responses[2])
-                            await message.edit(embed=embed)
+                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
+                    responses = {
+                        "https://i.imgur.com/zkxuAGQ.png":{
+                            "rock":"😮 Draw",
+                            "paper":"😄 You won",
+                            "scissor":"😭 You lose"
+                        },
+                        "https://i.imgur.com/paMpgkb.png":{
+                            "rock":"😭 You lose",
+                            "paper":"😮 Draw",
+                            "scissor":"😄 You won"
+                        }
+                        ,
+                        "https://i.imgur.com/aNkWXXy.png":{
+                            "rock":"😄 You won",
+                            "paper":"😭 You lose",
+                            "scissor":"😮 Draw"
+                        }
+                    }
+                    botresponse = random.choice(rps)
+                    embed = discord.Embed(
+                        colour = 0xFED000,
+                        title = "Rock paper scissor",
+                        description = responses[botresponse][answer]
+                    )
+                    embed.set_image(url=botresponse)
+                    await message.edit(embed=embed)
 
                 except asyncio.TimeoutError:
                     
@@ -267,7 +142,7 @@ class Game(commands.Cog):
                         title = "🕑 Out of time" ,
                     )
 
-                    embed.set_image(url ="https://i.imgur.com/bBMSqvf.jpg")
+                    embed.set_image(url ="https://i.imgur.com/9mQV5cF.jpg")
 
                     await message.edit(embed=embed)
 
@@ -287,7 +162,7 @@ class Game(commands.Cog):
 
                 if flip == responses[0]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "ทอยเหรียญ",
                         description = f"คุณ ``{ctx.author}`` ทอยได้ก้อย"
                 
@@ -299,7 +174,7 @@ class Game(commands.Cog):
         
                 if flip == responses[1]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "ทอยเหรียญ",
                         description = f"คุณ ``{ctx.author}`` ทอยได้หัว"
                 
@@ -314,7 +189,7 @@ class Game(commands.Cog):
 
                 if flip == responses[0]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "Coin flip",
                         description = f"คุณ ``{ctx.author}`` got tail"
                 
@@ -326,7 +201,7 @@ class Game(commands.Cog):
         
                 if flip == responses[1]:
                     embed = discord.Embed(
-                        colour =0x00FFFF,
+                        colour =0xFED000,
                         title = "Coin flip",
                         description = f"``{ctx.author}`` got head"
                 
