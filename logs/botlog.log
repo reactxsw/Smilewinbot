@@ -140,3 +140,791 @@
 2021-12-29 14:28:24,244:DEBUG:discord.client: Dispatching event socket_raw_send
 2021-12-29 14:28:29,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640762909242,"status":"idle"}}" to change status
 2021-12-29 14:28:29,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:34,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640762914246,"status":"idle"}}" to change status
+2021-12-29 14:28:34,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:39,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640762919249,"status":"idle"}}" to change status
+2021-12-29 14:28:39,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:41,506:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:28:41,506:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 19, 'op': 0, 'd': {'webhook_id': '925023682320031784', 'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:28:41.388000+00:00', 'pinned': False, 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'id': '925651525227905065', 'flags': 0, 'embeds': [{'url': 'https://github.com/reactxsw/Smilewinbot/commit/b7d4d752e7728009ac89c8f6ca150415442b91d9', 'type': 'rich', 'title': '[Smilewinbot:main] 1 new commit', 'description': '[`b7d4d75`](https://github.com/reactxsw/Smilewinbot/commit/b7d4d752e7728009ac89c8f6ca150415442b91d9) update - reactxsw', 'color': 7506394, 'author': {'url': 'https://github.com/reactxsw', 'proxy_icon_url': 'https://images-ext-2.discordapp.net/external/SjAMq36UuOODWBw_m44enlgqbLtZCXClxlqHaDFAfWY/%3Fv%3D4/https/avatars.githubusercontent.com/u/70201574', 'name': 'reactxsw', 'icon_url': 'https://avatars.githubusercontent.com/u/70201574?v=4'}}], 'edited_timestamp': None, 'content': '', 'components': [], 'channel_id': '925023550375624744', 'author': {'username': 'GitHub', 'id': '925023682320031784', 'discriminator': '0000', 'bot': True, 'avatar': 'df91181b3f1cf0ef1592fbe18e0962d7'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:28:41,506:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:28:41,506:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:28:44,263:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640762924263,"status":"idle"}}" to change status
+2021-12-29 14:28:44,263:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:47,550:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 19.
+2021-12-29 14:28:47,812:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:28:47,812:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:28:47,812:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:28:49,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640762929253,"status":"idle"}}" to change status
+2021-12-29 14:28:49,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:54,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640762934244,"status":"idle"}}" to change status
+2021-12-29 14:28:54,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:28:59,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640762939252,"status":"idle"}}" to change status
+2021-12-29 14:28:59,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:03,169:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:29:03,169:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 20, 'op': 0, 'd': {'webhook_id': '838610272481968188', 'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:29:03.159000+00:00', 'pinned': False, 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'id': '925651616542097438', 'flags': 0, 'embeds': [{'url': 'https://www.khaosod.co.th/special-stories/news_6807360', 'type': 'rich', 'title': 'เป็นสาวสองคงไม่เหมาะ ชื่อ ประยุทธ์ หรือ สรพงษ์ ก็ไม่เปลี่ยน พ้อทัวร์ถล่ม', 'timestamp': '2021-12-29T07:21:15.434000+00:00', 'image': {'width': 1200, 'url': 'https://www.khaosod.co.th/wpapp/uploads/2021/12/%E0%B8%97%E0%B8%B5%E0%B8%99%E0%B9%88%E0%B8%B2-%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9B%E0%B9%8B%E0%B8%B2.jpg', 'proxy_url': 'https://images-ext-2.discordapp.net/external/z7jZcpITAAq70tZI3PxtHwvFLaMX8fraW8yYjNiiqcA/https/www.khaosod.co.th/wpapp/uploads/2021/12/%25E0%25B8%2597%25E0%25B8%25B5%25E0%25B8%2599%25E0%25B9%2588%25E0%25B8%25B2-%25E0%25B8%2581%25E0%25B8%25A3%25E0%25B8%25B0%25E0%25B9%2580%25E0%25B8%259B%25E0%25B9%258B%25E0%25B8%25B2.jpg', 'height': 675}, 'footer': {'text': 'by : www.khaosod.co.th'}, 'fields': [{'value': 'ลิงก์ : [https://www.khaosod.co.th/special-storie..](https://www.khaosod.co.th/special-stories/news_6807360)', 'name': 'อ่านต่อ', 'inline': False}], 'description': '″ทีน่า” เปิดใจ ไม่เปลี่ยนชื่อ ”ประยุทธ์” ซัดกลับทนายเกิดผล พูดเอามันส์ เอากระแส แต่ต้องเข้าใจคนอื่นด้วย ไม่เคยตั้งใจยักยอกทรัพย์ใคร', 'color': 16775677, 'author': {'name': 'อัพเดท ข่าวเด่น!'}}], 'edited_timestamp': None, 'content': '', 'components': [], 'channel_id': '760100393551134741', 'author': {'username': 'miu', 'id': '838610272481968188', 'discriminator': '0000', 'bot': True, 'avatar': '178effbc19a069072112bda06a3fb98e'}, 'attachments': [], 'application_id': '466608402894684170', 'guild_id': '394451338140057610'}}
+2021-12-29 14:29:03,169:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:29:03,169:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:29:04,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640762944244,"status":"idle"}}" to change status
+2021-12-29 14:29:04,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:09,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640762949249,"status":"idle"}}" to change status
+2021-12-29 14:29:09,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:14,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640762954253,"status":"idle"}}" to change status
+2021-12-29 14:29:14,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:19,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640762959251,"status":"idle"}}" to change status
+2021-12-29 14:29:19,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:24,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640762964254,"status":"idle"}}" to change status
+2021-12-29 14:29:24,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:28,800:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:29:29,064:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:29:29,064:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:29:29,064:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:29:29,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640762969248,"status":"idle"}}" to change status
+2021-12-29 14:29:29,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:34,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640762974241,"status":"idle"}}" to change status
+2021-12-29 14:29:34,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:39,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640762979248,"status":"idle"}}" to change status
+2021-12-29 14:29:39,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:44,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640762984246,"status":"idle"}}" to change status
+2021-12-29 14:29:44,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:49,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640762989247,"status":"idle"}}" to change status
+2021-12-29 14:29:49,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:54,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640762994244,"status":"idle"}}" to change status
+2021-12-29 14:29:54,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:29:59,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640762999247,"status":"idle"}}" to change status
+2021-12-29 14:29:59,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:04,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763004245,"status":"idle"}}" to change status
+2021-12-29 14:30:04,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:09,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763009251,"status":"idle"}}" to change status
+2021-12-29 14:30:09,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:10,059:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:30:10,320:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:30:10,320:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:30:10,320:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:30:14,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763014252,"status":"idle"}}" to change status
+2021-12-29 14:30:14,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:19,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763019250,"status":"idle"}}" to change status
+2021-12-29 14:30:19,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:24,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763024245,"status":"idle"}}" to change status
+2021-12-29 14:30:24,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:29,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763029246,"status":"idle"}}" to change status
+2021-12-29 14:30:29,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:34,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763034241,"status":"idle"}}" to change status
+2021-12-29 14:30:34,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:39,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763039254,"status":"idle"}}" to change status
+2021-12-29 14:30:39,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:44,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763044246,"status":"idle"}}" to change status
+2021-12-29 14:30:44,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:49,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763049250,"status":"idle"}}" to change status
+2021-12-29 14:30:49,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:51,324:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:30:51,584:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:30:51,584:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:30:51,584:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:30:54,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763054253,"status":"idle"}}" to change status
+2021-12-29 14:30:54,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:30:59,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763059253,"status":"idle"}}" to change status
+2021-12-29 14:30:59,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:04,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763064246,"status":"idle"}}" to change status
+2021-12-29 14:31:04,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:09,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763069250,"status":"idle"}}" to change status
+2021-12-29 14:31:09,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:14,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763074250,"status":"idle"}}" to change status
+2021-12-29 14:31:14,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:19,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763079254,"status":"idle"}}" to change status
+2021-12-29 14:31:19,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:24,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763084250,"status":"idle"}}" to change status
+2021-12-29 14:31:24,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:29,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763089244,"status":"idle"}}" to change status
+2021-12-29 14:31:29,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:32,577:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:31:32,839:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:31:32,839:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:31:32,839:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:31:34,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763094253,"status":"idle"}}" to change status
+2021-12-29 14:31:34,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:39,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763099252,"status":"idle"}}" to change status
+2021-12-29 14:31:39,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:44,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763104249,"status":"idle"}}" to change status
+2021-12-29 14:31:44,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:49,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763109253,"status":"idle"}}" to change status
+2021-12-29 14:31:49,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:54,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763114254,"status":"idle"}}" to change status
+2021-12-29 14:31:54,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:31:59,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763119240,"status":"idle"}}" to change status
+2021-12-29 14:31:59,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:04,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763124248,"status":"idle"}}" to change status
+2021-12-29 14:32:04,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:09,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763129243,"status":"idle"}}" to change status
+2021-12-29 14:32:09,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:13,836:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:32:14,097:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:32:14,097:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:32:14,097:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:32:14,235:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763134235,"status":"idle"}}" to change status
+2021-12-29 14:32:14,235:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:19,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763139241,"status":"idle"}}" to change status
+2021-12-29 14:32:19,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:24,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763144241,"status":"idle"}}" to change status
+2021-12-29 14:32:24,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:29,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763149243,"status":"idle"}}" to change status
+2021-12-29 14:32:29,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:34,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763154242,"status":"idle"}}" to change status
+2021-12-29 14:32:34,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:39,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763159245,"status":"idle"}}" to change status
+2021-12-29 14:32:39,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:44,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763164242,"status":"idle"}}" to change status
+2021-12-29 14:32:44,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:49,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763169240,"status":"idle"}}" to change status
+2021-12-29 14:32:49,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:54,255:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763174255,"status":"idle"}}" to change status
+2021-12-29 14:32:54,255:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:32:55,091:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:32:55,352:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:32:55,352:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:32:55,352:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:32:59,257:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763179257,"status":"idle"}}" to change status
+2021-12-29 14:32:59,257:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:04,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763184243,"status":"idle"}}" to change status
+2021-12-29 14:33:04,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:09,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763189240,"status":"idle"}}" to change status
+2021-12-29 14:33:09,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:14,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763194253,"status":"idle"}}" to change status
+2021-12-29 14:33:14,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:19,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763199251,"status":"idle"}}" to change status
+2021-12-29 14:33:19,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:24,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763204249,"status":"idle"}}" to change status
+2021-12-29 14:33:24,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:29,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763209250,"status":"idle"}}" to change status
+2021-12-29 14:33:29,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:34,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763214250,"status":"idle"}}" to change status
+2021-12-29 14:33:34,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:36,350:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 20.
+2021-12-29 14:33:36,611:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:33:36,611:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:33:36,611:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:33:39,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763219254,"status":"idle"}}" to change status
+2021-12-29 14:33:39,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:44,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763224245,"status":"idle"}}" to change status
+2021-12-29 14:33:44,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:49,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763229248,"status":"idle"}}" to change status
+2021-12-29 14:33:49,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:54,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763234251,"status":"idle"}}" to change status
+2021-12-29 14:33:54,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:33:58,432:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:33:58,432:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 21, 'op': 0, 'd': {'webhook_id': '925023682320031784', 'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:33:58.375000+00:00', 'pinned': False, 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'id': '925652854767779862', 'flags': 0, 'embeds': [{'url': 'https://github.com/reactxsw/Smilewinbot/commit/17e5cacb6c8bad2c3ba1a1c66df4fab996452d24', 'type': 'rich', 'title': '[Smilewinbot:main] 1 new commit', 'description': '[`17e5cac`](https://github.com/reactxsw/Smilewinbot/commit/17e5cacb6c8bad2c3ba1a1c66df4fab996452d24) Update scam.py - reactxsw', 'color': 7506394, 'author': {'url': 'https://github.com/reactxsw', 'proxy_icon_url': 'https://images-ext-2.discordapp.net/external/SjAMq36UuOODWBw_m44enlgqbLtZCXClxlqHaDFAfWY/%3Fv%3D4/https/avatars.githubusercontent.com/u/70201574', 'name': 'reactxsw', 'icon_url': 'https://avatars.githubusercontent.com/u/70201574?v=4'}}], 'edited_timestamp': None, 'content': '', 'components': [], 'channel_id': '925023550375624744', 'author': {'username': 'GitHub', 'id': '925023682320031784', 'discriminator': '0000', 'bot': True, 'avatar': 'df91181b3f1cf0ef1592fbe18e0962d7'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:33:58,433:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:33:58,433:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:33:59,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763239246,"status":"idle"}}" to change status
+2021-12-29 14:33:59,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:04,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763244251,"status":"idle"}}" to change status
+2021-12-29 14:34:04,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:09,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763249249,"status":"idle"}}" to change status
+2021-12-29 14:34:09,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:14,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763254246,"status":"idle"}}" to change status
+2021-12-29 14:34:14,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:17,604:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:34:17,868:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:34:17,868:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:34:17,868:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:34:19,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763259253,"status":"idle"}}" to change status
+2021-12-29 14:34:19,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:24,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763264241,"status":"idle"}}" to change status
+2021-12-29 14:34:24,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:29,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763269250,"status":"idle"}}" to change status
+2021-12-29 14:34:29,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:34,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763274243,"status":"idle"}}" to change status
+2021-12-29 14:34:34,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:39,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763279252,"status":"idle"}}" to change status
+2021-12-29 14:34:39,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:44,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763284244,"status":"idle"}}" to change status
+2021-12-29 14:34:44,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:49,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763289247,"status":"idle"}}" to change status
+2021-12-29 14:34:49,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:54,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763294251,"status":"idle"}}" to change status
+2021-12-29 14:34:54,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:34:58,861:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:34:59,127:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:34:59,127:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:34:59,127:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:34:59,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763299250,"status":"idle"}}" to change status
+2021-12-29 14:34:59,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:04,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763304247,"status":"idle"}}" to change status
+2021-12-29 14:35:04,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:09,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763309246,"status":"idle"}}" to change status
+2021-12-29 14:35:09,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:14,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763314241,"status":"idle"}}" to change status
+2021-12-29 14:35:14,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:19,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763319242,"status":"idle"}}" to change status
+2021-12-29 14:35:19,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:24,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763324247,"status":"idle"}}" to change status
+2021-12-29 14:35:24,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:29,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763329246,"status":"idle"}}" to change status
+2021-12-29 14:35:29,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:34,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763334242,"status":"idle"}}" to change status
+2021-12-29 14:35:34,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:39,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763339252,"status":"idle"}}" to change status
+2021-12-29 14:35:39,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:40,121:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:35:40,382:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:35:40,383:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:35:40,383:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:35:44,259:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763344259,"status":"idle"}}" to change status
+2021-12-29 14:35:44,259:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:49,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763349247,"status":"idle"}}" to change status
+2021-12-29 14:35:49,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:54,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763354252,"status":"idle"}}" to change status
+2021-12-29 14:35:54,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:35:59,255:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763359255,"status":"idle"}}" to change status
+2021-12-29 14:35:59,255:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:04,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763364248,"status":"idle"}}" to change status
+2021-12-29 14:36:04,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:09,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763369242,"status":"idle"}}" to change status
+2021-12-29 14:36:09,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:14,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763374252,"status":"idle"}}" to change status
+2021-12-29 14:36:14,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:19,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763379252,"status":"idle"}}" to change status
+2021-12-29 14:36:19,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:21,393:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:36:21,655:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:36:21,655:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:36:21,655:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:36:24,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763384242,"status":"idle"}}" to change status
+2021-12-29 14:36:24,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:29,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763389254,"status":"idle"}}" to change status
+2021-12-29 14:36:29,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:34,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763394247,"status":"idle"}}" to change status
+2021-12-29 14:36:34,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:39,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763399252,"status":"idle"}}" to change status
+2021-12-29 14:36:39,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:44,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763404240,"status":"idle"}}" to change status
+2021-12-29 14:36:44,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:49,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763409249,"status":"idle"}}" to change status
+2021-12-29 14:36:49,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:54,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763414252,"status":"idle"}}" to change status
+2021-12-29 14:36:54,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:36:59,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763419243,"status":"idle"}}" to change status
+2021-12-29 14:36:59,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:02,649:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:37:02,915:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:37:02,915:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:37:02,915:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:37:04,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763424252,"status":"idle"}}" to change status
+2021-12-29 14:37:04,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:09,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763429251,"status":"idle"}}" to change status
+2021-12-29 14:37:09,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:14,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763434245,"status":"idle"}}" to change status
+2021-12-29 14:37:14,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:19,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763439244,"status":"idle"}}" to change status
+2021-12-29 14:37:19,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:24,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763444242,"status":"idle"}}" to change status
+2021-12-29 14:37:24,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:29,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763449253,"status":"idle"}}" to change status
+2021-12-29 14:37:29,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:34,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763454253,"status":"idle"}}" to change status
+2021-12-29 14:37:34,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:39,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763459241,"status":"idle"}}" to change status
+2021-12-29 14:37:39,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:43,911:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:37:44,173:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:37:44,173:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:37:44,173:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:37:44,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763464250,"status":"idle"}}" to change status
+2021-12-29 14:37:44,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:49,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763469240,"status":"idle"}}" to change status
+2021-12-29 14:37:49,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:54,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763474253,"status":"idle"}}" to change status
+2021-12-29 14:37:54,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:37:59,255:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763479255,"status":"idle"}}" to change status
+2021-12-29 14:37:59,255:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:04,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763484247,"status":"idle"}}" to change status
+2021-12-29 14:38:04,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:09,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763489245,"status":"idle"}}" to change status
+2021-12-29 14:38:09,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:14,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763494251,"status":"idle"}}" to change status
+2021-12-29 14:38:14,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:19,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763499246,"status":"idle"}}" to change status
+2021-12-29 14:38:19,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:24,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763504252,"status":"idle"}}" to change status
+2021-12-29 14:38:24,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:25,171:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:38:25,461:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:38:25,461:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:38:25,461:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:38:29,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763509256,"status":"idle"}}" to change status
+2021-12-29 14:38:29,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:34,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763514256,"status":"idle"}}" to change status
+2021-12-29 14:38:34,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:39,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763519248,"status":"idle"}}" to change status
+2021-12-29 14:38:39,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:44,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763524248,"status":"idle"}}" to change status
+2021-12-29 14:38:44,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:49,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763529243,"status":"idle"}}" to change status
+2021-12-29 14:38:49,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:54,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763534245,"status":"idle"}}" to change status
+2021-12-29 14:38:54,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:38:59,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763539247,"status":"idle"}}" to change status
+2021-12-29 14:38:59,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:04,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763544249,"status":"idle"}}" to change status
+2021-12-29 14:39:04,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:06,431:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:39:06,696:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:39:06,696:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:39:06,696:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:39:09,262:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763549262,"status":"idle"}}" to change status
+2021-12-29 14:39:09,262:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:14,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763554247,"status":"idle"}}" to change status
+2021-12-29 14:39:14,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:19,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763559241,"status":"idle"}}" to change status
+2021-12-29 14:39:19,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:24,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763564244,"status":"idle"}}" to change status
+2021-12-29 14:39:24,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:29,236:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763569236,"status":"idle"}}" to change status
+2021-12-29 14:39:29,236:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:34,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763574249,"status":"idle"}}" to change status
+2021-12-29 14:39:34,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:39,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763579243,"status":"idle"}}" to change status
+2021-12-29 14:39:39,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:44,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763584254,"status":"idle"}}" to change status
+2021-12-29 14:39:44,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:47,690:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:39:47,952:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:39:47,952:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:39:47,952:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:39:49,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763589245,"status":"idle"}}" to change status
+2021-12-29 14:39:49,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:54,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763594244,"status":"idle"}}" to change status
+2021-12-29 14:39:54,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:39:59,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763599252,"status":"idle"}}" to change status
+2021-12-29 14:39:59,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:04,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763604252,"status":"idle"}}" to change status
+2021-12-29 14:40:04,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:09,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763609252,"status":"idle"}}" to change status
+2021-12-29 14:40:09,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:14,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763614252,"status":"idle"}}" to change status
+2021-12-29 14:40:14,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:19,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763619250,"status":"idle"}}" to change status
+2021-12-29 14:40:19,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:24,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763624241,"status":"idle"}}" to change status
+2021-12-29 14:40:24,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:28,947:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:40:29,208:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:40:29,208:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:40:29,208:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:40:29,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763629243,"status":"idle"}}" to change status
+2021-12-29 14:40:29,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:34,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763634252,"status":"idle"}}" to change status
+2021-12-29 14:40:34,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:39,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763639247,"status":"idle"}}" to change status
+2021-12-29 14:40:39,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:44,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763644254,"status":"idle"}}" to change status
+2021-12-29 14:40:44,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:49,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763649245,"status":"idle"}}" to change status
+2021-12-29 14:40:49,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:54,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763654248,"status":"idle"}}" to change status
+2021-12-29 14:40:54,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:40:59,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763659249,"status":"idle"}}" to change status
+2021-12-29 14:40:59,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:04,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763664244,"status":"idle"}}" to change status
+2021-12-29 14:41:04,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:09,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763669244,"status":"idle"}}" to change status
+2021-12-29 14:41:09,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:10,205:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:41:10,466:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:41:10,466:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:41:10,466:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:41:14,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763674248,"status":"idle"}}" to change status
+2021-12-29 14:41:14,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:19,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763679254,"status":"idle"}}" to change status
+2021-12-29 14:41:19,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:24,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763684250,"status":"idle"}}" to change status
+2021-12-29 14:41:24,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:29,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763689244,"status":"idle"}}" to change status
+2021-12-29 14:41:29,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:34,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763694248,"status":"idle"}}" to change status
+2021-12-29 14:41:34,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:39,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763699243,"status":"idle"}}" to change status
+2021-12-29 14:41:39,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:44,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763704251,"status":"idle"}}" to change status
+2021-12-29 14:41:44,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:49,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763709247,"status":"idle"}}" to change status
+2021-12-29 14:41:49,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:51,462:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:41:51,725:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:41:51,725:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:41:51,725:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:41:54,263:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763714263,"status":"idle"}}" to change status
+2021-12-29 14:41:54,263:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:41:59,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763719251,"status":"idle"}}" to change status
+2021-12-29 14:41:59,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:04,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763724250,"status":"idle"}}" to change status
+2021-12-29 14:42:04,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:09,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763729252,"status":"idle"}}" to change status
+2021-12-29 14:42:09,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:14,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763734253,"status":"idle"}}" to change status
+2021-12-29 14:42:14,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:19,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763739248,"status":"idle"}}" to change status
+2021-12-29 14:42:19,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:24,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763744244,"status":"idle"}}" to change status
+2021-12-29 14:42:24,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:29,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763749249,"status":"idle"}}" to change status
+2021-12-29 14:42:29,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:32,714:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 21.
+2021-12-29 14:42:32,978:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:42:32,978:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:42:32,978:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:42:34,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763754240,"status":"idle"}}" to change status
+2021-12-29 14:42:34,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:39,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763759241,"status":"idle"}}" to change status
+2021-12-29 14:42:39,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:44,226:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763764226,"status":"idle"}}" to change status
+2021-12-29 14:42:44,226:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:49,074:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:42:49,074:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'GUILD_MEMBER_UPDATE', 's': 22, 'op': 0, 'd': {'user': {'username': 'REACT bot', 'public_flags': 0, 'id': '422360329175957514', 'discriminator': '9313', 'bot': True, 'avatar': 'cc3093a4031d2c7264d51292efec9664'}, 'roles': ['782233371623292938', '783575156621705238'], 'nick': 'ประวิทย์', 'mute': False, 'joined_at': '2020-12-02T06:07:55.546000+00:00', 'hoisted_role': '782233371623292938', 'guild_id': '782225828632854549', 'deaf': False}}
+2021-12-29 14:42:49,075:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:42:49,075:DEBUG:discord.client: Dispatching event member_update
+2021-12-29 14:42:49,238:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763769237,"status":"idle"}}" to change status
+2021-12-29 14:42:49,238:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:49,575:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:42:49,575:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'GUILD_MEMBER_UPDATE', 's': 23, 'op': 0, 'd': {'user': {'username': 'REACT bot', 'id': '422360329175957514', 'discriminator': '9313', 'bot': True, 'avatar': 'cc3093a4031d2c7264d51292efec9664'}, 'roles': ['782233371623292938', '783575156621705238'], 'nick': 'ประวิทย์', 'mute': False, 'joined_at': '2020-12-02T06:07:55.546000+00:00', 'hoisted_role': '782233371623292938', 'guild_id': '782225828632854549', 'deaf': False}}
+2021-12-29 14:42:49,575:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:42:49,575:DEBUG:discord.client: Dispatching event member_update
+2021-12-29 14:42:54,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763774242,"status":"idle"}}" to change status
+2021-12-29 14:42:54,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:42:54,569:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:42:54,569:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 24, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763774, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:42:54,569:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:42:54,569:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:42:59,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763779246,"status":"idle"}}" to change status
+2021-12-29 14:42:59,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:01,251:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:01,251:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 25, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:43:01.258000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655130164953088', 'mentions': [{'username': 'DeepKungChannel', 'public_flags': 256, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655131784118302', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '<@!485027400120532993>  รจ เเบรนด์ vps ถูกๆไหม', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:01,251:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:01,251:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:43:03,627:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:03,627:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 26, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763783, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:03,627:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:03,627:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:43:04,261:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763784261,"status":"idle"}}" to change status
+2021-12-29 14:43:04,261:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:09,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763789256,"status":"idle"}}" to change status
+2021-12-29 14:43:09,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:09,269:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:09,270:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 27, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:43:09.289000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655164042346496', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655165468569680', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'จะทําบอทเพลงต้องใช้ vps', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:09,270:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:09,270:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:43:13,971:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 27.
+2021-12-29 14:43:14,241:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:14,241:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:43:14,241:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:14,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763794241,"status":"idle"}}" to change status
+2021-12-29 14:43:14,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:19,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763799242,"status":"idle"}}" to change status
+2021-12-29 14:43:19,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:24,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763804251,"status":"idle"}}" to change status
+2021-12-29 14:43:24,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:27,468:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:27,468:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 28, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763807, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:27,468:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:27,468:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:43:29,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763809247,"status":"idle"}}" to change status
+2021-12-29 14:43:29,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:29,895:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:29,896:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 29, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:43:29.826000+00:00', 'referenced_message': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:43:01.258000+00:00', 'pinned': False, 'mentions': [{'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}], 'mention_roles': [], 'mention_everyone': False, 'id': '925655131784118302', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '<@!485027400120532993>  รจ เเบรนด์ vps ถูกๆไหม', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': []}, 'pinned': False, 'nonce': '925655527050969088', 'message_reference': {'message_id': '925655131784118302', 'guild_id': '924999182039801876', 'channel_id': '924999356191481874'}, 'mentions': [{'username': 'REACT', 'public_flags': 256, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655251606982717', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'ไม่รู้เลยครับ', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:29,896:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:29,896:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:43:34,261:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763814261,"status":"idle"}}" to change status
+2021-12-29 14:43:34,261:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:39,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763819245,"status":"idle"}}" to change status
+2021-12-29 14:43:39,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:39,945:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:39,945:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 30, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763819, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:39,945:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:39,945:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:43:44,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763824256,"status":"idle"}}" to change status
+2021-12-29 14:43:44,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:49,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763829242,"status":"idle"}}" to change status
+2021-12-29 14:43:49,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:54,168:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:54,168:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 31, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763834, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:54,168:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:54,168:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:43:54,235:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763834235,"status":"idle"}}" to change status
+2021-12-29 14:43:54,235:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:43:55,226:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 31.
+2021-12-29 14:43:55,488:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:55,488:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:43:55,488:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:56,998:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:43:56,998:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 32, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763837, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:43:56,998:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:43:56,998:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:43:59,239:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763839239,"status":"idle"}}" to change status
+2021-12-29 14:43:59,239:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:00,685:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:00,685:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 33, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:00.632000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655379604406272', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655380816695377', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'งั้น ต้องรีบปั๊มละ', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:00,685:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:00,686:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:02,342:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:02,343:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 34, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763842, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:02,343:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:02,343:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:04,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763844242,"status":"idle"}}" to change status
+2021-12-29 14:44:04,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:04,348:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:04,348:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 35, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763844, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:04,348:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:04,349:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:06,717:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:06,717:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 36, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:06.726000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655404917030912', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655406376783872', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'จะได้ได้ sponser ได้', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:06,717:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:06,717:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:09,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763849245,"status":"idle"}}" to change status
+2021-12-29 14:44:09,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:10,104:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:10,104:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 37, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:10.031000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655696601513984', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655420238974987', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'ผมชอบ google cloud อะแต่แพง', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:10,104:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:10,104:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:14,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763854252,"status":"idle"}}" to change status
+2021-12-29 14:44:14,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:15,059:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:15,059:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 38, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763855, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:15,059:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:15,059:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:15,439:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:15,439:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 39, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:15.412000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655441545887744', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655442808512513', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'เเน่นอน 5555', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:15,439:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:15,439:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:17,673:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:17,674:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 40, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763857, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:17,674:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:17,674:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:19,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763859250,"status":"idle"}}" to change status
+2021-12-29 14:44:19,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:20,977:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:20,977:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 41, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:20.941000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655742130683904', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655465998835733', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '55555', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:20,977:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:20,977:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:22,055:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:22,055:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 42, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:44:22.080000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655469307985920', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655470776156170', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'สต ชอบ digital ocean', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:22,055:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:22,055:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:44:24,178:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:24,178:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 43, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763864, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:24,178:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:24,178:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:24,259:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763864259,"status":"idle"}}" to change status
+2021-12-29 14:44:24,259:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:29,261:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763869261,"status":"idle"}}" to change status
+2021-12-29 14:44:29,261:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:34,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763874248,"status":"idle"}}" to change status
+2021-12-29 14:44:34,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:36,512:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 43.
+2021-12-29 14:44:36,800:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:36,800:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:44:36,800:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:39,258:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763879258,"status":"idle"}}" to change status
+2021-12-29 14:44:39,258:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:44,246:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763884246,"status":"idle"}}" to change status
+2021-12-29 14:44:44,246:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:49,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763889240,"status":"idle"}}" to change status
+2021-12-29 14:44:49,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:54,255:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763894255,"status":"idle"}}" to change status
+2021-12-29 14:44:54,255:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:44:56,690:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:44:56,691:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 44, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763896, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:44:56,691:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:44:56,691:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:44:59,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763899250,"status":"idle"}}" to change status
+2021-12-29 14:44:59,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:04,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763904241,"status":"idle"}}" to change status
+2021-12-29 14:45:04,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:04,778:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:04,778:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 45, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763904, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:04,778:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:04,778:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:05,928:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:05,928:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 46, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:05.952000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655653161107456', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655654788644935', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'ถ้ามี user เยอะๆ น่าจะได้อยู่', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:05,928:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:05,928:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:09,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763909244,"status":"idle"}}" to change status
+2021-12-29 14:45:09,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:09,434:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:09,434:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 47, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763909, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:09,434:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:09,434:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:14,243:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763914243,"status":"idle"}}" to change status
+2021-12-29 14:45:14,243:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:17,768:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 47.
+2021-12-29 14:45:17,789:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:17,789:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 48, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763917, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:17,789:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:17,789:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:18,032:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:18,032:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:45:18,032:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:19,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763919241,"status":"idle"}}" to change status
+2021-12-29 14:45:19,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:23,599:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:23,599:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 49, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:23.624000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655727328985088', 'mentions': [{'username': 'DeepKungChannel', 'public_flags': 256, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655728910381076', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '<@!485027400120532993>  ให้คนรอบตัวที่รู้จักดึงเข้าเยอะๆ ก่อนได้มะ', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:23,599:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:23,599:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:24,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763924244,"status":"idle"}}" to change status
+2021-12-29 14:45:24,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:26,718:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:26,718:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 50, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763926, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:26,718:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:26,718:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:29,023:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:29,023:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 51, 'op': 0, 'd': {'user_id': '485027400120532993', 'timestamp': 1640763929, 'member': {'user': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:29,023:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:29,023:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:29,268:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763929268,"status":"idle"}}" to change status
+2021-12-29 14:45:29,268:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:32,885:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:32,885:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 52, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:32.821000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925656043663392768', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:16:30.658000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655767485395056', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'ได้ครับ', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'DeepKungChannel', 'public_flags': 256, 'id': '485027400120532993', 'discriminator': '6590', 'avatar': '2c7be367d5b539e69ab7d2557627bbff'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:32,885:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:32,885:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:34,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763934241,"status":"idle"}}" to change status
+2021-12-29 14:45:34,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:34,734:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:34,735:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 53, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763934, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:34,735:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:34,735:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:36,887:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:36,887:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 54, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:36.903000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655783155171328', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655784606539816', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'จะได้รวบยอดว่า max ที่โปรโมทใกล้ตัวได้เท่าไหร่', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:36,887:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:36,887:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:39,126:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:39,126:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 55, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763939, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:39,126:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:39,126:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:39,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763939248,"status":"idle"}}" to change status
+2021-12-29 14:45:39,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:44,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763944247,"status":"idle"}}" to change status
+2021-12-29 14:45:44,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:47,197:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:47,198:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 56, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763947, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:47,198:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:47,198:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:49,182:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:49,182:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 57, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:49.098000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655834682195968', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655835756081193', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'บอกเขาดึงเข้าอันไหนได้ดึงให้หมดเลย', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:49,183:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:49,183:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:49,247:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763949247,"status":"idle"}}" to change status
+2021-12-29 14:45:49,247:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:50,860:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:50,860:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 58, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763950, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:50,860:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:50,860:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:45:54,254:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763954254,"status":"idle"}}" to change status
+2021-12-29 14:45:54,254:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:58,682:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:58,682:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 59, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:45:58.703000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925655874540666880', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925655876042362950', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'ถ้าบอกหลาายๆ คนน่าจะได้สัก 7 8 เซิฟอยู่', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:45:58,683:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:45:58,683:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:45:59,031:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 59.
+2021-12-29 14:45:59,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640763959244,"status":"idle"}}" to change status
+2021-12-29 14:45:59,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:45:59,292:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:45:59,292:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:45:59,292:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:46:01,608:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:46:01,608:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 60, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640763961, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:46:01,608:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:46:01,609:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:46:04,236:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763964236,"status":"idle"}}" to change status
+2021-12-29 14:46:04,236:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:09,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640763969251,"status":"idle"}}" to change status
+2021-12-29 14:46:09,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:14,253:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640763974253,"status":"idle"}}" to change status
+2021-12-29 14:46:14,253:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:19,242:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640763979242,"status":"idle"}}" to change status
+2021-12-29 14:46:19,242:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:24,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640763984244,"status":"idle"}}" to change status
+2021-12-29 14:46:24,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:29,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640763989252,"status":"idle"}}" to change status
+2021-12-29 14:46:29,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:34,248:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640763994248,"status":"idle"}}" to change status
+2021-12-29 14:46:34,248:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:39,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640763999250,"status":"idle"}}" to change status
+2021-12-29 14:46:39,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:40,293:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 60.
+2021-12-29 14:46:40,558:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:46:40,558:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:46:40,558:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:46:44,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640764004240,"status":"idle"}}" to change status
+2021-12-29 14:46:44,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:49,251:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640764009251,"status":"idle"}}" to change status
+2021-12-29 14:46:49,251:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:54,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640764014245,"status":"idle"}}" to change status
+2021-12-29 14:46:54,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:46:59,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640764019240,"status":"idle"}}" to change status
+2021-12-29 14:46:59,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:04,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640764024244,"status":"idle"}}" to change status
+2021-12-29 14:47:04,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:09,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640764029249,"status":"idle"}}" to change status
+2021-12-29 14:47:09,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:14,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640764034244,"status":"idle"}}" to change status
+2021-12-29 14:47:14,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:19,245:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640764039245,"status":"idle"}}" to change status
+2021-12-29 14:47:19,245:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:21,555:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 60.
+2021-12-29 14:47:21,824:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:21,824:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:47:21,824:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:24,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640764044256,"status":"idle"}}" to change status
+2021-12-29 14:47:24,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:29,240:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640764049240,"status":"idle"}}" to change status
+2021-12-29 14:47:29,240:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:34,241:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640764054241,"status":"idle"}}" to change status
+2021-12-29 14:47:34,241:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:39,224:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:39,224:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 61, 'op': 0, 'd': {'webhook_id': '838610272481968188', 'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:47:39.252000+00:00', 'pinned': False, 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'id': '925656297775460373', 'flags': 0, 'embeds': [{'url': 'https://www.khaosod.co.th/special-stories/news_6807519', 'type': 'rich', 'title': '‘คริสโตเฟอร์’ ฝากถึงผู้ขับขี่ยานพาหนะ ”เมาอย่าขับ” นึกถึงใจเขาใจเรา - ข่าวสด', 'timestamp': '2021-12-29T07:41:14.669000+00:00', 'image': {'width': 1200, 'url': 'https://www.khaosod.co.th/wpapp/uploads/2021/12/29-%E0%B8%84%E0%B8%A3%E0%B8%B4%E0%B8%AA%E0%B9%82%E0%B8%95%E0%B9%80%E0%B8%9F%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%A1%E0%B8%B2%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%82%E0%B8%B1%E0%B8%9A1.jpg', 'proxy_url': 'https://images-ext-2.discordapp.net/external/oZasGVF-H-kco6cs2u0eeYz6PuNHhvUk53_X1SVijsU/https/www.khaosod.co.th/wpapp/uploads/2021/12/29-%25E0%25B8%2584%25E0%25B8%25A3%25E0%25B8%25B4%25E0%25B8%25AA%25E0%25B9%2582%25E0%25B8%2595%25E0%25B9%2580%25E0%25B8%259F%25E0%25B8%25AD%25E0%25B8%25A3%25E0%25B9%258C%25E0%25B9%2580%25E0%25B8%25A1%25E0%25B8%25B2%25E0%25B9%2584%25E0%25B8%25A1%25E0%25B9%2588%25E0%25B8%2582%25E0%25B8%25B1%25E0%25B8%259A1.jpg', 'height': 675}, 'footer': {'text': 'by : www.khaosod.co.th'}, 'fields': [{'value': 'ลิงก์ : [https://www.khaosod.co.th/special-storie..](https://www.khaosod.co.th/special-stories/news_6807519)', 'name': 'อ่านต่อ', 'inline': False}], 'description': 'คริสโตเฟอร์ เบญจกุล ฝากถึงผู้ขับขี่ยานพาหนะ ”เมาอย่าขับ” นึกถึงใจเขาใจเรา หากคนในครอบครัวเป็นเหยื่อ จะรู้สึกยังไง เผย ถูกผ่าตัดศีรษะ 8 ครั้ง', 'color': 16775677, 'author': {'name': 'อัพเดท ข่าวเด่น!'}}], 'edited_timestamp': None, 'content': '', 'components': [], 'channel_id': '760100393551134741', 'author': {'username': 'miu', 'id': '838610272481968188', 'discriminator': '0000', 'bot': True, 'avatar': '178effbc19a069072112bda06a3fb98e'}, 'attachments': [], 'application_id': '466608402894684170', 'guild_id': '394451338140057610'}}
+2021-12-29 14:47:39,224:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:39,225:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:47:39,225:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640764059225,"status":"idle"}}" to change status
+2021-12-29 14:47:39,225:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:41,915:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:41,915:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 62, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640764061, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:47:41,915:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:41,915:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:47:44,250:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" S       | !r help ","timestamps":{}},"afk":false,"since":1640764064250,"status":"idle"}}" to change status
+2021-12-29 14:47:44,250:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:49,244:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Sm      | !r help ","timestamps":{}},"afk":false,"since":1640764069244,"status":"idle"}}" to change status
+2021-12-29 14:47:49,244:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:49,924:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:49,924:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 63, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640764069, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:47:49,925:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:49,925:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:47:53,490:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:53,491:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 64, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:47:53.519000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925656356046766080', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925656357615587348', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'เอาไปโปรโมทในเซิฟด้วยก็ได้ ในห้องประกาศ', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:47:53,491:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:53,491:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:47:54,256:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smi     | !r help ","timestamps":{}},"afk":false,"since":1640764074256,"status":"idle"}}" to change status
+2021-12-29 14:47:54,256:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:47:55,693:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:47:55,693:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 65, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640764075, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:47:55,694:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:47:55,694:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:47:59,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smil    | !r help ","timestamps":{}},"afk":false,"since":1640764079252,"status":"idle"}}" to change status
+2021-12-29 14:47:59,252:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:48:02,813:DEBUG:discord.gateway: Keeping shard ID 0 websocket alive with sequence 65.
+2021-12-29 14:48:03,077:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:48:03,077:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-12-29 14:48:03,077:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:48:03,852:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:48:03,852:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'TYPING_START', 's': 66, 'op': 0, 'd': {'user_id': '394447088970104833', 'timestamp': 1640764083, 'member': {'user': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'channel_id': '924999356191481874', 'guild_id': '924999182039801876'}}
+2021-12-29 14:48:03,852:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:48:03,852:DEBUG:discord.client: Dispatching event typing
+2021-12-29 14:48:04,258:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smile   | !r help ","timestamps":{}},"afk":false,"since":1640764084258,"status":"idle"}}" to change status
+2021-12-29 14:48:04,258:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:48:07,370:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-12-29 14:48:07,370:DEBUG:discord.gateway: For Shard ID 0: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 67, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-12-29T07:48:07.256000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '925656413655531520', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['924999495534669874'], 'mute': False, 'joined_at': '2021-12-27T12:17:26.222000+00:00', 'hoisted_role': '924999495534669874', 'deaf': False}, 'id': '925656415232753674', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'เเล้วเดี๋ยวจะลองหา partner บอทคนไทยดู', 'components': [], 'channel_id': '924999356191481874', 'author': {'username': 'REACT', 'public_flags': 256, 'id': '394447088970104833', 'discriminator': '1120', 'avatar': '10499ed48de3c7cf6417afeca6b81596'}, 'attachments': [], 'guild_id': '924999182039801876'}}
+2021-12-29 14:48:07,370:DEBUG:discord.client: Dispatching event socket_response
+2021-12-29 14:48:07,370:DEBUG:discord.client: Dispatching event message
+2021-12-29 14:48:09,231:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilew  | !r help ","timestamps":{}},"afk":false,"since":1640764089231,"status":"idle"}}" to change status
+2021-12-29 14:48:09,231:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:48:14,249:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewi | !r help ","timestamps":{}},"afk":false,"since":1640764094249,"status":"idle"}}" to change status
+2021-12-29 14:48:14,249:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-12-29 14:48:19,252:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":" Smilewin| !r help ","timestamps":{}},"afk":false,"since":1640764099252,"status":"idle"}}" to change status
+2021-12-29 14:48:19,252:DEBUG:discord.client: Dispatching event socket_raw_send

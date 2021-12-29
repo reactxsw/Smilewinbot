@@ -18,7 +18,6 @@ async def get_link_bypassing(url):
     return requests.Session().head(url,allow_redirects=True).url
 
 async def check_scam_link(message):
-    print(message.content)
     link = re.search("(?P<url>https?://[^\s]+)", message.content)
 
     if link != None:
