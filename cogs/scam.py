@@ -32,7 +32,7 @@ async def check_scam_link(message):
     else:
         pass
 
-class Scram(commands.Cog):
+class Scam(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -88,4 +88,4 @@ class Scram(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Scram(bot))
+    bot.add_cog(Scam(bot))
