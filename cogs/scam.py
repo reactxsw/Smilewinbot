@@ -5,7 +5,6 @@ import aiohttp
 import asyncio
 import re
 import requests
-from yarl import URL
 import settings
 from utils.languageembed import languageEmbed
 
