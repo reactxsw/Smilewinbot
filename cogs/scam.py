@@ -1,47 +1,38 @@
+from aiohttp.helpers import ProxyInfo
 import discord
 from discord.ext import commands
 import aiohttp
 import asyncio
 import re
 import requests
+from yarl import URL
 import settings
 from utils.languageembed import languageEmbed
 
+async def get_domain_name_from_url(url):
+    return url.split("//")[-1].split("/")[0]
 
-
-
-scram_link = requests.get("https://raw.githubusercontent.com/DevSpen/scam-links/master/src/links.txt").text.splitlines()
-scram_link2 = requests.get("https://raw.githubusercontent.com/matomo-org/referrer-spam-list/master/spammers.txt").text.splitlines()
+with open("data/phishing.txt") as f:
+    phishing = [x.strip() for x in f.readlines()] 
 
 async def get_link_bypassing(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url,allow_redirects=True) as resp:
-            return await resp.text()
+    return requests.Session().head(url,allow_redirects=True).url
 
-async def check_scram_link(self,message):
-    if message.author.bot:
-        return
-    
-    link = re.search("(?P<url>https?://[^\s]+)",message.content)
+async def check_scam_link(message):
+    print(message.content)
+    link = re.search("(?P<url>https?://[^\s]+)", message.content)
+
     if link != None:
-        #bypassing bit.ly and take a url out of it
-        b_link = await get_link_bypassing(link.group("url"))
-        domain = await get_domain_name_from_url(b_link)
-        if domain in scram_link or domain in scram_link2:
+        link = link.group("url")
+        if "bit.ly" in link:
+            url = await get_link_bypassing(link)
+        domain = await get_domain_name_from_url(url)
+        if domain in phishing:
             await message.delete()
             await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
 
-        print(domain)
     else:
         pass
-        # for content in message.content.split():
-        #     if content in scram_link or content in scram_link2:
-        #         await message.delete()
-        #         await message.channel.send(f"{message.author.mention} Please do not send the scam links!")
-
-    
-    print("run link")
-
 
 class Scram(commands.Cog):
     def __init__(self,bot):
@@ -95,11 +86,6 @@ class Scram(commands.Cog):
     @scram.command()
     async def remove(self,ctx,link):
         pass
-        
-
-
-async def get_domain_name_from_url(url):
-    return url.split("//")[-1].split("/")[0]
 
 
 
