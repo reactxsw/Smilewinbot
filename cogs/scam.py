@@ -28,7 +28,7 @@ async def check_scam_link(message):
         if domain in phishing:
             await message.delete()
             await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
-
+            
     else:
         pass
 
