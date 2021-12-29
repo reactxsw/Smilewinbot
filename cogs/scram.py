@@ -4,7 +4,6 @@ import aiohttp
 import asyncio
 import re
 import requests
-from bs4 import BeautifulSoup
 import settings
 from utils.languageembed import languageEmbed
 
@@ -13,6 +12,11 @@ from utils.languageembed import languageEmbed
 
 scram_link = requests.get("https://raw.githubusercontent.com/DevSpen/scam-links/master/src/links.txt").text.splitlines()
 
+async def get_link_bypassing(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url,allow_redirects=True) as resp:
+            return await resp.text()
+
 async def check_scram_link(self,message):
     if message.author.bot:
         return
@@ -20,8 +24,8 @@ async def check_scram_link(self,message):
     link = re.search("(?P<url>https?://[^\s]+)",message.content)
     if link != None:
         #bypassing bit.ly and take a url out of it
-        b_link = requests.Session().get(link.group("url"),allow_redirects=True).url
-        domain = get_domain_name_from_url(b_link)
+        b_link = await get_link_bypassing(link.group("url"))
+        domain = await get_domain_name_from_url(b_link)
         if domain in scram_link:
             await message.delete()
             await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
@@ -95,7 +99,7 @@ class Scram(commands.Cog):
         
 
 
-def get_domain_name_from_url(url):
+async def get_domain_name_from_url(url):
     return url.split("//")[-1].split("/")[0]
 
 
