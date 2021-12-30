@@ -49,8 +49,8 @@ class Scam(commands.Cog):
                     title = "Scram command information",
                     colour = 0xFED000,
                 )
-                embed.add_field(name="Add",value="`scram add [link]`")
-                embed.add_field(name="Remove",value="`scram remove [link]`")
+                embed.add_field(name="Add",value="`scam add [link]`")
+                embed.add_field(name="Remove",value="`scam remove [link]`")
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -64,8 +64,8 @@ class Scam(commands.Cog):
                     title = "Scram command information",
                     colour = 0xFED000,
                 )
-                embed.add_field(name="Add",value="`scram add [link]`")
-                embed.add_field(name="Remove",value="`scram remove [link]`")
+                embed.add_field(name="Add",value="`scam add [link]`")
+                embed.add_field(name="Remove",value="`scam remove [link]`")
                 embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -78,13 +78,35 @@ class Scam(commands.Cog):
 
     @scam.command()
     async def mode(self,ctx,mode):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
         
-        if mode == "warn":
-            # await settings.sdfsdfsdfsdf.update_one({"guild_id":ctx.guild.id},{'$set':{"mode":"warn"}})
-            await ctx.send(f"{ctx.author.mention} Set mode to warn")
-        elif mode == "delete":
-            # await settings.sdfsdfsdfs.update_one({"guild_id":ctx.guild.id},{'$set':{"mode":"delete"}})
-            await ctx.send(f"{ctx.author.mention} Set mode to delete")
+        else:
+            if languageserver == "Thai":
+                if mode == "warn":
+                    await settings.collection.update_one({"guild_id":ctx.guild.id},{'$set':{"scam":"warn"}})
+                    await ctx.send(f"{ctx.author.mention} Set mode to warn")
+                elif mode == "delete":
+                    await settings.collection.update_one({"guild_id":ctx.guild.id},{'$set':{"scam":"delete"}})
+                    await ctx.send(f"{ctx.author.mention} Set mode to delete")
+                
+                else:
+                    pass
+                    #raise eror บอกว่ามีเเค่ warn / delete
+            
+            if languageserver == "English":
+                if mode == "warn":
+                    await settings.collection.update_one({"guild_id":ctx.guild.id},{'$set':{"scam":"warn"}})
+                    await ctx.send(f"{ctx.author.mention} Set mode to warn")
+                elif mode == "delete":
+                    await settings.collection.update_one({"guild_id":ctx.guild.id},{'$set':{"scam":"delete"}})
+                    await ctx.send(f"{ctx.author.mention} Set mode to delete")
+
+                else:
+                    pass
+                    #raise eror บอกว่ามีเเค่ warn / delete
 
     @scam.command()
     async def add(self,ctx,link):
