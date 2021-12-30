@@ -33,6 +33,8 @@ class Music(commands.Cog):
         player = self.bot.wavelink.get_player(ctx.guild.id)
         await ctx.send(f'Connecting to **`{channel.name}`**')
         await player.connect(channel.id)
+        await ctx.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
+
 
     @commands.command()
     async def play(self, ctx, *, query: str):
