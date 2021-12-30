@@ -20,7 +20,7 @@ async def get_link_bypassing(url):
 
 async def message_handle(message):
     # mode_data = setting.collectionlsjflsjflsjfdb.find_one({"guild_id": message.guild.id})
-    mode_data = get_mode_data(message.guild.id)
+    mode_data =  await get_mode_data(message.guild.id)
     mode = mode_data["mode"]
     if mode == "warn":
         await message.channel.send(f"{message.author.mention} Please do not send the scam links!")
@@ -100,7 +100,7 @@ class Scram(commands.Cog):
 
     @scram.command()
     async def mode(self,ctx,mode):
-        _fetch_data = get_mode_data(ctx.guild.id) #This line will make sure that guild is in the database
+        _fetch_data = await get_mode_data(ctx.guild.id) #This line will make sure that guild is in the database because it will update data in line below
         if mode == "warn":
             # await settings.sdfsdfsdfsdf.update_one({"guild_id":ctx.guild.id},{'$set':{"mode":"warn"}})
             await ctx.send(f"{ctx.author.mention} Set mode to warn")
