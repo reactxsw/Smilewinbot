@@ -82,3 +82,16 @@
 2021-12-30 11:48:41.495  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2021-12-30 11:48:42.111  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52256 -- CloseStatus[code=1006, reason=]
 2021-12-30 11:48:42.112  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 13:11:13.570  INFO 32860 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63296
+2021-12-30 13:11:13.575  INFO 32860 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 13:11:13.575  WARN 32860 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 13:22:27.060  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63296 -- CloseStatus[code=1006, reason=]
+2021-12-30 13:22:27.061  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 13:22:32.298  INFO 32860 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57614
+2021-12-30 13:22:32.301  INFO 32860 --- [XNIO-1 task-11] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 13:22:32.302  WARN 32860 --- [XNIO-1 task-11] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 13:25:23.971  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:57614 -- CloseStatus[code=1006, reason=]
+2021-12-30 13:25:23.971  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 13:25:29.316  INFO 32860 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61227
+2021-12-30 13:25:29.319  INFO 32860 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 13:25:29.319  WARN 32860 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
