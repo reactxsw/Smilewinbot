@@ -17,7 +17,7 @@ class Music(commands.Cog):
         await self.bot.wavelink.initiate_node(host='127.0.0.1',
                                               port=8888,
                                               rest_uri='http://127.0.0.1:8888',
-                                              password='youshallnotpass',
+                                              password='Smilewindiscord',
                                               identifier='Smilewin',
                                               region='us_central')
 
