@@ -37,7 +37,7 @@ class Scam(commands.Cog):
         self.bot = bot
     
     @commands.group(invoke_without_command=True)
-    async def scram(self,ctx):
+    async def scam(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -76,12 +76,22 @@ class Scam(commands.Cog):
 """, Inline=False)
 
 
-    @scram.command()
+    @scam.command()
+    async def mode(self,ctx,mode):
+        
+        if mode == "warn":
+            # await settings.sdfsdfsdfsdf.update_one({"guild_id":ctx.guild.id},{'$set':{"mode":"warn"}})
+            await ctx.send(f"{ctx.author.mention} Set mode to warn")
+        elif mode == "delete":
+            # await settings.sdfsdfsdfs.update_one({"guild_id":ctx.guild.id},{'$set':{"mode":"delete"}})
+            await ctx.send(f"{ctx.author.mention} Set mode to delete")
+
+    @scam.command()
     async def add(self,ctx,link):
         pass
 
 
-    @scram.command()
+    @scam.command()
     async def remove(self,ctx,link):
         pass
 

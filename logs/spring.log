@@ -1,4 +1,6 @@
-2021-12-29 18:30:30.289  INFO 39428 --- [main] lavalink.server.Launcher                 : 
+2021-12-30 00:21:44.117  INFO 39428 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50601 -- CloseStatus[code=1006, reason=]
+2021-12-30 00:21:44.122  INFO 39428 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:34:06.570  INFO 32860 --- [main] lavalink.server.Launcher                 : 
 
 [32m       .  [31m _                  _ _       _    [32m__ _ _
 [32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
@@ -16,32 +18,67 @@
 	JVM:            16.0.2
 	Lavaplayer      1.3.96-original
 
-2021-12-29 18:30:30.373  INFO 39428 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 39428 (C:\Users\ardil\Documents\GitHub\Smilewinbot\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot)
-2021-12-29 18:30:30.374  INFO 39428 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
-2021-12-29 18:30:30.496  WARN 39428 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
-2021-12-29 18:30:31.395  WARN 39428 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2021-12-29 18:30:31.426  INFO 39428 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
-2021-12-29 18:30:31.426  INFO 39428 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1007 ms
-2021-12-29 18:30:31.749  WARN 39428 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
-2021-12-29 18:30:31.978  INFO 39428 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
-2021-12-29 18:30:32.152  INFO 39428 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
-2021-12-29 18:30:32.152  WARN 39428 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
-2021-12-29 18:30:32.335  INFO 39428 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2021-12-29 18:30:32.596  INFO 39428 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
-2021-12-29 18:30:32.606  INFO 39428 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
-2021-12-29 18:30:32.655  INFO 39428 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
-2021-12-29 18:30:32.658  INFO 39428 --- [main] lavalink.server.Launcher                 : Started Launcher in 2.781 seconds (JVM running for 3.161)
-2021-12-29 18:30:32.660  INFO 39428 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
-2021-12-29 18:31:29.699  INFO 39428 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-12-29 18:31:29.700  INFO 39428 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2021-12-29 18:31:29.707  INFO 39428 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
-2021-12-29 18:31:29.725  INFO 39428 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50601
-2021-12-29 18:31:29.778  INFO 39428 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
-2021-12-29 18:31:29.778  WARN 39428 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
-2021-12-29 18:32:12.180  INFO 39428 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:2pac"
-2021-12-29 18:32:13.091  INFO 39428 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 2pac
-2021-12-29 18:32:13.967  INFO 39428 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkQIAKjJQYWMgLSBIaXQgJ0VtIFVwIChEaXJ0eSkgKE11c2ljIFZpZGVvKSBIRAANU2V2ZW4gSGlwLUhvcAAAAAAABO24AAs0MXFDM3czVVVrVQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PTQxcUMzdzNVVWtVAAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
-2021-12-29 18:32:14.056  INFO 39428 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "7316fb6f7600318f7e73f63395ccde92", "event": {"token": "68c39cd4c81639bd", "guild_id": "924999182039801876", "endpoint": "singapore1586.discord.media:443"}}
-2021-12-29 18:37:38.255  INFO 39428 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
-2021-12-29 18:37:38.932  INFO 39428 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
-2021-12-29 18:37:39.341  INFO 39428 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAmQIAM3RoZSByZW1lZHkgZm9yIGEgYnJva2VuIGhlYXJ0ICh3aHkgYW0gSSBzbyBpbiBsb3ZlKQAMWFhYVEVOVEFDSU9OAAAAAAACdOgAC25kQ0k4RElNODZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9bmRDSThESU04NncAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2021-12-30 11:34:06.666  INFO 32860 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 32860 (C:\Users\ardil\Documents\GitHub\Smilewinbot\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot)
+2021-12-30 11:34:06.667  INFO 32860 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2021-12-30 11:34:06.795  WARN 32860 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2021-12-30 11:34:07.751  WARN 32860 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-12-30 11:34:07.784  INFO 32860 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-12-30 11:34:07.784  INFO 32860 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1073 ms
+2021-12-30 11:34:08.125  WARN 32860 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2021-12-30 11:34:08.381  INFO 32860 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2021-12-30 11:34:08.573  INFO 32860 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
+2021-12-30 11:34:08.573  WARN 32860 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
+2021-12-30 11:34:08.784  INFO 32860 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-12-30 11:34:09.100  INFO 32860 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2021-12-30 11:34:09.110  INFO 32860 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2021-12-30 11:34:09.163  INFO 32860 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
+2021-12-30 11:34:09.167  INFO 32860 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.061 seconds (JVM running for 3.565)
+2021-12-30 11:34:09.169  INFO 32860 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2021-12-30 11:34:15.392  INFO 32860 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-12-30 11:34:15.392  INFO 32860 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-12-30 11:34:15.399  INFO 32860 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2021-12-30 11:34:15.418  INFO 32860 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63806
+2021-12-30 11:34:15.471  INFO 32860 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:34:15.471  WARN 32860 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:35:33.774  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63806 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:35:33.774  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:35:44.305  INFO 32860 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60154
+2021-12-30 11:35:44.308  INFO 32860 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:35:44.308  WARN 32860 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:36:25.721  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60154 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:36:25.721  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:36:35.027  INFO 32860 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49773
+2021-12-30 11:36:35.030  INFO 32860 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:36:35.030  WARN 32860 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:37:58.574  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49773 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:37:58.574  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:38:07.295  INFO 32860 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56070
+2021-12-30 11:38:07.298  INFO 32860 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:38:07.298  WARN 32860 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:40:00.351  INFO 32860 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56070 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:40:00.351  INFO 32860 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:40:05.378  INFO 32860 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59056
+2021-12-30 11:40:05.380  INFO 32860 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:40:05.380  WARN 32860 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:42:55.193  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59056 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:42:55.193  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:43:00.341  INFO 32860 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65337
+2021-12-30 11:43:00.344  INFO 32860 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:43:00.344  WARN 32860 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:43:43.831  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65337 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:43:43.831  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:43:52.991  INFO 32860 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49191
+2021-12-30 11:43:52.993  INFO 32860 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:43:52.993  WARN 32860 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:46:36.253  INFO 32860 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59524
+2021-12-30 11:46:36.256  INFO 32860 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:46:36.256  WARN 32860 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:46:38.748  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49191 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:46:38.748  INFO 32860 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:47:40.371  INFO 32860 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52256
+2021-12-30 11:47:40.373  INFO 32860 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established
+2021-12-30 11:47:40.374  WARN 32860 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2021-12-30 11:48:41.495  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59524 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:48:41.495  INFO 32860 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-12-30 11:48:42.111  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52256 -- CloseStatus[code=1006, reason=]
+2021-12-30 11:48:42.112  INFO 32860 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
