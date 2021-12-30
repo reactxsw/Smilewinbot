@@ -1,6 +1,8 @@
 import discord
 import random
 import asyncio
+
+from requests.models import Response
 import settings
 from utils.languageembed import languageEmbed
 from discord.ext import commands
@@ -155,62 +157,37 @@ class Game(commands.Cog):
         
         else:
             server_language = languageserver["Language"]
-            responses = ['https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png']
-            flip = random.choice(responses)
+            coin = ['https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png']
+            flip = random.choice(coin)
+            responses = {
+                "https://i.imgur.com/Jeeym59.png":["ก้อย","tail"],
+                "https://i.imgur.com/Pq8ntth.png":["หัว","head"]
+            }
             
             if server_language == "Thai":
+                embed = discord.Embed(
+                    colour =0xFED000,
+                    title = "ทอยเหรียญ",
+                    description = f"คุณ ``{ctx.author}`` ทอยได้{responses[flip][0]}"
+            
+                )
+                embed.set_image(url=flip)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                if flip == responses[0]:
-                    embed = discord.Embed(
-                        colour =0xFED000,
-                        title = "ทอยเหรียญ",
-                        description = f"คุณ ``{ctx.author}`` ทอยได้ก้อย"
-                
-                    )
-                    embed.set_image(url=responses[0])
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    await ctx.send(embed=embed)
-        
-                if flip == responses[1]:
-                    embed = discord.Embed(
-                        colour =0xFED000,
-                        title = "ทอยเหรียญ",
-                        description = f"คุณ ``{ctx.author}`` ทอยได้หัว"
-                
-                    )
-
-                    embed.set_image(url=responses[1])
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
             if server_language == "English":
+                embed = discord.Embed(
+                    colour =0xFED000,
+                    title = "Coin flip",
+                    description = f"``{ctx.author}`` got {responses[flip][1]}"
+            
+                )
+                embed.set_image(url=flip)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                if flip == responses[0]:
-                    embed = discord.Embed(
-                        colour =0xFED000,
-                        title = "Coin flip",
-                        description = f"คุณ ``{ctx.author}`` got tail"
+                await ctx.send(embed=embed)
                 
-                    )
-                    embed.set_image(url=responses[0])
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    await ctx.send(embed=embed)
-        
-                if flip == responses[1]:
-                    embed = discord.Embed(
-                        colour =0xFED000,
-                        title = "Coin flip",
-                        description = f"``{ctx.author}`` got head"
-                
-                    )
-
-                    embed.set_image(url=responses[1])
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    await ctx.send(embed=embed)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Game(bot))

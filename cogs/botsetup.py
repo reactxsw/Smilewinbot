@@ -31,7 +31,8 @@ class BotSetup(commands.Cog):
                     "log_voice_system":"NO",
                     "log_delete_system":"NO",
                     "log_name_system":"NO",
-                    "log_channel_id":"None"
+                    "log_channel_id":"None",
+                    "scam":"warn"
                     }
         return newserver
 
@@ -3969,6 +3970,10 @@ class BotSetup(commands.Cog):
 
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
+
+    @commands.command()
+    async def insertall(self,ctx):
+        result = await settings.collection.update_many({}, {'$set': {'scam': "warn"}})
 
 def setup(bot: commands.Bot):
     bot.add_cog(BotSetup(bot))
