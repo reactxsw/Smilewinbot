@@ -1,3 +1,4 @@
+import settings
 from discord.ext import commands
 from utils.languageembed import languageEmbed
 import discord
@@ -14,12 +15,12 @@ class Music(commands.Cog):
 
     async def start_nodes(self):
         await self.bot.wait_until_ready()
-        await self.bot.wavelink.initiate_node(host='127.0.0.1',
-                                              port=8888,
-                                              rest_uri='http://127.0.0.1:8888',
-                                              password='youshallnotpass',
-                                              identifier='Smilewin',
-                                              region='us_central')
+        await self.bot.wavelink.initiate_node(host=settings.lavalinkip,
+                                              port=settings.lavalinkport,
+                                              rest_uri=f"http://{settings.lavalinkip}:{settings.lavalinkport}",
+                                              password=settings.lavalinkpass,
+                                              identifier=settings.lavalinkindentifier,
+                                              region=settings.lavalinkregion)
 
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):

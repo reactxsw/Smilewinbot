@@ -3,7 +3,7 @@ server: # REST and WS server
   address: 127.0.0.1
 lavalink:
   server:
-    password: "youshallnotpass"
+    password: "Smilewindiscord"
     sources:
       youtube: true
       bandcamp: true
