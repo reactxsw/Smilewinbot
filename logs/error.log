@@ -98,3 +98,7 @@
 2021-12-30 11:38:20: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r insertall,command: insertall}
 2021-12-30 11:43:08: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r insertall,command: insertall}
 2021-12-30 11:43:59: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r insertall,command: insertall}
+2021-12-30 17:02:58: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2021-12-30 17:02:58: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2021-12-30 17:16:46: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2021-12-30 17:18:16: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}

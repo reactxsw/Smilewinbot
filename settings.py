@@ -93,6 +93,11 @@ if Path("config.json").exists():
     faceiteu = config.get("emoji_:faceiteu:_id")
     faceitas = config.get("emoji_:faceitas:_id")
     faceitus = config.get("emoji_:faceitus:_id")
+    lavalinkip = config.get("Lavalink_IPv4")
+    lavalinkport = config.get("Lavalink_Port")
+    lavalinkpass = config.get("Lavalink_pass")
+    lavalinkindentifier = config.get("Lavalink_identifier")
+    lavalinkregion = config.get("Lavalink_region")
 
 else: 
     with open("config.json", "w") as setting:
