@@ -160,7 +160,8 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
-                newdata = {"category": "add", "link": link, "author":str(ctx.author), "author_id": ctx.author.id, "id": str(bson.objectid.ObjectId())}
+                id = str(bson.objectid.ObjectId())
+                newdata = {"category": "add", "link": link, "author":str(ctx.author), "author_id": ctx.author.id, "id": id}
                 data.append(newdata)
 
                 with open("data/request_approve.json","w") as f:
@@ -172,6 +173,7 @@ class Scam(commands.Cog):
                     await user.send(text)
                 
                 await ctx.send(f"{ctx.author.mention} Request add link success")
+                await ctx.author.send(f"Your request add link has been sent to developer\nTo cancel your request, use `{settings.COMMAND_PREFIX} scam cancel {id}`")
             else:
                 await ctx.send(f"{ctx.author.mention} Please use `{settings.COMMAND_PREFIX} scam add [link]`")
 
@@ -224,7 +226,8 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
-                newdata = {"category": "remove", "link": link, "author":str(ctx.author), "author_id": ctx.author.id, "id": str(bson.objectid.ObjectId())}
+                id = str(bson.objectid.ObjectId())
+                newdata = {"category": "remove", "link": link, "author":str(ctx.author), "author_id": ctx.author.id, "id": id}
                 data.append(newdata)
 
                 with open("data/request_approve.json","w") as f:
@@ -237,10 +240,11 @@ class Scam(commands.Cog):
                     
                 
                 await ctx.send(f"{ctx.author.mention} Request remove link success")
+                await ctx.author.send(f"Your request remove link has been sent to developer\nTo cancel your request, use `{settings.COMMAND_PREFIX} scam cancel {id}`")
             else:
                 await ctx.send(f"{ctx.author.mention} Please use `{settings.COMMAND_PREFIX} scam remove [link]`")
         
-    @scam.command()
+    @scam.command(aliases=["request_list"])
     async def list(self,ctx):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
@@ -276,12 +280,12 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/bot_scam_link.json","r") as f:
+                            with open("data/proxyurl.json","r") as f:
                                 data_link = json.load(f)
                             
                             data_link.append(i["link"])
                             
-                            with open("data/bot_scam_link.json","w") as f:
+                            with open("data/proxyurl.json","w") as f:
                                 json.dump(data_link,f, indent=2)
                             
                             await ctx.send(f"{ctx.author.mention} อนุมัติคำขอเพิ่มลิ้งสำเร็จ")
@@ -290,13 +294,13 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/bot_scam_link.json","r") as f:
+                            with open("data/proxyurl.json","r") as f:
                                 data_link = json.load(f)
                             
                             for j in data_link:
                                 if j == i["link"]:
                                     data_link.remove(j)
-                                    with open("data/bot_scam_link.json","w") as f:
+                                    with open("data/proxyurl.json","w") as f:
                                         json.dump(data_link,f, indent=2)
                                     break
                             await ctx.send(f"{ctx.author.mention} อนุมัติคำขอลบลิ้งสำเร็จ")
@@ -318,12 +322,12 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/bot_scam_link.json","r") as f:
+                            with open("data/proxyurl.json","r") as f:
                                 data_link = json.load(f)
                             
                             data_link.append(i["link"])
                             
-                            with open("data/bot_scam_link.json","w") as f:
+                            with open("data/proxyurl.json","w") as f:
                                 json.dump(data_link,f, indent=2)
                             
                             await ctx.send(f"{ctx.author.mention} Approve add link success")
@@ -332,13 +336,13 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/bot_scam_link.json","r") as f:
+                            with open("data/proxyurl.json","r") as f:
                                 data_link = json.load(f)
                             
                             for j in data_link:
                                 if j == i["link"]:
                                     data_link.remove(j)
-                                    with open("data/bot_scam_link.json","w") as f:
+                                    with open("data/proxyurl.json","w") as f:
                                         json.dump(data_link,f, indent=2)
                                     break
                             await ctx.send(f"{ctx.author.mention} Approve remove link success")
@@ -354,6 +358,86 @@ class Scam(commands.Cog):
                                 
             else:
                 await ctx.send("You don't have permission to use this command")
+    
+    @scam.command(aliaes=["scam_list"])
+    async def disapproved(self,ctx,id):
+        server_lang = await get_server_lang(ctx)
+        if server_lang == "Thai":
+            if ctx.author.id in developerid:
+                with open("data/request_approve.json","r") as f:
+                    data = json.load(f)
+                
+                for i in data:
+                    if i["id"] == id:
+                        await ctx.send(f"{ctx.author.mention} ปฏิเสธคำขอแล้ว")
+                        data.remove(i)
+                        with open("data/request_approve.json","w") as f:
+                            json.dump(data,f, indent=2)
+                        break
+                for dev_user_id in developerid:
+                    user = await self.bot.fetch_user(dev_user_id)
+                    text = await text_beautifier(f"{str(ctx.author)} has disapproved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
+                    await user.send(text)
+            else:
+                await ctx.send("คุณไม่มีสิทธิ์ในการใช้คำสั่งนี้")
+        elif server_lang == "English":
+            if ctx.author.id in developerid:
+                with open("data/request_approve.json","r") as f:
+                    data = json.load(f)
+                
+                for i in data:
+                    if i["id"] == id:
+                        await ctx.send(f"{ctx.author.mention} Approve add link success")
+                        data.remove(i)
+                        with open("data/request_approve.json","w") as f:
+                            json.dump(data,f, indent=2)
+                        break
+                
+                for dev_user_id in developerid:
+                    user = await self.bot.fetch_user(dev_user_id)
+                    text = await text_beautifier(f"{str(ctx.author)} has approved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
+                    await user.send(text)
+            else:
+                await ctx.send("You don't have permission to use this command")
+    
+    @scam.command()
+    async def cancel(self,ctx,id):
+        server_lang = await get_server_lang(ctx)
+        if server_lang == "Thai":
+            with open("data/request_approve.json","r") as f:
+                data = json.load(f)
+            
+            for i in data:
+                if i["id"] == id:
+                    await ctx.send(f"{ctx.author.mention} ยกเลิกคำขอแล้ว")
+                    data.remove(i)
+                    with open("data/request_approve.json","w") as f:
+                        json.dump(data,f, indent=2)
+                    break
+            
+            for dev_user_id in developerid:
+                user = await self.bot.fetch_user(dev_user_id)
+                text = await text_beautifier(f"{str(ctx.author)} has canceled his request.\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
+                await user.send(text)
+
+        elif server_lang == "English":
+            with open("data/request_approve.json","r") as f:
+                data = json.load(f)
+
+            for i in data:
+                if i["id"] == id:
+                    await ctx.send("Cancel request success")
+                    data.remove(i)
+                    with open("data/request_approve.json","w") as f:
+                        json.dump(data,f, indent=2)
+                    break
+            
+            for dev_user_id in developerid:
+                user = await self.bot.fetch_user(dev_user_id)
+                text = await text_beautifier(f"{str(ctx.author)} has canceled his request.\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
+                await user.send(text)
+
+                
 
 async def get_server_lang(ctx):
     server_lang = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
