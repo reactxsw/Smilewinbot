@@ -24,11 +24,6 @@ class on_message_event(commands.Cog):
                     data = await settings.collection.find_one({"guild_id":guild_id})
                     if not data is None:
                         if not message.author.bot:
-                            if "level_system" in data:
-                                status = data["level_system"]
-                            else:
-                                await settings.collection.update_one({"guild_id":guild_id}, {"$set":{"level_system":"NO"}})
-                                status = "NO"
                             if status == "YES":
                                 user = await settings.collectionlevel.find_one({"user_id":user_id, "guild_id":guild_id})
                                 if user is None:
