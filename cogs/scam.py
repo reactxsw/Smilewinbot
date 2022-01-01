@@ -34,11 +34,11 @@ async def get_mode(guild_id):
 
 async def check_scam_link(message):
     if not message.content.startswith(f'{settings.COMMAND_PREFIX}'):
-        server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
-        if server_lang is None:
-            server_lang = "English"
-        else:
-            server_lang = server_lang["Language"]
+        # server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
+        # if server_lang is None:
+        #     server_lang = "English"
+        # else:
+        #     server_lang = server_lang["Language"]
         link = re.search("(?P<url>https?://[^\s]+)", message.content)
         mode = await get_mode(message.guild.id)
 
@@ -53,16 +53,10 @@ async def check_scam_link(message):
                 phishing = f.read().split("\n")
             if domain in phishing:
                 if mode == "warn":
-                    if server_lang == "Thai":
-                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                    elif server_lang == "English":
-                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                 elif mode == "delete":
                     await message.delete()
-                    if server_lang == "Thai":
-                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                    elif server_lang == "English":
-                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                 
         else:
             with open("data/phishing.txt","r") as f:
@@ -70,10 +64,10 @@ async def check_scam_link(message):
             for content in message.content.split():
                 if content in phishing:
                     if mode == "warn":
-                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                     elif mode == "delete":
                         await message.delete()
-                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
 class Scam(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -150,7 +144,9 @@ class Scam(commands.Cog):
         link= await get_domain_name_from_url(link)
         if server_lang == "Thai":
             if link != None:
-                #check is the link is in data/scram_link.json
+                #check is the link is in data/phishing.txt
+                with open("data/phishing.txt","r") as f:
+                    phishing = f.read().split("\n")
                 if link in phishing:
                     await ctx.send(f"{ctx.author.mention} มีลิ้งค์นี้ในระบบแล้ว")
                     return
@@ -175,7 +171,9 @@ class Scam(commands.Cog):
         
         elif server_lang == "English":
             if link != None:
-                #check is the link is in data/scram_link.json
+                #check is the link is in data/phishing.txt
+                with open("data/phishing.txt","r") as f:
+                    phishing = f.read().split("\n")
                 if link in phishing:
                     await ctx.send(f"{ctx.author.mention} The link is already in the database")
                     return
@@ -210,7 +208,9 @@ class Scam(commands.Cog):
         link = await get_domain_name_from_url(link)
         if server_lang == "Thai":
             if link != None:
-                #check is the link is in data/scram_link.json
+                #check is the link is in data/phishing.txt
+                with open("data/phishing.txt","r") as f:
+                    phishing = f.read().split("\n")
                 if link not in phishing:
                     await ctx.send(f"{ctx.author.mention} ไม่มีลิ้งค์นี้ในระบบ")
                     return
@@ -235,7 +235,9 @@ class Scam(commands.Cog):
         
         elif server_lang == "English":
             if link != None:
-                #check is the link is in data/scram_link.json
+                #check is the link is in data/phishing.txt
+                with open("data/phishing.txt","r") as f:
+                    phishing = f.read().split("\n")
                 if link not in phishing:
                     await ctx.send(f"{ctx.author.mention} The link is not in the database")
                     return
@@ -298,7 +300,7 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/phishing.json","r") as f:
+                            with open("data/phishing.txt","r") as f:
                                 phishing = f.read().split("\n")
                             
                             phishing.append(i["link"])
@@ -314,7 +316,7 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/phishing.json","r") as f:
+                            with open("data/phishing.txt","r") as f:
                                 phishing = f.read().split("\n")
                             for j in phishing:
                                 if j == i["link"]:
@@ -342,7 +344,7 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/phishing.json","r") as f:
+                            with open("data/phishing.txt","r") as f:
                                 phishing = f.read().split("\n")
                             
                             phishing.append(i["link"])
@@ -356,7 +358,7 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/phishing.json","r") as f:
+                            with open("data/phishing.txt","r") as f:
                                 phishing = f.read().split("\n")
                             for j in phishing:
                                 if j == i["link"]:
@@ -460,7 +462,7 @@ class Scam(commands.Cog):
 
                 
 
-async def get_server_lang(ctx,mode="ctx"):
+async def get_server_lang(ctx):
     server_lang = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
     if server_lang is None:
         message = await ctx.send(embed=languageEmbed.languageembed(ctx))
