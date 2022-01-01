@@ -53,6 +53,8 @@ async def check_scam_link(message):
             domain = await get_domain_name_from_url(url)
         else:
             domain = await get_domain_name_from_url(link)
+        with open("data/phishing.txt","r") as f:
+            phishing = f.read().split("\n")
         if domain in phishing:
             if mode == "warn":
                 if server_lang == "Thai":
@@ -67,6 +69,8 @@ async def check_scam_link(message):
                     await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
             
     else:
+        with open("data/phishing.txt","r") as f:
+            phishing = f.read().split("\n")
         for content in message.content.split():
             if content in phishing:
                 if mode == "warn":
@@ -298,6 +302,8 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
+                            with open("data/phishing.json","r") as f:
+                                phishing = f.read().split("\n")
                             
                             phishing.append(i["link"])
                             phishing.sort()
@@ -312,6 +318,8 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
+                            with open("data/phishing.json","r") as f:
+                                phishing = f.read().split("\n")
                             for j in phishing:
                                 if j == i["link"]:
                                     phishing.remove(j)
@@ -338,6 +346,8 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
+                            with open("data/phishing.json","r") as f:
+                                phishing = f.read().split("\n")
                             
                             phishing.append(i["link"])
                             phishing.sort()
@@ -350,7 +360,8 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            
+                            with open("data/phishing.json","r") as f:
+                                phishing = f.read().split("\n")
                             for j in phishing:
                                 if j == i["link"]:
                                     phishing.remove(j)
