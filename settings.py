@@ -48,6 +48,7 @@ if Path("config.json").exists():
     with open('config.json') as setting:
         config = json.load(setting)
     
+    developers = config.get("developers")
     developerid = config.get("developer_user_id")
     TOKEN = config.get("bot_token")
     COMMAND_PREFIX = config.get("bot_prefix")

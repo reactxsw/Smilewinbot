@@ -17,7 +17,7 @@ class on_message_event(commands.Cog):
                 return
             
             else:
-                if not message.content.startswith('/r'):
+                if not message.content.startswith('!r'):
                     guild_id = message.guild.id
                     user_id = message.author.id
                     channel = message.channel
