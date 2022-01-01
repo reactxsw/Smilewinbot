@@ -99,6 +99,8 @@ if Path("config.json").exists():
     lavalinkpass = config.get("Lavalink_pass")
     lavalinkindentifier = config.get("Lavalink_identifier")
     lavalinkregion = config.get("Lavalink_region")
+    with open("data/phishing.txt","r",encoding="utf-8") as f:
+        phishing = f.read().split("\n")
 
 else: 
     with open("config.json", "w") as setting:

@@ -9,14 +9,14 @@ import settings
 from utils.languageembed import languageEmbed
 import bson
 import json
+import idna
+from urllib.parse import urlparse
+
 
 async def get_domain_name_from_url(url):
     return url.split("//")[-1].split("/")[0]
 
-with open("data/phishing.txt") as f:
-    phishing = [x.strip() for x in f.readlines()] 
-
-async def get_link_bypassing(url):
+async def bitlybypass(url):
     return requests.Session().head(url,allow_redirects=True).url
 
 async def get_mode(guild_id):
@@ -33,24 +33,16 @@ async def get_mode(guild_id):
 
 async def check_scam_link(message):
     if not message.content.startswith(f'{settings.COMMAND_PREFIX}'):
-        # server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
-        # if server_lang is None:
-        #     server_lang = "English"
-        # else:
-        #     server_lang = server_lang["Language"]
         link = re.search("(?P<url>https?://[^\s]+)", message.content)
         mode = await get_mode(message.guild.id)
-
+        
         if link != None:
             link = link.group("url")
             if "bit.ly" in link:
-                url = await get_link_bypassing(link)
-                domain = await get_domain_name_from_url(url)
-            else:
-                domain = await get_domain_name_from_url(link)
-            with open("data/phishing.txt","r") as f:
-                phishing = f.read().split("\n")
-            if domain in phishing:
+                link = await bitlybypass(link)
+            link = (idna.decode(urlparse(link).netloc))
+
+            if link in settings.phishing:
                 if mode == "warn":
                     await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                 elif mode == "delete":
@@ -58,10 +50,9 @@ async def check_scam_link(message):
                     await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                 
         else:
-            with open("data/phishing.txt","r") as f:
-                phishing = f.read().split("\n")
+
             for content in message.content.split():
-                if content in phishing:
+                if content in settings.phishing:
                     if mode == "warn":
                         await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ | Please do not send a scam link here.")
                     elif mode == "delete":
@@ -143,10 +134,7 @@ class Scam(commands.Cog):
         link= await get_domain_name_from_url(link)
         if server_lang == "Thai":
             if link != None:
-                #check is the link is in data/phishing.txt
-                with open("data/phishing.txt","r") as f:
-                    phishing = f.read().split("\n")
-                if link in phishing:
+                if link in settings.phishing:
                     await ctx.send(f"{ctx.author.mention} มีลิ้งค์นี้ในระบบแล้ว")
                     return
 
@@ -170,10 +158,7 @@ class Scam(commands.Cog):
         
         elif server_lang == "English":
             if link != None:
-                #check is the link is in data/phishing.txt
-                with open("data/phishing.txt","r") as f:
-                    phishing = f.read().split("\n")
-                if link in phishing:
+                if link in settings.phishing:
                     await ctx.send(f"{ctx.author.mention} The link is already in the database")
                     return
 
@@ -207,10 +192,7 @@ class Scam(commands.Cog):
         link = await get_domain_name_from_url(link)
         if server_lang == "Thai":
             if link != None:
-                #check is the link is in data/phishing.txt
-                with open("data/phishing.txt","r") as f:
-                    phishing = f.read().split("\n")
-                if link not in phishing:
+                if link not in settings.phishing:
                     await ctx.send(f"{ctx.author.mention} ไม่มีลิ้งค์นี้ในระบบ")
                     return
                 
@@ -234,10 +216,7 @@ class Scam(commands.Cog):
         
         elif server_lang == "English":
             if link != None:
-                #check is the link is in data/phishing.txt
-                with open("data/phishing.txt","r") as f:
-                    phishing = f.read().split("\n")
-                if link not in phishing:
+                if link not in settings.phishing:
                     await ctx.send(f"{ctx.author.mention} The link is not in the database")
                     return
 
@@ -299,14 +278,12 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/phishing.txt","r") as f:
-                                phishing = f.read().split("\n")
                             
-                            phishing.append(i["link"])
-                            phishing.sort()
+                            settings.phishing.append(i["link"])
+                            settings.phishing.sort()
                             
                             with open("data/phishing.txt","w") as f:
-                                f.write("\n".join(phishing))
+                                f.write("\n".join(settings.phishing))
                             
                             await ctx.send(f"{ctx.author.mention} อนุมัติคำขอเพิ่มลิ้งสำเร็จ")
                         
@@ -315,14 +292,12 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/phishing.txt","r") as f:
-                                phishing = f.read().split("\n")
-                            for j in phishing:
+                            for j in settings.phishing:
                                 if j == i["link"]:
-                                    phishing.remove(j)
-                                    phishing.sort()
+                                    settings.phishing.remove(j)
+                                    settings.phishing.sort()
                                     with open("data/phishing.txt","w") as f:
-                                        f.write("\n".join(phishing))
+                                        f.write("\n".join(settings.phishing))
                                     break
                             await ctx.send(f"{ctx.author.mention} อนุมัติคำขอลบลิ้งสำเร็จ")
                             data.remove(i)
@@ -343,13 +318,10 @@ class Scam(commands.Cog):
                 for i in data:
                     if i["id"] == id:
                         if i["category"] == "add":
-                            with open("data/phishing.txt","r") as f:
-                                phishing = f.read().split("\n")
-                            
-                            phishing.append(i["link"])
-                            phishing.sort()
+                            settings.phishing.append(i["link"])
+                            settings.phishing.sort()
                             with open("data/phishing.txt","w") as f:
-                                f.write("\n".join(phishing))
+                                f.write("\n".join(settings.phishing))
                             
                             await ctx.send(f"{ctx.author.mention} Approve add link success")
                             data.remove(i)
@@ -357,14 +329,12 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                         elif i["category"] == "remove":
-                            with open("data/phishing.txt","r") as f:
-                                phishing = f.read().split("\n")
-                            for j in phishing:
+                            for j in settings.phishing:
                                 if j == i["link"]:
-                                    phishing.remove(j)
-                                    phishing.sort()
+                                    settings.phishing.remove(j)
+                                    settings.phishing.sort()
                                     with open("data/phishing.txt","w") as f:
-                                        f.write("\n".join(phishing))
+                                        f.write("\n".join(settings.phishing))
                                     break
                             await ctx.send(f"{ctx.author.mention} Approve remove link success")
                             

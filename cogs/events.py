@@ -297,7 +297,7 @@ f"""สวัสดีครับ {entry.user.name}
 
 
                                     """) 
-                uembed.add_field(name="🤝Partner : ",value=f"[allzone](https://allzone.online/)")
+                uembed.add_field(name="🤝Partner : ",value=f"-")
                 await entry.user.send(embed=uembed)
         
         except discord.Forbidden:
