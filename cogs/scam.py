@@ -10,11 +10,6 @@ from utils.languageembed import languageEmbed
 import bson
 import json
 
-with open("data/developer_id.txt") as developerid:
-    developerid = developerid.read()
-    developerid = developerid.splitlines()
-    developerid = [int(i) for i in developerid]
-
 async def get_domain_name_from_url(url):
     return url.split("//")[-1].split("/")[0]
 
@@ -38,46 +33,47 @@ async def get_mode(guild_id):
             return "warn"
 
 async def check_scam_link(message):
-    server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
-    if server_lang is None:
-        server_lang = "English"
-    else:
-        server_lang = server_lang["Language"]
-    link = re.search("(?P<url>https?://[^\s]+)", message.content)
-    mode = await get_mode(message.guild.id)
-
-    if link != None:
-        link = link.group("url")
-        if "bit.ly" in link:
-            url = await get_link_bypassing(link)
-            domain = await get_domain_name_from_url(url)
+    if not message.content.startswith(f'{settings.COMMAND_PREFIX}'):
+        server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
+        if server_lang is None:
+            server_lang = "English"
         else:
-            domain = await get_domain_name_from_url(link)
-        with open("data/phishing.txt","r") as f:
-            phishing = f.read().split("\n")
-        if domain in phishing:
-            if mode == "warn":
-                if server_lang == "Thai":
-                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                elif server_lang == "English":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
-            elif mode == "delete":
-                await message.delete()
-                if server_lang == "Thai":
-                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                elif server_lang == "English":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
-            
-    else:
-        with open("data/phishing.txt","r") as f:
-            phishing = f.read().split("\n")
-        for content in message.content.split():
-            if content in phishing:
+            server_lang = server_lang["Language"]
+        link = re.search("(?P<url>https?://[^\s]+)", message.content)
+        mode = await get_mode(message.guild.id)
+
+        if link != None:
+            link = link.group("url")
+            if "bit.ly" in link:
+                url = await get_link_bypassing(link)
+                domain = await get_domain_name_from_url(url)
+            else:
+                domain = await get_domain_name_from_url(link)
+            with open("data/phishing.txt","r") as f:
+                phishing = f.read().split("\n")
+            if domain in phishing:
                 if mode == "warn":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    if server_lang == "Thai":
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
+                    elif server_lang == "English":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
                 elif mode == "delete":
                     await message.delete()
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    if server_lang == "Thai":
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
+                    elif server_lang == "English":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                
+        else:
+            with open("data/phishing.txt","r") as f:
+                phishing = f.read().split("\n")
+            for content in message.content.split():
+                if content in phishing:
+                    if mode == "warn":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    elif mode == "delete":
+                        await message.delete()
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
 class Scam(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
@@ -168,7 +164,7 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","w") as f:
                     json.dump(data,f, indent=2)
 
-                for dev in developerid:
+                for dev in settings.developers:
                     user = await self.bot.fetch_user(dev)
                     text = await text_beautifier(f"New add scam link request from {str(ctx.author)}\nData : {json.dumps(newdata, indent=2)}")
                     await user.send(text)
@@ -194,7 +190,7 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","w") as f:
                     json.dump(data,f, indent=2)
                 
-                for dev in developerid:
+                for dev in settings.developers:
                     user = await self.bot.fetch_user(dev)
                     text = await text_beautifier(f"New add scam link request from {str(ctx.author)}\nData : {json.dumps(newdata, indent=2)}")
                     await user.send(text)
@@ -228,7 +224,7 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","w") as f:
                     json.dump(data,f, indent=2)
 
-                for dev in developerid:
+                for dev in settings.developers:
                     user = await self.bot.fetch_user(dev)
                     text = await text_beautifier(f"New remove scam link request from {str(ctx.author)}\nData : {json.dumps(newdata, indent=2)}")
                     await user.send(text)
@@ -255,7 +251,7 @@ class Scam(commands.Cog):
                 with open("data/request_approve.json","w") as f:
                     json.dump(data,f, indent=2)
 
-                for dev in developerid:
+                for dev in settings.developers:
                     user = await self.bot.fetch_user(dev)
                     text = await text_beautifier(f"New remove scam link request from {str(ctx.author)}\nData : {json.dumps(newdata, indent=2)}")
                     await user.send(text)
@@ -270,7 +266,7 @@ class Scam(commands.Cog):
     async def list(self,ctx):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 await ctx.send(f"{ctx.author.mention} ส่งไปที่แชทส่วนตัวแล้ว!!!.")
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
@@ -281,7 +277,7 @@ class Scam(commands.Cog):
                 await ctx.send("คุณไม่มีสิทธิ์ใช้คำสั่งนี้")
             
         elif server_lang == "English":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 await ctx.send(f"{ctx.author.mention} I have sent it to you DM!!!.")
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
@@ -295,7 +291,7 @@ class Scam(commands.Cog):
     async def approve(self,ctx,id):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
@@ -332,14 +328,14 @@ class Scam(commands.Cog):
                             with open("data/request_approve.json","w") as f:
                                 json.dump(data,f, indent=2)
                             break
-                for dev_user_id in developerid:
+                for dev_user_id in settings.developers:
                         user = await self.bot.fetch_user(dev_user_id)
                         text = await text_beautifier(f"{str(ctx.author)} has approved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                         await user.send(text)
             else:
                 await ctx.send("คุณไม่มีสิทธิ์ในการใช้คำสั่งนี้")
         elif server_lang == "English":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
@@ -376,7 +372,7 @@ class Scam(commands.Cog):
                                 json.dump(data,f, indent=2)
                             break
                 
-                for dev_user_id in developerid:
+                for dev_user_id in settings.developers:
                     user = await self.bot.fetch_user(dev_user_id)
                     text = await text_beautifier(f"{str(ctx.author)} has approved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                     await user.send(text)
@@ -388,7 +384,7 @@ class Scam(commands.Cog):
     async def disapprove(self,ctx,id):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
@@ -399,14 +395,14 @@ class Scam(commands.Cog):
                         with open("data/request_approve.json","w") as f:
                             json.dump(data,f, indent=2)
                         break
-                for dev_user_id in developerid:
+                for dev_user_id in settings.developers:
                     user = await self.bot.fetch_user(dev_user_id)
                     text = await text_beautifier(f"{str(ctx.author)} has disapproved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                     await user.send(text)
             else:
                 await ctx.send("คุณไม่มีสิทธิ์ในการใช้คำสั่งนี้")
         elif server_lang == "English":
-            if ctx.author.id in developerid:
+            if ctx.author.id in settings.developers:
                 with open("data/request_approve.json","r") as f:
                     data = json.load(f)
                 
@@ -418,7 +414,7 @@ class Scam(commands.Cog):
                             json.dump(data,f, indent=2)
                         break
                 
-                for dev_user_id in developerid:
+                for dev_user_id in settings.developers:
                     user = await self.bot.fetch_user(dev_user_id)
                     text = await text_beautifier(f"{str(ctx.author)} has approved the request from {i['author']}\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                     await user.send(text)
@@ -440,7 +436,7 @@ class Scam(commands.Cog):
                         json.dump(data,f, indent=2)
                     break
             
-            for dev_user_id in developerid:
+            for dev_user_id in settings.developers:
                 user = await self.bot.fetch_user(dev_user_id)
                 text = await text_beautifier(f"{str(ctx.author)} has canceled his request.\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                 await user.send(text)
@@ -457,7 +453,7 @@ class Scam(commands.Cog):
                         json.dump(data,f, indent=2)
                     break
             
-            for dev_user_id in developerid:
+            for dev_user_id in settings.developers:
                 user = await self.bot.fetch_user(dev_user_id)
                 text = await text_beautifier(f"{str(ctx.author)} has canceled his request.\nid : {i['id']}\ncategory : {i['category']}\nlink : {i['link']}")
                 await user.send(text)
