@@ -23,7 +23,6 @@ async def get_mode(guild_id):
     #if server setting have scam in it, then check is scam mode is warn or delete
     server_setting = await settings.collection.find_one({"guild_id":guild_id})
     if server_setting is None:
-        await settings.collection.insert_one({"guild_id":guild_id,"scam":"warn"})
         return "warn"
     else:
         if "scam" in server_setting:
