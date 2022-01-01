@@ -38,46 +38,47 @@ async def get_mode(guild_id):
             return "warn"
 
 async def check_scam_link(message):
-    server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
-    if server_lang is None:
-        server_lang = "English"
-    else:
-        server_lang = server_lang["Language"]
-    link = re.search("(?P<url>https?://[^\s]+)", message.content)
-    mode = await get_mode(message.guild.id)
-
-    if link != None:
-        link = link.group("url")
-        if "bit.ly" in link:
-            url = await get_link_bypassing(link)
-            domain = await get_domain_name_from_url(url)
+    if not message.content.startswith(f'{settings.COMMAND_PREFIX}'):
+        server_lang = await settings.collectionlanguage.find_one({"guild_id":message.guild.id})
+        if server_lang is None:
+            server_lang = "English"
         else:
-            domain = await get_domain_name_from_url(link)
-        with open("data/phishing.txt","r") as f:
-            phishing = f.read().split("\n")
-        if domain in phishing:
-            if mode == "warn":
-                if server_lang == "Thai":
-                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                elif server_lang == "English":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
-            elif mode == "delete":
-                await message.delete()
-                if server_lang == "Thai":
-                    await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
-                elif server_lang == "English":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
-            
-    else:
-        with open("data/phishing.txt","r") as f:
-            phishing = f.read().split("\n")
-        for content in message.content.split():
-            if content in phishing:
+            server_lang = server_lang["Language"]
+        link = re.search("(?P<url>https?://[^\s]+)", message.content)
+        mode = await get_mode(message.guild.id)
+
+        if link != None:
+            link = link.group("url")
+            if "bit.ly" in link:
+                url = await get_link_bypassing(link)
+                domain = await get_domain_name_from_url(url)
+            else:
+                domain = await get_domain_name_from_url(link)
+            with open("data/phishing.txt","r") as f:
+                phishing = f.read().split("\n")
+            if domain in phishing:
                 if mode == "warn":
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    if server_lang == "Thai":
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
+                    elif server_lang == "English":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
                 elif mode == "delete":
                     await message.delete()
-                    await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    if server_lang == "Thai":
+                        await message.channel.send(f"{message.author.mention} โปรดอย่าส่งลิ้งค์ที่ไม่น่าเชื่อถือ")
+                    elif server_lang == "English":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                
+        else:
+            with open("data/phishing.txt","r") as f:
+                phishing = f.read().split("\n")
+            for content in message.content.split():
+                if content in phishing:
+                    if mode == "warn":
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
+                    elif mode == "delete":
+                        await message.delete()
+                        await message.channel.send(f"{message.author.mention} Please do not send a scam link here.")
 class Scam(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
