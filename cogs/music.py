@@ -3,6 +3,8 @@ from discord.ext import commands
 from utils.languageembed import languageEmbed
 import discord
 import wavelink
+import re
+
 class Music(commands.Cog):
 
     def __init__(self, bot):
@@ -38,6 +40,7 @@ class Music(commands.Cog):
 
     @commands.command()
     async def play(self, ctx, *, query: str):
+        RURL = re.compile("https?:\/\/(?:www\.)?.+")
         tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
 
         if not tracks:
