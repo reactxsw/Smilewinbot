@@ -1,7 +1,6 @@
 server: # REST and WS server
-  port: 8888
+  port: 443
   address: 127.0.0.1
-lavalink:
   server:
     password: "Smilewindiscord"
     sources:

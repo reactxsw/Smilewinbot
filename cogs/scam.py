@@ -17,19 +17,16 @@ async def get_domain_name_from_url(url):
     return url.split("//")[-1].split("/")[0]
 
 async def bitlybypass(url):
+    print(requests.Session().head(url,allow_redirects=True).url)
     return requests.Session().head(url,allow_redirects=True).url
 
 async def get_mode(guild_id):
     #if server setting have scam in it, then check is scam mode is warn or delete
-    server_setting = await settings.collection.find_one({"guild_id":guild_id})
-    if server_setting is None:
+    data = await settings.collection.find_one({"guild_id":guild_id})
+    if data is None:
         return "warn"
     else:
-        if "scam" in server_setting:
-            return server_setting["scam"]
-        else:
-            await settings.collection.update_one({"guild_id":guild_id}, {"$set":{"scam":"warn"}})
-            return "warn"
+        return data["scam"]
 
 async def check_scam_link(message):
     if not message.content.startswith(f'{settings.COMMAND_PREFIX}'):
