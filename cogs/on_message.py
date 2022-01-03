@@ -51,8 +51,5 @@ class on_message_event(commands.Cog):
                 else:
                     pass
 
-
-
-
 def setup(bot):
     bot.add_cog(on_message_event(bot))
