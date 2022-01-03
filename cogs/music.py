@@ -17,12 +17,12 @@ class Music(commands.Cog):
 
     async def start_nodes(self):
         await self.bot.wait_until_ready()
-        await self.bot.wavelink.initiate_node(host=settings.lavalinkip,
-                                              port=settings.lavalinkport,
-                                              rest_uri=f"http://{settings.lavalinkip}:{settings.lavalinkport}",
-                                              password=settings.lavalinkpass,
-                                              identifier=settings.lavalinkindentifier,
-                                              region=settings.lavalinkregion)
+        await self.bot.wavelink.initiate_node(host='127.0.0.1',
+                                              port=2333,
+                                              rest_uri='http://127.0.0.1:2333',
+                                              password='youshallnotpass',
+                                              identifier='TEST',
+                                              region='us_central')
 
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):

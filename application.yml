@@ -1,8 +1,8 @@
 server: # REST and WS server
-  port: 443
+  port: 2333
   address: 127.0.0.1
   server:
-    password: "Smilewindiscord"
+    password: "youshallnotpass"
     sources:
       youtube: true
       bandcamp: true
