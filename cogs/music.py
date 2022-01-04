@@ -1,4 +1,5 @@
 from discord import colour, embeds
+from wavelink.node import Node
 import settings
 from discord.ext import commands
 from utils.languageembed import languageEmbed
@@ -47,10 +48,11 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @wavelink.WavelinkMixin.listener()
     async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
+        guild_id = payload.player.guild_id
+        player = payload.player
         if payload.reason == "FINISHED":
-            Music.do_next()
-        print(payload.reason)
-        print(node)
+            print(payload.player.channel_id)
+            await self.do_next(guild_id,player)
 
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
@@ -81,11 +83,19 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def loop(self,ctx):
         pass
     
-    async def do_next(self,ctx):
-        pass
+    async def do_next(self,guild_id,player):
+        Queue = await settings.collectionmusic.find_one({"guild_id":guild_id})
+        if Queue["Queue"] == []:
+            return
+        
+        else:
+            Song = Queue["Queue"][1]["song_id"]
+            print(Song)
+            tracks = await self.bot.wavelink.build_track(Song)
+            await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
+            await player.play(tracks)
 
-    async def build_track(self,ctx):
-        pass
+
 
     async def build_embed(title,duration,thumbnail,next,author,requester):
         embed = discord.Embed(
@@ -115,7 +125,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
                 data = {
                     "guild_id":ctx.guild.id,
-                    "Queue":[{"song_title":song_title,"song_id":song_id}]
+                    "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
                 }
                 await settings.collectionmusic.insert_one(data)
                 player = self.bot.wavelink.get_player(ctx.guild.id)
@@ -128,7 +138,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             
             else:
                 if not len(Queue["Queue"]) > 25:
-                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {song_title:song_id}}})
+                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
 
                 else:
                     await ctx.send("คิวห้ามเกิน 25")
