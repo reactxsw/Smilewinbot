@@ -1,10 +1,9 @@
-from discord.errors import PrivilegedIntentsRequired
 import settings
 from discord.ext import commands
 from utils.languageembed import languageEmbed
 import discord
 import wavelink
-
+import settings
 import re
 
 class Music(commands.Cog, wavelink.WavelinkMixin):
@@ -32,14 +31,6 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 "password": settings.lavalinkpass,
                 "identifier": f"{settings.lavalinkindentifier}_1",
                 "region": settings.lavalinkregion,
-            },
-            "Node_2": {
-                "host": settings.lavalinkip,
-                "port": f"{settings.lavalinkport}",
-                "rest_uri": f"http://{settings.lavalinkip}:{settings.lavalinkport}",
-                "password": settings.lavalinkpass,
-                "identifier": f"{settings.lavalinkindentifier}_2",
-                "region": settings.lavalinkregion,
             }
         }
 
@@ -50,13 +41,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def on_node_ready(self, node: wavelink.Node):
         print(f"Node {node.identifier} is ready")
 
-    @commands.Cog.listener()
-    async def on_wavelink_track_end(self, player: wavelink.Player, track: wavelink.Track, reason):
-        if reason == "STOPPED":
-            print("skiped")
-        
-        else:
-            print("song end")
+    @wavelink.WavelinkMixin.listener()
+    async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
+        if payload.reason == "FINISHED":
+            pass
+        print(payload.reason)
+        print(node)
 
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
@@ -70,17 +60,47 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         await ctx.send(f'Connecting to **`{channel.name}`**')
         await ctx.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
         await player.connect(channel.id)
-        
 
+    @commands.command()
+    async def stop(self,ctx):
+        pass
+
+    @commands.command()
+    async def pause(self,ctx):
+        pass
+
+    @commands.command()
+    async def resume(self,ctx):
+        pass
+
+    @commands.command()
+    async def loop(self,ctx):
+        pass
+    
+    async def do_next(self,ctx):
+        pass
 
     @commands.command()
     async def play(self, ctx, *, query: str):
-        RURL = re.compile("https?:\/\/(?:www\.)?.+")
         tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
-
+        player = self.bot.wavelink.get_player(ctx.guild.id)
         if not tracks:
             return await ctx.send('Could not find any songs with that query.')
+        Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if Queue is None and not player.is_playing:
+            data = {
+                "guild_id":ctx.guild.id,
+                "Queue":[str(tracks[0])]
+            }
+            await settings.collectionmusic.insert_one(data)
         
+        else:
+            if len(Queue["Queue"]) > 24 :
+                return
+
+            else:
+                await settings.collectionmusic.update({'guild_id': ctx.guild.id}, {'$push': {'Queue': tracks[0]}})
+
         player = self.bot.wavelink.get_player(ctx.guild.id)
         if not player.is_connected:
             await ctx.invoke(self.connect_)
