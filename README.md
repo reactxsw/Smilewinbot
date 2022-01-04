@@ -8,7 +8,7 @@ A discord bot made with python for my discord server
 <div id="need"></div>
 <h1>Things needed</h1>
 <p>Git : https://git-scm.com/download/win</p>
-<p>Lavalink 13 : https://github.com/freyacodes/Lavalink</p>
+<p>Lavalink 3.4 : https://github.com/freyacodes/Lavalink</p>
 <p>Java 16 : https://www.oracle.com/java/technologies/javase-downloads.html</p>
 <p>Python 3.9 : https://www.python.org/</p>
 <h1>API needed</h1>
