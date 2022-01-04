@@ -4,6 +4,7 @@ from discord.ext import commands
 from utils.languageembed import languageEmbed
 import discord
 import wavelink
+
 import re
 
 class Music(commands.Cog, wavelink.WavelinkMixin):
@@ -49,8 +50,13 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def on_node_ready(self, node: wavelink.Node):
         print(f"Node {node.identifier} is ready")
 
-    async def build_embed(self,ctx):
-        pass
+    @commands.Cog.listener()
+    async def on_wavelink_track_end(self, player: wavelink.Player, track: wavelink.Track, reason):
+        if reason == "STOPPED":
+            print("skiped")
+        
+        else:
+            print("song end")
 
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
@@ -75,11 +81,6 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         if not tracks:
             return await ctx.send('Could not find any songs with that query.')
         
-        if isinstance(tracks, wavelink.TrackPlaylist):
-            print("playing")
-
-        else:
-            print("not playing")
         player = self.bot.wavelink.get_player(ctx.guild.id)
         if not player.is_connected:
             await ctx.invoke(self.connect_)

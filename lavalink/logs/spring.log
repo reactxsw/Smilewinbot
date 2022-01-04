@@ -227,3 +227,50 @@
 2022-01-04 01:44:09.131  INFO 37832 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
 2022-01-04 01:44:09.465  INFO 37832 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
 2022-01-04 01:44:09.930  INFO 37832 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAmQIAM3RoZSByZW1lZHkgZm9yIGEgYnJva2VuIGhlYXJ0ICh3aHkgYW0gSSBzbyBpbiBsb3ZlKQAMWFhYVEVOVEFDSU9OAAAAAAACdOgAC25kQ0k4RElNODZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9bmRDSThESU04NncAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2022-01-04 11:03:41.807  INFO 43784 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.4
+	Build:          1257
+	Build time:     26.10.2021 14:18:37 UTC
+	Branch          master
+	Commit:         a364833
+	Commit time:    26.10.2021 14:15:20 UTC
+	JVM:            16.0.2
+	Lavaplayer      1.3.96-original
+
+2022-01-04 11:03:41.938  INFO 43784 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 43784 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
+2022-01-04 11:03:41.939  INFO 43784 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2022-01-04 11:03:42.182  WARN 43784 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2022-01-04 11:03:43.264  WARN 43784 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2022-01-04 11:03:43.299  INFO 43784 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2022-01-04 11:03:43.299  INFO 43784 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1298 ms
+2022-01-04 11:03:43.747  WARN 43784 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2022-01-04 11:03:44.101  INFO 43784 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2022-01-04 11:03:44.319  INFO 43784 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
+2022-01-04 11:03:44.320  WARN 43784 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
+2022-01-04 11:03:44.594  INFO 43784 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-04 11:03:44.888  INFO 43784 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2022-01-04 11:03:44.898  INFO 43784 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2022-01-04 11:03:44.956  INFO 43784 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
+2022-01-04 11:03:44.960  INFO 43784 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.663 seconds (JVM running for 4.059)
+2022-01-04 11:03:44.962  INFO 43784 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2022-01-04 11:03:51.336  INFO 43784 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-04 11:03:51.337  INFO 43784 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-04 11:03:51.344  INFO 43784 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2022-01-04 11:03:51.363  INFO 43784 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57051
+2022-01-04 11:03:51.396  INFO 43784 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57055
+2022-01-04 11:03:51.431  INFO 43784 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 11:03:51.431  INFO 43784 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 11:03:51.431  WARN 43784 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 11:03:51.431  WARN 43784 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 11:05:14.733  INFO 43784 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 11:05:15.753  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 11:05:16.651  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAmQIAM3RoZSByZW1lZHkgZm9yIGEgYnJva2VuIGhlYXJ0ICh3aHkgYW0gSSBzbyBpbiBsb3ZlKQAMWFhYVEVOVEFDSU9OAAAAAAACdOgAC25kQ0k4RElNODZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9bmRDSThESU04NncAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2022-01-04 11:05:17.470  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "5fc5c6aaceba1a3a84f9e6f4ed204135", "event": {"token": "b664785bc4e3a067", "guild_id": "924999182039801876", "endpoint": "singapore8582.discord.media:443"}}
