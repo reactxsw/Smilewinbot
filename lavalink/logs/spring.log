@@ -521,3 +521,149 @@
 2022-01-04 13:12:17.232  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
 2022-01-04 13:12:17.962  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAmQIAM3RoZSByZW1lZHkgZm9yIGEgYnJva2VuIGhlYXJ0ICh3aHkgYW0gSSBzbyBpbiBsb3ZlKQAMWFhYVEVOVEFDSU9OAAAAAAACdOgAC25kQ0k4RElNODZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9bmRDSThESU04NncAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
 2022-01-04 13:12:18.138  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "7b5fc347720ff2b442ee5ee4be4f497a", "event": {"token": "de489f2188516163", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 14:30:55.539  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:55059 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:30:55.541  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:31:05.552  INFO 43784 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53096
+2022-01-04 14:31:05.557  INFO 43784 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:31:05.558  WARN 43784 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:31:31.203  INFO 43784 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:31:31.981  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:33:21.415  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53096 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:33:21.415  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:33:26.208  INFO 43784 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:55761
+2022-01-04 14:33:26.210  INFO 43784 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:33:26.211  WARN 43784 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:33:47.623  INFO 43784 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:33:48.128  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:34:07.549  INFO 43784 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:34:08.023  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:38:45.612  INFO 43784 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57626
+2022-01-04 14:38:45.614  INFO 43784 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:38:45.615  WARN 43784 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:38:51.854  INFO 43784 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:38:51.857  INFO 43784 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:38:52.563  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:38:53.049  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:38:56.628  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:55761 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:38:56.628  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:39:35.403  INFO 43784 --- [XNIO-1 task-17] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:39:35.921  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:40:14.694  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:57626 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:40:14.694  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:40:24.245  INFO 43784 --- [XNIO-1 task-19] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63782
+2022-01-04 14:40:24.247  INFO 43784 --- [XNIO-1 task-19] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:40:24.247  WARN 43784 --- [XNIO-1 task-19] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:40:26.130  INFO 43784 --- [XNIO-1 task-20] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:40:26.535  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:44:34.697  INFO 43784 --- [XNIO-1 task-22] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62972
+2022-01-04 14:44:34.701  INFO 43784 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:44:34.701  WARN 43784 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:44:44.136  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63782 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:44:44.136  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:44:44.948  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62972 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:44:44.948  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:44:53.730  INFO 43784 --- [XNIO-1 task-23] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63118
+2022-01-04 14:44:53.732  INFO 43784 --- [XNIO-1 task-23] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:44:53.732  WARN 43784 --- [XNIO-1 task-23] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:53:18.576  INFO 43784 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57374
+2022-01-04 14:53:18.579  INFO 43784 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:53:18.579  WARN 43784 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:53:28.030  INFO 43784 --- [XNIO-1 task-25] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:28.034  INFO 43784 --- [XNIO-1 task-26] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:28.768  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:29.186  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:30.502  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "dd20d829127db34269b69081d19c872e", "event": {"token": "f2064ffad60fe8ef", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 14:53:32.314  INFO 43784 --- [XNIO-1 task-29] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:32.318  INFO 43784 --- [XNIO-1 task-30] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:32.782  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:33.407  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:34.526  INFO 43784 --- [XNIO-1 task-33] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:34.584  INFO 43784 --- [XNIO-1 task-34] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:35.024  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:35.479  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:35.559  INFO 43784 --- [XNIO-1 task-38] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:35.559  INFO 43784 --- [XNIO-1 task-37] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:36.083  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:36.415  INFO 43784 --- [XNIO-1 task-41] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:36.416  INFO 43784 --- [XNIO-1 task-40] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:53:36.513  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:36.961  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:53:37.085  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:55:20.100  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63118 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:55:20.100  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:55:20.989  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:57374 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:55:20.989  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:55:25.936  INFO 43784 --- [XNIO-1 task-45] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54226
+2022-01-04 14:55:25.938  INFO 43784 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:55:25.938  WARN 43784 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:55:37.720  INFO 43784 --- [XNIO-1 task-46] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:55:38.217  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:57:04.700  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54226 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:57:04.700  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:57:14.017  INFO 43784 --- [XNIO-1 task-48] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56035
+2022-01-04 14:57:14.019  INFO 43784 --- [XNIO-1 task-48] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:57:14.019  WARN 43784 --- [XNIO-1 task-48] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:57:33.471  INFO 43784 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 14:57:33.975  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 14:57:43.307  INFO 43784 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56035 -- CloseStatus[code=1006, reason=]
+2022-01-04 14:57:43.307  INFO 43784 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 14:57:53.195  INFO 43784 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56259
+2022-01-04 14:57:53.197  INFO 43784 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 14:57:53.197  WARN 43784 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 14:58:37.963  INFO 43784 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 14:58:38.418  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:03:23.192  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56259 -- CloseStatus[code=1006, reason=]
+2022-01-04 15:03:23.192  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 15:03:25.781  INFO 43784 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63064
+2022-01-04 15:03:25.783  INFO 43784 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 15:03:25.784  WARN 43784 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 15:03:34.332  INFO 43784 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:https://www.youtube.com/watch?v=e3kg7vMIb1E"
+2022-01-04 15:03:34.984  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: https://www.youtube.com/watch?v=e3kg7vMIb1E
+2022-01-04 15:08:20.424  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63064 -- CloseStatus[code=1006, reason=]
+2022-01-04 15:08:20.425  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 15:08:29.816  INFO 43784 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53956
+2022-01-04 15:08:29.820  INFO 43784 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 15:08:29.820  WARN 43784 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 15:08:35.348  INFO 43784 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 15:08:36.027  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:09:04.718  INFO 43784 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64492
+2022-01-04 15:09:04.719  INFO 43784 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 15:09:04.720  WARN 43784 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 15:09:13.044  INFO 43784 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 15:09:13.047  INFO 43784 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 15:09:13.535  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:09:13.931  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:18:30.591  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64492 -- CloseStatus[code=1006, reason=]
+2022-01-04 15:18:30.592  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 15:18:31.514  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53956 -- CloseStatus[code=1006, reason=]
+2022-01-04 15:18:31.514  INFO 43784 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 15:18:36.021  INFO 43784 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:55496
+2022-01-04 15:18:36.024  INFO 43784 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 15:18:36.024  WARN 43784 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 15:19:09.226  INFO 43784 --- [XNIO-1 task-18] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 15:19:09.908  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:19:10.782  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2022-01-04 15:19:10.902  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "de6ebfac1f931dc1ecb14acc0581fd82", "event": {"token": "ddc920494b85e640", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 15:19:41.777  INFO 43784 --- [XNIO-1 task-20] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 15:19:42.291  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 15:21:04.826  INFO 43784 --- [XNIO-1 task-22] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62172
+2022-01-04 15:21:04.828  INFO 43784 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 15:21:04.828  WARN 43784 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 15:21:10.211  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:55496 -- CloseStatus[code=1006, reason=]
+2022-01-04 15:21:10.216  INFO 43784 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-04 15:21:14.145  INFO 43784 --- [XNIO-1 task-23] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:remedy of a broken heart"
+2022-01-04 15:21:14.638  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: remedy of a broken heart
+2022-01-04 15:21:15.388  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAmQIAM3RoZSByZW1lZHkgZm9yIGEgYnJva2VuIGhlYXJ0ICh3aHkgYW0gSSBzbyBpbiBsb3ZlKQAMWFhYVEVOVEFDSU9OAAAAAAACdOgAC25kQ0k4RElNODZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9bmRDSThESU04NncAB3lvdXR1YmUAAAAAAAAAAA==", "noReplace": false, "startTime": "0"}
+2022-01-04 15:21:16.239  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "49f5e65214342a66e76d10a4326c3367", "event": {"token": "ddc920494b85e640", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 15:21:34.911  INFO 43784 --- [XNIO-1 task-25] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 15:21:35.354  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 15:21:54.157  INFO 43784 --- [XNIO-1 task-27] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:https://www.youtube.com/watch?v=e3kg7vMIb1E"
+2022-01-04 15:21:54.850  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: https://www.youtube.com/watch?v=e3kg7vMIb1E
+2022-01-04 15:22:22.819  INFO 43784 --- [XNIO-1 task-29] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:https://www.youtube.com/watch?v=NWefBcSpeVg"
+2022-01-04 15:22:23.373  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: https://www.youtube.com/watch?v=NWefBcSpeVg
+2022-01-04 15:23:26.447  INFO 43784 --- [XNIO-1 task-31] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:gangster paradise"
+2022-01-04 15:23:27.023  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: gangster paradise
+2022-01-04 15:24:37.286  INFO 43784 --- [XNIO-1 task-33] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:black and white"
+2022-01-04 15:24:37.786  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: black and white
+2022-01-04 15:24:51.116  INFO 43784 --- [XNIO-1 task-35] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:hate will never win"
+2022-01-04 15:24:51.763  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: hate will never win

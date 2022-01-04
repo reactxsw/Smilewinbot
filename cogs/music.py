@@ -44,7 +44,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @wavelink.WavelinkMixin.listener()
     async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
         if payload.reason == "FINISHED":
-            pass
+            Music.do_next()
         print(payload.reason)
         print(node)
 
@@ -80,35 +80,38 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def do_next(self,ctx):
         pass
 
+    async def build_track(self,ctx):
+        pass
+
     @commands.command()
     async def play(self, ctx, *, query: str):
         tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
         player = self.bot.wavelink.get_player(ctx.guild.id)
-        if not tracks:
-            return await ctx.send('Could not find any songs with that query.')
-        Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-        if Queue is None and not player.is_playing:
-            data = {
-                "guild_id":ctx.guild.id,
-                "Queue":[str(tracks[0])]
-            }
-            await settings.collectionmusic.insert_one(data)
-        
-        else:
-            if len(Queue["Queue"]) > 24 :
-                return
+        if tracks:
+            song_id = tracks[0].id
+            song_title = tracks[0].title
+            Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+            if Queue is None and not player.is_playing:
 
+                data = {
+                    "guild_id":ctx.guild.id,
+                    "Queue":[{song_title:song_id}]
+                }
+                await settings.collectionmusic.insert_one(data)
+                player = self.bot.wavelink.get_player(ctx.guild.id)
+                if not player.is_connected:
+                    await ctx.invoke(self.connect_)
+
+                await ctx.send(f'Added {song_title} to the queue.')
+                await player.play(tracks[0])
+            
             else:
-                await settings.collectionmusic.update({'guild_id': ctx.guild.id}, {'$push': {'Queue': tracks[0]}})
+                if not len(Queue["Queue"]) > 25:
+                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {song_title:song_id}}})
 
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if not player.is_connected:
-            await ctx.invoke(self.connect_)
-
-        await ctx.send(f'Added {str(tracks[0])} to the queue.')
-        await player.play(tracks[0])
-
-
-
+                else:
+                    await ctx.send("คิวห้ามเกิน 25")
+        else:        
+            return await ctx.send('Could not find any songs with that query.')
 def setup(bot):
     bot.add_cog(Music(bot))
