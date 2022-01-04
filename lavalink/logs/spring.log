@@ -1228,3 +1228,44 @@ java.nio.channels.ClosedChannelException: null
 2022-01-04 19:50:47.539  INFO 14080 --- [XNIO-1 task-40] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58632
 2022-01-04 19:50:47.542  INFO 14080 --- [XNIO-1 task-40] lavalink.server.io.SocketServer          : Connection successfully established
 2022-01-04 19:50:47.542  WARN 14080 --- [XNIO-1 task-40] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:52:46.498  INFO 14080 --- [XNIO-1 task-41] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52576
+2022-01-04 19:52:46.501  INFO 14080 --- [XNIO-1 task-41] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:52:46.501  WARN 14080 --- [XNIO-1 task-41] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:53:03.275  INFO 14080 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58632 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:53:03.276  INFO 14080 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:53:04.293  INFO 14080 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52576 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:53:04.294  INFO 14080 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:53:12.606  INFO 14080 --- [XNIO-1 task-42] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52691
+2022-01-04 19:53:12.609  INFO 14080 --- [XNIO-1 task-42] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:53:12.609  WARN 14080 --- [XNIO-1 task-42] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:53:39.336  INFO 14080 --- [XNIO-1 task-43] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:53:39.988  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:53:41.652  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "6267c65a3a1a8cd35d2cd3529bd7d568", "event": {"token": "5982d14ece129f28", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 19:55:17.619  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52691 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:55:17.619  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:55:22.715  INFO 14080 --- [XNIO-1 task-45] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64881
+2022-01-04 19:55:22.717  INFO 14080 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:55:22.718  WARN 14080 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:55:48.177  INFO 14080 --- [XNIO-1 task-46] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:55:48.642  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:55:49.857  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}
+2022-01-04 19:55:50.338  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "89d95a00d3c459fce3080be1383a12de", "event": {"token": "5982d14ece129f28", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 20:11:00.965  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64881 -- CloseStatus[code=1006, reason=]
+2022-01-04 20:11:00.971  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 20:11:10.393  INFO 14080 --- [XNIO-1 task-48] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53731
+2022-01-04 20:11:10.396  INFO 14080 --- [XNIO-1 task-48] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 20:11:10.396  WARN 14080 --- [XNIO-1 task-48] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 20:13:00.079  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53731 -- CloseStatus[code=1006, reason=]
+2022-01-04 20:13:00.080  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 20:13:04.148  INFO 14080 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50282
+2022-01-04 20:13:04.153  INFO 14080 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 20:13:04.153  WARN 14080 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 20:25:33.692  INFO 14080 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50282 -- CloseStatus[code=1006, reason=]
+2022-01-04 20:25:33.693  INFO 14080 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 20:25:41.518  INFO 14080 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60011
+2022-01-04 20:25:41.520  INFO 14080 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 20:25:41.520  WARN 14080 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 20:26:00.892  INFO 14080 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 20:26:01.489  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 20:26:02.471  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "9f038c64f2dd57c5f5d0af8587e2625f", "event": {"token": "7606b8375600e9b3", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 20:26:02.710  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "noReplace": false, "startTime": "0"}

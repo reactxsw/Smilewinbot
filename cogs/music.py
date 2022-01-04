@@ -86,7 +86,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     async def build_track(self,ctx):
         pass
-    async def build_embed(title,duration,thumbnail,next):
+
+    async def build_embed(title,duration,thumbnail,next,author,requester):
         embed = discord.Embed(
             title = "Smilewin Music",
             description = f"Now playing {title}",
@@ -94,7 +95,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         )
         embed.set_thumbnail(url=thumbnail)
         embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
-        embed.add_field(name='Requested By', value="")
+        embed.add_field(name='Requested By', value=requester.mention)
         embed.add_field(name='Next', value=next)
         return embed
 
@@ -107,19 +108,20 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             song_title = tracks[0].title
             song_duration = tracks[0].duration
             song_thumbnail = tracks[0].thumb
+            song_author = tracks[0].author
 
             Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
             if Queue is None and not player.is_playing:
 
                 data = {
                     "guild_id":ctx.guild.id,
-                    "Queue":[{song_title:song_id}]
+                    "Queue":[{"song_title":song_title,"song_id":song_id}]
                 }
                 await settings.collectionmusic.insert_one(data)
                 player = self.bot.wavelink.get_player(ctx.guild.id)
                 if not player.is_connected:
                     await ctx.invoke(self.connect_)
-                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-")
+                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-",song_author,ctx.author)
                 await ctx.send(embed=embed)
                 await ctx.send(f'Added {song_title} to the queue.')
                 await player.play(tracks[0])
