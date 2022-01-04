@@ -1,3 +1,4 @@
+from discord import colour, embeds
 import settings
 from discord.ext import commands
 from utils.languageembed import languageEmbed
@@ -5,6 +6,9 @@ import discord
 import wavelink
 import settings
 import re
+import datetime
+
+
 
 class Music(commands.Cog, wavelink.WavelinkMixin):
 
@@ -27,10 +31,10 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             "Node_1": {
                 "host": settings.lavalinkip,
                 "port": settings.lavalinkport,
-                "rest_uri": f"http://{settings.lavalinkip}:{settings.lavalinkport}",
+                "rest_uri": f"http://"+f"{settings.lavalinkip}:{settings.lavalinkport}",
                 "password": settings.lavalinkpass,
                 "identifier": f"{settings.lavalinkindentifier}_1",
-                "region": settings.lavalinkregion,
+                "region": settings.lavalinkregion
             }
         }
 
@@ -82,6 +86,17 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     async def build_track(self,ctx):
         pass
+    async def build_embed(title,duration,thumbnail,next):
+        embed = discord.Embed(
+            title = "Smilewin Music",
+            description = f"Now playing {title}",
+            colour = 0xFED000
+        )
+        embed.set_thumbnail(url=thumbnail)
+        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
+        embed.add_field(name='Requested By', value="")
+        embed.add_field(name='Next', value=next)
+        return embed
 
     @commands.command()
     async def play(self, ctx, *, query: str):
@@ -90,6 +105,9 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         if tracks:
             song_id = tracks[0].id
             song_title = tracks[0].title
+            song_duration = tracks[0].duration
+            song_thumbnail = tracks[0].thumb
+
             Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
             if Queue is None and not player.is_playing:
 
@@ -101,7 +119,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 player = self.bot.wavelink.get_player(ctx.guild.id)
                 if not player.is_connected:
                     await ctx.invoke(self.connect_)
-
+                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-")
+                await ctx.send(embed=embed)
                 await ctx.send(f'Added {song_title} to the queue.')
                 await player.play(tracks[0])
             

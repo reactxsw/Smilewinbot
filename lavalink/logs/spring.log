@@ -667,3 +667,564 @@
 2022-01-04 15:24:37.786  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: black and white
 2022-01-04 15:24:51.116  INFO 43784 --- [XNIO-1 task-35] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:hate will never win"
 2022-01-04 15:24:51.763  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: hate will never win
+2022-01-04 18:24:43.950  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62172 -- CloseStatus[code=1006, reason=]
+2022-01-04 18:24:43.959  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 18:24:53.114  INFO 43784 --- [XNIO-1 task-38] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54731
+2022-01-04 18:24:53.127  INFO 43784 --- [XNIO-1 task-38] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:24:53.128  WARN 43784 --- [XNIO-1 task-38] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:25:07.005  INFO 43784 --- [XNIO-1 task-37] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:25:07.757  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:25:54.653  INFO 43784 --- [XNIO-1 task-41] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58674
+2022-01-04 18:25:54.655  INFO 43784 --- [XNIO-1 task-41] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:25:54.656  WARN 43784 --- [XNIO-1 task-41] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:26:06.545  INFO 43784 --- [XNIO-1 task-40] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:26:06.548  INFO 43784 --- [XNIO-1 task-42] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:26:07.018  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:26:07.529  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:26:43.820  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58674 -- CloseStatus[code=1006, reason=]
+2022-01-04 18:26:43.821  INFO 43784 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 18:26:48.172  INFO 43784 --- [XNIO-1 task-45] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:51698
+2022-01-04 18:26:48.174  INFO 43784 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:26:48.174  WARN 43784 --- [XNIO-1 task-45] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:26:55.026  INFO 43784 --- [XNIO-1 task-46] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:26:55.034  INFO 43784 --- [XNIO-1 task-47] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:26:55.485  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:26:55.937  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:27:34.524  INFO 43784 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54731 -- CloseStatus[code=1006, reason=]
+2022-01-04 18:27:34.524  INFO 43784 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 18:27:36.902  INFO 43784 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61809
+2022-01-04 18:27:36.904  INFO 43784 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:27:36.905  WARN 43784 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:27:44.916  INFO 43784 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:27:44.920  INFO 43784 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:27:45.427  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:27:45.815  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:28:06.842  INFO 43784 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:28:06.915  INFO 43784 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:28:07.251  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:28:07.662  INFO 43784 --- [lava-daemon-pool-info-loader-2-thread-2] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 18:28:43.431  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:61809 -- CloseStatus[code=1006, reason=]
+2022-01-04 18:28:43.432  INFO 43784 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 18:28:50.779  INFO 14080 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.4
+	Build:          1257
+	Build time:     26.10.2021 14:18:37 UTC
+	Branch          master
+	Commit:         a364833
+	Commit time:    26.10.2021 14:15:20 UTC
+	JVM:            16.0.2
+	Lavaplayer      1.3.96-original
+
+2022-01-04 18:28:50.872  INFO 14080 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 14080 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
+2022-01-04 18:28:50.873  INFO 14080 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2022-01-04 18:28:51.045  WARN 14080 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2022-01-04 18:28:52.015  WARN 14080 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2022-01-04 18:28:52.049  INFO 14080 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2022-01-04 18:28:52.049  INFO 14080 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1130 ms
+2022-01-04 18:28:52.389  WARN 14080 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2022-01-04 18:28:52.686  INFO 14080 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2022-01-04 18:28:52.902  INFO 14080 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
+2022-01-04 18:28:52.902  WARN 14080 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
+2022-01-04 18:28:53.165  INFO 14080 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-04 18:28:53.460  INFO 14080 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2022-01-04 18:28:53.468  INFO 14080 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2022-01-04 18:28:53.527  INFO 14080 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
+2022-01-04 18:28:53.530  INFO 14080 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.213 seconds (JVM running for 3.645)
+2022-01-04 18:28:53.532  INFO 14080 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2022-01-04 18:28:57.577  INFO 14080 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-04 18:28:57.578  INFO 14080 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-04 18:28:57.589  INFO 14080 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
+2022-01-04 18:28:57.613  INFO 14080 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58659
+2022-01-04 18:28:57.682  INFO 14080 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:28:57.682  WARN 14080 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:29:03.697  INFO 14080 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58677
+2022-01-04 18:29:03.700  INFO 14080 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 18:29:03.700  WARN 14080 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 18:29:13.305  INFO 14080 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:29:13.305  INFO 14080 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 18:30:26.513  INFO 14080 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52424
+2022-01-04 18:30:12.576  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58677 -- CloseStatus[code=1006, reason=]
+2022-01-04 18:33:07.883  INFO 14080 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52746
+2022-01-04 19:03:49.135  INFO 14080 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62524
+2022-01-04 18:31:23.569  INFO 14080 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57888
+2022-01-04 19:04:37.330  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:04:37.335  INFO 14080 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:04:37.335  INFO 14080 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:04:37.336  INFO 14080 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:04:37.336  WARN 14080 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:04:37.337  WARN 14080 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:04:37.340  WARN 14080 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:04:37.339  INFO 14080 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:04:37.341  WARN 14080 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:04:37.343 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.344 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.345 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.345 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.346 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.346 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.347 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.349 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.350 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.351 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.354 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.355 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.356 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.357 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.358 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.359 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.360 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.361 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.362 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.363 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.364 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.365 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.366 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.367 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.369 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.371 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.372 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.373 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.374 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.375 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.376 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.380 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.381 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.382 ERROR 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Error
+
+java.nio.channels.ClosedChannelException: null
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel.flush(AbstractFramedStreamSinkChannel.java:347) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:413) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners$14.handleEvent(ChannelListeners.java:409) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.ChannelListeners.invokeChannelListener(ChannelListeners.java:92) ~[xnio-api-3.3.8.Final.jar!/:3.3.8.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedStreamSinkChannel$1.run(AbstractFramedStreamSinkChannel.java:214) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at io.undertow.server.protocol.framed.AbstractFramedChannel$1.run(AbstractFramedChannel.java:137) ~[undertow-core-2.0.26.Final.jar!/:2.0.26.Final]
+	at org.xnio.nio.WorkerThread.safeRun(WorkerThread.java:582) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:466) ~[xnio-nio-3.3.8.Final.jar!/:3.3.8.Final]
+
+2022-01-04 19:04:37.387  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58659 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:04:37.387  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:04:38.234  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:04:38.725  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:04:42.594  INFO 14080 --- [XNIO-1 task-13] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53045
+2022-01-04 19:04:42.595  INFO 14080 --- [XNIO-1 task-13] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:04:42.596  WARN 14080 --- [XNIO-1 task-13] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:04:48.965  INFO 14080 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:04:49.406  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:05:39.635  INFO 14080 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56439
+2022-01-04 19:05:39.637  INFO 14080 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:05:39.637  WARN 14080 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:05:46.627  INFO 14080 --- [XNIO-1 task-17] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:05:46.632  INFO 14080 --- [XNIO-1 task-18] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:05:47.022  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:05:47.459  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:06:11.837  INFO 14080 --- [XNIO-1 task-22] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:06:11.837  INFO 14080 --- [XNIO-1 task-21] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:06:12.350  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:06:12.716  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:06:24.704  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53045 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:06:24.704  INFO 14080 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:06:26.554  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56439 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:06:26.554  INFO 14080 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:06:35.888  INFO 14080 --- [XNIO-1 task-25] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:51307
+2022-01-04 19:06:35.898  INFO 14080 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:06:35.899  WARN 14080 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:07:03.552  INFO 14080 --- [XNIO-1 task-26] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:07:03.996  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:07:58.880  INFO 14080 --- [XNIO-1 task-28] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:07:59.332  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:08:31.321  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:51307 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:08:31.321  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:08:39.535  INFO 14080 --- [XNIO-1 task-30] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53532
+2022-01-04 19:08:39.537  INFO 14080 --- [XNIO-1 task-30] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:08:39.537  WARN 14080 --- [XNIO-1 task-30] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:08:49.560  INFO 14080 --- [XNIO-1 task-31] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:08:50.033  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:08:51.656  INFO 14080 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "079705811b0043145208618cf2a8148c", "event": {"token": "d63f3efa681461ad", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 19:10:04.308  INFO 14080 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53532 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:10:04.309  INFO 14080 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:10:14.084  INFO 14080 --- [XNIO-1 task-33] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56521
+2022-01-04 19:10:14.087  INFO 14080 --- [XNIO-1 task-33] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:10:14.087  WARN 14080 --- [XNIO-1 task-33] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-04 19:11:09.792  INFO 14080 --- [XNIO-1 task-34] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:11:10.269  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:11:11.318  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "414521a900b28844a72a512fe3038e1e", "event": {"token": "d63f3efa681461ad", "guild_id": "924999182039801876", "endpoint": "singapore3547.discord.media:443"}}
+2022-01-04 19:48:23.671  INFO 14080 --- [XNIO-1 task-36] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:48:24.291  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:49:22.267  INFO 14080 --- [XNIO-1 task-38] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10 bands"
+2022-01-04 19:49:22.670  INFO 14080 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10 bands
+2022-01-04 19:50:30.212  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56521 -- CloseStatus[code=1006, reason=]
+2022-01-04 19:50:30.212  INFO 14080 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-04 19:50:47.539  INFO 14080 --- [XNIO-1 task-40] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58632
+2022-01-04 19:50:47.542  INFO 14080 --- [XNIO-1 task-40] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-04 19:50:47.542  WARN 14080 --- [XNIO-1 task-40] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
