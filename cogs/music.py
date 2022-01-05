@@ -69,37 +69,72 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @commands.command()
     async def stop(self,ctx):
-        pass
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        await settings.collectionmusic.delete_one({"guild_id":ctx.guild.id})
+        await player.destroy()
 
     @commands.command()
     async def pause(self,ctx):
-        pass
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        if not player.is_paused:
+            await player.set_pause(True)
+            await ctx.send("Paused")
+        else:
+            await ctx.send(f"Not playing use `{settings.COMMAND_PREFIX} resume` to resume")
 
     @commands.command()
     async def resume(self,ctx):
-        pass
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        if player.is_paused:
+            await player.set_pause(False)
+            await ctx.send("Resumed")
+        else:
+            await ctx.send(f"Song has not been paused. Use `{settings.COMMAND_PREFIX} pause` to pause the song")
 
     @commands.command()
     async def loop(self,ctx):
-        pass
+        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if not server["mode"] == "Loop":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Loop"}})
+            await ctx.send("Loop mode activated")
+        
+        elif server["mode"] == "Loop":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Default"}})
+            await ctx.send("Loop mode deactivated")
+    
+    @commands.command()
+    async def repeat(self,ctx):
+        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if not server["mode"] == "Repeat":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Repeat"}})
+            await ctx.send("Repeat mode activated")
+        
+        elif server["mode"] == "Repeat":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Default"}})
+            await ctx.send("Repeat mode deactivated")
     
     async def do_next(self,guild_id,player):
-        await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
         server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if server["mode"] == "Default":
+        if server["Mode"] == "Default":
             if server["Queue"] == []:
                 return
 
             else:
+                await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
+                server["Queue"] = server["Queue"][1:]
                 Song = server["Queue"][0]["song_id"]
                 tracks = await self.bot.wavelink.build_track(Song)
                 await player.play(tracks)
         
-        if server["mode"] == "Repeat":
-            pass
+        elif server["Mode"] == "Repeat":
+            Song = server["Queue"][0]["song_id"]
+            tracks = await self.bot.wavelink.build_track(Song)
+            await player.play(tracks)
 
-        if server["mode"] == "Loop":
+        elif server["Mode"] == "Loop":
             pass
+            
+
 
 
     async def build_embed(title,duration,thumbnail,next,author,requester):
@@ -115,9 +150,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         return embed
 
     @commands.command()
-    async def play(self, ctx, *, query: str):
-        tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
+    async def play(self, ctx, *, query:str = None):
         player = self.bot.wavelink.get_player(ctx.guild.id)
+        if query == None:
+            await ctx.send("Please specify a song to play")
+            return
+        tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
         if tracks:
             song_id = tracks[0].id
             song_title = tracks[0].title
