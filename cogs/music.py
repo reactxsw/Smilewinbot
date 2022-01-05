@@ -86,12 +86,11 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def do_next(self,guild_id,player):
         await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
         Queue = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if len(Queue["Queue"]) == 0:
+        if Queue["Queue"] == []:
             return
 
         else:
-            Song = Queue["Queue"][1]["song_id"]
-            print(Song)
+            Song = Queue["Queue"][0]["song_id"]
             tracks = await self.bot.wavelink.build_track(Song)
             await player.play(tracks)
 
