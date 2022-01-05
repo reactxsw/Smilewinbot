@@ -58,7 +58,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 await self.do_next(guild_id,player,server["Mode"],track)
             
             else:
-                pass
+                server["Queue"].index("")
     
     async def do_next(self,guild_id,player,mode,tracks=None):
         server = await settings.collectionmusic.find_one({"guild_id":guild_id})
@@ -116,22 +116,22 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def loop(self,ctx):
         server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
         if not server["Mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Loop"}})
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Loop"}})
             await ctx.send("Loop mode activated")
         
-        elif server["mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Default"}})
+        elif server["Mode"] == "Loop":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
             await ctx.send("Loop mode deactivated")
         
     @commands.command()
     async def repeat(self,ctx):
         server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
         if not server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Repeat"}})
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Repeat"}})
             await ctx.send("Repeat mode activated")
         
         elif server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'mode': "Default"}})
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
             await ctx.send("Repeat mode deactivated")
 
     async def build_embed(title,duration,thumbnail,next,author,requester):
