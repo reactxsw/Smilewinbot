@@ -156,3 +156,10 @@
 2022-01-04 19:53:40: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
 2022-01-04 21:01:46: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
 2022-01-04 21:02:20: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-05 20:41:58: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r setlanguagethai,command: None}
+2022-01-05 20:50:24: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r slim,command: slim}
+2022-01-05 20:55:19: [REACT#1120 | 394447088970104833] in [812237174111076362 | REACT's server]{Error:NoneType: None,userinput: !r repeat,command: repeat}
+2022-01-05 20:55:37: [REACT#1120 | 394447088970104833] in [812237174111076362 | REACT's server]{Error:NoneType: None,userinput: !r repeat,command: repeat}
+2022-01-05 20:56:15: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r setwebhook,command: setwebhook}
+2022-01-05 20:57:18: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r anon,command: anon}
+2022-01-05 20:57:56: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r anon (ว่าไง),command: anon}
