@@ -85,14 +85,22 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     
     async def do_next(self,guild_id,player):
         await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-        Queue = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if Queue["Queue"] == []:
-            return
+        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
+        if server["mode"] == "Default":
+            if server["Queue"] == []:
+                return
 
-        else:
-            Song = Queue["Queue"][0]["song_id"]
-            tracks = await self.bot.wavelink.build_track(Song)
-            await player.play(tracks)
+            else:
+                Song = server["Queue"][0]["song_id"]
+                tracks = await self.bot.wavelink.build_track(Song)
+                await player.play(tracks)
+        
+        if server["mode"] == "Repeat":
+            pass
+
+        if server["mode"] == "Loop":
+            pass
+
 
     async def build_embed(title,duration,thumbnail,next,author,requester):
         embed = discord.Embed(
@@ -122,6 +130,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
                 data = {
                     "guild_id":ctx.guild.id,
+                    "Mode":"Default",
                     "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
                 }
                 await settings.collectionmusic.insert_one(data)
