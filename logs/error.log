@@ -163,3 +163,10 @@
 2022-01-05 20:56:15: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r setwebhook,command: setwebhook}
 2022-01-05 20:57:18: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r anon,command: anon}
 2022-01-05 20:57:56: [hurricane#9578 | 867971739106295810] in [926896377332633660 | ทดลอง]{Error:NoneType: None,userinput: !r anon (ว่าไง),command: anon}
+2022-01-06 10:49:04: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-06 10:51:12: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-06 10:52:51: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-06 11:16:50: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 11:18:54: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 11:19:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 11:36:59: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}

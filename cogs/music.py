@@ -60,6 +60,9 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             else:
                 server["Queue"].index("")
     
+    async def loop():
+        pass
+
     async def do_next(self,guild_id,player,mode,tracks=None):
         server = await settings.collectionmusic.find_one({"guild_id":guild_id})
         if mode == "Default":
@@ -134,7 +137,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
             await ctx.send("Repeat mode deactivated")
 
-    async def build_embed(title,duration,thumbnail,next,author,requester):
+    async def build_embed(title,duration,thumbnail,next,author,requester,mode):
         embed = discord.Embed(
             title = "Smilewin Music",
             description = f"Now playing {title}",
@@ -143,7 +146,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         embed.set_thumbnail(url=thumbnail)
         embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
         embed.add_field(name='Requested By', value=requester.mention)
-        embed.add_field(name='Next', value=next)
+        embed.add_field(name='Next', value="-" if next is None else next)
+        embed.set_footer(text=f"┗Requested by {requester}")
         return embed
 
     @commands.command()
@@ -159,25 +163,37 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
             Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
             if Queue is None and not player.is_playing:
-
+                embed = discord.Embed(
+                    title = "Searching ..",
+                    colour = 0xFED000
+                )
+                message = await ctx.send(embed=embed)
                 data = {
                     "guild_id":ctx.guild.id,
                     "Mode":"Default",
-                    "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
+                    "Request_channel":ctx.channel.id,
+                    "Message_id":message.id,
+                    "Queue":[{
+                        "position":1,
+                        "song_title":song_title,
+                        "song_id":song_id,
+                        "requester":ctx.author.id}]
                 }
                 await settings.collectionmusic.insert_one(data)
                 player = self.bot.wavelink.get_player(ctx.guild.id)
                 if not player.is_connected:
                     await ctx.invoke(self.connect_)
-                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-",song_author,ctx.author)
-                await ctx.send(embed=embed)
-                await ctx.send(f'Added {song_title} to the queue.')
+                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,None,song_author,ctx.author,"Default")
+                await message.edit(embed=embed)
                 await player.play(tracks[0])
             
             else:
                 if not len(Queue["Queue"]) > 20:
-                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-
+                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"position":len(Queue["Queue"])+1,"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
+                    if len(Queue["Queue"]) == 1:
+                        message = await self.bot.get_channel(Queue["Request_channel"]).fetch_message(Queue["Message_id"]) # the message's channel
+                        embed = await Music.build_embed(Queue["Queue"][0]["song_title"],song_duration,song_thumbnail,song_title,song_author,ctx.author,Queue["Mode"])
+                        await message.edit(embed=embed)
                 else:
                     await ctx.send("คิวห้ามเกิน 20")
         else:        
