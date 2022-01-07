@@ -1,6 +1,5 @@
 from discord import colour, embeds
 from wavelink.node import Node
-from wavelink.player import Track
 import settings
 from discord.ext import commands
 from utils.languageembed import languageEmbed
@@ -33,7 +32,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             "Node_1": {
                 "host": settings.lavalinkip,
                 "port": settings.lavalinkport,
-                "rest_uri": f"http://{settings.lavalinkip}:{settings.lavalinkport}",
+                "rest_uri": f"http://"+f"{settings.lavalinkip}:{settings.lavalinkport}",
                 "password": settings.lavalinkpass,
                 "identifier": f"{settings.lavalinkindentifier}_1",
                 "region": settings.lavalinkregion
@@ -51,33 +50,23 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
         guild_id = payload.player.guild_id
         player = payload.player
-        track = payload.track
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
         if payload.reason == "FINISHED":
-            if server["Mode"] != "Loop":
-                await self.do_next(guild_id,player,server["Mode"],track)
-            
-            else:
-                server["Queue"].index("")
+            print(payload.player.channel_id)
+            await self.do_next(guild_id,player)
     
-    async def loop():
-        pass
-
-    async def do_next(self,guild_id,player,mode,tracks=None):
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if mode == "Default":
-            await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-            if server["Queue"] == []:
-                return
-
+    @commands.command()
+    async def volmusic(self, ctx, volume : int):
+            default_volume = 100    
+            player = self.bot.wavelink.get_player(ctx.guild.id)
+            if isinstance(volume, int):
+                await player.set_volume(int(volume))
+                embed = discord.Embed(title=f'Successfully, Set volume into `{volume}`',color=discord.Colour.green())
+                embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
+                emoji = '\N{THUMBS UP SIGN}'
+                msg = await ctx.send(embed=embed)
+                await msg.add_reaction(emoji)
             else:
-                Song = server["Queue"][0]["song_id"]
-                tracks = await self.bot.wavelink.build_track(Song)
-                await player.play(tracks)
-        
-        if mode == "Repeat":
-            tracks.play(tracks)
-
+                await ctx.send("Please input only numbers")
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         if not channel:
@@ -93,51 +82,40 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @commands.command()
     async def stop(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        await settings.collectionmusic.delete_one({"guild_id":ctx.guild.id})
-        await player.destroy()
+        pass
 
     @commands.command()
     async def pause(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if not player.is_paused:
-            await player.set_pause(True)
-            await ctx.send("Paused")
-        else:
-            await ctx.send(f"Not playing use `{settings.COMMAND_PREFIX} resume` to resume")
+        pass
 
     @commands.command()
     async def resume(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if player.is_paused:
-            await player.set_pause(False)
-            await ctx.send("Resumed")
-        else:
-            await ctx.send(f"Song has not been paused. Use `{settings.COMMAND_PREFIX} pause` to pause the song")
+        pass
 
     @commands.command()
     async def loop(self,ctx):
-        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-        if not server["Mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Loop"}})
-            await ctx.send("Loop mode activated")
-        
-        elif server["Mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
-            await ctx.send("Loop mode deactivated")
-        
-    @commands.command()
-    async def repeat(self,ctx):
-        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-        if not server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Repeat"}})
-            await ctx.send("Repeat mode activated")
-        
-        elif server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
-            await ctx.send("Repeat mode deactivated")
+        pass
+    
+    async def do_next(self,guild_id,player):
+        await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
+        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
+        if server["mode"] == "Default":
+            if server["Queue"] == []:
+                return
 
-    async def build_embed(title,duration,thumbnail,next,author,requester,mode):
+            else:
+                Song = server["Queue"][0]["song_id"]
+                tracks = await self.bot.wavelink.build_track(Song)
+                await player.play(tracks)
+        
+        if server["mode"] == "Repeat":
+            pass
+
+        if server["mode"] == "Loop":
+            pass
+
+
+    async def build_embed(title,duration,thumbnail,next,author,requester):
         embed = discord.Embed(
             title = "Smilewin Music",
             description = f"Now playing {title}",
@@ -146,8 +124,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         embed.set_thumbnail(url=thumbnail)
         embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
         embed.add_field(name='Requested By', value=requester.mention)
-        embed.add_field(name='Next', value="-" if next is None else next)
-        embed.set_footer(text=f"┗Requested by {requester}")
+        embed.add_field(name='Next', value=next)
         return embed
 
     @commands.command()
@@ -163,41 +140,28 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
             Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
             if Queue is None and not player.is_playing:
-                embed = discord.Embed(
-                    title = "Searching ..",
-                    colour = 0xFED000
-                )
-                message = await ctx.send(embed=embed)
+
                 data = {
                     "guild_id":ctx.guild.id,
                     "Mode":"Default",
-                    "Request_channel":ctx.channel.id,
-                    "Message_id":message.id,
-                    "Queue":[{
-                        "position":1,
-                        "song_title":song_title,
-                        "song_id":song_id,
-                        "requester":ctx.author.id}]
+                    "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
                 }
                 await settings.collectionmusic.insert_one(data)
                 player = self.bot.wavelink.get_player(ctx.guild.id)
                 if not player.is_connected:
                     await ctx.invoke(self.connect_)
-                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,None,song_author,ctx.author,"Default")
-                await message.edit(embed=embed)
+                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-",song_author,ctx.author)
+                await ctx.send(embed=embed)
+                await ctx.send(f'Added {song_title} to the queue.')
                 await player.play(tracks[0])
             
             else:
-                if not len(Queue["Queue"]) > 20:
-                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"position":len(Queue["Queue"])+1,"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-                    if len(Queue["Queue"]) == 1:
-                        message = await self.bot.get_channel(Queue["Request_channel"]).fetch_message(Queue["Message_id"]) # the message's channel
-                        embed = await Music.build_embed(Queue["Queue"][0]["song_title"],song_duration,song_thumbnail,song_title,song_author,ctx.author,Queue["Mode"])
-                        await message.edit(embed=embed)
+                if not len(Queue["Queue"]) > 25:
+                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
+
                 else:
-                    await ctx.send("คิวห้ามเกิน 20")
+                    await ctx.send("คิวห้ามเกิน 25")
         else:        
             return await ctx.send('Could not find any songs with that query.')
-
 def setup(bot):
     bot.add_cog(Music(bot))
