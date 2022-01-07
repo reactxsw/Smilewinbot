@@ -2,6 +2,7 @@ from typing import Text
 import discord
 import datetime
 from discord import user
+from cogs.music import Music
 import settings
 from discord.ext import commands
 
@@ -60,6 +61,11 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_voice_state_update(self,member, before, after):
         await self.bot.wait_until_ready()
+        #if the bot was disconnected
+        if member.id == self.bot.user.id and after.channel == None:
+            await Music.disconnect_handler(Music(self.bot),before.channel.guild.id)
+
+        #voice levels
         languageserver = await settings.collectionlanguage.find_one({"guild_id":member.guild.id})
         if not languageserver is None:
             server_language = languageserver["Language"]

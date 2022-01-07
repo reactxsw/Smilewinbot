@@ -1,14 +1,14 @@
 from discord import colour, embeds
 from wavelink.node import Node
 import settings
-from discord.ext import commands
+from discord.ext import commands, tasks
 from utils.languageembed import languageEmbed
 import discord
 import wavelink
 import settings
 import re
 import datetime
-
+import asyncio
 
 
 class Music(commands.Cog, wavelink.WavelinkMixin):
@@ -66,6 +66,25 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         await ctx.send(f'Connecting to **`{channel.name}`**')
         await ctx.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
         await player.connect(channel.id)
+    
+    @commands.command()
+    async def skip(self,ctx):
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        data = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if data["Queue"] == []:
+            await ctx.send("Queue is empty")
+        else:
+            data["Queue"] = data["Queue"][1:]
+            await settings.collectionmusic.update_one({"guild_id": ctx.guild.id}, {'$pop': {'Queue': -1}})
+            if data["Queue"] == []:
+                await player.stop()
+                await self.auto_disconnect(player)
+            else:
+                await player.stop()
+                Song = data["Queue"][0]["song_id"]
+                tracks = await self.bot.wavelink.build_track(Song)
+                await player.play(tracks)
+                await ctx.send("Skipped")
 
     @commands.command()
     async def stop(self,ctx):
@@ -116,12 +135,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def do_next(self,guild_id,player):
         server = await settings.collectionmusic.find_one({"guild_id":guild_id})
         if server["Mode"] == "Default":
+            await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
+            server["Queue"] = server["Queue"][1:]
             if server["Queue"] == []:
-                return
+                await self.auto_disconnect(player)
 
             else:
-                await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-                server["Queue"] = server["Queue"][1:]
                 Song = server["Queue"][0]["song_id"]
                 tracks = await self.bot.wavelink.build_track(Song)
                 await player.play(tracks)
@@ -153,8 +172,25 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def play(self, ctx, *, query:str = None):
         player = self.bot.wavelink.get_player(ctx.guild.id)
         if query == None:
-            await ctx.send("Please specify a song to play")
-            return
+            if not player.is_playing:
+                _data = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+                if _data != None and _data["Queue"] != []:
+                    Song = _data["Queue"][0]["song_id"]
+                    tracks = await self.bot.wavelink.build_track(Song)
+                    if player.is_connected:
+                        await player.play(tracks)
+                        await ctx.send("Resuming")
+                    else:
+                        await ctx.invoke(self.connect_)
+                        await player.play(tracks)
+                        await ctx.send("Reconnected and playing")
+                    return
+                else:
+                    await ctx.send("Please specify a song to play")
+                    return
+            else:
+                await ctx.send("Please specify a song to play")
+                return
         tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
         if tracks:
             song_id = tracks[0].id
@@ -183,10 +219,42 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             else:
                 if not len(Queue["Queue"]) > 25:
                     await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-
+                    if not player.is_playing:
+                        if Queue["Queue"] == []:
+                            if player.is_connected:
+                                await player.play(tracks[0])
+                            else:
+                                await ctx.invoke(self.connect_)
+                                await player.play(tracks[0])
+                        else:
+                            Song = Queue["Queue"][0]["song_id"]
+                            tracks = await self.bot.wavelink.build_track(Song)
+                            if player.is_connected:
+                                await player.play(tracks)
+                            else:
+                                await ctx.invoke(self.connect_)
+                                await player.play(tracks)
+                    await ctx.send(f'Added {song_title} to the queue.')
                 else:
                     await ctx.send("คิวห้ามเกิน 25")
         else:        
             return await ctx.send('Could not find any songs with that query.')
+    
+    #auto disconnect for 5 minute after a bot is not playing
+    async def auto_disconnect(self,player):
+        while player.is_playing: #Checks if voice is playing
+            await asyncio.sleep(1) #While it's playing it sleeps for 1 second
+        else:
+            await asyncio.sleep(30) #If it's not playing it waits 30 seconds
+            while player.is_playing: #and checks once again if the bot is not playing
+                break #if it's playing it breaks
+            else:
+                await player.destroy() #if not it disconnects
+
+    async def disconnect_handler(self, guild_id):
+        player = self.bot.wavelink.get_player(guild_id)
+        await player.stop()
+        await settings.collectionmusic.delete_one({"guild_id": guild_id})
+
 def setup(bot):
     bot.add_cog(Music(bot))
