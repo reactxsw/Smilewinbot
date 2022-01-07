@@ -1,5 +1,7 @@
 import discord
 import datetime
+
+from motor.metaprogramming import asynchronize
 import settings
 from discord.ext import commands
 import wavelink
@@ -43,6 +45,34 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node: wavelink.Node):
         print(f"Node {node.identifier} is ready")
+
+    async def do_next(self,guild_id,player,mode,tracks=None):
+        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
+        if mode == "Default":
+            await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
+            if server["Queue"] == []:
+                return
+
+            else:
+                Song = server["Queue"][0]["song_id"]
+                tracks = await self.bot.wavelink.build_track(Song)
+                await player.play(tracks)
+    
+        if mode == "Repeat":
+            tracks.play(tracks)
+    
+    @wavelink.WavelinkMixin.listener()
+    async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
+        guild_id = payload.player.guild_id
+        player = payload.player
+        track = payload.track
+        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
+        if payload.reason == "FINISHED":
+            if server["Mode"] != "Loop":
+                await self.do_next(guild_id,player,server["Mode"],track)
+            
+            else:
+                server["Queue"].index("")
 
     async def setnewserver(self,ctx):
         newserver = {"guild_id":ctx.guild.id,
@@ -114,7 +144,67 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         embed.set_footer(text=f"┗Requested by {requester}")
 
         return embed
+
+    @commands.command()
+    async def stop(self,ctx):
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        await settings.collectionmusic.delete_one({"guild_id":ctx.guild.id})
+        await player.destroy()
+
+    @commands.command()
+    async def pause(self,ctx):
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        if not player.is_paused:
+            await player.set_pause(True)
+            await ctx.send("Paused")
+        else:
+            await ctx.send(f"Not playing use `{settings.COMMAND_PREFIX} resume` to resume")
+
+    @commands.command()
+    async def resume(self,ctx):
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        if player.is_paused:
+            await player.set_pause(False)
+            await ctx.send("Resumed")
+        else:
+            await ctx.send(f"Song has not been paused. Use `{settings.COMMAND_PREFIX} pause` to pause the song")
+
+    @commands.command()
+    async def loop(self,ctx):
+        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if not server["Mode"] == "Loop":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Loop"}})
+            await ctx.send("Loop mode activated")
         
+        elif server["Mode"] == "Loop":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
+            await ctx.send("Loop mode deactivated")
+        
+    @commands.command()
+    async def repeat(self,ctx):
+        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
+        if not server["Mode"] == "Repeat":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Repeat"}})
+            await ctx.send("Repeat mode activated")
+        
+        elif server["Mode"] == "Repeat":
+            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
+            await ctx.send("Repeat mode deactivated")
+
+    @commands.command()
+    async def volmusic(self, ctx, volume : int):
+        default_volume = 100    
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        if isinstance(volume, int):
+            await player.set_volume(int(volume))
+            embed = discord.Embed(title=f'Successfully, Set volume into `{volume}`',color=discord.Colour.green())
+            embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
+            emoji = '\N{THUMBS UP SIGN}'
+            msg = await ctx.send(embed=embed)
+            await msg.add_reaction(emoji)
+        else:
+            await ctx.send("Please input only numbers")
+
     @commands.command(name='connect')
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         if not channel:
@@ -193,6 +283,9 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         else:
             await ctx.send('No channel to join. Please either specify a valid channel or join one.')
 
+    
+    async def test(self):
+        print("555")
     @commands.command()
     async def musicsetup(self,ctx):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -208,7 +301,9 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             embed.set_footer(text=f"server : {ctx.guild.name}")
             embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed , components=[
                 [
-                    Button(label=" ⏯ ",style=ButtonStyle.green,custom_id="pause_stop",disabled = True),
+                    self.bot.components_manager.add_callback(
+                        Button(label=" ⏯ ",style=ButtonStyle.green,custom_id="pause_stop",disabled = True), self.test),
+
                     Button(label=" ⏭ ",style=ButtonStyle.gray,custom_id="skip",disabled = True),
                     Button(label=" ⏹ ",style=ButtonStyle.red ,custom_id="stop",disabled = True),
                     Button(label=" 🔂 ",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
