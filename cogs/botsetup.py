@@ -2,7 +2,11 @@ from utils.languageembed import languageEmbed
 import settings
 import discord
 from discord.ext import commands
-
+from discord_components import (
+    Button,
+    ButtonStyle,
+    Select,
+    SelectOption)
 
 class BotSetup(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
@@ -32,7 +36,10 @@ class BotSetup(commands.Cog):
                     "log_delete_system":"NO",
                     "log_name_system":"NO",
                     "log_channel_id":"None",
-                    "scam":"warn"
+                    "scam":"warn",
+                    "Music_channel_id":"None",
+                    "Embed_message_id":"None",
+                    "Music_message_id":"None"
                     }
         return newserver
 
@@ -3973,7 +3980,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     async def insertall(self,ctx):
-        result = await settings.collection.update_many({}, {'$set': {'scam': "warn"}})
+        result = await settings.collection.update_many({}, {'$set': {"Music_channel_id":"None","Embed_message_id":"None","Music_message_id":"None"}})
 
 def setup(bot: commands.Bot):
     bot.add_cog(BotSetup(bot))

@@ -12,10 +12,8 @@ import sys
 import traceback
 
 #from
-from discord.channel import StoreChannel
 from discord import Webhook, AsyncWebhookAdapter
 from discord.ext import commands, tasks
-from discord.utils import get
 from datetime import date, timedelta
 from itertools import cycle
 

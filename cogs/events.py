@@ -11,17 +11,20 @@ class Events(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
             
+
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload): 
         await self.bot.wait_until_ready()
         message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
-            data = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
-            if not data is None:
-                emoji = data["emoji"]
-                role = data["role_give_id"]
+            roledata = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
+            if roledata is None:
+                pass
+
+            else:
+                emoji = roledata["emoji"]
+                role = roledata["role_give_id"]
                 if str(payload.emoji) == str(emoji):
-                    role = data["role_give_id"]
                     role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
                     if role and payload.member != self.bot.user:
                         await payload.member.add_roles(role)

@@ -15,8 +15,8 @@ class Error(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self,ctx, error):
         current_time = datetime.now()
-        gmt_7 = timezone(timedelta(hours=7))
-        thai_time = (str(current_time.astimezone(gmt_7))).split('.')[0]
+        #gmt_7 = timezone(timedelta(hours=7))
+        thai_time = (str(current_time.astimezone(timezone(timedelta(hours=7))))).split('.')[0]
         errorlog = (f"\n{thai_time}: [{ctx.author} | {str(ctx.author.id)}] in [{str(ctx.guild.id)} | {ctx.guild.name}]" + "{Error:"+f"{traceback.format_exc().strip()},userinput: {ctx.message.content},command: {ctx.command}"+"}")
         with open('logs/error.log', 'a', encoding='UTF-8') as log:
             log.write(errorlog)

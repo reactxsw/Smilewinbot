@@ -28,6 +28,7 @@ class Help(commands.Cog):
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='ช่วยเหลือคําสั่งช่วยเหลือ')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='ช่วยเหลือคําสั่งเกี่ยวกับตัวบอท')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpmusic``',value='ช่วยเหลือคําสั่งเกี่ยวกับการเปิดเพลง')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='ช่วยเหลือคําสั่งบรรเทิง')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='ช่วยเหลือคําสั่งทั่วไป')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='ช่วยเหลือคําสั่งเกี่ยวกับเกม')
@@ -61,6 +62,7 @@ class Help(commands.Cog):
                     )
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}help``',value='help commands')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpbot``',value='help commands related to bot')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpmusic``',value='help commands related to Music')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpfun``',value='help commands related to fun')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgeneral``',value='help general commands')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpgame``',value='help commands related to game')
@@ -79,6 +81,70 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
+                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
+
+    @commands.command()
+    async def helpmusic(self , ctx):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            
+            if server_language == "Thai":
+                embed=discord.Embed(
+                    title='คำสั่งสำหรับใช้งานบอท',
+                    description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
+                    )
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}play [ชื่อเพลง/ลิงค์YouTube]``',value='เล่นเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}repeat``',value='เล่นเพลงที่กําลังเล่นอยู่ซํ้า')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}loop``',value='เล่นเพลงทั้งคิวซํ้า')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pause``',value='พักเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}resume``',value='เล่นเพลงต่อ')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}stop``',value='เลิกเล่นเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}nowplaying``',value='โชว์เพลงที่กําลังเล่นอยู่')
+                embed.add_field(name="📢หมายเหตุ",value="""```
+[] คือ ค่าที่จำเป็นต้องใส่
+/ คือ หรือ
+<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
+• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
+• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
+```
+""", inline=False)
+
+                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                message = await ctx.send(embed=embed)
+                await message.add_reaction('👍')
+            
+            if server_language == "Engish":
+                embed=discord.Embed(
+                    title='คำสั่งสำหรับใช้งานบอท',
+                    description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
+                    color=0xFED000   
+                    )
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}play [song/YouTube url]``',value='เล่นเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}repeat``',value='เล่นเพลงที่กําลังเล่นอยู่ซํ้า')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}loop``',value='เล่นเพลงทั้งคิวซํ้า')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pause``',value='พักเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}resume``',value='เล่นเพลงต่อ')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}stop``',value='เลิกเล่นเพลง')
+                embed.add_field(name="📢Note",value="""```
+[] = required
+/ = or
+<> = optional``````
+• In order for bots to use all functions, bots should have Administrator permission.
+• The function cannot work in private chat.
+```
+""", Inline=False)
                 embed.set_thumbnail(url=self.bot.user.avatar_url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -548,7 +614,6 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}removeroleall [@role]``', value = 'ลบยศกับสมาชิกทุกคน')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}changenick [@member] [newnick]``', value = 'เปลี่ยนชื่อของสมาชิก')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}clear [จํานวน] ``', value = 'เคลียข้อความตามจํานวน',)
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect [@member]``' ,value = 'disconnect สมาชิกที่อยู่ในห้องพูด')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome [@member]``' ,value = 'ย้ายสมาชิกมาห้องของเรา')
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
@@ -579,7 +644,6 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}removeroleall [@role]``', value = 'remove role to all member')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}changenick [@member] [newnick]``', value = 'change member nickname')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}clear [จํานวน] ``', value = 'clear messages')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}disconnect [@member]``' ,value = 'disconnect a member')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}movetome [@member]``' ,value = 'move a member to your voice chat')
                 embed.add_field(name="📢Note",value="""```
 [] = required
