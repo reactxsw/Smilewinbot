@@ -25,7 +25,6 @@ class Player(pomice.Player):
         # Set context here so we can send a now playing embed
         self.context: commands.Context = None
         self.dj: nextcord.Member = None
-
         self.pause_votes = set()
         self.resume_votes = set()
         self.skip_votes = set()
@@ -39,19 +38,19 @@ class Player(pomice.Player):
         self.skip_votes.clear()
         self.shuffle_votes.clear()
         self.stop_votes.clear()
+        
 
         # Check if theres a controller still active and deletes it
         if self.controller:
             with suppress(nextcord.HTTPException):
                 await self.controller.delete()
             
-
        # Queue up the next track, else teardown the player
         try:
             track: pomice.Track = self.queue.get_nowait()
         except asyncio.queues.QueueEmpty:  
             return await self.teardown()
-
+        
         await self.play(track)
 
         # Call the controller (a.k.a: The "Now Playing" embed) and check if one exists
@@ -61,7 +60,15 @@ class Player(pomice.Player):
             self.controller = await self.context.send(embed=embed)
 
         else:
-            embed = nextcord.Embed(title=f"Now playing", description=f"[{track.title}]({track.uri}) [{track.requester.mention}]")
+            embed = nextcord.Embed(
+                title=f"Smilewin Music", 
+                description=f"Now playing [{track.title}]({track.uri})",
+                colour = 0xFED000)
+
+            embed.set_thumbnail(url=track.thumbnail)
+            embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
+            embed.add_field(name='Requested By', value=track.requester.mention)
+            embed.add_field(name='Next', value="-")
             self.controller = await self.context.send(embed=embed)
 
 
@@ -133,7 +140,8 @@ class Music(commands.Cog):
             host=settings.lavalinkip,
             port=settings.lavalinkport,
             password=settings.lavalinkpass,
-            identifier=settings.lavalinkindentifier
+            identifier=settings.lavalinkindentifier,
+            region=settings.lavalinkregion
         )
         print(f"Node is ready!")
 
@@ -155,13 +163,6 @@ class Music(commands.Cog):
 
         return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
-
-    # The following are events from pomice.events
-    # We are using these so that if the track either stops or errors,
-    # we can just skip to the next track
-
-    # Of course, you can modify this to do whatever you like
-    
     @commands.Cog.listener()
     async def on_pomice_track_end(self, player: Player, track, _):
         await player.do_next()
@@ -181,17 +182,12 @@ class Music(commands.Cog):
             if not channel:
                 return await ctx.send("You must be in a voice channel in order to use this command!")
 
-        # With the release of discord.py 1.7, you can now add a compatible
-        # VoiceProtocol class as an argument in VoiceChannel.connect().
-        # This library takes advantage of that and is how you initialize a player.
         await ctx.author.voice.channel.connect(cls=Player)
         player: Player = ctx.voice_client
-
-        # Set the player context so we can use it so send messages
         await player.set_context(ctx=ctx)
         await ctx.send(f"Joined the voice channel `{channel.name}`")
 
-    @commands.command(aliases=['disconnect', 'dc', 'disc', 'lv', 'fuckoff'])
+    @commands.command(aliases=['disconnect', 'dc', 'disc', 'lv'])
     async def leave(self, ctx: commands.Context):
         if not (player := ctx.voice_client):
             return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
@@ -201,25 +197,67 @@ class Music(commands.Cog):
         
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
-        # Checks if the player is in the channel before we play anything
-        print(self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild_id))
-        if not (player := ctx.voice_client):
-            await ctx.invoke(self.join)   
-            player = ctx.voice_client
-        results = await player.get_tracks(search, ctx=ctx)     
-        
-        if not results:
-            return await ctx.send("No results were found for that search term", delete_after=7)
-        
-        if isinstance(results, pomice.Playlist):
-            for track in results.tracks:
-                await player.queue.put(track)
-        else:
+        if ctx.author.voice is not None:
+            player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
+            if player is None:
+                await ctx.invoke(self.join)   
+                player = ctx.voice_client
+            results = await player.get_tracks(search, ctx=ctx)     
+            if not results:
+                return await ctx.send("No results were found for that search term", delete_after=7)
+            
             track = results[0]
-            await player.queue.put(track)
+            s_title = track.title
+            s_id = track.id
+            Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+            if Queue is None and not player.is_playing:
+                embed = nextcord.Embed(
+                    title = "Searching ..",
+                    colour = 0xFED000
+                )
+                message = await ctx.send(embed=embed)
+                data = {
+                    "guild_id":ctx.guild.id,
+                    "Mode":"Default",
+                    "Request_channel":ctx.channel.id,
+                    "Message_id":message.id,
+                    "Queue":[]
+                }
+                data["Queue"].append({
+                        "position":1,
+                        "song_title":s_title,
+                        "song_id":s_title,
+                        "requester":ctx.author.id})
 
-        if not player.is_playing:
-            await player.do_next()
+                await settings.collectionmusic.insert_one(data)
+
+            else:
+                if not len(Queue["Queue"]) > 20:
+                    await settings.collectionmusic.update_one({
+                        'guild_id': ctx.guild.id}, {
+                            '$push': {
+                                'Queue': {
+                                    "position":len(Queue["Queue"])+1,
+                                    "song_title":s_title,
+                                    "song_id":s_id,
+                                    "requester":ctx.author.id}}})
+
+                    if len(Queue["Queue"]) == 1:
+                        message = await self.bot.get_channel(Queue["Request_channel"]).fetch_message(Queue["Message_id"]) # the message's channel
+                        embed = await Music.build_embed(Queue["Queue"][0]["song_title"],track,Queue["Mode"])
+                        await message.edit(embed=embed)
+
+            if isinstance(results, pomice.Playlist):
+                num = 0 
+                for track in results.tracks:
+                    await player.queue.put(track)
+                    
+            else:
+                track = results[0]
+                await player.queue.put(track)
+
+            if not player.is_playing:
+                await player.do_next()
 
 
 
