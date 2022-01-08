@@ -3,6 +3,7 @@ import datetime
 import asyncio
 from contextlib import suppress
 from motor.metaprogramming import asynchronize
+from pomice.objects import Playlist
 import settings
 from nextcord.ext import commands
 import nextcord
@@ -226,7 +227,7 @@ class Music(commands.Cog):
                 data["Queue"].append({
                         "position":1,
                         "song_title":s_title,
-                        "song_id":s_title,
+                        "song_id":s_id,
                         "requester":ctx.author.id})
 
                 await settings.collectionmusic.insert_one(data)
@@ -248,14 +249,52 @@ class Music(commands.Cog):
                         await message.edit(embed=embed)
 
             if isinstance(results, pomice.Playlist):
-                num = 0 
-                for track in results.tracks:
-                    await player.queue.put(track)
-                    
-            else:
-                track = results[0]
-                await player.queue.put(track)
+                Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+                if Queue is None and not player.is_playing:
+                    if len(results.tracks) > 20:
+                        results.tracks = results.tracks[:21]
 
+                    embed = nextcord.Embed(
+                        title = "Searching ..",
+                        colour = 0xFED000
+                    )
+                    message = await ctx.send(embed=embed)
+                    data = {
+                        "guild_id":ctx.guild.id,
+                        "Mode":"Default",
+                        "Request_channel":ctx.channel.id,
+                        "Message_id":message.id,
+                        "Queue":[]
+                    }
+                    num = 0
+                    for track in results.tracks:
+                        data["Queue"].append({
+                                "position":num+1,
+                                "song_title":track.title,
+                                "song_id":track.id,
+                                "requester":ctx.author.id})
+
+                    await settings.collectionmusic.insert_one(data)
+                
+                else:
+                    if not len(Queue["Queue"]) > 20:
+                        availble = 21 - len(Queue["Queue"])
+                        if len(results.tracks) > availble:
+                            results.tracks = results.tracks[:availble]
+                        num = len(Queue["Queue"]) + 1
+                        for track in results.tracks:
+                            await settings.collectionmusic.update_one({
+                                'guild_id': ctx.guild.id}, {
+                                    '$push': {
+                                        'Queue': {
+                                            "position":num+1,
+                                            "song_title":s_title,
+                                            "song_id":s_id,
+                                            "requester":ctx.author.id
+                                            }
+                                        }
+                                    })
+                                                             
             if not player.is_playing:
                 await player.do_next()
 
