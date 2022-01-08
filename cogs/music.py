@@ -59,7 +59,7 @@ class Player(pomice.Player):
         if track.is_stream:
             embed = nextcord.Embed(title="Now playing", description=f":red_circle: **LIVE** [{track.title}]({track.uri}) [{track.requester.mention}]")
             self.controller = await self.context.send(embed=embed)
-            
+
         else:
             embed = nextcord.Embed(title=f"Now playing", description=f"[{track.title}]({track.uri}) [{track.requester.mention}]")
             self.controller = await self.context.send(embed=embed)
@@ -133,7 +133,7 @@ class Music(commands.Cog):
             host=settings.lavalinkip,
             port=settings.lavalinkport,
             password=settings.lavalinkpass,
-            identifier="MAIN"
+            identifier=settings.lavalinkindentifier
         )
         print(f"Node is ready!")
 
@@ -202,6 +202,7 @@ class Music(commands.Cog):
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
         # Checks if the player is in the channel before we play anything
+        print(self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild_id))
         if not (player := ctx.voice_client):
             await ctx.invoke(self.join)   
             player = ctx.voice_client

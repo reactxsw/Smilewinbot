@@ -177,3 +177,21 @@
 2022-01-08 21:31:10.062  INFO 7780 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
 2022-01-08 21:32:39.093  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
 2022-01-08 21:35:37.676  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "924999182039801876"}
+2022-01-08 21:57:28.021  INFO 7780 --- [XNIO-1 task-44] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49154
+2022-01-08 21:57:28.024  INFO 7780 --- [XNIO-1 task-44] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-08 21:57:29.699  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:51216 -- CloseStatus[code=1006, reason=]
+2022-01-08 21:57:29.700  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-08 21:57:45.311  INFO 7780 --- [XNIO-1 task-45] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-08 21:57:45.487  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "bf1966480c271dbe54ddaf0735a50907", "event": {"token": "885e0eff41560842", "guild_id": "924999182039801876", "endpoint": "singapore1846.discord.media:443"}}
+2022-01-08 21:57:46.053  INFO 7780 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-08 21:57:46.059  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-08 21:59:36.813  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49154 -- CloseStatus[code=1006, reason=]
+2022-01-08 21:59:36.813  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-08 21:59:49.415  INFO 7780 --- [XNIO-1 task-47] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61104
+2022-01-08 21:59:49.416  INFO 7780 --- [XNIO-1 task-47] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-08 21:59:56.934  INFO 7780 --- [XNIO-1 task-48] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-08 21:59:57.038  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "6d056b56b859782d66deeddf1f255c9d", "event": {"token": "885e0eff41560842", "guild_id": "924999182039801876", "endpoint": "singapore1846.discord.media:443"}}
+2022-01-08 21:59:57.379  INFO 7780 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-08 21:59:57.387  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAZwIACDEwIEJhbmRzAAVEcmFrZQAAAAAAArdQAAt0Y0wyQjBpbE1adwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRjTDJCMGlsTVp3AAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-08 22:01:39.065  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:61104 -- CloseStatus[code=1006, reason=]
+2022-01-08 22:01:39.066  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
