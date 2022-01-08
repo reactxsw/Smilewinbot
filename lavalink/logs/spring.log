@@ -50,3 +50,21 @@
 2022-01-08 17:03:49.145  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "394451338140057610", "track": "QAAAlQIAM0pPTklOICxHT0QgLEZ1cmxvbmcgLSBDLVdhbGsgW09mZmljaWFsIE11c2ljIFZpZGVvXQAIRSBSRUNPUkQAAAAAAANnGAALRTI3S3g4MTdKdTQAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1FMjdLeDgxN0p1NAAHeW91dHViZQAAAAAAAAAA", "noReplace": false, "startTime": "0"}
 2022-01-08 17:14:17.172  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65400 -- CloseStatus[code=1006, reason=]
 2022-01-08 17:14:17.172  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-08 17:14:49.654  INFO 7780 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63175
+2022-01-08 17:14:49.663  INFO 7780 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-08 17:14:49.664  WARN 7780 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-08 17:20:30.658  INFO 7780 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63175 -- CloseStatus[code=1006, reason=]
+2022-01-08 17:20:30.659  INFO 7780 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-08 17:20:41.438  INFO 7780 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57570
+2022-01-08 17:20:41.441  INFO 7780 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-08 17:20:41.442  WARN 7780 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-08 17:22:03.832  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:57570 -- CloseStatus[code=1006, reason=]
+2022-01-08 17:22:03.832  INFO 7780 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-08 17:22:14.988  INFO 7780 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56696
+2022-01-08 17:22:14.990  INFO 7780 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-08 17:22:14.991  WARN 7780 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3
+2022-01-08 17:29:30.080  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56696 -- CloseStatus[code=1006, reason=]
+2022-01-08 17:29:30.080  INFO 7780 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-08 17:29:40.463  INFO 7780 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60404
+2022-01-08 17:29:40.467  INFO 7780 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established
+2022-01-08 17:29:40.467  WARN 7780 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Library developers: Please specify a 'Client-Name' header. User agent: Python/3.9 aiohttp/3.7.3

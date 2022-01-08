@@ -48,7 +48,7 @@ class MakeImage(commands.Cog):
                     member = choice(memberonly)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    authorasset = ctx.author.avatar_url_as(size=128)
+                    authorasset = ctx.author.avatar.with_size(128)
                     authordata = BytesIO(await authorasset.read())
                     authorpfp = Image.open(authordata)
 
@@ -58,7 +58,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    memberasset = member.avatar_url_as(size=128)
+                    memberasset = member.avatar.with_size(128)
                     memberdata = BytesIO(await memberasset.read())
                     memberpfp = Image.open(memberdata)
 
@@ -85,7 +85,7 @@ class MakeImage(commands.Cog):
                 else:
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    authorasset = ctx.author.avatar_url_as(size=128)
+                    authorasset = ctx.author.avatar.with_size(128)
                     authordata = BytesIO(await authorasset.read())
                     authorpfp = Image.open(authordata)
 
@@ -95,7 +95,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    memberasset = member.avatar_url_as(size=128)
+                    memberasset = member.avatar.with_size(128)
                     memberdata = BytesIO(await memberasset.read())
                     memberpfp = Image.open(memberdata)
 
@@ -142,7 +142,7 @@ class MakeImage(commands.Cog):
                     member = choice(memberonly)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    authorasset = ctx.author.avatar_url_as(size=128)
+                    authorasset = ctx.author.avatar.with_size(128)
                     authordata = BytesIO(await authorasset.read())
                     authorpfp = Image.open(authordata)
 
@@ -151,8 +151,7 @@ class MakeImage(commands.Cog):
                     heart = heart.resize((42,42))
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
-
-                    memberasset = member.avatar_url_as(size=128)
+                    memberasset = member.avatar.with_size(128)
                     memberdata = BytesIO(await memberasset.read())
                     memberpfp = Image.open(memberdata)
 
@@ -179,7 +178,7 @@ class MakeImage(commands.Cog):
                 else:
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    authorasset = ctx.author.avatar_url_as(size=128)
+                    authorasset = ctx.author.avatar.with_size(128)
                     authordata = BytesIO(await authorasset.read())
                     authorpfp = Image.open(authordata)
 
@@ -189,7 +188,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    memberasset = member.avatar_url_as(size=128)
+                    memberasset = member.avatar.with_size(128)
                     memberdata = BytesIO(await memberasset.read())
                     memberpfp = Image.open(memberdata)
 
@@ -248,7 +247,7 @@ class MakeImage(commands.Cog):
                     member2 = choice(memberonly2)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -258,7 +257,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
@@ -287,7 +286,7 @@ class MakeImage(commands.Cog):
                     member2 = choice(memberonly)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
@@ -297,7 +296,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -324,7 +323,7 @@ class MakeImage(commands.Cog):
                 else:
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -334,7 +333,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
@@ -382,7 +381,7 @@ class MakeImage(commands.Cog):
                     member2 = choice(memberonly2)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -392,7 +391,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
@@ -421,7 +420,7 @@ class MakeImage(commands.Cog):
                     member2 = choice(memberonly)
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
@@ -431,7 +430,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -458,7 +457,7 @@ class MakeImage(commands.Cog):
                 else:
                     template = Image.open('image/template.png')
                     heart = Image.open('image/heart.png')
-                    member1asset = member1.avatar_url_as(size=128)
+                    member1asset = member1.avatar.with_size(128)
                     member1data = BytesIO(await member1asset.read())
                     member1pfp = Image.open(member1data)
 
@@ -468,7 +467,7 @@ class MakeImage(commands.Cog):
                     draw = ImageDraw.Draw(heart)
                     draw.text((10, 10), love ,font = font)
 
-                    member2asset = member2.avatar_url_as(size=128)
+                    member2asset = member2.avatar.with_size(128)
                     member2data = BytesIO(await member2asset.read())
                     member2pfp = Image.open(member2data)
 
