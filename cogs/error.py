@@ -22,7 +22,7 @@ class Error(commands.Cog):
             log.write(errorlog)
         
         log.close()
-        channel = self.bot.get_channel(id = int(settings.supportchannel))
+        channel = self.bot.get_channel(int(settings.supportchannel))
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             pass

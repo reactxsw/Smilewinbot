@@ -73,7 +73,7 @@ class Events(commands.Cog):
                     logchannel = data["log_channel_id"]
                     logstatus = data["log_voice_system"]
                     if not logchannel == "None":
-                        channel = self.bot.get_channel(id = int(logchannel))
+                        channel = self.bot.get_channel(int(logchannel))
                         if channel:
                             if logstatus == "YES":
                                 if before.channel is None:
@@ -121,7 +121,7 @@ class Events(commands.Cog):
                     logchannel = data["log_channel_id"]
                     logstatus = data["log_voice_system"]
                     if not logchannel == "None":
-                        channel = self.bot.get_channel(id = int(logchannel))
+                        channel = self.bot.get_channel( int(logchannel))
                         if channel:
                             if logstatus == "YES":
                                 if before.channel is None:
@@ -176,7 +176,7 @@ class Events(commands.Cog):
                 if not data is None:
                     welcome = data["welcome_id"] 
                     if not welcome == "None":
-                        channel = self.bot.get_channel(id = int(welcome))
+                        channel = self.bot.get_channel(int(welcome))
                         if channel:
                             embed = nextcord.Embed(
                                 colour = 0x99e68b,
@@ -189,7 +189,7 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
-                            channel = self.bot.get_channel(id = int(welcome))
+                            channel = self.bot.get_channel( int(welcome))
                             await channel.send(embed=embed)
                     
                     else:
@@ -200,7 +200,7 @@ class Events(commands.Cog):
                 if not data is None:
                     welcome = data["welcome_id"] 
                     if not welcome == "None":
-                        channel = self.bot.get_channel(id = int(welcome))
+                        channel = self.bot.get_channel(int(welcome))
                         if channel:
                             embed = nextcord.Embed(
                                     colour = 0x99e68b,
@@ -213,7 +213,7 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
                             
-                            channel = self.bot.get_channel(id = int(welcome))
+                            channel = self.bot.get_channel( int(welcome))
                             await channel.send(embed=embed)
                     
                     else:
@@ -234,7 +234,7 @@ class Events(commands.Cog):
                 if not data is None:
                     welcome = data["leave_id"] 
                     if not welcome == "None":
-                        channel = self.bot.get_channel(id = int(data["leave_id"]))
+                        channel = self.bot.get_channel(int(data["leave_id"]))
                         if channel:
                             embed = nextcord.Embed(
                                 colour=0x983925, 
@@ -247,7 +247,7 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
-                            channel = self.bot.get_channel(id = int(data["leave_id"]))
+                            channel = self.bot.get_channel(int(data["leave_id"]))
                             await channel.send(embed=embed)
                     else:
                         return
@@ -257,7 +257,7 @@ class Events(commands.Cog):
                 if not data is None:
                     welcome = data["leave_id"] 
                     if not welcome == "None":
-                        channel = self.bot.get_channel(id = int(data["leave_id"]))
+                        channel = self.bot.get_channel(int(data["leave_id"]))
                         if channel:
                             embed = nextcord.Embed(
                                 colour=0x983925, 
@@ -270,7 +270,7 @@ class Events(commands.Cog):
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
  
-                            channel = self.bot.get_channel(id = int(data["leave_id"]))
+                            channel = self.bot.get_channel( int(data["leave_id"]))
                             await channel.send(embed=embed)
 
                     else:
@@ -282,7 +282,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self,guild):
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel(id = int(settings.logchannel))
+        channel = self.bot.get_channel( int(settings.logchannel))
         embed = nextcord.Embed(
             title = f"Bot have joined a new server {guild.name} with {guild.member_count} members",
             colour = 0x00FFFF
@@ -333,7 +333,7 @@ f"""สวัสดีครับ {entry.user.name}
     @commands.Cog.listener()
     async def on_guild_remove(self,guild):
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel(id = int(settings.logchannel))
+        channel = self.bot.get_channel( int(settings.logchannel))
         embed = nextcord.Embed(
             title = f"Bot have left {guild.name}",
             colour = 0x983925

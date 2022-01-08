@@ -1036,7 +1036,7 @@ f"""**General Information**
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                channel = self.bot.get_channel(id = int(settings.supportchannel))
+                channel = self.bot.get_channel(int(settings.supportchannel))
                 if not message is None: 
                     embed = nextcord.Embed(
                         title = f"ปัญหาบอทโดย {ctx.author}",
@@ -1061,7 +1061,7 @@ f"""**General Information**
                     await ctx.send(embed=embed)
 
             if server_language == "English":
-                channel = self.bot.get_channel(id = int(settings.supportchannel))
+                channel = self.bot.get_channel(int(settings.supportchannel))
                 if not message is None: 
                     embed = nextcord.Embed(
                         title = f"ปัญหาบอทโดย {ctx.author}",

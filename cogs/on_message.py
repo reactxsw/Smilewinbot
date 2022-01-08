@@ -24,7 +24,7 @@ class on_message_event(commands.Cog):
                     embed_message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
-                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
+                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {message.guild.name}")
                     await embed_message.edit(embed=embed, components=[
