@@ -125,8 +125,8 @@ class Verify(commands.Cog):
 เพศ : {sex}
 {frame}```""")
             )
-                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar.url}") 
                     embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text = ctx.author.id)
                     await message.delete()
@@ -206,8 +206,8 @@ Age : {age}
 Sex : {sex}
 {frame}```""")
                     )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar.url}") 
                             embed.timestamp = datetime.datetime.utcnow()
                             embed.set_footer(text = ctx.author.id)
                             await message.delete()
@@ -284,7 +284,7 @@ Sex : {sex}
                                 )
                                 embed.set_image(url = "attachment://verify.png")
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar.url}") 
 
                                 message = await ctx.send(embed=embed , file=file)
 
@@ -300,7 +300,7 @@ Sex : {sex}
                                             description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
                                             colour =  0xB9E7A5
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -333,7 +333,7 @@ Sex : {sex}
                                             description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {settings.COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                             colour =  0x983925
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -345,7 +345,7 @@ Sex : {sex}
                                         description = f":x: คุณใช้เวลานานเกินไป {settings.COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                         colour =  0x983925
                                     )
-                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                     message = await ctx.send(embed=embed) 
                                     await asyncio.sleep(3)
                                     await message.delete()     
@@ -355,7 +355,7 @@ Sex : {sex}
                                     description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                     colour =  0x983925
                                 )
-                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                 await ctx.send(embed=embed)
                                 
                         else:
@@ -425,7 +425,7 @@ Sex : {sex}
                                 )
                                 embed.set_image(url = "attachment://verify.png")
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar.url}") 
 
                                 message = await ctx.send(embed=embed , file=file)
 
@@ -440,7 +440,7 @@ Sex : {sex}
                                         description = f":white_check_mark: You have been verified",
                                         colour =  0xB9E7A5
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -473,7 +473,7 @@ Sex : {sex}
                                             description = f":x: Incorrect captcha please try again use {settings.COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                             colour =  0x983925
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -486,7 +486,7 @@ Sex : {sex}
                                             description = f":x: timeout please try again use {settings.COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                             colour =  0x983925
                                         )
-                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                     message = await ctx.send(embed=embed) 
                                     await asyncio.sleep(3)
                                     await message.delete()     
@@ -496,7 +496,7 @@ Sex : {sex}
                                     description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                     colour =  0x983925
                                 )
-                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                 await ctx.send(embed=embed)  
                                 
                         else:

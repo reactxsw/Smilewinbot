@@ -81,7 +81,7 @@ class Events(commands.Cog):
                                         colour = 0x56FF2D,
                                         description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
                                     )
-                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}")
                                     embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                     embed.timestamp = datetime.datetime.utcnow()
                                     await channel.send(embed=embed)
@@ -91,7 +91,7 @@ class Events(commands.Cog):
                                             colour = 0x00FFFF,
                                             description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
                                         )
-                                        embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                        embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}") 
                                         embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                         embed.timestamp = datetime.datetime.utcnow()
                                         await channel.send(embed=embed)
@@ -104,7 +104,7 @@ class Events(commands.Cog):
                                         colour = 0x983925,
                                         description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
                                     )
-                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}") 
                                     embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                     embed.timestamp = datetime.datetime.utcnow()
                                     await channel.send(embed=embed)
@@ -129,7 +129,7 @@ class Events(commands.Cog):
                                         colour = 0x56FF2D,
                                         description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
                                     )
-                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}")
+                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}")
                                     embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                     embed.timestamp = datetime.datetime.utcnow()
                                     await channel.send(embed=embed)
@@ -139,7 +139,7 @@ class Events(commands.Cog):
                                         colour = 0x00FFFF,
                                         description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
                                     )
-                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}") 
                                     embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                     embed.timestamp = datetime.datetime.utcnow()
                                     await channel.send(embed=embed)
@@ -153,7 +153,7 @@ class Events(commands.Cog):
                                         colour = 0x983925,
                                         description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
                                     )
-                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar_url}") 
+                                    embed.set_author(name=f"{member}", icon_url=f"{member.avatar.url}") 
                                     embed.set_footer(text=f"{member}" + f"  ⮞ ")
                                     embed.timestamp = datetime.datetime.utcnow()
                                     await channel.send(embed=embed)
@@ -184,8 +184,8 @@ class Events(commands.Cog):
                                 description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
                             )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                            embed.set_thumbnail(url=f"{member.avatar.url}")
+                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
@@ -208,8 +208,8 @@ class Events(commands.Cog):
                                     description = 'Please read and follow our rules'
                                 )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                            embed.set_thumbnail(url=f"{member.avatar.url}")
+                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
                             
@@ -242,8 +242,8 @@ class Events(commands.Cog):
                                 description= f"{member.name}ได้ออกจากเซิฟเวอร์"
                             )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                            embed.set_thumbnail(url=f"{member.avatar.url}")
+                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
@@ -265,8 +265,8 @@ class Events(commands.Cog):
                                 description= f"{member.name} have left the server"
                                 )
 
-                            embed.set_thumbnail(url=f"{member.avatar_url}")
-                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar_url}") 
+                            embed.set_thumbnail(url=f"{member.avatar.url}")
+                            embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
                             embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
                             embed.timestamp = datetime.datetime.utcnow()
  

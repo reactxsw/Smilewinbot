@@ -1,79 +1,96 @@
-import nextcord
+import pomice
 import datetime
-
+import asyncio
+from contextlib import suppress
 from motor.metaprogramming import asynchronize
 import settings
 from nextcord.ext import commands
-import wavelink
+import nextcord
+import math
+import random
 from discord_components import (
     Button,
     ButtonStyle,
     Select,
     SelectOption,
 )
-class Music(commands.Cog, wavelink.WavelinkMixin):
+class Player(pomice.Player):
+    """Custom pomice Player class."""
 
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+ 
+        self.queue = asyncio.Queue()
+        self.controller: nextcord.Message = None
+        # Set context here so we can send a now playing embed
+        self.context: commands.Context = None
+        self.dj: nextcord.Member = None
 
-        if not hasattr(bot, 'wavelink'):
-            self.bot.wavelink = wavelink.Client(bot=self.bot)
+        self.pause_votes = set()
+        self.resume_votes = set()
+        self.skip_votes = set()
+        self.shuffle_votes = set()
+        self.stop_votes = set()
 
-        self.bot.loop.create_task(self.start_nodes())
+    async def do_next(self) -> None:
+        # Clear the votes for a new song
+        self.pause_votes.clear()
+        self.resume_votes.clear()
+        self.skip_votes.clear()
+        self.shuffle_votes.clear()
+        self.stop_votes.clear()
 
-    async def start_nodes(self):
-        await self.bot.wait_until_ready()
-        if self.bot.wavelink.nodes:
-            previous = self.bot.wavelink.nodes.copy()
-            for node in previous.values():
-                await node.destroy()
-        
-        nodes = {
-            "Node_1": {
-                "host": settings.lavalinkip,
-                "port": settings.lavalinkport,
-                "rest_uri": f"http://{settings.lavalinkip}:{settings.lavalinkport}",
-                "password": settings.lavalinkpass,
-                "identifier": f"{settings.lavalinkindentifier}_1",
-                "region": settings.lavalinkregion
-            }
-        }
-
-        for n in nodes.values():
-            await self.bot.wavelink.initiate_node(**n)
-
-    @wavelink.WavelinkMixin.listener()
-    async def on_node_ready(self, node: wavelink.Node):
-        print(f"Node {node.identifier} is ready")
-
-    async def do_next(self,guild_id,player,mode,tracks=None):
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if mode == "Default":
-            await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-            if server["Queue"] == []:
-                return
-
-            else:
-                Song = server["Queue"][0]["song_id"]
-                tracks = await self.bot.wavelink.build_track(Song)
-                await player.play(tracks)
-    
-        if mode == "Repeat":
-            tracks.play(tracks)
-    
-    @wavelink.WavelinkMixin.listener()
-    async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
-        guild_id = payload.player.guild_id
-        player = payload.player
-        track = payload.track
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if payload.reason == "FINISHED":
-            if server["Mode"] != "Loop":
-                await self.do_next(guild_id,player,server["Mode"],track)
+        # Check if theres a controller still active and deletes it
+        if self.controller:
+            with suppress(nextcord.HTTPException):
+                await self.controller.delete()
             
-            else:
-                server["Queue"].index("")
 
+       # Queue up the next track, else teardown the player
+        try:
+            track: pomice.Track = self.queue.get_nowait()
+        except asyncio.queues.QueueEmpty:  
+            return await self.teardown()
+
+        await self.play(track)
+
+        # Call the controller (a.k.a: The "Now Playing" embed) and check if one exists
+
+        if track.is_stream:
+            embed = nextcord.Embed(title="Now playing", description=f":red_circle: **LIVE** [{track.title}]({track.uri}) [{track.requester.mention}]")
+            self.controller = await self.context.send(embed=embed)
+            
+        else:
+            embed = nextcord.Embed(title=f"Now playing", description=f"[{track.title}]({track.uri}) [{track.requester.mention}]")
+            self.controller = await self.context.send(embed=embed)
+
+
+    async def teardown(self):
+        """Clear internal states, remove player controller and disconnect."""
+        with suppress((nextcord.HTTPException), (KeyError)):
+            await self.destroy()
+            if self.controller:
+                await self.controller.delete() 
+
+    async def set_context(self, ctx: commands.Context):
+        """Set context for the player"""
+        self.context = ctx 
+        self.dj = ctx.author 
+
+
+
+
+class Music(commands.Cog):
+    def __init__(self, bot: commands.Bot) -> None:
+        self.bot = bot
+        
+        # In order to initialize a node, or really do anything in this library,
+        # you need to make a node pool
+        self.pomice = pomice.NodePool()
+
+        # Start the node
+        bot.loop.create_task(self.start_nodes())
+    
     async def setnewserver(self,ctx):
         newserver = {"guild_id":ctx.guild.id,
                     "welcome_id":"None",
@@ -105,183 +122,253 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                     }
         return newserver
 
-    async def stop_music(self,guild_id):
-        player = self.bot.wavelink.get_player(guild_id)
-        if player.is_connected:
-            await player.disconnect(True)
-            await player.destroy()
-            await settings.collectionmusic.delete_one({"guild_id":guild_id})
-
-    async def pause_resume_music(self,guild_id):
-        player = self.bot.wavelink.get_player(guild_id)
-        if player.is_connected:
-            if player.is_paused:
-                await player.set_pause(False)
-            
-            else:
-                await player.set_pause(True)
-
-        else:
-            pass
-    
-    async def mute_bot(self,guild_id):
-        player = self.bot.wavelink.get_player(guild_id)
-        if player.volumer == 0:
-            player.set_volume(80)
-        else:
-            player.set_volume(0)
-
-    async def build_embed(title,duration,thumbnail,next,author,requester,mode):
-        embed = nextcord.Embed(
-            title = "Smilewin Music",
-            description = f"Now playing {title}",
-            colour = 0xFED000
+    async def start_nodes(self):
+        # Waiting for the bot to get ready before connecting to nodes.
+        await self.bot.wait_until_ready()
+        
+        # You can pass in Spotify credentials to enable Spotify querying.
+        # If you do not pass in valid Spotify credentials, Spotify querying will not work 
+        await self.pomice.create_node(
+            bot=self.bot,
+            host=settings.lavalinkip,
+            port=settings.lavalinkport,
+            password=settings.lavalinkpass,
+            identifier="MAIN"
         )
-        embed.set_thumbnail(url=thumbnail)
-        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
-        embed.add_field(name='Requested By', value=requester.mention)
-        embed.add_field(name='Next', value="-" if next is None else next)
-        embed.set_footer(text=f"┗Requested by {requester}")
+        print(f"Node is ready!")
 
-        return embed
+    async def required(self, ctx: commands.Context):
+        """Method which returns required votes based on amount of members in a channel."""
+        player: Player = ctx.voice_client
+        channel = self.bot.get_channel(int(player.channel.id))
+        required = math.ceil((len(channel.members) - 1) / 2.5)
 
-    @commands.command()
-    async def stop(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        await settings.collectionmusic.delete_one({"guild_id":ctx.guild.id})
-        await player.destroy()
+        if ctx.command.name == 'stop':
+            if len(channel.members) == 3:
+                required = 2
 
-    @commands.command()
-    async def pause(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if not player.is_paused:
-            await player.set_pause(True)
-            await ctx.send("Paused")
-        else:
-            await ctx.send(f"Not playing use `{settings.COMMAND_PREFIX} resume` to resume")
+        return required
 
-    @commands.command()
-    async def resume(self,ctx):
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if player.is_paused:
-            await player.set_pause(False)
-            await ctx.send("Resumed")
-        else:
-            await ctx.send(f"Song has not been paused. Use `{settings.COMMAND_PREFIX} pause` to pause the song")
+    async def is_privileged(self, ctx: commands.Context):
+        """Check whether the user is an Admin or DJ."""
+        player: Player = ctx.voice_client
 
-    @commands.command()
-    async def loop(self,ctx):
-        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-        if not server["Mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Loop"}})
-            await ctx.send("Loop mode activated")
-        
-        elif server["Mode"] == "Loop":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
-            await ctx.send("Loop mode deactivated")
-        
-    @commands.command()
-    async def repeat(self,ctx):
-        server = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-        if not server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Repeat"}})
-            await ctx.send("Repeat mode activated")
-        
-        elif server["Mode"] == "Repeat":
-            await settings.collectionmusic.update_one({"guild_id":ctx.guild.id}, {'$set': {'Mode': "Default"}})
-            await ctx.send("Repeat mode deactivated")
+        return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
-    @commands.command()
-    async def volmusic(self, ctx, volume : int):
-        default_volume = 100    
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if isinstance(volume, int):
-            await player.set_volume(int(volume))
-            embed = nextcord.Embed(title=f'Successfully, Set volume into `{volume}`',color=nextcord.Colour.green())
-            embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
-            emoji = '\N{THUMBS UP SIGN}'
-            msg = await ctx.send(embed=embed)
-            await msg.add_reaction(emoji)
-        else:
-            await ctx.send("Please input only numbers")
 
-    @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: nextcord.VoiceChannel=None):
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise nextcord.nextcordException('No channel to join. Please either specify a valid channel or join one.')
+    # The following are events from pomice.events
+    # We are using these so that if the track either stops or errors,
+    # we can just skip to the next track
 
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        await ctx.send(f'Connecting to **`{channel.name}`**')
-        await ctx.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
-        await player.connect(channel.id)
+    # Of course, you can modify this to do whatever you like
     
-    @commands.command(name='disconnect')
-    async def disconnect_(self, ctx, *, channel: nextcord.VoiceChannel=None):
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise nextcord.nextcordException('No channel to join. Please either specify a valid channel or join one.')
+    @commands.Cog.listener()
+    async def on_pomice_track_end(self, player: Player, track, _):
+        await player.do_next()
 
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        await ctx.send(f'Connecting to **`{channel.name}`**')
-        await ctx.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
-        await player.disconnect(channel.id)
+    @commands.Cog.listener()
+    async def on_pomice_track_stuck(self, player: Player, track, _):
+        await player.do_next()
+
+    @commands.Cog.listener()
+    async def on_pomice_track_exception(self, player: Player, track, _):
+        await player.do_next()
+        
+    @commands.command(aliases=['joi', 'j', 'summon', 'su', 'con'])
+    async def join(self, ctx: commands.Context, *, channel: nextcord.VoiceChannel = None) -> None:
+        if not channel:
+            channel = getattr(ctx.author.voice, "channel", None)
+            if not channel:
+                return await ctx.send("You must be in a voice channel in order to use this command!")
+
+        # With the release of discord.py 1.7, you can now add a compatible
+        # VoiceProtocol class as an argument in VoiceChannel.connect().
+        # This library takes advantage of that and is how you initialize a player.
+        await ctx.author.voice.channel.connect(cls=Player)
+        player: Player = ctx.voice_client
+
+        # Set the player context so we can use it so send messages
+        await player.set_context(ctx=ctx)
+        await ctx.send(f"Joined the voice channel `{channel.name}`")
+
+    @commands.command(aliases=['disconnect', 'dc', 'disc', 'lv', 'fuckoff'])
+    async def leave(self, ctx: commands.Context):
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        await player.destroy()
+        await ctx.send("Player has left the channel.")
+        
+    @commands.command(aliases=['pla', 'p'])
+    async def play(self, ctx: commands.Context, *, search: str) -> None:
+        # Checks if the player is in the channel before we play anything
+        if not (player := ctx.voice_client):
+            await ctx.invoke(self.join)   
+            player = ctx.voice_client
+        results = await player.get_tracks(search, ctx=ctx)     
+        
+        if not results:
+            return await ctx.send("No results were found for that search term", delete_after=7)
+        
+        if isinstance(results, pomice.Playlist):
+            for track in results.tracks:
+                await player.queue.put(track)
+        else:
+            track = results[0]
+            await player.queue.put(track)
+
+        if not player.is_playing:
+            await player.do_next()
+
+
+
+    @commands.command(aliases=['pau', 'pa'])
+    async def pause(self, ctx: commands.Context):
+        """Pause the currently playing song."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        if player.is_paused or not player.is_connected:
+            return
+
+        if self.is_privileged(ctx):
+            await ctx.send('An admin or DJ has paused the player.', delete_after=10)
+            player.pause_votes.clear()
+
+            return await player.set_pause(True)
+
+        required = self.required(ctx)
+        player.pause_votes.add(ctx.author)
+
+        if len(player.pause_votes) >= required:
+            await ctx.send('Vote to pause passed. Pausing player.', delete_after=10)
+            player.pause_votes.clear()
+            await player.set_pause(True)
+        else:
+            await ctx.send(f'{ctx.author.mention} has voted to pause the player. Votes: {len(player.pause_votes)}/{required}', delete_after=15)
+
+    @commands.command(aliases=['res', 'r'])
+    async def resume(self, ctx: commands.Context):
+        """Resume a currently paused player."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        if not player.is_paused or not player.is_connected:
+            return
+
+        if self.is_privileged(ctx):
+            await ctx.send('An admin or DJ has resumed the player.', delete_after=10)
+            player.resume_votes.clear()
+
+            return await player.set_pause(False)
+
+        required = self.required(ctx)
+        player.resume_votes.add(ctx.author)
+
+        if len(player.resume_votes) >= required:
+            await ctx.send('Vote to resume passed. Resuming player.', delete_after=10)
+            player.resume_votes.clear()
+            await player.set_pause(False)
+        else:
+            await ctx.send(f'{ctx.author.mention} has voted to resume the player. Votes: {len(player.resume_votes)}/{required}', delete_after=15)
+
+    @commands.command(aliases=['n', 'nex', 'next', 'sk'])
+    async def skip(self, ctx: commands.Context):
+        """Skip the currently playing song."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        if not player.is_connected:
+            return
+
+        if self.is_privileged(ctx):
+            await ctx.send('An admin or DJ has skipped the song.', delete_after=10)
+            player.skip_votes.clear()
+
+            return await player.stop()
+
+        if ctx.author == player.current.requester:
+            await ctx.send('The song requester has skipped the song.', delete_after=10)
+            player.skip_votes.clear()
+
+            return await player.stop()
+
+        required = self.required(ctx)
+        player.skip_votes.add(ctx.author)
+
+        if len(player.skip_votes) >= required:
+            await ctx.send('Vote to skip passed. Skipping song.', delete_after=10)
+            player.skip_votes.clear()
+            await player.stop()
+        else:
+            await ctx.send(f'{ctx.author.mention} has voted to skip the song. Votes: {len(player.skip_votes)}/{required} ', delete_after=15)
 
     @commands.command()
-    async def play(self, ctx, *, query: str):
-        if ctx.author.voice is not None:
-            tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
-            player = self.bot.wavelink.get_player(ctx.guild.id)
-            if tracks:
-                song_id = tracks[0].id
-                song_title = tracks[0].title
-                song_duration = tracks[0].duration
-                song_thumbnail = tracks[0].thumb
-                song_author = tracks[0].author
+    async def stop(self, ctx: commands.Context):
+        """Stop the player and clear all internal states."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
 
-                Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-                if Queue is None and not player.is_playing:
-                    embed = nextcord.Embed(
-                        title = "Searching ..",
-                        colour = 0xFED000
-                    )
-                    message = await ctx.send(embed=embed)
-                    data = {
-                        "guild_id":ctx.guild.id,
-                        "Mode":"Default",
-                        "Request_channel":ctx.channel.id,
-                        "Message_id":message.id,
-                        "Queue":[{
-                            "position":1,
-                            "song_title":song_title,
-                            "song_id":song_id,
-                            "requester":ctx.author.id}]
-                    }
-                    await settings.collectionmusic.insert_one(data)
-                    player = self.bot.wavelink.get_player(ctx.guild.id)
-                    if not player.is_connected:
-                        await ctx.invoke(self.connect_)
-                    embed = await Music.build_embed(song_title,song_duration,song_thumbnail,None,song_author,ctx.author,"Default")
-                    await message.edit(embed=embed)
-                    await player.play(tracks[0])
-                
-                else:
-                    if not len(Queue["Queue"]) > 20:
-                        await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"position":len(Queue["Queue"])+1,"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-                        if len(Queue["Queue"]) == 1:
-                            message = await self.bot.get_channel(Queue["Request_channel"]).fetch_message(Queue["Message_id"]) # the message's channel
-                            embed = await Music.build_embed(Queue["Queue"][0]["song_title"],song_duration,song_thumbnail,song_title,song_author,ctx.author,Queue["Mode"])
-                            await message.edit(embed=embed)
-                    else:
-                        await ctx.send("คิวห้ามเกิน 20")
-            else:        
-                return await ctx.send('Could not find any songs with that query.')
+        if not player.is_connected:
+            return
+
+        if self.is_privileged(ctx):
+            await ctx.send('An admin or DJ has stopped the player.', delete_after=10)
+            return await player.teardown()
+
+        required = self.required(ctx)
+        player.stop_votes.add(ctx.author)
+
+        if len(player.stop_votes) >= required:
+            await ctx.send('Vote to stop passed. Stopping the player.', delete_after=10)
+            await player.teardown()
         else:
-            await ctx.send('No channel to join. Please either specify a valid channel or join one.')
+            await ctx.send(f'{ctx.author.mention} has voted to stop the player. Votes: {len(player.stop_votes)}/{required}', delete_after=15)
+
+    @commands.command(aliases=['mix', 'shuf'])
+    async def shuffle(self, ctx: commands.Context):
+        """Shuffle the players queue."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        if not player.is_connected:
+            return
+
+        if player.queue.qsize() < 3:
+            return await ctx.send('The queue is empty. Add some songs to shuffle the queue.', delete_after=15)
+
+        if self.is_privileged(ctx):
+            await ctx.send('An admin or DJ has shuffled the queue.', delete_after=10)
+            player.shuffle_votes.clear()
+            return random.shuffle(player.queue._queue)
+
+        required = self.required(ctx)
+        player.shuffle_votes.add(ctx.author)
+
+        if len(player.shuffle_votes) >= required:
+            await ctx.send('Vote to shuffle passed. Shuffling the queue.', delete_after=10)
+            player.shuffle_votes.clear()
+            random.shuffle(player.queue._queue)
+        else:
+            await ctx.send(f'{ctx.author.mention} has voted to shuffle the queue. Votes: {len(player.shuffle_votes)}/{required}', delete_after=15)
+
+    @commands.command(aliases=['v', 'vol'])
+    async def volume(self, ctx: commands.Context, *, vol: int):
+        """Change the players volume, between 1 and 100."""
+        if not (player := ctx.voice_client):
+            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
+
+        if not player.is_connected:
+            return
+
+        if not self.is_privileged(ctx):
+            return await ctx.send('Only the DJ or admins may change the volume.')
+
+        if not 0 < vol < 101:
+            return await ctx.send('Please enter a value between 1 and 100.')
+
+        await player.set_volume(vol)
+        await ctx.send(f'Set the volume to **{vol}**%', delete_after=7)
 
     
     @commands.command()
@@ -294,7 +381,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
             embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
-            embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
+            embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
             embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
             embed.set_footer(text=f"server : {ctx.guild.name}")
             try:
@@ -325,7 +412,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
                 embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
-                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
+                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
                 embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, components=[
@@ -352,7 +439,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
-                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
+                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
                     embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, components=[

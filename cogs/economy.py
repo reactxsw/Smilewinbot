@@ -151,7 +151,7 @@ class Economy(commands.Cog):
                                 embed = nextcord.Embed(
                                     colour = 0xB9E7A5
                                 )
-                                embed.set_author(name=f"จำนวนเงินของ {member.name}", icon_url=f"{member.avatar_url}") 
+                                embed.set_author(name=f"จำนวนเงินของ {member.name}", icon_url=f"{member.avatar.url}") 
                             
                                 embed.add_field(name=f'เงินในธนาคาร', value=f'{bank} {currency}', inline = False)
                                 embed.add_field(name=f'เงินทั้งหมด', value=f' ?? {currency}', inline = False)
@@ -206,7 +206,7 @@ class Economy(commands.Cog):
                                 embed = nextcord.Embed(
                                     colour = 0xB9E7A5
                                 )
-                                embed.set_author(name=f"จำนวนเงินของ {ctx.author.name}", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"จำนวนเงินของ {ctx.author.name}", icon_url=f"{ctx.author.avatar.url}") 
                             
                                 embed.add_field(name=f'เงินในธนาคาร', value=f'{bank} {currency}', inline = False)
                                 embed.add_field(name=f'เงินในกระเป๋าตัง', value=f'{wallet} {currency}', inline = False)
@@ -261,7 +261,7 @@ class Economy(commands.Cog):
                                 embed = nextcord.Embed(
                                     colour = 0xB9E7A5
                                 )
-                                embed.set_author(name=f"{member.name} balance", icon_url=f"{member.avatar_url}") 
+                                embed.set_author(name=f"{member.name} balance", icon_url=f"{member.avatar.url}") 
                             
                                 embed.add_field(name=f'Bank', value=f'{bank} {currency}', inline = False)
                                 embed.add_field(name=f'Total money', value=f' ?? {currency}', inline = False)
@@ -316,7 +316,7 @@ class Economy(commands.Cog):
                                 embed = nextcord.Embed(
                                     colour = 0xB9E7A5
                                 )
-                                embed.set_author(name=f"{ctx.author.name} balance", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"{ctx.author.name} balance", icon_url=f"{ctx.author.avatar.url}") 
                             
                                 embed.add_field(name=f'Bank', value=f'{bank} {currency}', inline = False)
                                 embed.add_field(name=f'Wallet', value=f'{wallet} {currency}', inline = False)
@@ -1199,7 +1199,7 @@ class Economy(commands.Cog):
                                             colour = 0xB9E7A5
                                         )
                                         embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar_url}") 
+                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar.url}") 
                                         message  = await ctx.send(embed=embed)
                                         await message.add_reaction('💸')
 
@@ -1212,7 +1212,7 @@ class Economy(commands.Cog):
                                             colour = 0x983925
                                         )
                                         embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar_url}") 
+                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar.url}") 
                                         message  = await ctx.send(embed=embed)
                                         await message.add_reaction('💸')
 
@@ -1299,7 +1299,7 @@ class Economy(commands.Cog):
                                             colour = 0xB9E7A5
                                         )
                                         embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar_url}") 
+                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar.url}") 
                                         message  = await ctx.send(embed=embed)
                                         await message.add_reaction('💸')
 
@@ -1312,7 +1312,7 @@ class Economy(commands.Cog):
                                             colour = 0x983925
                                         )
                                         embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar_url}") 
+                                        embed.set_author(name=f"SLOT MACHINE", icon_url=f"{ctx.author.avatar.url}") 
                                         message  = await ctx.send(embed=embed)
                                         await message.add_reaction('💸')
 

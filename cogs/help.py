@@ -48,7 +48,7 @@ class Help(commands.Cog):
 ```
 """, inline=False)
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -81,7 +81,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -119,7 +119,7 @@ class Help(commands.Cog):
 ```
 """, inline=False)
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -145,7 +145,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, Inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -178,7 +178,7 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}resetmoney [@member]``', value ='รีเซ็ทเงินของสมาชิก')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}work``', value ='ทํางานหาเงิน')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}beg``', value ='ขอทาน')
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -217,7 +217,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, Inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -255,7 +255,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -283,7 +283,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -316,7 +316,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -340,7 +340,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -389,7 +389,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -425,7 +425,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -465,7 +465,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -495,7 +495,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -544,7 +544,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
                 message = await ctx.send(embed=embed)
@@ -583,7 +583,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
             
                 message = await ctx.send(embed=embed)
@@ -623,7 +623,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -653,7 +653,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -697,7 +697,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -731,7 +731,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -776,7 +776,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
@@ -810,7 +810,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
@@ -845,7 +845,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
@@ -870,7 +870,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
@@ -930,7 +930,7 @@ class Help(commands.Cog):
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
@@ -980,7 +980,7 @@ class Help(commands.Cog):
 • The function cannot work in private chat.
 ```
 """, inline=False)
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')

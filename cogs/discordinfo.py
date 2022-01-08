@@ -162,7 +162,7 @@ class DiscordInfo(commands.Cog):
                     description = "```🕒 " + uptime +"```",
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -177,7 +177,7 @@ class DiscordInfo(commands.Cog):
                     description = "```🕒 " + uptime +"```",
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -407,7 +407,7 @@ f"""**General Information**
                 embed.add_field(name='🤖 ``ภาษาที่ใช้เขียนบอท``', value=f'Python {PYTHON_VERSION}')
                 embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
 
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
@@ -434,7 +434,7 @@ f"""**General Information**
                 embed.add_field(name='🤖 ``Programming language``', value=f'Python {PYTHON_VERSION}')
                 embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
 
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
@@ -459,9 +459,9 @@ f"""**General Information**
                     colour = member.color,
                     title = f"ข้อมูลของสมาชิก {member}"
                 )
-                embed.set_author(name = f'ข้อมูลของ {member}', icon_url=f"{member.avatar_url}")
-                embed.set_thumbnail(url=member.avatar_url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar_url)
+                embed.set_author(name = f'ข้อมูลของ {member}', icon_url=f"{member.avatar.url}")
+                embed.set_thumbnail(url=member.avatar.url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar.url)
                 embed.add_field(name="```ID ของสมาชิก:```",value=member.id)
                 embed.add_field(name="```ชื่อในเซิฟ:```",value=member.display_name)
                 embed.add_field(name="```วันที่สมัคร:```",value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
@@ -476,9 +476,9 @@ f"""**General Information**
                     colour = member.color,
                     title = f"Info of {member}"
                 )
-                embed.set_author(name = f'Info of {member}', icon_url=f"{member.avatar_url}")
-                embed.set_thumbnail(url=member.avatar_url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar_url)
+                embed.set_author(name = f'Info of {member}', icon_url=f"{member.avatar.url}")
+                embed.set_thumbnail(url=member.avatar.url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar.url)
                 embed.add_field(name="```Member id:```",value=member.id)
                 embed.add_field(name="```Member nickname:```",value=member.display_name)
                 embed.add_field(name="```Creation date:```",value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
@@ -511,7 +511,7 @@ f"""**General Information**
 
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
         
@@ -532,7 +532,7 @@ f"""**General Information**
 
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
         
@@ -557,8 +557,8 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"รูปของสมาชิก: {member}",
-                    description = f"ลิงค์ : [คลิกที่นี้]({member.avatar_url})")
-                embed.set_image(url=member.avatar_url)
+                    description = f"ลิงค์ : [คลิกที่นี้]({member.avatar.url})")
+                embed.set_image(url=member.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -569,8 +569,8 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"{member} profile picture",
-                    description = f"link : [click here]({member.avatar_url})")
-                embed.set_image(url=member.avatar_url)
+                    description = f"link : [click here]({member.avatar.url})")
+                embed.set_image(url=member.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -592,7 +592,7 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"หารูปของสมาชิก: {member}",
-                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar.url}")
                 
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -602,7 +602,7 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"search for {member} profile picture",
-                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar.url}")
                 
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -992,7 +992,7 @@ f"""**General Information**
                     description = f"[discordbotlist](https://discordbotlist.com/bots/smilewin/upvote)" + "\n" + "[Top.gg](https://discordbotlist.com/bots/smilewin/upvote)"
 
                 )
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🙏')
@@ -1004,7 +1004,7 @@ f"""**General Information**
                     description = f"[discordbotlist](https://discordbotlist.com/bots/smilewin/upvote)" + "\n" + "[Top.gg](https://discordbotlist.com/bots/smilewin/upvote)"
 
                 )
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🙏')

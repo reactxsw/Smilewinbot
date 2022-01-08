@@ -35,7 +35,7 @@ class Mod(commands.Cog):
             
                 )
 
-                embed.set_thumbnail(url=f"{member.avatar_url}")
+                embed.set_thumbnail(url=f"{member.avatar.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
         
                 message = await ctx.send(embed=embed)
@@ -55,7 +55,7 @@ class Mod(commands.Cog):
             
                 )
 
-                embed.set_thumbnail(url=f"{member.avatar_url}")
+                embed.set_thumbnail(url=f"{member.avatar.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
         
                 message = await ctx.send(embed=embed)
@@ -144,7 +144,7 @@ class Mod(commands.Cog):
                     
                 )
 
-                embed.set_thumbnail(url=f"{member.avatar_url}")
+                embed.set_thumbnail(url=f"{member.avatar.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 
                 message = await ctx.send(embed=embed)
@@ -164,7 +164,7 @@ class Mod(commands.Cog):
                     
                 )
 
-                embed.set_thumbnail(url=f"{member.avatar_url}")
+                embed.set_thumbnail(url=f"{member.avatar.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 
                 message = await ctx.send(embed=embed)

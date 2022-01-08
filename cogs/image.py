@@ -232,7 +232,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,
@@ -249,7 +249,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,
@@ -276,7 +276,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,
@@ -293,7 +293,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,
@@ -316,7 +316,7 @@ class Image(commands.Cog):
         else:
 
             if image is None:
-                image = ctx.author.avatar_url
+                image = ctx.author.avatar.url
             
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}") as r:
@@ -344,7 +344,7 @@ class Image(commands.Cog):
 
         else: 
 
-            image = ctx.author.avatar_url
+            image = ctx.author.avatar.url
             username = ctx.author
 
             async with aiohttp.ClientSession() as session:
@@ -410,7 +410,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,
@@ -427,7 +427,7 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
                 embed = nextcord.Embed(
                     colour=0x00FFFF,

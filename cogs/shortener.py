@@ -416,7 +416,7 @@ https://hastebin.com/{r['key']}```"""
                 try:
                     async with aiohttp.ClientSession() as session:
                         webhook = Webhook.from_url(webhook_url, session=session)
-                        await webhook.send(message , avatar_url= self.bot.user.avatar_url , username="Smilewinbot")
+                        await webhook.send(message , avatar_url= self.bot.user.avatar.url , username="Smilewinbot")
 
                     embed = nextcord.Embed(
                         colour = 0x00FFFF,
@@ -444,7 +444,7 @@ https://hastebin.com/{r['key']}```"""
                 try:
                     async with aiohttp.ClientSession() as session:
                         webhook = Webhook.from_url(webhook_url, session=session)
-                        await webhook.send(message , avatar_url= self.bot.user.avatar_url , username="Smilewinbot")
+                        await webhook.send(message , avatar_url= self.bot.user.avatar.url , username="Smilewinbot")
 
                     embed = nextcord.Embed(
                         colour = 0x00FFFF,
@@ -506,7 +506,7 @@ https://hastebin.com/{r['key']}```"""
                         try:
                             async with aiohttp.ClientSession() as session:
                                 webhook = Webhook.from_url(item, session=session)
-                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
+                                await webhook.send(message , avatar_url = self.bot.user.avatar.url , username = "Smilewinbot")
 
                         except nextcord.InvalidArgument:
                             pass
@@ -570,7 +570,7 @@ https://hastebin.com/{r['key']}```"""
                         try:
                             async with aiohttp.ClientSession() as session:
                                 webhook = Webhook.from_url(item, session=session)
-                                await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
+                                await webhook.send(message , avatar_url = self.bot.user.avatar.url , username = "Smilewinbot")
                         except nextcord.InvalidArgument:
                             pass
                 
