@@ -1,9 +1,9 @@
 from typing import Text
-import discord
+import nextcord
 import datetime
-from discord import user
+from nextcord import user
 import settings
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Events(commands.Cog): 
@@ -25,7 +25,7 @@ class Events(commands.Cog):
                 emoji = roledata["emoji"]
                 role = roledata["role_give_id"]
                 if str(payload.emoji) == str(emoji):
-                    role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
+                    role = nextcord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
                     if role and payload.member != self.bot.user:
                         await payload.member.add_roles(role)
                 
@@ -48,7 +48,7 @@ class Events(commands.Cog):
                     member = self.bot.get_guild(payload.guild_id).get_member(payload.user_id)
                     if role in [role.id for role in member.roles]:
                         role = data["role_give_id"]
-                        role = discord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
+                        role = nextcord.utils.get(self.bot.get_guild(payload.guild_id).roles, id = role)
                         await member.remove_roles(role)
                     
                     else:
@@ -77,7 +77,7 @@ class Events(commands.Cog):
                         if channel:
                             if logstatus == "YES":
                                 if before.channel is None:
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         colour = 0x56FF2D,
                                         description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
                                     )
@@ -87,7 +87,7 @@ class Events(commands.Cog):
                                     await channel.send(embed=embed)
                                 
                                 elif before.channel is not None and after.channel is not None and before.channel != after.channel:
-                                        embed = discord.Embed(
+                                        embed = nextcord.Embed(
                                             colour = 0x00FFFF,
                                             description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
                                         )
@@ -100,7 +100,7 @@ class Events(commands.Cog):
                                     pass
                                 
                                 else:
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         colour = 0x983925,
                                         description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
                                     )
@@ -125,7 +125,7 @@ class Events(commands.Cog):
                         if channel:
                             if logstatus == "YES":
                                 if before.channel is None:
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         colour = 0x56FF2D,
                                         description = f"🢂 ``Joined voice channel`` {after.channel} :loud_sound:"
                                     )
@@ -135,7 +135,7 @@ class Events(commands.Cog):
                                     await channel.send(embed=embed)
                                 
                                 elif before.channel is not None and after.channel is not None and before.channel != after.channel:
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         colour = 0x00FFFF,
                                         description = f"🢆 ``Moved from`` {before.channel} :loud_sound: to {after.channel} :loud_sound:"
                                     )
@@ -149,7 +149,7 @@ class Events(commands.Cog):
 
                                 
                                 else:
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         colour = 0x983925,
                                         description = f"🢀``Left voice channel`` {before.channel} :loud_sound:"
                                     )
@@ -178,7 +178,7 @@ class Events(commands.Cog):
                     if not welcome == "None":
                         channel = self.bot.get_channel(id = int(welcome))
                         if channel:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x99e68b,
                                 title =f'ยินดีต้อนรับเข้าสู่ {member.guild.name}',
                                 description = 'กรุณาอ่านกฏเเละเคารพกันเเละกันด้วยนะครับ'
@@ -202,7 +202,7 @@ class Events(commands.Cog):
                     if not welcome == "None":
                         channel = self.bot.get_channel(id = int(welcome))
                         if channel:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                     colour = 0x99e68b,
                                     title =f'Welcome to {member.guild.name}',
                                     description = 'Please read and follow our rules'
@@ -236,7 +236,7 @@ class Events(commands.Cog):
                     if not welcome == "None":
                         channel = self.bot.get_channel(id = int(data["leave_id"]))
                         if channel:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour=0x983925, 
                                 title = "Member leave",
                                 description= f"{member.name}ได้ออกจากเซิฟเวอร์"
@@ -259,7 +259,7 @@ class Events(commands.Cog):
                     if not welcome == "None":
                         channel = self.bot.get_channel(id = int(data["leave_id"]))
                         if channel:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour=0x983925, 
                                 title = "Member leave",
                                 description= f"{member.name} have left the server"
@@ -283,40 +283,40 @@ class Events(commands.Cog):
     async def on_guild_join(self,guild):
         await self.bot.wait_until_ready()
         channel = self.bot.get_channel(id = int(settings.logchannel))
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title = f"Bot have joined a new server {guild.name} with {guild.member_count} members",
             colour = 0x00FFFF
         )
         await channel.send(embed=embed)
         try:
-            async for entry in guild.audit_logs(limit= 1 ,action=discord.AuditLogAction.bot_add):
-                uembed = discord.Embed(
+            async for entry in guild.audit_logs(limit= 1 ,action=nextcord.AuditLogAction.bot_add):
+                uembed = nextcord.Embed(
                                     colour = 0x00FFFF,
                                     description =
 f"""สวัสดีครับ {entry.user.name}
 ขอบคุณที่เชิญบอท{self.bot.user.name} เข้าร่วมเซิร์ฟเวอร์ {entry.user.mention}
 
-เว็บไซต์บอท : [Smilewin](https://smilewindiscord-th.web.app/)
+เว็บไซต์บอท : [Smilewin](https://smilewinnextcord-th.web.app/)
 
 
                                     """) 
                 uembed.add_field(name="🤝Partner : ",value=f"-")
                 await entry.user.send(embed=uembed)
         
-        except discord.Forbidden:
+        except nextcord.Forbidden:
             pass
 
         for channel in guild.text_channels:
             if channel.permissions_for(guild.me).send_messages:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"🙏 สวัสดีครับเซิฟเวอร์ / Hello {guild.name}",
                     description = f"""
                     พิม ``{settings.COMMAND_PREFIX}help`` เพื่อดูคําสั่งของบอท
-                    Support : https://discord.com/invite/R8RYXyB4Cg
+                    Support : https://nextcord.com/invite/R8RYXyB4Cg
 
                     use ``{settings.COMMAND_PREFIX}help`` to view bot commands
-                    support : https://discord.com/invite/R8RYXyB4Cg
+                    support : https://nextcord.com/invite/R8RYXyB4Cg
 
                     """
 
@@ -334,7 +334,7 @@ f"""สวัสดีครับ {entry.user.name}
     async def on_guild_remove(self,guild):
         await self.bot.wait_until_ready()
         channel = self.bot.get_channel(id = int(settings.logchannel))
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title = f"Bot have left {guild.name}",
             colour = 0x983925
         )  

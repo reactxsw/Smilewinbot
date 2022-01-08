@@ -1,7 +1,7 @@
 from os import name
-import discord
+import nextcord
 import settings
-from discord.ext import commands
+from nextcord.ext import commands
 from utils.languageembed import languageEmbed
 
 
@@ -21,7 +21,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คำสั่งสำหรับใช้งานบอท',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -55,7 +55,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='Help command',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -98,7 +98,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คำสั่งสำหรับใช้งานบอท',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -126,7 +126,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "Engish":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คำสั่งสำหรับใช้งานบอท',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -162,7 +162,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งต่างๆเกี่ยวกับระบบเศรษฐกิจ',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -193,7 +193,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='Instructions for use economy command',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000
@@ -234,7 +234,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับตัวบอท',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -262,7 +262,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='help commands related to bot',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -299,7 +299,7 @@ class Help(commands.Cog):
         else:
             server_language = languageserver["Language"]
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งข้อมูลของสมาชิก',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -323,7 +323,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='help commands related to user',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -357,7 +357,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับตั้งค่า',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -396,7 +396,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='help commands related to setup',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -442,7 +442,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับเกม',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -472,7 +472,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับเกม',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -512,7 +512,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับข้อมูล',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -551,7 +551,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='help commands related to information',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -600,7 +600,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวเเอดมิน',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -630,7 +630,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวเเอดมิน',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -670,7 +670,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
 
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งบรรเทิง',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -704,7 +704,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งบรรเทิง',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -748,7 +748,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งทั่วไป',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -782,7 +782,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งทั่วไป',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -826,7 +826,7 @@ class Help(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับรูป',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -851,7 +851,7 @@ class Help(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งเกี่ยวกับรูป',
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -887,7 +887,7 @@ class Help(commands.Cog):
             
             if server_language == "Thai":
 
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='คําสั่งnsfw',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
@@ -937,7 +937,7 @@ class Help(commands.Cog):
             
             if server_language == "English":
 
-                embed=discord.Embed(
+                embed=nextcord.Embed(
                     title='NSFW commands',
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   

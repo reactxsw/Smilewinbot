@@ -3,9 +3,9 @@ from utils.languageembed import languageEmbed
 import os
 import logging
 from datetime import datetime, timedelta, timezone
-import discord
+import nextcord
 import traceback
-from discord.ext import commands
+from nextcord.ext import commands
 
 class Error(commands.Cog):
 
@@ -32,7 +32,7 @@ class Error(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.CommandNotFound):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
                     )
@@ -41,7 +41,7 @@ class Error(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 elif isinstance(error, commands.BotMissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"⚠️บอทไม่มีสิทธิ คุณต้องให้สิทธิเเอดมินกับบอทก่อนใช้คําสั่งนี้"
                     )
@@ -56,7 +56,7 @@ class Error(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.CommandNotFound):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"⚠️ Command not found"
                     )
@@ -65,7 +65,7 @@ class Error(commands.Cog):
                     await message.add_reaction('⚠️')
                 
                 elif isinstance(error, commands.BotMissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"⚠️Bot don't have enough permission to do that please give administrator permission to the bot"
                     )

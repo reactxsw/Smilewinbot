@@ -1,7 +1,7 @@
-import discord
+import nextcord
 import settings
 from utils.languageembed import languageEmbed
-from discord.ext import commands
+from nextcord.ext import commands
 from discordTogether import DiscordTogether
 
 class DiscordActivity(commands.Cog):
@@ -20,7 +20,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "Thai":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} ต้องเข้าห้องพูดคุยก่อน",
                         colour = 0x983925
                     )
@@ -31,8 +31,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'youtube')
                         await ctx.send(f"คลิกที่ลิงก์เพื่อเริ่ม:\n{link}")
 
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "บอทไม่มีสิทธิ์ ``สร้างลิงค์เชิญ``",
                             colour = 0x983925
                         )
@@ -41,7 +41,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "English":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} need to join voice channel",
                         colour = 0x983925
                     )
@@ -52,8 +52,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'youtube')
                         await ctx.send(f"Click on the link to start:\n{link}")
                     
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "Bot don't have ``CREATE_INVITE`` permission",
                             colour = 0x983925
                         )
@@ -70,7 +70,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "Thai":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} ต้องเข้าห้องพูดคุยก่อน",
                         colour = 0x983925
                     )
@@ -81,8 +81,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'poker')
                         await ctx.send(f"คลิกที่ลิงก์เพื่อเริ่ม:\n{link}")
 
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "บอทไม่มีสิทธิ์ ``สร้างลิงค์เชิญ``",
                             colour = 0x983925
                         )
@@ -91,7 +91,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "English":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} need to join voice channel",
                         colour = 0x983925
                     )
@@ -102,8 +102,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'poker')
                         await ctx.send(f"Click on the link to start:\n{link}")
                     
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "Bot don't have ``CREATE_INVITE`` permission",
                             colour = 0x983925
                         )
@@ -120,7 +120,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "Thai":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} ต้องเข้าห้องพูดคุยก่อน",
                         colour = 0x983925
                     )
@@ -131,8 +131,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'chess')
                         await ctx.send(f"คลิกที่ลิงก์เพื่อเริ่ม:\n{link}")
 
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "บอทไม่มีสิทธิ์ ``สร้างลิงค์เชิญ``",
                             colour = 0x983925
                         )
@@ -141,7 +141,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "English":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} need to join voice channel",
                         colour = 0x983925
                     )
@@ -152,8 +152,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'chess')
                         await ctx.send(f"Click on the link to start:\n{link}")
                     
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "Bot don't have ``CREATE_INVITE`` permission",
                             colour = 0x983925
                         )
@@ -170,7 +170,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "Thai":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} ต้องเข้าห้องพูดคุยก่อน",
                         colour = 0x983925
                     )
@@ -181,8 +181,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'betrayal')
                         await ctx.send(f"คลิกที่ลิงก์เพื่อเริ่ม:\n{link}")
 
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "บอทไม่มีสิทธิ์ ``สร้างลิงค์เชิญ``",
                             colour = 0x983925
                         )
@@ -191,7 +191,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "English":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} need to join voice channel",
                         colour = 0x983925
                     )
@@ -202,8 +202,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'betrayal')
                         await ctx.send(f"Click on the link to start:\n{link}")
                     
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "Bot don't have ``CREATE_INVITE`` permission",
                             colour = 0x983925
                         )
@@ -220,7 +220,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "Thai":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} ต้องเข้าห้องพูดคุยก่อน",
                         colour = 0x983925
                     )
@@ -231,8 +231,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'fishing')
                         await ctx.send(f"คลิกที่ลิงก์เพื่อเริ่ม:\n{link}")
 
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "บอทไม่มีสิทธิ์ ``สร้างลิงค์เชิญ``",
                             colour = 0x983925
                         )
@@ -241,7 +241,7 @@ class DiscordActivity(commands.Cog):
             if server_language == "English":
                 voice_state = ctx.author.voice
                 if voice_state is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         description= f"{ctx.author.mention} need to join voice channel",
                         colour = 0x983925
                     )
@@ -252,8 +252,8 @@ class DiscordActivity(commands.Cog):
                         link = await self.togetherControl.create_link(ctx.author.voice.channel.id, 'poker')
                         await ctx.send(f"Click on the link to start:\n{link}")
                     
-                    except discord.ext.commands.errors.BotMissingPermissions:
-                        embed = discord.Embed(
+                    except nextcord.ext.commands.errors.BotMissingPermissions:
+                        embed = nextcord.Embed(
                             description= "Bot don't have ``CREATE_INVITE`` permission",
                             colour = 0x983925
                         )

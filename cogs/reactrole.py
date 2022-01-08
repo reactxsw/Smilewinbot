@@ -1,8 +1,8 @@
-import discord
-from discord.embeds import Embed
+import nextcord
+from nextcord.embeds import Embed
 import settings
 from utils.languageembed import languageEmbed
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class ReactRole(commands.Cog):
@@ -12,7 +12,7 @@ class ReactRole(commands.Cog):
     
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setreactrole(self,ctx , emoji , role: discord.Role , * , text):
+    async def setreactrole(self,ctx , emoji , role: nextcord.Role , * , text):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -21,7 +21,7 @@ class ReactRole(commands.Cog):
         else:
 
             if role >= ctx.guild.me.top_role:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "ไม่มีสิทธ์",
                     description = "ยศของบอทจะต้องสูงกว่ายศที่จะให้สมาชิก ตัวอย่างตามรูปด้านล่าง",
                     colour =  0x983925,
@@ -33,7 +33,7 @@ class ReactRole(commands.Cog):
                 if "//" in text:
                     text = text.replace('//','\n')
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         description = text
                     )
@@ -60,7 +60,7 @@ class ReactRole(commands.Cog):
 
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -74,7 +74,7 @@ class ReactRole(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"

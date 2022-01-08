@@ -1,15 +1,15 @@
 from aiohttp.client import ClientSession, request
-import discord 
+import nextcord 
 from utils.languageembed import languageEmbed
-from discord import embeds
-from discord.client import Client
-from discord.ext.commands.core import command
+from nextcord import embeds
+from nextcord.client import Client
+from nextcord.ext.commands.core import command
 import humanize
 import settings
 import math
 import aiohttp
 import flag
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Faceit(commands.Cog):
@@ -180,7 +180,7 @@ class Faceit(commands.Cog):
 
                 downelo = humanize.intcomma(downelo)
                 rcmatch = ' '.join([str(elem) for elem in rcmatch])
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = f"**CSGO FACEIT** <:faceitlogo:{settings.faceitlogo}>",
                     description = f"""
 **Username** : **{nick}**

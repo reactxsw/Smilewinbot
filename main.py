@@ -2,7 +2,6 @@
 #import
 import settings
 import subprocess
-import discord  
 import datetime  
 import os
 import platform
@@ -10,10 +9,8 @@ import logging
 import asyncio
 import sys
 import traceback
-
-#from
-from discord import Webhook, AsyncWebhookAdapter
-from discord.ext import commands, tasks
+import nextcord
+from nextcord.ext import commands ,tasks
 from datetime import date, timedelta
 from itertools import cycle
 
@@ -23,7 +20,7 @@ handler = logging.FileHandler(filename='logs/botlog.log', encoding='utf-8', mode
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-intent = discord.Intents.default()
+intent = nextcord.Intents.default()
 intent.members = True
 
 developer = "REACT#1120"
@@ -60,7 +57,8 @@ async def clearcmd():
 @tasks.loop(seconds=5)
 async def change_status():
     await bot.wait_until_ready()
-    await bot.change_presence(status = discord.Status.idle, activity=discord.Game(next(status)))
+    await bot.change_presence(status = nextcord.Status.idle, activity=nextcord.Game(next(status)))
+
 
 @tasks.loop(seconds=120)
 async def serverstat():
@@ -76,7 +74,7 @@ async def serverstat():
             member_channel = bot.get_channel(data["status_members_id"])
             bot_channel = bot.get_channel(data["status_bots_id"])
             online_channel = bot.get_channel(data["status_online_id"])
-            memberonline = len([member for member in guild.members if not member.bot and member.status is discord.Status.online])
+            memberonline = len([member for member in guild.members if not member.bot and member.status is nextcord.Status.online])
             if total_member_channel:
                 await total_member_channel.edit(name = f"︱👥 Total : {guild.member_count}")
             if member_channel:
@@ -131,8 +129,8 @@ async def on_ready():
     print_ascii_art()
     #If you doesn't put log channel in config.json it won't error
     try:
-        channel = bot.get_channel(id = int(settings.logchannel))
-        embed = discord.Embed(
+        channel = bot.get_channel(int(settings.logchannel))
+        embed = nextcord.Embed(
             title = f"Bot is online",
             colour = 0x56FF2D
         )
@@ -157,7 +155,6 @@ def print_ascii_art():
     print(f"                                   ║                                      ║")
     print(f"                                   ╚══════════════════════════════════════╝")  
     print("")
-
 
 @bot.command(aliases=["reload"])
 @commands.is_owner()
@@ -187,7 +184,7 @@ async def on_connect():
 def main():
     loadcogs()
     try:
-        bot.run(settings.TOKEN , bot = True,reconnect=True)
+        bot.run(settings.TOKEN ,reconnect=True)
     except Exception as e:
         print(e)
 

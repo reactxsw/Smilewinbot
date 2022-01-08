@@ -194,3 +194,9 @@
 2022-01-07 18:05:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play รางวัลแด่คนช่างฝัน,command: play}
 2022-01-07 18:24:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r ซีวอค,command: None}
 2022-01-07 18:24:12: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play ซีวอค,command: play}
+2022-01-07 23:00:06: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:01:59: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:04:01: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:04:56: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:06:06: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:08:53: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}

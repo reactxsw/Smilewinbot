@@ -1,8 +1,8 @@
-from discord.ext.commands.core import command
+from nextcord.ext.commands.core import command
 from utils.languageembed import languageEmbed
 import settings
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 
 class ServerStat(commands.Cog):
@@ -30,12 +30,12 @@ class ServerStat(commands.Cog):
         else:
             status = "YES"
             overwrites = {
-                    ctx.guild.default_role: discord.PermissionOverwrite(connect=False)
+                    ctx.guild.default_role: nextcord.PermissionOverwrite(connect=False)
                 }
 
             server = await settings.collectionstatus.find_one({"guild_id":ctx.guild.id})
             memberonly = len([member for member in ctx.guild.members if not member.bot])
-            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is nextcord.Status.online])
             botonly = int(ctx.guild.member_count) - int(memberonly)
 
             if server is None:
@@ -190,13 +190,13 @@ class ServerStat(commands.Cog):
                         await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_online_id":onlinesvc.id}})
 
                 if server_language == "Thai":
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
 
                     )
                     await ctx.send(embed = embed)
                 
                 if server_language == "English":
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
 
                     )
                     await ctx.send(embed = embed)

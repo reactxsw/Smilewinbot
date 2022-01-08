@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 from utils.languageembed import languageEmbed
 import settings
 import requests
@@ -10,7 +10,7 @@ class Level(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def rank(self , ctx , member : discord.Member=None):
+    async def rank(self , ctx , member : nextcord.Member=None):
         language = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if language is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -44,7 +44,7 @@ class Level(commands.Cog):
                             if ranking["user_id"] == member.id:
                                 break
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = f"เลเวลของ {member}"
                             )
                         embed.add_field(name = "ชื่อ",value= f"{member.name}")
@@ -58,7 +58,7 @@ class Level(commands.Cog):
                         await message.add_reaction("✅")
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}level on เพื่อเปิดใช้",
                         colour = 0x983925
@@ -92,7 +92,7 @@ class Level(commands.Cog):
                             if ranking["user_id"] == member.id:
                                 break
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = f"เลเวลของ {member}"
                             )
                         embed.add_field(name = "ชื่อ",value= f"{member.name}")
@@ -106,7 +106,7 @@ class Level(commands.Cog):
                         await message.add_reaction("✅")
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}level on เพื่อเปิดใช้",
                         colour = 0x983925
@@ -219,7 +219,7 @@ class Level(commands.Cog):
 > อันดับ {tenth[0]} : {tenth[1]} เลเวล :{tenth[2]}
 """
                     
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title="เเรงค์เลเวลในเซิฟเวอร์",
                         colour=0x00FFFF,
                         description = description
@@ -230,7 +230,7 @@ class Level(commands.Cog):
                     await message.add_reaction('✅')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}level on เพื่อเปิดใช้",
                             colour = 0x983925
@@ -319,7 +319,7 @@ class Level(commands.Cog):
 > อันดับ {ninth[0]} : {ninth[1]} เลเวล :{ninth[2]}
 > อันดับ {tenth[0]} : {tenth[1]} เลเวล :{tenth[2]}
 """                    
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title="เเรงค์เลเวลในเซิฟเวอร์",
                         colour=0x00FFFF,
                         description = description
@@ -330,7 +330,7 @@ class Level(commands.Cog):
                     await message.add_reaction('✅')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}level on เพื่อเปิดใช้",
                             colour = 0x983925

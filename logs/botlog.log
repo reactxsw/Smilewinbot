@@ -1,8 +1,0 @@
-2022-01-07 22:56:53,859:DEBUG:discord.client: on_ready has successfully been registered as an event
-2022-01-07 22:56:53,859:DEBUG:discord.client: on_connect has successfully been registered as an event
-2022-01-07 22:56:54,337:INFO:discord.client: logging in using static token
-2022-01-07 22:56:54,740:DEBUG:discord.http: GET https://discord.com/api/v7/users/@me with None has returned 401
-2022-01-07 22:56:54,749:INFO:discord.client: Cleaning up tasks.
-2022-01-07 22:56:54,750:INFO:discord.client: Cleaning up after 1 tasks.
-2022-01-07 22:56:54,750:INFO:discord.client: All tasks finished cancelling.
-2022-01-07 22:56:54,750:INFO:discord.client: Closing the event loop.

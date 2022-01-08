@@ -1,7 +1,7 @@
-from discord.ext import commands
+from nextcord.ext import commands
 from utils.languageembed import languageEmbed
 import aiohttp
-import discord
+import nextcord
 import settings
 import datetime
 import requests
@@ -26,7 +26,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/anal") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "Anal"
 
@@ -39,7 +39,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -56,7 +56,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/anal") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "Anal"
 
@@ -69,7 +69,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -98,8 +98,8 @@ class Nsfw(commands.Cog):
                     file = open(f"download/pg{tag}.gif", "wb")
                     file.write(response.content)
                     file.close()
-                    file = discord.File(f"download/pg{tag}.gif", filename=f"pg{tag}.gif")
-                    embed = discord.Embed(
+                    file = nextcord.File(f"download/pg{tag}.gif", filename=f"pg{tag}.gif")
+                    embed = nextcord.Embed(
                         colour = 0xFC7EF5,
                     )   
                     embed.set_image(url=f"attachment://pg{tag}.gif")
@@ -109,7 +109,7 @@ class Nsfw(commands.Cog):
                     await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -129,8 +129,8 @@ class Nsfw(commands.Cog):
                     file = open(f"download/pg.gif", "wb")
                     file.write(response.content)
                     file.close()
-                    file = discord.File(f"download/pg.gif", filename=f"pg.gif")
-                    embed = discord.Embed(
+                    file = nextcord.File(f"download/pg.gif", filename=f"pg.gif")
+                    embed = nextcord.Embed(
                         colour = 0xFC7EF5,
                     )   
                     embed.set_image(url=f"attachment://pg.gif")
@@ -140,7 +140,7 @@ class Nsfw(commands.Cog):
                     await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -166,7 +166,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/solog") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "Girl solo"
 
@@ -179,7 +179,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -196,7 +196,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/solog") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "Girl solo"
 
@@ -209,7 +209,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️') 
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -235,7 +235,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/erofeet") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "erofeet"
 
@@ -248,7 +248,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -265,7 +265,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/erofeet") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "erofeet"
 
@@ -278,7 +278,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -304,7 +304,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/feetg") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "feet"
 
@@ -317,7 +317,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -334,7 +334,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/feetg") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "feet"
 
@@ -347,7 +347,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -373,7 +373,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/pussy_jpg") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "pussy"
 
@@ -386,7 +386,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -403,7 +403,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/pussy_jpg") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "pussy"
 
@@ -416,7 +416,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -442,7 +442,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/Random_hentai_gif") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "hentai"
 
@@ -455,7 +455,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -472,7 +472,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/Random_hentai_gif") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "hentai"
 
@@ -485,7 +485,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -511,7 +511,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/eroyuri") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "eroyuri"
 
@@ -524,7 +524,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -541,7 +541,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/eroyuri") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "eroyuri"
 
@@ -554,7 +554,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                     
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -580,7 +580,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/yuri") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "yuri"
 
@@ -593,7 +593,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -610,7 +610,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/yuri") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "yuri"
 
@@ -623,7 +623,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -649,7 +649,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/solo") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "solo"
 
@@ -662,7 +662,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -679,7 +679,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/solo") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "solo"
 
@@ -692,7 +692,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -718,7 +718,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/classic") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "classic"
 
@@ -731,7 +731,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -748,7 +748,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/classic") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "classic"
 
@@ -761,7 +761,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -787,7 +787,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/boobs") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "boobs"
 
@@ -800,7 +800,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
             
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -817,7 +817,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/boobs") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "boobs"
 
@@ -830,7 +830,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
             
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -856,7 +856,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/tits") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "tits"
 
@@ -869,7 +869,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -886,7 +886,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/tits") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "tits"
 
@@ -899,7 +899,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -925,7 +925,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/blowjob") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "tits"
 
@@ -938,7 +938,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -955,7 +955,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/blowjob") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "tits"
 
@@ -968,7 +968,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
             
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -994,7 +994,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/nsfw_neko_gif") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "lewd"
 
@@ -1007,7 +1007,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -1024,7 +1024,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/nsfw_neko_gif") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "lewd"
 
@@ -1037,7 +1037,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
@@ -1063,7 +1063,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/les") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "lesbian"
 
@@ -1076,7 +1076,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -1093,7 +1093,7 @@ class Nsfw(commands.Cog):
                     async with aiohttp.ClientSession() as session:
                         async with session.get("https://nekos.life/api/v2/img/les") as r:
                             r = await r.json()
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0xFC7EF5,
                                 title = "lesbian"
 
@@ -1106,7 +1106,7 @@ class Nsfw(commands.Cog):
                             await message.add_reaction('❤️')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title =f"NSFW",
                         description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"

@@ -1,9 +1,9 @@
-import discord
+import nextcord
 import datetime
 
 from motor.metaprogramming import asynchronize
 import settings
-from discord.ext import commands
+from nextcord.ext import commands
 import wavelink
 from discord_components import (
     Button,
@@ -132,7 +132,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             player.set_volume(0)
 
     async def build_embed(title,duration,thumbnail,next,author,requester,mode):
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             title = "Smilewin Music",
             description = f"Now playing {title}",
             colour = 0xFED000
@@ -197,7 +197,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         player = self.bot.wavelink.get_player(ctx.guild.id)
         if isinstance(volume, int):
             await player.set_volume(int(volume))
-            embed = discord.Embed(title=f'Successfully, Set volume into `{volume}`',color=discord.Colour.green())
+            embed = nextcord.Embed(title=f'Successfully, Set volume into `{volume}`',color=nextcord.Colour.green())
             embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
             emoji = '\N{THUMBS UP SIGN}'
             msg = await ctx.send(embed=embed)
@@ -206,12 +206,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             await ctx.send("Please input only numbers")
 
     @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
+    async def connect_(self, ctx, *, channel: nextcord.VoiceChannel=None):
         if not channel:
             try:
                 channel = ctx.author.voice.channel
             except AttributeError:
-                raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
+                raise nextcord.nextcordException('No channel to join. Please either specify a valid channel or join one.')
 
         player = self.bot.wavelink.get_player(ctx.guild.id)
         await ctx.send(f'Connecting to **`{channel.name}`**')
@@ -219,12 +219,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         await player.connect(channel.id)
     
     @commands.command(name='disconnect')
-    async def disconnect_(self, ctx, *, channel: discord.VoiceChannel=None):
+    async def disconnect_(self, ctx, *, channel: nextcord.VoiceChannel=None):
         if not channel:
             try:
                 channel = ctx.author.voice.channel
             except AttributeError:
-                raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
+                raise nextcord.nextcordException('No channel to join. Please either specify a valid channel or join one.')
 
         player = self.bot.wavelink.get_player(ctx.guild.id)
         await ctx.send(f'Connecting to **`{channel.name}`**')
@@ -245,7 +245,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
                 Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
                 if Queue is None and not player.is_playing:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "Searching ..",
                         colour = 0xFED000
                     )
@@ -284,8 +284,6 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             await ctx.send('No channel to join. Please either specify a valid channel or join one.')
 
     
-    async def test(self):
-        print("555")
     @commands.command()
     async def musicsetup(self,ctx):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -294,29 +292,30 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             await settings.collection.insert_one(newserver)
             channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง:arrows_counterclockwise: เริ่มเพลงที่กำลังเล่นใหม่:repeat: เปลี่ยนโหมดการวนเล่นเพลง:twisted_rightwards_arrows: สุ่มเพลงในคิว:sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-            embed=discord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
+            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
             embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
             embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
             embed.set_footer(text=f"server : {ctx.guild.name}")
-            embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed , components=[
-                [
-                    self.bot.components_manager.add_callback(
-                        Button(label=" ⏯ ",style=ButtonStyle.green,custom_id="pause_stop",disabled = True), self.test),
+            try:
+                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed , components=[
+                    [
 
-                    Button(label=" ⏭ ",style=ButtonStyle.gray,custom_id="skip",disabled = True),
-                    Button(label=" ⏹ ",style=ButtonStyle.red ,custom_id="stop",disabled = True),
-                    Button(label=" 🔂 ",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
-                    Button(label=" 🔁 ",style=ButtonStyle.gray ,custom_id="loop",disabled = True),
-                    ],
+                        Button(label=" ⏯ ",style=ButtonStyle.green,custom_id="pause_stop",disabled = True),
+                        Button(label=" ⏭ ",style=ButtonStyle.gray,custom_id="skip",disabled = True),
+                        Button(label=" ⏹ ",style=ButtonStyle.red ,custom_id="stop",disabled = True),
+                        Button(label=" 🔂 ",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
+                        Button(label=" 🔁 ",style=ButtonStyle.gray ,custom_id="loop",disabled = True),
+                        ],
 
-                [
-                    Button(label=" 🔊 เพิ่มเสียง ",style=ButtonStyle.blue ,custom_id="decrease_volume",disabled = True),
-                    Button(label=" 🔈 ลดเสียง ",style=ButtonStyle.blue ,custom_id="increase_volume",disabled = True),
-                    Button(label=" 🔇 เปิด/ปิดเสียง ",style=ButtonStyle.blue ,custom_id="mute_volume",disabled = True)    
-                    ]
-                ])
-
+                    [
+                        Button(label=" 🔊 เพิ่มเสียง ",style=ButtonStyle.blue ,custom_id="decrease_volume",disabled = True),
+                        Button(label=" 🔈 ลดเสียง ",style=ButtonStyle.blue ,custom_id="increase_volume",disabled = True),
+                        Button(label=" 🔇 เปิด/ปิดเสียง ",style=ButtonStyle.blue ,custom_id="mute_volume",disabled = True)    
+                        ]
+                    ])
+            except Exception as e:
+                print(e)
             music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -324,7 +323,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             if data["Music_channel_id"] == "None":
                 channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง:arrows_counterclockwise: เริ่มเพลงที่กำลังเล่นใหม่:repeat: เปลี่ยนโหมดการวนเล่นเพลง:twisted_rightwards_arrows: สุ่มเพลงในคิว:sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-                embed=discord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
@@ -351,7 +350,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 if data["Music_channel_id"] not in ctx.guild.text_channels:
                     channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง:arrows_counterclockwise: เริ่มเพลงที่กำลังเล่นใหม่:repeat: เปลี่ยนโหมดการวนเล่นเพลง:twisted_rightwards_arrows: สุ่มเพลงในคิว:sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-                    embed=discord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
@@ -382,7 +381,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
 
 
-                    except discord.NotFound:
+                    except nextcord.NotFound:
                         pass
 
 def setup(bot: commands.Bot):

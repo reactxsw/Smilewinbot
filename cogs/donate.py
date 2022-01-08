@@ -1,12 +1,12 @@
 import os
-import discord
-from discord.colour import Color
+import nextcord
+from nextcord.colour import Color
 import settings
 import datetime
 import aiohttp
 import validators
 import requests
-from discord.ext import commands
+from nextcord.ext import commands
 from utils.languageembed import languageEmbed
 
 class Invite(commands.Cog):
@@ -42,7 +42,7 @@ class Invite(commands.Cog):
                                             data = await redeem.json()
                                             gift_owner = data["data"]["owner_profile"]["full_name"]
                                             amount_redeem = float(data["data"]["amount_baht"])
-                                            embed = discord.Embed(
+                                            embed = nextcord.Embed(
                                                 title = "ขอบคุณครับ",
                                                 description = f"บริจาคเงินจํานวน {amount_redeem} ให้บอท smilewin",
                                                 Color = 0xFED000
@@ -51,14 +51,14 @@ class Invite(commands.Cog):
                                             print(f"รับเงินสําเร็จจาก {gift_owner} จํานวน {amount_redeem}")
                                         
                                         else:
-                                            embed = discord.Embed(
+                                            embed = nextcord.Embed(
                                                 title = "",
                                                 description = "",
                                                 Color = 0xFED000
                                             )
                                             await ctx.send(embed=embed)  
                             else:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     title = "",
                                     description = "",
                                     Color = 0xFED000
@@ -66,7 +66,7 @@ class Invite(commands.Cog):
                                 await ctx.send(embed=embed)
                                 print("ไม่พบอั่งเปา")
         else:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title = "",
                 description = "",
                 Color = 0xFED000
@@ -86,7 +86,7 @@ class Invite(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ลิงค์อั่งเปาที่จะบริจาค ``{settings.COMMAND_PREFIX}donate [link]``"
                     )
@@ -97,7 +97,7 @@ class Invite(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ลิงค์อั่งเปาที่จะบริจาค ``{settings.COMMAND_PREFIX}donate [link]``"
                     )

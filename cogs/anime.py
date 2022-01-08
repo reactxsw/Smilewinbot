@@ -1,8 +1,8 @@
 from utils.languageembed import languageEmbed
 import settings
-import discord
+import nextcord
 import aiohttp
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Anime(commands.Cog): 
@@ -10,7 +10,7 @@ class Anime(commands.Cog):
         self.bot = bot
 
     @commands.command()  
-    async def feed(self,ctx, member: discord.Member = None):
+    async def feed(self,ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -21,7 +21,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/feed") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "feed"
 
@@ -37,7 +37,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/feed") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "feed"
 
@@ -50,7 +50,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def tickle(self, ctx, member: discord.Member = None):
+    async def tickle(self, ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -61,7 +61,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/tickle") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "tickle"
 
@@ -76,7 +76,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/tickle") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "tickle"
 
@@ -89,7 +89,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def slap(self,ctx, member: discord.Member = None):
+    async def slap(self,ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -100,7 +100,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/slap") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "slap"
 
@@ -115,7 +115,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/slap") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "slap"
 
@@ -128,7 +128,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def hug(self,ctx, member: discord.Member = None):
+    async def hug(self,ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -139,7 +139,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/hug") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "hug"
 
@@ -155,7 +155,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/hug") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "hug"
 
@@ -168,7 +168,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def smug(self, ctx, member: discord.Member = None):
+    async def smug(self, ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -179,7 +179,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/smug") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "smug"
 
@@ -195,7 +195,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/smug") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "smug"
 
@@ -208,7 +208,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def pat(self,ctx, member: discord.Member = None):
+    async def pat(self,ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -219,7 +219,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/pat") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "pat"
 
@@ -235,7 +235,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/pat") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "pat"
 
@@ -248,7 +248,7 @@ class Anime(commands.Cog):
                         await message.add_reaction('❤️')
 
     @commands.command()
-    async def kiss(self,ctx, member: discord.Member = None):
+    async def kiss(self,ctx, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -259,7 +259,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/kiss") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "kiss"
 
@@ -275,7 +275,7 @@ class Anime(commands.Cog):
                 async with aiohttp.ClientSession() as session:
                     async with session.get("https://nekos.life/api/v2/img/kiss") as r:
                         r = await r.json()
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0xFC7EF5,
                             title = "kiss"
 

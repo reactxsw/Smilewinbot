@@ -1,6 +1,6 @@
 from importlib import reload
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import settings
 from cogs.scam import check_scam_link
 from discord_components import (
@@ -18,29 +18,30 @@ class on_message_event(commands.Cog):
     async def on_message(self,message):
         await self.bot.wait_until_ready()
         data = await settings.collection.find_one({"guild_id":message.guild.id})
-        if message.guild:
-            if message.channel.id == data["Music_channel_id"]:
-                embed_message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
-                embed=discord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                                    colour = 0xffff00)
-                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
-                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                embed.set_footer(text=f"server : {message.guild.name}")
-                await embed_message.edit(embed=embed, components=[
-                [
-                    Button(label="⏯",style=ButtonStyle.green,custom_id="pause_stop"),
-                    Button(label="⏭",style=ButtonStyle.gray,custom_id="skip"),
-                    Button(label="⏹",style=ButtonStyle.red ,custom_id="stop"),
-                    Button(label="🔂",style=ButtonStyle.gray ,custom_id="repeat"),
-                    Button(label="🔁",style=ButtonStyle.gray ,custom_id="loop"),
-                    ],
+        if data != None:
+            if message.guild:
+                if message.channel.id == data["Music_channel_id"]:
+                    embed_message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewindiscord-th.web.app/invitebot.html) | [❯ Website](https://smilewindiscord-th.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
+                                        colour = 0xffff00)
+                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar_url)
+                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                    embed.set_footer(text=f"server : {message.guild.name}")
+                    await embed_message.edit(embed=embed, components=[
+                    [
+                        Button(label="⏯",style=ButtonStyle.green,custom_id="pause_stop"),
+                        Button(label="⏭",style=ButtonStyle.gray,custom_id="skip"),
+                        Button(label="⏹",style=ButtonStyle.red ,custom_id="stop"),
+                        Button(label="🔂",style=ButtonStyle.gray ,custom_id="repeat"),
+                        Button(label="🔁",style=ButtonStyle.gray ,custom_id="loop"),
+                        ],
 
-                [
-                    Button(label="🔊 เพิ่มเสียง",style=ButtonStyle.blue ,custom_id="decrease_volume"),
-                    Button(label="🔈 ลดเสียง",style=ButtonStyle.blue ,custom_id="increase_volume"),
-                    Button(label="🔇 เปิด/ปิดเสียง",style=ButtonStyle.blue ,custom_id="mute_volume")    
-                    ]
-                ])
+                    [
+                        Button(label="🔊 เพิ่มเสียง",style=ButtonStyle.blue ,custom_id="decrease_volume"),
+                        Button(label="🔈 ลดเสียง",style=ButtonStyle.blue ,custom_id="increase_volume"),
+                        Button(label="🔇 เปิด/ปิดเสียง",style=ButtonStyle.blue ,custom_id="mute_volume")    
+                        ]
+                    ])
 
             if message.content.startswith('!r'):
                 return

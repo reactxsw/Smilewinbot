@@ -1,13 +1,13 @@
 import settings
-import discord
+import nextcord
 import requests
 import datetime
 import urllib
 import aiohttp
 from utils.languageembed import languageEmbed
-from discord import Webhook, AsyncWebhookAdapter
+from nextcord import Webhook
 from urllib.parse import urlencode
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Shortener(commands.Cog):
@@ -29,7 +29,7 @@ class Shortener(commands.Cog):
                     async with session.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}') as r:
                         response = await r.text()
                         if len(f'```{response}```') > 2000:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 description = f" ⚠️``{ctx.author}`` ตัวอักษรมากเกินไป ``"
                             )
@@ -38,7 +38,7 @@ class Shortener(commands.Cog):
                         
                         else:
                 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x00FFFF,
                                 title = "🎨 ASCII ",
                                 description = (f"```{response}```")
@@ -53,7 +53,7 @@ class Shortener(commands.Cog):
                     async with session.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(text)}') as r:
                         response = await r.text()
                         if len(f'```{response}```') > 2000:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 description = f" ⚠️``{ctx.author}`` Too much letter ``"
                             )
@@ -62,7 +62,7 @@ class Shortener(commands.Cog):
                         
                         else:
                 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x00FFFF,
                                 title = "🎨 ASCII ",
                                 description = (f"```{response}```")
@@ -84,7 +84,7 @@ class Shortener(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งที่ต้องการสร้าง ascii art ``{settings.COMMAND_PREFIX}ascii (word)``"
                     )
@@ -95,7 +95,7 @@ class Shortener(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` please specify what to turn into ascii art ``{settings.COMMAND_PREFIX}ascii (word)``"
                     )
@@ -118,7 +118,7 @@ class Shortener(commands.Cog):
                         r = await r.json()
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f'Hastebin link ของ {ctx.author}',
                     description = f"""
@@ -135,7 +135,7 @@ https://hastebin.com/{r['key']}```"""
                 print(f"{ctx.author} have made a hastebinlink : https://hastebin.com/{r['key']}")
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f'Hastebin link ของ {ctx.author}',
                     description = f"""
@@ -163,7 +163,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ข้อความที่ต้องการที่จะใส่",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่ต้องการที่จะใส่ ``{settings.COMMAND_PREFIX}hastebin (message)``"
@@ -175,7 +175,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "message",
                         description = f" ⚠️``{ctx.author}`` need to specify of messages to put in hastebin ``{settings.COMMAND_PREFIX}hastebin (message)``"
@@ -208,7 +208,7 @@ https://hastebin.com/{r['key']}```"""
                         r = await r.text()
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f'Pastebin link ของ {ctx.author}',
                     description = f"""
@@ -225,7 +225,7 @@ https://hastebin.com/{r['key']}```"""
                 print(f"{ctx.author} have made a Pastebinlink : {r}")
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f'Pastebin link ของ {ctx.author}',
                     description = f"""
@@ -253,7 +253,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ข้อความที่ต้องการที่จะใส่",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่ต้องการที่จะใส่ ``{settings.COMMAND_PREFIX}pastebin (message)``"
@@ -265,7 +265,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "message",
                         description = f" ⚠️``{ctx.author}`` need to specify of messages to put in pastebin ``{settings.COMMAND_PREFIX}pastebin (message)``"
@@ -288,7 +288,7 @@ https://hastebin.com/{r['key']}```"""
             url = f"https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={urllib.parse.quote_plus(text)}"
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "💻 QR CODE GENERATOR",
                     description = f"ลิงค์ : [คลิกที่นี้](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={urllib.parse.quote_plus(text)})"
@@ -297,7 +297,7 @@ https://hastebin.com/{r['key']}```"""
                 await ctx.send(embed=embed)
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "💻 QR CODE GENERATOR",
                     description = f"link : [click here](https://api.qrserver.com/v1/create-qr-code/?size=500x500&data={urllib.parse.quote_plus(text)})"
@@ -317,7 +317,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` กรุณาระบุสิ่งที่จะเขียนใน QR code ``{settings.COMMAND_PREFIX}qr [message]``"
                     )
@@ -328,7 +328,7 @@ https://hastebin.com/{r['key']}```"""
                 
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what to write on QR code ``{settings.COMMAND_PREFIX}qr [message]``"
                     )
@@ -361,7 +361,7 @@ https://hastebin.com/{r['key']}```"""
             if "//" in message:
                 message = message.replace('//', '\n')
 
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x00FFFF,
                 title= f"{message}"
             )
@@ -381,7 +381,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็น embed ``{settings.COMMAND_PREFIX}embed (message)``"
                     )
@@ -392,7 +392,7 @@ https://hastebin.com/{r['key']}```"""
         
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` Specify text to make into embed ``{settings.COMMAND_PREFIX}embed (message)``"
                     )
@@ -415,11 +415,10 @@ https://hastebin.com/{r['key']}```"""
             if server_language == "Thai":
                 try:
                     async with aiohttp.ClientSession() as session:
-                        webhook = Webhook.from_url(webhook_url, adapter=AsyncWebhookAdapter(session))
-
+                        webhook = Webhook.from_url(webhook_url, session=session)
                         await webhook.send(message , avatar_url= self.bot.user.avatar_url , username="Smilewinbot")
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = "ส่งข้อความไปยังwebhook",
                         description = f"""```
@@ -430,8 +429,8 @@ https://hastebin.com/{r['key']}```"""
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')            
 
-                except discord.InvalidArgument:
-                    embed = discord.Embed(
+                except nextcord.InvalidArgument:
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title= "ไม่สามารถส่งข้อความไปยังwebhook",
                         description= "Webhook อาจจะผิดโปรดตรวจสอบ"
@@ -444,11 +443,10 @@ https://hastebin.com/{r['key']}```"""
             if server_language == "English":
                 try:
                     async with aiohttp.ClientSession() as session:
-                        webhook = Webhook.from_url(webhook_url, adapter=AsyncWebhookAdapter(session))
-
+                        webhook = Webhook.from_url(webhook_url, session=session)
                         await webhook.send(message , avatar_url= self.bot.user.avatar_url , username="Smilewinbot")
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = "sending message to webhook",
                         description = f"""```
@@ -459,8 +457,8 @@ https://hastebin.com/{r['key']}```"""
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
                     
-                except discord.InvalidArgument:
-                    embed = discord.Embed(
+                except nextcord.InvalidArgument:
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title= "Unable to send to webhook",
                         description= "Webhook might not be valid"
@@ -507,16 +505,15 @@ https://hastebin.com/{r['key']}```"""
                     for i, item in enumerate(all_webhook):
                         try:
                             async with aiohttp.ClientSession() as session:
-                                webhook = Webhook.from_url(item, adapter=AsyncWebhookAdapter(session))
-                                
+                                webhook = Webhook.from_url(item, session=session)
                                 await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
 
-                        except discord.InvalidArgument:
+                        except nextcord.InvalidArgument:
                             pass
                         
                 else:
                     if status == "YES" and webhookurl == "None":
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "ไม่พบ webhook ของคุณ",
                             description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {settings.COMMAND_PREFIX}setwebhook #channel"
@@ -526,7 +523,7 @@ https://hastebin.com/{r['key']}```"""
                         await message.add_reaction('⚠️')
 
                     elif status == "NO" and webhookurl != "None":
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "คุณได้ปิดคําสั่งนี้ไว้",
                             description = f"คุณต้องเปิดใช้คําสั่งนี้โดยใช้ {settings.COMMAND_PREFIX}chat on"
@@ -536,7 +533,7 @@ https://hastebin.com/{r['key']}```"""
                         await message.add_reaction('⚠️')
                     
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "ตั้งค่าห้องคุย",
                             description = f"คุณต้องตั้งค่าห้องคุยกับคนเเปลกหน้าก่อน ใช้คําสั่ง {settings.COMMAND_PREFIX}setwebhook #channel"
@@ -572,15 +569,14 @@ https://hastebin.com/{r['key']}```"""
                     for i, item in enumerate(all_webhook):
                         try:
                             async with aiohttp.ClientSession() as session:
-                                webhook = Webhook.from_url(item, adapter=AsyncWebhookAdapter(session))
-                                
+                                webhook = Webhook.from_url(item, session=session)
                                 await webhook.send(message , avatar_url = self.bot.user.avatar_url , username = "Smilewinbot")
-                        except discord.InvalidArgument:
+                        except nextcord.InvalidArgument:
                             pass
                 
                 else:
                     if status == "YES" and webhookurl == "None":
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "Your webhook is not found",
                             description = f"You need to setup a room to talk to stranger {settings.COMMAND_PREFIX}setwebhook #channel"
@@ -590,7 +586,7 @@ https://hastebin.com/{r['key']}```"""
                         await message.add_reaction('⚠️')
 
                     elif status == "NO" and webhookurl != "None":
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "Command is disable",
                             description = f"This command is disable please use {settings.COMMAND_PREFIX}chat on"
@@ -600,7 +596,7 @@ https://hastebin.com/{r['key']}```"""
                         await message.add_reaction('⚠️')
                     
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = "setup room",
                             description = f"You need to setup a room to talk to stranger {settings.COMMAND_PREFIX}setwebhook #channel"
@@ -621,7 +617,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ข้อความที่จะส่ง ``{settings.COMMAND_PREFIX}anon (message)``"
                     )
@@ -632,7 +628,7 @@ https://hastebin.com/{r['key']}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a message to send ``{settings.COMMAND_PREFIX}anon (message)``"
                     )

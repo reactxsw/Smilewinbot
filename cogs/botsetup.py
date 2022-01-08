@@ -1,7 +1,7 @@
 from utils.languageembed import languageEmbed
 import settings
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 from discord_components import (
     Button,
     ButtonStyle,
@@ -55,7 +55,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "คุณต้องระบุ give / remove"
                 )
@@ -65,7 +65,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
             
             else:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify give / remove"
                 )
@@ -86,7 +86,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -99,7 +99,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -112,7 +112,7 @@ class BotSetup(commands.Cog):
 
     @setrole.command()
     @commands.has_permissions(administrator=True)
-    async def give(self,ctx, role: discord.Role):
+    async def give(self,ctx, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -127,7 +127,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
                         description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
@@ -141,7 +141,7 @@ class BotSetup(commands.Cog):
                     give_role_id = server["introduce_role_give_id"]
                     if give_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
                             description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
@@ -153,7 +153,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ได้หลังเเนะนําตัว",
                             description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
@@ -169,7 +169,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "role to give",
                         description= f"role to give after member introduce themself have been set to {role.mention}"
@@ -183,7 +183,7 @@ class BotSetup(commands.Cog):
                     give_role_id = server["introduce_role_give_id"]
                     if give_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "role to give",
                             description= f"role to give after member introduce themself have been set to {role.mention}"
@@ -195,7 +195,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to give",
                             description= f"role to give after member introduce themself have been updated to {role.mention}"
@@ -216,7 +216,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -228,7 +228,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุยศที่จะให้หลังจากเเนะนําตัว",
                         description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากเเนะนําตัว ``{settings.COMMAND_PREFIX}setrole give @role``"
@@ -240,7 +240,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -252,7 +252,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a role to give after a member introduce themself",
                         description = f" ⚠️``{ctx.author}`` need to specify a role to give after a member introduce themself ``{settings.COMMAND_PREFIX}setrole give @role``"
@@ -264,7 +264,7 @@ class BotSetup(commands.Cog):
 
     @setrole.command()
     @commands.has_permissions(administrator=True)
-    async def remove(self,ctx, role: discord.Role):
+    async def remove(self,ctx, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -279,7 +279,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
                         description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
@@ -293,7 +293,7 @@ class BotSetup(commands.Cog):
                     remove_role_id = server["introduce_role_remove_id"]
                     if remove_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
                             description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
@@ -305,7 +305,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ลบหลังเเนะนําตัว",
                             description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
@@ -321,7 +321,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to remove",
                             description= f"role to remove after member introduce themself have been set to {role.mention}"
@@ -335,7 +335,7 @@ class BotSetup(commands.Cog):
                     remove_role_id = server["introduce_role_remove_id"]
                     if remove_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to remove",
                             description= f"role to remove after member introduce themself have been set to {role.mention}"
@@ -347,7 +347,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to remove",
                             description= f"role to remove after member introduce themself have been updated to {role.mention}"
@@ -369,7 +369,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -381,7 +381,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุยศที่จะลบหลังจากเเนะนําตัว",
                         description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากเเนะนําตัว ``{settings.COMMAND_PREFIX}setrole remove @role``"
@@ -393,7 +393,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -405,7 +405,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a role to remove after a member introduce themself",
                         description = f" ⚠️``{ctx.author}`` need to specify a role to give after a member introduce themself ``{settings.COMMAND_PREFIX}setrole give @role``"
@@ -417,7 +417,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setintroduce(self,ctx, channel:discord.TextChannel):
+    async def setintroduce(self,ctx, channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -432,7 +432,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -446,7 +446,7 @@ class BotSetup(commands.Cog):
                     introduce_channel = server["introduce_channel_id"]
                     if introduce_channel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -458,7 +458,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -475,7 +475,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "channel for introduction",
                         description= f"Channel have been set to {channel.mention}"
@@ -489,7 +489,7 @@ class BotSetup(commands.Cog):
                     introduce_channel = server["introduce_channel_id"]
                     if introduce_channel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "channel for introduction",
                             description= f"Channel have been set to {channel.mention}"
@@ -501,7 +501,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_channel_id":channel.id,"introduce_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "channel for introduction",
                             description= f"Channel have been updated to {channel.mention}"
@@ -522,7 +522,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -534,7 +534,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{settings.COMMAND_PREFIX}setintroduce #channel``"
@@ -546,7 +546,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -558,7 +558,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setintroduce #channel``"
@@ -585,7 +585,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่ากรอบเเนะนําตัว",
                         description= f"กรอบได้ถูกตั้งเป็น {frame}"
@@ -599,7 +599,7 @@ class BotSetup(commands.Cog):
                     frame = server["introduce_frame"]
                     if frame == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ากรอบเเนะนําตัว",
                             description= f"กรอบได้ถูกตั้งเป็น {frame}"
@@ -611,7 +611,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ากรอบเเนะนําตัว",
                             description= f"กรอบได้ถูกอัพเดตเป็น {frame}"
@@ -627,7 +627,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "set frame",
                         description= f"frame have been set to {frame}"
@@ -641,7 +641,7 @@ class BotSetup(commands.Cog):
                     frame = server["introduce_frame"]
                     if frame == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "set frame",
                             description= f"frame have been set to {frame}"
@@ -653,7 +653,7 @@ class BotSetup(commands.Cog):
         
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_frame":frame}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "set frame",
                             description= f"frame have been updated to {frame}"
@@ -674,7 +674,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -686,7 +686,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
             
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุกรอบที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุกรอบที่จะตั้ง ``{settings.COMMAND_PREFIX}setframe (frame)``"
@@ -698,7 +698,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -710,7 +710,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
             
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a frame",
                         description = f" ⚠️``{ctx.author}`` need to specify a frame ``{settings.COMMAND_PREFIX}setframe (frame)``"
@@ -732,7 +732,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "คุณต้องระบุ ON / OFF"
                 )
@@ -742,7 +742,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify ON / OFF"
                 )
@@ -768,7 +768,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าเเนะนําตัว",
                         description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -782,7 +782,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเเนะนําตัว",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -794,7 +794,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเเนะนําตัว",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -811,7 +811,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been activated"
                     )
@@ -824,7 +824,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been activated"
                         )
@@ -835,7 +835,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been activated"
                         )
@@ -856,7 +856,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -869,7 +869,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -898,7 +898,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
                         description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -912,7 +912,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -924,7 +924,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -941,7 +941,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been deactivated"
                     )
@@ -954,7 +954,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been deactivated"
                         )
@@ -965,7 +965,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been deactivated"
                         )
@@ -986,7 +986,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -999,7 +999,7 @@ class BotSetup(commands.Cog):
         
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1021,7 +1021,7 @@ class BotSetup(commands.Cog):
         else:
             server_language = language["Language"]
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "ต้องระบุ ON / OFF"
                 )
@@ -1031,7 +1031,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify on / off"
                 )
@@ -1051,7 +1051,7 @@ class BotSetup(commands.Cog):
             server_language = language["Language"]
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1064,7 +1064,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1092,7 +1092,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเลเวล",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1106,7 +1106,7 @@ class BotSetup(commands.Cog):
                     level_status = server["level_system"]
                     if level_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเลเวล",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1118,7 +1118,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเลเวล",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1135,7 +1135,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Level system",
                         description= f"The level system have been activated"
@@ -1149,7 +1149,7 @@ class BotSetup(commands.Cog):
                     level_status = server["level_system"]
                     if level_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Level system",
                             description= f"The level system have been activated"
@@ -1161,7 +1161,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Level system",
                             description= f"The level system have been activated"
@@ -1183,7 +1183,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1196,7 +1196,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1224,7 +1224,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าเลเวล",
                         description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1238,7 +1238,7 @@ class BotSetup(commands.Cog):
                     level_status = server["level_system"]
                     if level_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเลเวล",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1250,7 +1250,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเลเวล",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1267,7 +1267,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Level system",
                         description= f"The level system have been deactivated"
@@ -1281,7 +1281,7 @@ class BotSetup(commands.Cog):
                     level_status = server["level_system"]
                     if level_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Level system",
                             description= f"The level system have been deactivated"
@@ -1293,7 +1293,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"level_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Level system",
                             description= f"The level system have been deactivated"
@@ -1315,7 +1315,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1328,7 +1328,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1350,7 +1350,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "คุณต้องระบุ ON / OFF"
                 )
@@ -1360,7 +1360,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify ON / OFF"
                 )
@@ -1387,7 +1387,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าเเนะนําตัว",
                         description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -1401,7 +1401,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเเนะนําตัว",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -1413,7 +1413,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าเเนะนําตัว",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -1431,7 +1431,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"introduce_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been activated"
                     )
@@ -1444,7 +1444,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["introduce_status"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been activated"
                         )
@@ -1455,7 +1455,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been activated"
                         )
@@ -1476,7 +1476,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1489,7 +1489,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1518,7 +1518,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
                         description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1532,7 +1532,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["log_voice_system"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1544,7 +1544,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -1561,7 +1561,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         description= f"The command have been deactivated"
                     )
@@ -1574,7 +1574,7 @@ class BotSetup(commands.Cog):
                     intro_status = server["log_voice_system"]
                     if intro_status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been deactivated"
                         )
@@ -1585,7 +1585,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_voice_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             description= f"The command have been deactivated"
                         )
@@ -1606,7 +1606,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1619,7 +1619,7 @@ class BotSetup(commands.Cog):
         
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1632,10 +1632,10 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setlog(self,ctx, channel:discord.TextChannel):
+    async def setlog(self,ctx, channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 title = "Language setting / ตั้งค่าภาษา",
                 description = "```คุณต้องตั้งค่าภาษาก่อน / You need to set the language first```" + "\n" + "/r setlanguage thai : เพื่อตั้งภาษาไทย" + "\n" + "/r setlanguage english : To set English language"
 
@@ -1654,7 +1654,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเนะนําตัว",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -1668,7 +1668,7 @@ class BotSetup(commands.Cog):
                     introduce_channel = server["log_channel_id"]
                     if introduce_channel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -1680,7 +1680,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่าห้องเเนะนําตัว",
                             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -1697,7 +1697,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "channel for introduction",
                         description= f"Channel have been set to {channel.mention}"
@@ -1711,7 +1711,7 @@ class BotSetup(commands.Cog):
                     introduce_channel = server["log_channel_id"]
                     if introduce_channel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "channel for introduction",
                             description= f"Channel have been set to {channel.mention}"
@@ -1723,7 +1723,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"log_channel_id":channel.id,"log_voice_system":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "channel for introduction",
                             description= f"Channel have been updated to {channel.mention}"
@@ -1744,7 +1744,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1756,7 +1756,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเนะนําตัว ``{settings.COMMAND_PREFIX}setintroduce #channel``"
@@ -1768,7 +1768,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1780,7 +1780,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setintroduce #channel``"
@@ -1807,7 +1807,7 @@ class BotSetup(commands.Cog):
                 if server is None:
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "ตั้งค่าสําเร็จ",
                         colour= 0x00FFFF,
                         description = f"ลงทะเบือนเซิฟเวอร์ในฐานข้อมูลสําเร็จ"
@@ -1817,7 +1817,7 @@ class BotSetup(commands.Cog):
 
                 else:
                     sid = server["_id"]
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "มีข้อมูลของเซิฟเวอร์ในฐานข้อมูลเเล้ว",
                         colour= 0x00FFFF,
                         description = f"ไอดีของเซิฟเวอร์ในฐานข้อมูลคือ {sid}"
@@ -1831,7 +1831,7 @@ class BotSetup(commands.Cog):
                 if server is None:
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "Setup complete",
                         colour= 0x00FFFF,
                         description = f"Your server is now registered on the database"
@@ -1841,7 +1841,7 @@ class BotSetup(commands.Cog):
 
                 else:
                     sid = server["_id"]
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "Server data already exist",
                         colour= 0x00FFFF,
                         description = f"ID of your server in database {sid}"
@@ -1861,7 +1861,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -1874,7 +1874,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -1897,7 +1897,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "ต้องระบุ ON / OFF"
                 )
@@ -1907,7 +1907,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify on / off"
                 )
@@ -1934,7 +1934,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งระบบเศรษฐกิจ",
                         description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1948,7 +1948,7 @@ class BotSetup(commands.Cog):
                     economy_status = server["economy_system"]
                     if economy_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งระบบเศรษฐกิจ",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1960,7 +1960,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งระบบเศรษฐกิจ",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -1978,7 +1978,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
                         description= f"The level system have been activated"
@@ -1992,7 +1992,7 @@ class BotSetup(commands.Cog):
                     economy_status = server["economy_system"]
                     if economy_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Economy system",
                             description= f"The level system have been activated"
@@ -2004,7 +2004,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Economy system",
                             description= f"The level system have been activated"
@@ -2026,7 +2026,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2039,7 +2039,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2069,7 +2069,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งระบบเศรษฐกิจ",
                         description= f"ได้ทําการปิดใช้งานระบบนี้"
@@ -2083,7 +2083,7 @@ class BotSetup(commands.Cog):
                     economy_status = server["economy_system"]
                     if economy_status == "YES":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งระบบเศรษฐกิจ",
                             description= f"ได้ทําการปิดใช้งานระบบนี้"
@@ -2095,7 +2095,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งระบบเศรษฐกิจ",
                             description= f"ได้ทําการปิดใช้งานระบบนี้"
@@ -2113,7 +2113,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Economy system",
                         description= f"The level system have been deactivated"
@@ -2127,7 +2127,7 @@ class BotSetup(commands.Cog):
                     economy_status = server["economy_system"]
                     if economy_status == "YES":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Economy system",
                             description= f"The level system have been deactivated"
@@ -2139,7 +2139,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"economy_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Economy system",
                             description= f"The level system have been deactivated"
@@ -2161,7 +2161,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2174,7 +2174,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2187,7 +2187,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setwelcome(self,ctx , channel:discord.TextChannel):
+    async def setwelcome(self,ctx , channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -2201,7 +2201,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2215,7 +2215,7 @@ class BotSetup(commands.Cog):
                     if welcome == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
                             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2227,7 +2227,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่าห้องเเจ้งเตือนคนเข้าเซิฟเวอร์",
                             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -2243,7 +2243,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "channel for welcome",
                         description= f"Channel have been set to {channel.mention}"
@@ -2257,7 +2257,7 @@ class BotSetup(commands.Cog):
                     if welcome == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "channel for welcome",
                             description= f"Channel have been set to {channel.mention}"
@@ -2269,7 +2269,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"welcome_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "channel for welcome",
                             description= f"Channel have been set to {channel.mention}"
@@ -2290,7 +2290,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2302,7 +2302,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือนคนเข้าเซิฟเวอร์``{settings.COMMAND_PREFIX}setwelcome #channel``"
@@ -2314,7 +2314,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2326,7 +2326,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setwelcome #channel``"
@@ -2338,7 +2338,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setleave(self,ctx , channel:discord.TextChannel):
+    async def setleave(self,ctx , channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -2354,7 +2354,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2368,7 +2368,7 @@ class BotSetup(commands.Cog):
                     if leave == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
                             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2380,7 +2380,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่าห้องเเจ้งเตือนคนออกจากเซิฟเวอร์",
                             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -2396,7 +2396,7 @@ class BotSetup(commands.Cog):
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "channel for leave",
                         description= f"Channel have been set to {channel.mention}"
@@ -2410,7 +2410,7 @@ class BotSetup(commands.Cog):
                     if leave == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "channel for leave",
                             description= f"Channel have been set to {channel.mention}"
@@ -2422,7 +2422,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"leave_id":channel.id}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "channel for leave",
                             description= f"Channel have been set to {channel.mention}"
@@ -2442,7 +2442,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2454,7 +2454,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องเเจ้งเตือนคนออกเซิฟเวอร์``{settings.COMMAND_PREFIX}setleave #channel``"
@@ -2466,7 +2466,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2478,7 +2478,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setleave #channel``"
@@ -2490,7 +2490,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setwebhook(self,ctx , channel:discord.TextChannel):
+    async def setwebhook(self,ctx , channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -2507,7 +2507,7 @@ class BotSetup(commands.Cog):
                     webhook = await channel.create_webhook(name='Smilewinbot')
                     webhookurl = webhook.url
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2523,7 +2523,7 @@ class BotSetup(commands.Cog):
                         webhook = await channel.create_webhook(name='Smilewinbot')
                         webhookurl = webhook.url
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -2537,7 +2537,7 @@ class BotSetup(commands.Cog):
                         webhook = await channel.create_webhook(name='Smilewinbot')
                         webhookurl = webhook.url
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -2555,7 +2555,7 @@ class BotSetup(commands.Cog):
                     webhook = await channel.create_webhook(name='Smilewinbot')
                     webhookurl = webhook.url
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhookurl,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "room to talk to a stranger",
                         description= f"channel have been set to {channel.mention}"
@@ -2571,7 +2571,7 @@ class BotSetup(commands.Cog):
                         webhook = await channel.create_webhook(name='Smilewinbot')
                         webhookurl = webhook.url
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "room to talk to a stranger",
                             description= f"channel have been set to {channel.mention}"
@@ -2585,7 +2585,7 @@ class BotSetup(commands.Cog):
                         webhook = await channel.create_webhook(name='Smilewinbot')
                         webhookurl = webhook.url
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_url":webhook,"webhook_channel_id":channel.id,"webhook_status":"YES"}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "room to talk to a stranger",
                             description= f"channel have been updated to {channel.mention}"
@@ -2606,7 +2606,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{settings.COMMAND_PREFIX}setwebhook #text-channel``"
@@ -2617,7 +2617,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2630,7 +2630,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2642,7 +2642,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
         
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setwebhook #channel``"
@@ -2664,7 +2664,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "ต้องระบุ on / off"
                 )
@@ -2674,7 +2674,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify on / off"
                 )
@@ -2695,7 +2695,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2709,7 +2709,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2739,7 +2739,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                         description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -2753,7 +2753,7 @@ class BotSetup(commands.Cog):
                     status = server["webhook_status"]
                     if status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -2765,7 +2765,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ได้ทําการเปิดใช้งานคําสั่งนี้"
@@ -2783,7 +2783,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Anonymous chat",
                             description= f"The command have been activated"
@@ -2797,7 +2797,7 @@ class BotSetup(commands.Cog):
                     status = server["webhook_status"]
                     if status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Anonymous chat",
                             description= f"The command have been activated"
@@ -2809,7 +2809,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Anonymous chat",
                             description= f"The command have been activated"
@@ -2831,7 +2831,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2844,7 +2844,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2874,7 +2874,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                         description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -2888,7 +2888,7 @@ class BotSetup(commands.Cog):
                     status = server["webhook_status"]
                     if status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -2900,7 +2900,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่าห้องคุยกับคนเเปลกหน้า",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -2918,7 +2918,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Anonymous chat",
                         description= f"The command have been deactivated"
@@ -2932,7 +2932,7 @@ class BotSetup(commands.Cog):
                     status = server["webhook_status"]
                     if status == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Anonymous chat",
                             description= f"The command have been deactivated"
@@ -2944,7 +2944,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"webhook_status":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Anonymous chat",
                             description= f"The command have been deactivated"
@@ -2965,7 +2965,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -2978,7 +2978,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -2991,7 +2991,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setverify(self,ctx , channel:discord.TextChannel):
+    async def setverify(self,ctx , channel:nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -3007,7 +3007,7 @@ class BotSetup(commands.Cog):
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                     colour= 0x00FFFF,
                     title = "ตั้งค่าห้องยืนยันตัวตน",
                     description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -3021,7 +3021,7 @@ class BotSetup(commands.Cog):
                     if verifychannel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่าห้องยืนยันตัวตน",
                         description= f"ห้องได้ถูกตั้งเป็น {channel.mention}"
@@ -3033,7 +3033,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "ตั้งค่าห้องยืนยันตัวตน",
                         description= f"ห้องได้ถูกอัพเดตเป็น {channel.mention}"
@@ -3048,7 +3048,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Verification channel",
                         description= f"channel have been set to {channel.mention}"
@@ -3063,7 +3063,7 @@ class BotSetup(commands.Cog):
                     if verifychannel == "None":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Verification channel",
                         description= f"channel have been set to {channel.mention}"
@@ -3075,7 +3075,7 @@ class BotSetup(commands.Cog):
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_channel_id":channel.id , "verification_system":"YES"}})
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "Verification channel",
                         description= f"channel have been updated to {channel.mention}"
@@ -3096,7 +3096,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุห้องที่จะตั้ง",
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องยืนยันตัวตน ``{settings.COMMAND_PREFIX}setverify #text-channel``"
@@ -3107,7 +3107,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่าห้อง",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3120,7 +3120,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify a channel",
                         description = f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setverify #text-channel``"
@@ -3131,7 +3131,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "   You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -3154,7 +3154,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "ต้องระบุ ON / OFF"
                 )
@@ -3164,7 +3164,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify on / off"
                 )
@@ -3185,7 +3185,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3198,7 +3198,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -3228,7 +3228,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่ายืนยันตัวตน",
                         description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -3242,7 +3242,7 @@ class BotSetup(commands.Cog):
                     verification_status = server["verification_system"]
                     if verification_status== "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายืนยันตัวตน",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -3254,7 +3254,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายืนยันตัวตน",
                             description= f"ได้ทําการเปิดใช้งานระบบนี้"
@@ -3272,7 +3272,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Verification system",
                         description= f"The level system have been activated"
@@ -3286,7 +3286,7 @@ class BotSetup(commands.Cog):
                     verification_status = server["verification_system"]
                     if verification_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Verification system",
                             description= f"The level system have been activated"
@@ -3298,7 +3298,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Verification system",
                             description= f"The level system have been activated"
@@ -3320,7 +3320,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3333,7 +3333,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -3363,7 +3363,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่ายืนยันตัวตน",
                         description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -3377,7 +3377,7 @@ class BotSetup(commands.Cog):
                     verification_status = server["verification_system"]
                     if verification_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายืนยันตัวตน",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -3389,7 +3389,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายืนยันตัวตน",
                             description= f"ได้ทําการปิดใช้งานคําสั่งนี้"
@@ -3407,7 +3407,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "Verification system",
                         description= f"The Verification system have been deactivated"
@@ -3421,7 +3421,7 @@ class BotSetup(commands.Cog):
                     verification_status = server["verification_system"]
                     if verification_status == "NO":
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Verification system",
                             description= f"The Verification system have been deactivated"
@@ -3433,7 +3433,7 @@ class BotSetup(commands.Cog):
 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_system":status}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "Verification system",
                             description= f"The Verification system have been deactivated"
@@ -3455,7 +3455,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3468,7 +3468,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -3494,7 +3494,7 @@ class BotSetup(commands.Cog):
                 if server is None:
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                         colour =  0x983925
@@ -3504,7 +3504,7 @@ class BotSetup(commands.Cog):
                     
                 else:
                     if 1 > time >= 120:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = f"ตั้งค่าเวลา {time}",
                             description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 หรือน้อยกว่า 1 วินาทีได้ "
@@ -3518,7 +3518,7 @@ class BotSetup(commands.Cog):
                         verifychannel = server["verification_channel_id"]
                         status = server["verification_system"]    
                         if verifychannel == "None" and status == "NO":
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                                 colour =  0x983925
@@ -3527,7 +3527,7 @@ class BotSetup(commands.Cog):
                             await ctx.send(embed=embed)
                         
                         elif status == "NO":
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์นี้ปิดใช้งาน verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX} #channel",
                                 colour =  0x983925
@@ -3538,7 +3538,7 @@ class BotSetup(commands.Cog):
                         else:
                             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour= 0x00FFFF,
                                 title = "ตั้งค่าเวลายืนยันตัวตน",
                                 description= f"เวลายืนยันตัวตน {time}"
@@ -3552,7 +3552,7 @@ class BotSetup(commands.Cog):
                 if server is None:
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                         colour =  0x983925
@@ -3563,7 +3563,7 @@ class BotSetup(commands.Cog):
     
                 else:
                     if 1 > time >= 120:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title = f"ตั้งค่าเวลา {time}",
                             description = f"⚠️ ``{ctx.author}`` คุณไม่สามารถตั้งเวลาเกิน 120 หรือน้อยกว่า 1 วินาทีได้ "
@@ -3577,7 +3577,7 @@ class BotSetup(commands.Cog):
                         verifychannel = server["verification_channel_id"]
                         status = server["verification_system"]    
                         if verifychannel == "None" and status == "NO":
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                                 colour =  0x983925
@@ -3586,7 +3586,7 @@ class BotSetup(commands.Cog):
                             await ctx.send(embed=embed)
                         
                         elif status == "NO":
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์นี้ปิดใช้งาน verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX} #channel",
                                 colour =  0x983925
@@ -3597,7 +3597,7 @@ class BotSetup(commands.Cog):
                         else:
                             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_time":time}})
 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour= 0x00FFFF,
                                 title = "ตั้งค่าเวลายืนยันตัวตน",
                                 description= f"เวลายืนยันตัวตน {time}"
@@ -3617,7 +3617,7 @@ class BotSetup(commands.Cog):
             server_language = languageserver["Language"]
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "คุณต้องระบุ give / remove"
                 )
@@ -3627,7 +3627,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction('✅')
             
             else:
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     description = "you need to specify give / remove"
                 )
@@ -3648,7 +3648,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command"
@@ -3661,7 +3661,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3674,7 +3674,7 @@ class BotSetup(commands.Cog):
 
     @verifyrole.command(aliases=['give'])
     @commands.has_permissions(administrator=True)
-    async def _give(self,ctx, role: discord.Role):
+    async def _give(self,ctx, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -3689,7 +3689,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id, "verification_system":"YES" }})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title = "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                         description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
@@ -3703,7 +3703,7 @@ class BotSetup(commands.Cog):
                     give_role_id = server["verification_role_give_id"]
                     if give_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title = "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                             description= f"ยศที่ได้ถูกตั้งเป็น {role.mention}"
@@ -3715,7 +3715,7 @@ class BotSetup(commands.Cog):
                 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ได้หลังจากยืนยันตัวตน",
                             description= f"ยศที่ได้ถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
@@ -3731,7 +3731,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id, "verification_system":"YES" }})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "role to give",
                         description= f"role to give after member verify have been set to {role.mention}"
@@ -3745,7 +3745,7 @@ class BotSetup(commands.Cog):
                     give_role_id = server["verification_role_give_id"]
                     if give_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to give",
                             description= f"role to give after member verify have been set to {role.mention}"
@@ -3757,7 +3757,7 @@ class BotSetup(commands.Cog):
             
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_give_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to give",
                             description= f"role to give after member verify have been updated to {role.mention}"
@@ -3779,7 +3779,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3791,7 +3791,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุยศที่จะให้หลังจากยืนยันตัวตน",
                         description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะให้หลังจากยืนยันตัวตน ``{settings.COMMAND_PREFIX}setrole give @role``"
@@ -3803,7 +3803,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``admin`` to be able to use this command"
@@ -3815,7 +3815,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "specify what role to remove",
                         description = f" ⚠️``{ctx.author}`` need to specify what role to give after verification``{settings.COMMAND_PREFIX}setrole give @role``"
@@ -3827,7 +3827,7 @@ class BotSetup(commands.Cog):
             
     @verifyrole.command(aliases=['remove'])
     @commands.has_permissions(administrator=True)
-    async def _remove(self,ctx, role: discord.Role):
+    async def _remove(self,ctx, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -3842,7 +3842,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id, "verification_system":"YES" }})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                         description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
@@ -3856,7 +3856,7 @@ class BotSetup(commands.Cog):
                     remove_role_id = server["verification_role_remove_id"]
                     if remove_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                             description= f"ยศที่ลบถูกตั้งเป็นถูกตั้งเป็น {role.mention}"
@@ -3868,7 +3868,7 @@ class BotSetup(commands.Cog):
                 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "ตั้งค่ายศที่ลบหลังจากยืนยันตัวตน",
                             description= f"ยศที่ลบถูกตั้งเป็นถูกอัพเดตเป็น {role.mention}"
@@ -3884,7 +3884,7 @@ class BotSetup(commands.Cog):
                     newserver = await BotSetup.setnewserver(self,ctx)
                     await settings.collection.insert_one(newserver)
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id, "verification_system":"YES" }})
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour= 0x00FFFF,
                         title= "role to remove",
                         description= f"role to remove after member verify have been set to {role.mention}"
@@ -3898,7 +3898,7 @@ class BotSetup(commands.Cog):
                     remove_role_id = server["verification_role_remove_id"]
                     if remove_role_id == "None": 
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to remove",
                             description= f"role to remove after member verify have been set to {role.mention}"
@@ -3910,7 +3910,7 @@ class BotSetup(commands.Cog):
                 
                     else:
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"verification_role_remove_id":role.id}})
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour= 0x00FFFF,
                             title= "role to remove",
                             description= f"role to remove after member verify have been updated to {role.mention}"
@@ -3932,7 +3932,7 @@ class BotSetup(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "คุณไม่มีสิทธิ์ตั้งค่า",
                         description = f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"
@@ -3944,7 +3944,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุยศที่จะลบหลังจากยืนยันตัวตน",
                         description = f" ⚠️``{ctx.author}`` จะต้องระบุยศที่จะลบหลังจากยืนยันตัวตน ``{settings.COMMAND_PREFIX}setrole remove @role``"
@@ -3956,7 +3956,7 @@ class BotSetup(commands.Cog):
 
             if server_language == "English":
                 if isinstance(error, commands.MissingPermissions):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "You don't have permission",
                         description = f"⚠️ ``{ctx.author}`` You must have ``admin`` to be able to use this command"
@@ -3968,7 +3968,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction('⚠️')
 
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "specify what role to remove",
                         description = f" ⚠️``{ctx.author}`` need to specify what role to remove after verification``{settings.COMMAND_PREFIX}setrole remove @role``"
