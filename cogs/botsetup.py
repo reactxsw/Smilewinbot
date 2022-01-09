@@ -2,11 +2,6 @@ from utils.languageembed import languageEmbed
 import settings
 import nextcord
 from nextcord.ext import commands
-from discord_components import (
-    Button,
-    ButtonStyle,
-    Select,
-    SelectOption)
 
 class BotSetup(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):

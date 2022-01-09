@@ -3,12 +3,6 @@ import nextcord
 from nextcord.ext import commands
 import settings
 from cogs.scam import check_scam_link
-from discord_components import (
-    Button,
-    ButtonStyle,
-    Select,
-    SelectOption,
-)
 
 class on_message_event(commands.Cog):
     def __init__(self,bot):
@@ -27,21 +21,7 @@ class on_message_event(commands.Cog):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {message.guild.name}")
-                    await embed_message.edit(embed=embed, components=[
-                    [
-                        Button(label="⏯",style=ButtonStyle.green,custom_id="pause_stop"),
-                        Button(label="⏭",style=ButtonStyle.gray,custom_id="skip"),
-                        Button(label="⏹",style=ButtonStyle.red ,custom_id="stop"),
-                        Button(label="🔂",style=ButtonStyle.gray ,custom_id="repeat"),
-                        Button(label="🔁",style=ButtonStyle.gray ,custom_id="loop"),
-                        ],
-
-                    [
-                        Button(label="🔊 เพิ่มเสียง",style=ButtonStyle.blue ,custom_id="decrease_volume"),
-                        Button(label="🔈 ลดเสียง",style=ButtonStyle.blue ,custom_id="increase_volume"),
-                        Button(label="🔇 เปิด/ปิดเสียง",style=ButtonStyle.blue ,custom_id="mute_volume")    
-                        ]
-                    ])
+                    await embed_message.edit(embed=embed)
 
             if message.content.startswith('!r'):
                 return
