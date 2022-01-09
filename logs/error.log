@@ -235,3 +235,14 @@
 2022-01-09 03:55:28: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
 2022-01-09 03:56:01: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
 2022-01-09 03:56:43: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 23:00:28: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:02:12: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:17: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:20: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:22: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:04:26: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:06:49: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:14:59: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:16:16: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:16:33: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:18:35: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
