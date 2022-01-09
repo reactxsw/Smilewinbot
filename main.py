@@ -13,6 +13,7 @@ import nextcord
 from nextcord.ext import commands ,tasks
 from datetime import date, timedelta
 from itertools import cycle
+from utils.button import MusicButton
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -127,7 +128,7 @@ async def on_ready():
     except RuntimeError:
         pass
     print_ascii_art()
-    #If you doesn't put log channel in config.json it won't error
+    bot.add_view(MusicButton)
     try:
         channel = bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
