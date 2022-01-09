@@ -77,3 +77,5 @@
 2022-01-09 03:56:43.129  INFO 7780 --- [XNIO-1 task-37] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
 2022-01-09 03:56:43.176  INFO 7780 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "cb6dcbddc489099907b84b09384d6c67", "event": {"token": "7355e1020415b7da", "guild_id": "924999182039801876", "endpoint": "singapore7413.discord.media:443"}}
 2022-01-09 03:56:43.857  INFO 7780 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-09 04:35:36.064  INFO 7780 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64258 -- CloseStatus[code=1006, reason=]
+2022-01-09 04:35:36.069  INFO 7780 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.

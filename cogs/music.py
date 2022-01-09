@@ -463,22 +463,7 @@ class Music(commands.Cog):
             embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
             embed.set_footer(text=f"server : {ctx.guild.name}")
             try:
-                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed , components=[
-                    [
-
-                        Button(label=" ⏯ ",style=ButtonStyle.green,custom_id="pause_stop",disabled = True),
-                        Button(label=" ⏭ ",style=ButtonStyle.gray,custom_id="skip",disabled = True),
-                        Button(label=" ⏹ ",style=ButtonStyle.red ,custom_id="stop",disabled = True),
-                        Button(label=" 🔂 ",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
-                        Button(label=" 🔁 ",style=ButtonStyle.gray ,custom_id="loop",disabled = True),
-                        ],
-
-                    [
-                        Button(label=" 🔊 เพิ่มเสียง ",style=ButtonStyle.blue ,custom_id="decrease_volume",disabled = True),
-                        Button(label=" 🔈 ลดเสียง ",style=ButtonStyle.blue ,custom_id="increase_volume",disabled = True),
-                        Button(label=" 🔇 เปิด/ปิดเสียง ",style=ButtonStyle.blue ,custom_id="mute_volume",disabled = True)    
-                        ]
-                    ])
+                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed)
             except Exception as e:
                 print(e)
             music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
@@ -493,21 +478,7 @@ class Music(commands.Cog):
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
-                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, components=[
-                [
-                    Button(label="⏯",style=ButtonStyle.green,custom_id="pause_stop",disabled = True),
-                    Button(label="⏭",style=ButtonStyle.gray,custom_id="skip",disabled = True),
-                    Button(label="⏹",style=ButtonStyle.red ,custom_id="stop",disabled = True),
-                    Button(label="🔂",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
-                    Button(label="🔁",style=ButtonStyle.gray ,custom_id="loop",disabled = True),
-                    ],
-
-                [
-                    Button(label="🔊 เพิ่มเสียง",style=ButtonStyle.blue ,custom_id="decrease_volume",disabled = True),
-                    Button(label="🔈 ลดเสียง",style=ButtonStyle.blue ,custom_id="increase_volume",disabled = True),
-                    Button(label="🔇 เปิด/ปิดเสียง",style=ButtonStyle.blue ,custom_id="mute_volume",disabled = True)    
-                    ]
-                ])
+                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed)
                 music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -520,21 +491,7 @@ class Music(commands.Cog):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, components=[
-                [
-                    Button(label="⏯",style=ButtonStyle.green,custom_id="pause_stop",disabled = True),
-                    Button(label="⏭",style=ButtonStyle.gray,custom_id="skip",disabled = True),
-                    Button(label="⏹",style=ButtonStyle.red ,custom_id="stop",disabled = True),
-                    Button(label="🔂",style=ButtonStyle.gray ,custom_id="repeat",disabled = True),
-                    Button(label="🔁",style=ButtonStyle.gray ,custom_id="loop",disabled = True),
-                    ],
-
-                [
-                    Button(label="🔊 เพิ่มเสียง",style=ButtonStyle.blue ,custom_id="decrease_volume",disabled = True),
-                    Button(label="🔈 ลดเสียง",style=ButtonStyle.blue ,custom_id="increase_volume",disabled = True),
-                    Button(label="🔇 เปิด/ปิดเสียง",style=ButtonStyle.blue ,custom_id="mute_volume",disabled = True)    
-                    ]
-                ])
+                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed)
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
