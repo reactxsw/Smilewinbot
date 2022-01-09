@@ -9,12 +9,7 @@ from nextcord.ext import commands
 import nextcord
 import math
 import random
-from discord_components import (
-    Button,
-    ButtonStyle,
-    Select,
-    SelectOption,
-)
+
 class Player(pomice.Player):
     """Custom pomice Player class."""
 
@@ -195,7 +190,19 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
-        
+    
+    async def build_embed(self,track : pomice.Track , next = None):
+        embed = nextcord.Embed(
+            title = "Smilewin Music",
+            description = f"Now playing {track.title}",
+            colour = 0xFED000
+        )
+        embed.set_thumbnail(url=track.thumbnail)
+        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
+        embed.add_field(name='Requested By', value=track.requester.mention)
+        embed.add_field(name='Next', value="-" if next is None else next)
+        return embed
+
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
         if ctx.author.voice is not None:
@@ -229,7 +236,8 @@ class Music(commands.Cog):
                         "song_title":s_title,
                         "song_id":s_id,
                         "requester":ctx.author.id})
-
+                embed = await Music.build_embed(Queue["Queue"][0]["song_title"],track,Queue["Mode"])
+                await message.edit(embed=embed)
                 await settings.collectionmusic.insert_one(data)
 
             else:
