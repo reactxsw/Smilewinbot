@@ -1,5 +1,6 @@
 import nextcord
-
+from cogs.music import Music
+from Music import handle_click
 class MusicButton(nextcord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
