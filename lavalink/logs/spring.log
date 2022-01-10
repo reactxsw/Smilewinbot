@@ -226,3 +226,15 @@
 2022-01-10 16:20:33.281  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2022-01-10 16:20:45.739  INFO 20592 --- [XNIO-1 task-22] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58233
 2022-01-10 16:20:45.756  INFO 20592 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:27:27.258  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58233 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:27:27.259  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:36:27.492  INFO 20592 --- [XNIO-1 task-23] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58589
+2022-01-10 16:36:27.496  INFO 20592 --- [XNIO-1 task-23] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:37:10.271  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58589 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:37:10.271  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:37:20.402  INFO 20592 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59175
+2022-01-10 16:37:20.405  INFO 20592 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:38:36.441  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59175 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:38:36.442  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:43:19.580  INFO 20592 --- [XNIO-1 task-25] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57557
+2022-01-10 16:43:19.584  INFO 20592 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6

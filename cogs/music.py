@@ -16,60 +16,60 @@ class MusicButton(nextcord.ui.View):
         super().__init__(timeout=None)
 
     @nextcord.ui.button(
-        label=' :play_pause:', 
+        label=' ⏯ ', 
         style=nextcord.ButtonStyle.green,
         custom_id="pause_stop")
     async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
     
     @nextcord.ui.button(
-        label =" :track_next: ",
+        label =" ⏭ ",
         style=nextcord.ButtonStyle.secondary,
         custom_id="skip_song")
     async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :stop_button: ",
-        style=nextcord.ButtonStyle.danger ,
-        custom_id="stop")
+        label=" ⏹ ",
+        style=nextcord.ButtonStyle.red,
+        custom_id="stop_song")
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :repeat_one: ",
+        label=" 🔂 ",
         style=nextcord.ButtonStyle.secondary ,
         custom_id="repeat_song")
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :repeat: ",
+        label=" 🔁 ",
         style=nextcord.ButtonStyle.secondary ,
         custom_id="loop_playlist")
     async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :sound: เพิ่มเสียง ",
+        label=" 🔊 เพิ่มเสียง ",
         style=nextcord.ButtonStyle.primary ,
         custom_id="increase_volume")
     async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :loud_sound: ลดเสียง ",
+        label=" 🔈 ลดเสียง ",
         style=nextcord.ButtonStyle.primary ,
         custom_id="decrease_volume")
     async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" :mute: เพิ่มเสียง ",
+        label=" 🔇 เปิด/ปิดเสียง ",
         style=nextcord.ButtonStyle.primary ,
         custom_id="mute_volume")
     async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await self.handle_click(button, interaction)
+        await Music.handle_click(self,button, interaction)
 
 class Player(pomice.Player):
     def __init__(self, *args, **kwargs):
