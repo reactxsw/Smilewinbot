@@ -1,8 +1,8 @@
-import discord
+import nextcord
 import aiohttp
 import settings
 from utils.languageembed import languageEmbed
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Proxy(commands.Cog):
@@ -28,7 +28,7 @@ class Proxy(commands.Cog):
                 with open("data/http.txt", "w") as file:
                     file.write(r)
                 file.close()
-                f = discord.File("data/http.txt", filename="http.txt")
+                f = nextcord.File("data/http.txt", filename="http.txt")
                 await ctx.send(file = f)
             
             if server_language == "English":
@@ -39,7 +39,7 @@ class Proxy(commands.Cog):
                 with open("data/http.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/http.txt", filename="http.txt")
+                file = nextcord.File("data/http.txt", filename="http.txt")
                 await ctx.send(file = file)
 
     @commands.command()
@@ -60,7 +60,7 @@ class Proxy(commands.Cog):
                 with open("data/https.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/https.txt", filename="https.txt")
+                file = nextcord.File("data/https.txt", filename="https.txt")
                 await ctx.send(file = file)
             
             if server_language == "English":
@@ -71,7 +71,7 @@ class Proxy(commands.Cog):
                 with open("data/https.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/https.txt", filename="https.txt")
+                file = nextcord.File("data/https.txt", filename="https.txt")
                 await ctx.send(file = file)
 
     @commands.command()
@@ -92,7 +92,7 @@ class Proxy(commands.Cog):
                 with open("data/proxy.txt", "w") as file:
                     file.write(r)
                 file.close()
-                f = discord.File("data/proxy.txt", filename="proxy.txt")
+                f = nextcord.File("data/proxy.txt", filename="proxy.txt")
                 await ctx.send(file = f)
             
             if server_language == "English":
@@ -103,7 +103,7 @@ class Proxy(commands.Cog):
                 with open("data/proxy.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/proxy.txt", filename="proxy.txt")
+                file = nextcord.File("data/proxy.txt", filename="proxy.txt")
                 await ctx.send(file = file)
 
     @commands.command()
@@ -124,7 +124,7 @@ class Proxy(commands.Cog):
                 with open("data/sock4.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/sock4.txt", filename="sock4.txt")
+                file = nextcord.File("data/sock4.txt", filename="sock4.txt")
                 await ctx.send(file = file)
             
             if server_language == "English":
@@ -135,7 +135,7 @@ class Proxy(commands.Cog):
                 with open("data/sock4.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/sock4.txt", filename="sock4.txt")
+                file = nextcord.File("data/sock4.txt", filename="sock4.txt")
                 await ctx.send(file = file)
 
     @commands.command()
@@ -156,7 +156,7 @@ class Proxy(commands.Cog):
                 with open("data/sock5.txt", "w") as file:
                     file.write(r)
                 file.close()
-                f = discord.File("data/sock5.txt", filename="data/sock5.txt")
+                f = nextcord.File("data/sock5.txt", filename="data/sock5.txt")
                 await ctx.send(file = f)
             
             if server_language == "English":
@@ -167,7 +167,7 @@ class Proxy(commands.Cog):
                 with open("data/sock5.txt", "w") as file:
                     file.write(r)
                 file.close()
-                file = discord.File("data/sock5.txt", filename="data/sock5.txt")
+                file = nextcord.File("data/sock5.txt", filename="data/sock5.txt")
                 await ctx.send(file = file)
 
 def setup(bot: commands.Bot):

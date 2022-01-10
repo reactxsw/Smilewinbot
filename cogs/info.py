@@ -1,14 +1,14 @@
-from discord import colour
+from nextcord import colour
 from utils.languageembed import languageEmbed
 import settings
-import discord
+import nextcord
 import json
 import aiohttp
 import datetime
 from bs4 import BeautifulSoup
 import requests
 import humanize
-from discord.ext import commands
+from nextcord.ext import commands
 from googleapiclient.discovery import build
 
 
@@ -30,7 +30,7 @@ class Info(commands.Cog):
                     usd = r['USD']
                     eur = r['EUR']
                     thb = r['THB']
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0xffff00,
                         title = "Bitcoin",
                         description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
@@ -54,7 +54,7 @@ class Info(commands.Cog):
                     usd = r['USD']
                     eur = r['EUR']
                     thb = r['THB']  
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0xffff00,
                         title = "Ethereum",
                         description=f'USD: `{str(usd)}$`\nEUR: `{str(eur)}€`\nTHB: `{str(thb)}฿`')
@@ -77,7 +77,7 @@ class Info(commands.Cog):
             if server_language == "Thai":
                 url = f"https://api.github.com/users/{user}"
                 if user is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อของGithubที่จะดู ``{settings.COMMAND_PREFIX}github (user)``"
                     )
@@ -101,7 +101,7 @@ class Info(commands.Cog):
                         bio = r['bio']
                         repo = r['public_repos']
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title = f"💻 ข้อมูล Github ของ {username}",
                             description = f"""```
@@ -121,7 +121,7 @@ Bio : {bio}
                         await message.add_reaction("💻")
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️ไม่สามารถค้นหาชื่อของGithubได้โปรดเช็คตัวสะกด")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -132,7 +132,7 @@ Bio : {bio}
             if server_language == "English":
                 url = f"https://api.github.com/users/{user}"
                 if user is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a github username to search ``{settings.COMMAND_PREFIX}github (user)``"
                     )
@@ -156,7 +156,7 @@ Bio : {bio}
                         bio = r['bio']
                         repo = r['public_repos']
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title = f"💻 ข้อมูล Github ของ {username}",
                             description = f"""```
@@ -176,7 +176,7 @@ Repository : {repo}```"""
                         await message.add_reaction("💻")
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️Unable to find the github profile please check your spelling")
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -196,7 +196,7 @@ Repository : {repo}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อที่จะค้นหา ``{settings.COMMAND_PREFIX}github (username)``"
                     )
@@ -207,7 +207,7 @@ Repository : {repo}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a username to search ``{settings.COMMAND_PREFIX}github (username)``"
                     )
@@ -250,7 +250,7 @@ Repository : {repo}```"""
 
                     if server_language == "Thai":
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title="💊 ข้อมูล COVID-19 ประเทศไทย",
                             description=f"อัพเดตล่าลุดเมื่อ {update}",
                             color=0x00FFFF
@@ -270,7 +270,7 @@ Repository : {repo}```"""
             
                     if server_language == "English":
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title="💊 Thailand COVID-19 status",
                             description=f"lastest update: {update}",
                             color=0x00FFFF
@@ -319,7 +319,7 @@ Repository : {repo}```"""
                     activecase = humanize.intcomma(activecase)
 
             if server_language == "Thai": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0x00FFFF,
                     title = "💊สถานะไวรัสโควิด-19 ทั่วโลก",
                     description = "เเหล่งที่มา : https://disease.sh/v3/covid-19/all"
@@ -341,7 +341,7 @@ Repository : {repo}```"""
                 await message.add_reaction('💊')
             
             if server_language == "English": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0x00FFFF,
                     title = "💊Covid-19 around the world",
                     description = "Source : https://disease.sh/v3/covid-19/all"
@@ -379,7 +379,7 @@ Repository : {repo}```"""
 
             if server_language == "Thai":
                 if r["status"] == "success":
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0xfed000,
                         title =f":satellite_orbital: ・ɢᴇᴏ ʟᴏᴄᴀᴛɪᴏɴ ↷",
                         description = f"""
@@ -409,7 +409,7 @@ Repository : {repo}```"""
                     await message.add_reaction('💻')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"ไม่พบ IP",
                         description = f"""
@@ -419,7 +419,7 @@ Repository : {repo}```"""
 
             if server_language == "English":
                 if r["status"] == "success":
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title =f":satellite_orbital: ・ɢᴇᴏ ʟᴏᴄᴀᴛɪᴏɴ ↷",
                         description = f"""
@@ -448,7 +448,7 @@ Repository : {repo}```"""
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('💻')
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = f"IP not found",
                         description = f"""
@@ -468,7 +468,7 @@ Repository : {repo}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` กรุณาระบุ IP ที่ต้องการที่จะค้นหา ``{settings.COMMAND_PREFIX}geoip (IP)``"
                     )
@@ -479,7 +479,7 @@ Repository : {repo}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify an IP to search for ``{settings.COMMAND_PREFIX}geoip (IP)``"
                     )
@@ -540,7 +540,7 @@ Repository : {repo}```"""
             if server_language == "Thai":
                 if Age_restriction is True:
                     if ctx.channel.is_nsfw():
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = video_title,
                             colour = 0x00FFFF , 
                             description = f"[ดูคลิปนี้]({clip_url})"
@@ -558,7 +558,7 @@ Repository : {repo}```"""
                         await message.add_reaction('✅')
                     
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title =f"NSFW",
                             description = f"คุณไม่สามารถค้นหาเนื้อหา 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -571,7 +571,7 @@ Repository : {repo}```"""
                         await message.add_reaction('✨')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = video_title,
                             colour = 0x00FFFF , 
                             description = f"[ดูคลิปนี้]({clip_url})"
@@ -592,7 +592,7 @@ Repository : {repo}```"""
             if server_language == "English":
                 if Age_restriction is True:
                     if ctx.channel.is_nsfw():
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = video_title,
                             colour = 0x00FFFF , 
                             description = f"[click here]({clip_url})"
@@ -610,7 +610,7 @@ Repository : {repo}```"""
                         await message.add_reaction('✅')
                     
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title =f"NSFW",
                             description = f"you are not allow to search for 18+ content in this text channel please use this in NSFW channel"
@@ -622,7 +622,7 @@ Repository : {repo}```"""
                         await message.add_reaction('✨')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = video_title,
                             colour = 0x00FFFF , 
                             description = f"[click here]({clip_url})"
@@ -651,7 +651,7 @@ Repository : {repo}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหา ``{settings.COMMAND_PREFIX}youtube [ชื่อคลิป]``"
                     )
@@ -662,7 +662,7 @@ Repository : {repo}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` need to specify what video to search on Youtube ``{settings.COMMAND_PREFIX}youtube [video name]``"
                         )
@@ -685,7 +685,7 @@ Repository : {repo}```"""
             snippet = youtube.search().list(part='snippet', q=keywords,type='video',maxResults=50).execute()
             i = 1
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         title = "ค้นหาวิดีโอจาก YouTube",
                         colour = 0x00FFFF , 
                         description = f"ค้นหา: {keywords}"
@@ -703,7 +703,7 @@ Repository : {repo}```"""
                 await message.add_reaction('✅')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         title = "Video from YouTube",
                         colour = 0x00FFFF , 
                         description = f"search: {keywords}"
@@ -732,7 +732,7 @@ Repository : {repo}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหา ``{settings.COMMAND_PREFIX}ytsearch [keywords]``"
                     )
@@ -743,7 +743,7 @@ Repository : {repo}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what video to search ``{settings.COMMAND_PREFIX}ytsearch [keywords]``"
                     )
@@ -787,7 +787,7 @@ Repository : {repo}```"""
             flag = (f"https://flagcdn.com/256x192/{codelower}.png")
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"{name}",
                     description = f"""```
@@ -810,7 +810,7 @@ Repository : {repo}```"""
                 await message.add_reaction('😊')
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"{name}",
                     description = f"""```
@@ -844,7 +844,7 @@ language : {language}```""")
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อประเทศที่จะดู ``{settings.COMMAND_PREFIX}country (country)``"
                     )
@@ -855,7 +855,7 @@ language : {language}```""")
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a country to search ``{settings.COMMAND_PREFIX}country (country)``"
                     )
@@ -876,7 +876,7 @@ language : {language}```""")
 
             if server_language == "Thai": 
                 if website is None: 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมเว็บที่จะดู ``{settings.COMMAND_PREFIX}pingweb (website)``"
                     )
@@ -889,7 +889,7 @@ language : {language}```""")
                     try:
                         r = requests.get(website).status_code
                         if r == 404:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 title = f"สถานะของเว็บไซต์ {website}",
                                 description = f" ⚠️`` เว็บไซต์ไม่ออนไลน์```")
@@ -899,7 +899,7 @@ language : {language}```""")
                             await message.add_reaction('⚠️') 
 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x75ff9f,
                                 title = f"สถานะของเว็บไซต์ {website}",
                                 description = f"```เว็บไซต์ออนไลน์ปกติ```"
@@ -908,7 +908,7 @@ language : {language}```""")
                             message = await ctx.send(embed=embed )
 
                     except requests.exceptions.MissingSchema:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{settings.COMMAND_PREFIX}pingweb (website)``"
                         )
@@ -918,7 +918,7 @@ language : {language}```""")
                         await message.add_reaction('⚠️')
                     
                     except requests.exceptions.ConnectionError:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` เว็บอาจไม่ถูกต้อง ``{settings.COMMAND_PREFIX}pingweb (website)``"
                         )
@@ -930,7 +930,7 @@ language : {language}```""")
             
             if server_language == "English": 
                 if website is None: 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a website to search ``{settings.COMMAND_PREFIX}pingweb (website)``"
                     )
@@ -943,7 +943,7 @@ language : {language}```""")
                     try:
                         r = requests.get(website).status_code
                         if r == 404:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 title = f"Status of {website}",
                                 description = f" ⚠️`` Website is offline```")
@@ -953,7 +953,7 @@ language : {language}```""")
                             await message.add_reaction('⚠️') 
 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x75ff9f,
                                 title = f"Status of {website}",
                                 description = f"``` Website is online```"
@@ -962,7 +962,7 @@ language : {language}```""")
                             message = await ctx.send(embed=embed )
 
                     except requests.exceptions.MissingSchema:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` Unable to find the website ``{settings.COMMAND_PREFIX}pingweb (website)``"
                         )
@@ -972,7 +972,7 @@ language : {language}```""")
                         await message.add_reaction('⚠️')
                     
                     except requests.exceptions.ConnectionError:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` Unable to find the website ``{settings.COMMAND_PREFIX}pingweb (website)``"
                         )
@@ -1005,7 +1005,7 @@ language : {language}```""")
                             
                             day = r['weather'][0]['description']
 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x00FFFF,
                                 title = f"สภาพอากาศในจังหวัด {city}",
                                 description = f"""```
@@ -1023,7 +1023,7 @@ language : {language}```""")
                             await ctx.send(embed=embed)
 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 description = f" ⚠️``{ctx.author}`` ไม่มีจังหวัดนี้กรุณาตรวจสอบตัวสะกด ``{settings.COMMAND_PREFIX}weather (city)``"
                             )
@@ -1046,7 +1046,7 @@ language : {language}```""")
                             
                             day = r['weather'][0]['description']
 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x00FFFF,
                                 title = f"weather in {city}",
                                 description = f"""```
@@ -1064,7 +1064,7 @@ Weather : {day}```
                             await ctx.send(embed=embed)
 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x983925,
                                 description = f" ⚠️``{ctx.author}`` Cannot find this city ``{settings.COMMAND_PREFIX}weather (city)``"
                             )
@@ -1085,7 +1085,7 @@ Weather : {day}```
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{settings.COMMAND_PREFIX}weather (city)``"
                     )
@@ -1096,7 +1096,7 @@ Weather : {day}```
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมชื่อจังหวัดที่จะดู ``{settings.COMMAND_PREFIX}weather (city)``"
                     )
@@ -1122,7 +1122,7 @@ Weather : {day}```
                         certissuer = response["tls"]["cert_issuer"]
                         certexpire = response["tls"]["cert_expires"]
                         certauthority = response["tls"]["cert_authority"]
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = "เช็คลิงค์",
                             description = f"**Certification**\n``Certification Issuer:`` {certissuer}\n``certification expire:`` {certexpire}\n``certificaiton authority:`` {certauthority}"
                         )
@@ -1137,7 +1137,7 @@ Weather : {day}```
                         certissuer = response["tls"]["cert_issuer"]
                         certexpire = response["tls"]["cert_expires"]
                         certauthority = response["tls"]["cert_authority"]
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = "เช็คลิงค์",
                             description = f"**Certification**\n``Certification Issuer:`` {certissuer}\n``certification expire:`` {certexpire}\n``certificaiton authority:`` {certauthority}"
                         )
@@ -1176,7 +1176,7 @@ Weather : {day}```
                         gold_jewelry_sell = gold_jewelry_sell.contents[0]
                         date_and_time = (f"{date} {time}")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "ราคาทอง",
                     colour = 0xfed000,
                     description = f"""

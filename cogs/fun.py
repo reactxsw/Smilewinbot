@@ -1,12 +1,12 @@
-import discord
+import nextcord
 import random
 import datetime
 import aiohttp
-from discord.ext.commands.core import command
+from nextcord.ext.commands.core import command
 from utils.languageembed import languageEmbed
 import settings
 import asyncpraw
-from discord.ext import commands
+from nextcord.ext import commands
 
 class Fun(commands.Cog): 
     def __init__(self, bot: commands.AutoShardedBot):
@@ -34,7 +34,7 @@ class Fun(commands.Cog):
 
                 if random_sub.over_18:
                     if ctx.channel.is_nsfw():
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title =f"{title}",
                             description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
@@ -48,7 +48,7 @@ class Fun(commands.Cog):
                         await message.add_reaction('✨')
                     
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title =f"NSFW",
                             description = f"คุณไม่สามารถค้นหา subreddit ที่ 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
@@ -61,7 +61,7 @@ class Fun(commands.Cog):
                         await message.add_reaction('✨')
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title =f"{title}",
                         description = f"ที่มาของรูปคือ subreddit r/{subreddit}"
@@ -87,7 +87,7 @@ class Fun(commands.Cog):
 
                 if random_sub.over_18:
                     if ctx.channel.is_nsfw():
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title =f"{title}",
                             description = f"Source : subreddit r/{subreddit}"
@@ -101,7 +101,7 @@ class Fun(commands.Cog):
                         await message.add_reaction('✨')
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             title =f"NSFW",
                             description = f"unable to search subreddit which is 18+ in this text channel please use this in NSFW channel"
@@ -113,7 +113,7 @@ class Fun(commands.Cog):
                         await message.add_reaction('✨')
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title =f"{title}",
                         description = f"Source : subreddit r/{subreddit}"
@@ -138,7 +138,7 @@ class Fun(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` กรุณาระบุsubreddit ที่ต้องการ ``{settings.COMMAND_PREFIX}sreddit (subreddit)``"
                     )
@@ -149,7 +149,7 @@ class Fun(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` please specify a subreddit ``{settings.COMMAND_PREFIX}sreddit (subreddit)``"
                     )
@@ -172,7 +172,7 @@ class Fun(commands.Cog):
                 lines = open("data/slim.txt" , encoding="utf8").read().splitlines()
                 slimrandom =  random.choice(lines)
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffe852,
                     title = "คําพูดสลิ่ม",
                     description = f"```{slimrandom}```"
@@ -200,7 +200,7 @@ class Fun(commands.Cog):
             if server_language == "Thai":
                 lines = open("data/quote.txt" , encoding="utf8").read().splitlines()
                 quoterandom =  random.choice(lines)
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffe852,
                     title = "คําคม",
                     description = f"```fix\n{quoterandom}```"
@@ -229,7 +229,7 @@ class Fun(commands.Cog):
             url = (f"https://www.calculator.net/img/dice{x}.png")
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "🎲 ทอยลูกเต่า"
                 )
@@ -240,7 +240,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("🎲")
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "🎲 Dice"
                 )
@@ -269,7 +269,7 @@ class Fun(commands.Cog):
             percent = r['magic']['type']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "🎱 8ball",
                     description = f"""```
@@ -282,7 +282,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("🎱")
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "🎱 8ball",
                     description = f"""```
@@ -306,7 +306,7 @@ class Fun(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะถาม ``{settings.COMMAND_PREFIX}8ball [คําถาม]``"
                     )
@@ -317,7 +317,7 @@ class Fun(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what video to ask ``{settings.COMMAND_PREFIX}8ball [question]``"
                     )
@@ -340,7 +340,7 @@ class Fun(commands.Cog):
                     url  = r['image']
                     cap = r['caption']
 
-                    embed=  discord.Embed(
+                    embed=  nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"{cap}"
                     )

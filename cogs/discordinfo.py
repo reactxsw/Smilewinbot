@@ -1,5 +1,5 @@
-import discord
-from discord import colour
+import nextcord
+from nextcord import colour
 import humanize
 from utils.languageembed import languageEmbed
 import settings
@@ -7,7 +7,7 @@ import datetime
 import platform
 import psutil
 import requests
-from discord.ext import commands
+from nextcord.ext import commands
 
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
@@ -20,7 +20,7 @@ class DiscordInfo(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def channelinfo(self,ctx,channel:discord.TextChannel=None):
+    async def channelinfo(self,ctx,channel:nextcord.TextChannel=None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -32,7 +32,7 @@ class DiscordInfo(commands.Cog):
                 channel = ctx.channel
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "ข้อมูลช่องเเชท",
                     colour = 0xfed000
                 )
@@ -47,7 +47,7 @@ class DiscordInfo(commands.Cog):
                 await ctx.send(embed=embed)
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "ข้อมูลช่องเเชท",
                     colour = 0xfed000
                 )
@@ -89,13 +89,13 @@ class DiscordInfo(commands.Cog):
             totalmember =ctx.guild.member_count
             memberonly = len([member for member in ctx.guild.members if not member.bot])
             botonly = int(totalmember) - int(memberonly)
-            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is nextcord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.dnd])
             totalonline = memberonline + memberidle + memberbusy
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color= 0xffff00,
                     title=f"สมาชิกใน {ctx.guild.name}",
                     description= f"""
@@ -118,7 +118,7 @@ class DiscordInfo(commands.Cog):
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('❤️')
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color= 0xffff00,
                     title=f"members in {ctx.guild.name}",
                     description= f"""
@@ -156,13 +156,13 @@ class DiscordInfo(commands.Cog):
 
             if server_language == "Thai":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color = 0xffff00,
                     title =  "เวลาทำงานของบอท Smilewin",
                     description = "```🕒 " + uptime +"```",
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -171,13 +171,13 @@ class DiscordInfo(commands.Cog):
             
             if server_language == "English":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color = 0xffff00,
                     title =  "Smilewin bot uptime",
                     description = "```🕒 " + uptime +"```",
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -196,10 +196,10 @@ class DiscordInfo(commands.Cog):
             totalmember =ctx.guild.member_count
             memberonly = len([member for member in ctx.guild.members if not member.bot])
             botonly = int(totalmember) - int(memberonly)
-            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is discord.Status.online])
-            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.offline])
-            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.idle])
-            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  discord.Status.dnd])
+            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is nextcord.Status.online])
+            memberoffline = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.offline])
+            memberidle = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.idle])
+            memberbusy = len([member for member in ctx.guild.members if not member.bot and member.status is  nextcord.Status.dnd])
             connect = sum([len(voice_channel.members) for voice_channel in ctx.guild.voice_channels])
             totalonline = memberonline + memberidle + memberbusy
             nitro_teir = ctx.guild.premium_tier
@@ -246,7 +246,7 @@ class DiscordInfo(commands.Cog):
                 else:
                     verification_level = "ไม่รู้"
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffff00,
                     title=f"ข้อมูลเซิฟเวอร์📊", 
                     description=
@@ -327,7 +327,7 @@ f"""**ข้อมูลทั่วไป**
                 else:
                     verification_level = "Don't know"
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffff00,
                     title=f"Server Information📊", 
                     description=
@@ -387,7 +387,7 @@ f"""**General Information**
             
             if server_language == "Thai":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffff00,
                     title='ข้อมูลของบอท Smilewin bot'
                 )
@@ -405,16 +405,16 @@ f"""**General Information**
                 embed.add_field(name='💻 ``ระบบปฏิบัติการ``', value=f'{OS}')
                 embed.add_field(name='💻 ``เเรมที่ใช้``', value=f"{psutil.virtual_memory().percent} %" )
                 embed.add_field(name='🤖 ``ภาษาที่ใช้เขียนบอท``', value=f'Python {PYTHON_VERSION}')
-                embed.add_field(name='🤖 ``Discord.py``', value=f'Discord.py {discord.__version__}')
+                embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
 
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
             
             if server_language == "English":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0xffff00,
                     title='Smilewin bot info'
                 )
@@ -432,15 +432,15 @@ f"""**General Information**
                 embed.add_field(name='💻 ``OS``', value=f'{OS}')
                 embed.add_field(name='💻 ``RAM``', value=f"{psutil.virtual_memory().percent} %" )
                 embed.add_field(name='🤖 ``Programming language``', value=f'Python {PYTHON_VERSION}')
-                embed.add_field(name='🤖 ``Discord.py``', value=f'Discord.py {discord.__version__}')
+                embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
 
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
 
     @commands.command()
-    async def userinfo(self , ctx, member: discord.Member = None):
+    async def userinfo(self , ctx, member: nextcord.Member = None):
 
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -455,13 +455,13 @@ f"""**General Information**
             roles = [role for role in member.roles]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = member.color,
                     title = f"ข้อมูลของสมาชิก {member}"
                 )
-                embed.set_author(name = f'ข้อมูลของ {member}', icon_url=f"{member.avatar_url}")
-                embed.set_thumbnail(url=member.avatar_url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar_url)
+                embed.set_author(name = f'ข้อมูลของ {member}', icon_url=f"{member.avatar.url}")
+                embed.set_thumbnail(url=member.avatar.url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar.url)
                 embed.add_field(name="```ID ของสมาชิก:```",value=member.id)
                 embed.add_field(name="```ชื่อในเซิฟ:```",value=member.display_name)
                 embed.add_field(name="```วันที่สมัคร:```",value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
@@ -472,13 +472,13 @@ f"""**General Information**
                 await message.add_reaction('🤖')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = member.color,
                     title = f"Info of {member}"
                 )
-                embed.set_author(name = f'Info of {member}', icon_url=f"{member.avatar_url}")
-                embed.set_thumbnail(url=member.avatar_url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar_url)
+                embed.set_author(name = f'Info of {member}', icon_url=f"{member.avatar.url}")
+                embed.set_thumbnail(url=member.avatar.url)
+                embed.set_footer(text=f"┗Requested by {ctx.author}",icon_url=ctx.author.avatar.url)
                 embed.add_field(name="```Member id:```",value=member.id)
                 embed.add_field(name="```Member nickname:```",value=member.display_name)
                 embed.add_field(name="```Creation date:```",value=member.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
@@ -500,7 +500,7 @@ f"""**General Information**
             latency = requests.get("https://discord.com/").elapsed.total_seconds()
             if server_language == "English":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color = 0xffff00,
                     title = 'Smilewin bot ping',
                     description = f"""
@@ -511,7 +511,7 @@ f"""**General Information**
 
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
         
@@ -521,7 +521,7 @@ f"""**General Information**
             
             if server_language == "Thai":
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     color = 0xffff00,
                     title = 'Smilewin bot ping',
                     description = f"""
@@ -532,7 +532,7 @@ f"""**General Information**
 
                 )
 
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
         
@@ -541,7 +541,7 @@ f"""**General Information**
                 print(f"{ctx.author} ping bot and the latency is {round(self.bot.latency * 1000)}ms")
 
     @commands.command()
-    async def avatar(self,ctx , member : discord.Member=None): 
+    async def avatar(self,ctx , member : nextcord.Member=None): 
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -554,11 +554,11 @@ f"""**General Information**
 
             if server_language == "Thai": 
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"รูปของสมาชิก: {member}",
-                    description = f"ลิงค์ : [คลิกที่นี้]({member.avatar_url})")
-                embed.set_image(url=member.avatar_url)
+                    description = f"ลิงค์ : [คลิกที่นี้]({member.avatar.url})")
+                embed.set_image(url=member.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -566,18 +566,18 @@ f"""**General Information**
 
             if server_language == "English": 
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"{member} profile picture",
-                    description = f"link : [click here]({member.avatar_url})")
-                embed.set_image(url=member.avatar_url)
+                    description = f"link : [click here]({member.avatar.url})")
+                embed.set_image(url=member.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
                 await message.add_reaction("✅")
 
     @commands.command()
-    async def searchavatar(self,ctx, member: discord.Member=None): 
+    async def searchavatar(self,ctx, member: nextcord.Member=None): 
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -589,20 +589,20 @@ f"""**General Information**
                 member = ctx.author
 
             if server_language == "Thai": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"หารูปของสมาชิก: {member}",
-                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar.url}")
                 
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction("✅")
             
             if server_language == "English": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"search for {member} profile picture",
-                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar_url}")
+                    description=f"https://images.google.com/searchbyimage?image_url={member.avatar.url}")
                 
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
@@ -619,7 +619,7 @@ f"""**General Information**
             server_language = languageserver["Language"]
              
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title= '💻 เครดิตคนทําบอท',
                     description=
                     """
@@ -634,7 +634,7 @@ f"""**General Information**
                 await message.add_reaction('👍')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title= '💻 Developer',
                     description=
                     """
@@ -659,7 +659,7 @@ f"""**General Information**
             server_language = languageserver["Language"]
             
             if server_language == "Thai": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"เซิฟเวอร์: {ctx.guild.name}")
                 embed.set_image(url=ctx.guild.icon_url)
@@ -669,7 +669,7 @@ f"""**General Information**
                 await message.add_reaction("✅")
             
             if server_language == "English": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"Server: {ctx.guild.name}")
                 embed.set_image(url=ctx.guild.icon_url)
@@ -690,7 +690,7 @@ f"""**General Information**
             if server_language == "Thai":
 
                 invitelink = str(f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot")
-                embed = discord.Embed(  
+                embed = nextcord.Embed(  
                     colour = 0x00FFFF,
                     title = f"ลิงค์เชิญบอท SmileWin : ",
                     description = f"[คลิกที่นี้]({invitelink})"
@@ -703,7 +703,7 @@ f"""**General Information**
             if server_language == "English":
 
                 invitelink = str(f"https://discord.com/api/oauth2/authorize?client_id={self.bot.user.id}&permissions=8&scope=bot")
-                embed = discord.Embed(  
+                embed = nextcord.Embed(  
                     colour = 0x00FFFF,
                     title = f"invite link : ",
                     description = f"[click here]({invitelink})"
@@ -726,7 +726,7 @@ f"""**General Information**
             if server_language == "Thai":
                 server = await settings.collection.find_one({"guild_id":ctx.guild.id})
                 if server is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่า",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setup",
                             colour =  0x983925
@@ -817,7 +817,7 @@ f"""**General Information**
                             verification_id = "None"
                     else:
                         verification_id = "None"
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "การตั้งค่าของ Server",
                         description = f"```Database ID : {database_id}```",
                         colour= 0x00FFFF
@@ -836,7 +836,7 @@ f"""**General Information**
             if server_language == "English":
                 server = await settings.collection.find_one({"guild_id":ctx.guild.id})
                 if server is None:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่า",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setup",
                             colour =  0x983925
@@ -927,7 +927,7 @@ f"""**General Information**
                             verification_id = "None"
                     else:
                         verification_id = "None"
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "การตั้งค่าของ Server",
                         description = f"```Database ID : {database_id}```",
                         colour= 0x00FFFF
@@ -956,7 +956,7 @@ f"""**General Information**
             if server_language == "Thai":
                 servers = list(self.bot.guilds)
                 n = min(n, len(servers))
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title=f"{n} อันดับเซิฟเวอร์",
                     colour = 0x00FFFF
                     )
@@ -967,7 +967,7 @@ f"""**General Information**
             if server_language == "English":
                 servers = list(self.bot.guilds)
                 n = min(n, len(servers))
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title=f"Top {n} servers",
                     colour = 0x00FFFF
                     )
@@ -986,25 +986,25 @@ f"""**General Information**
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = f"โหวตให้บอท {self.bot.user}",
                     colour = 0x00FFFF,
                     description = f"[discordbotlist](https://discordbotlist.com/bots/smilewin/upvote)" + "\n" + "[Top.gg](https://discordbotlist.com/bots/smilewin/upvote)"
 
                 )
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🙏')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = f"Vote for {self.bot.user}",
                     colour = 0x00FFFF,
                     description = f"[discordbotlist](https://discordbotlist.com/bots/smilewin/upvote)" + "\n" + "[Top.gg](https://discordbotlist.com/bots/smilewin/upvote)"
 
                 )
-                embed.set_thumbnail(url=self.bot.user.avatar_url)
+                embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🙏')
@@ -1036,16 +1036,16 @@ f"""**General Information**
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                channel = self.bot.get_channel(id = int(settings.supportchannel))
+                channel = self.bot.get_channel(int(settings.supportchannel))
                 if not message is None: 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"ปัญหาบอทโดย {ctx.author}",
                         description = message,
                         colour = 0x00FFFF,
                     )
                     await channel.send(embed=embed)
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"ขอบคุณครับ",
                         description = "ปัญหาได้ถูกเเจ้งเรียบร้อย",
                         colour = 0x00FFFF,
@@ -1053,7 +1053,7 @@ f"""**General Information**
                     await ctx.send(embed=embed)
 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "ระบุปัญหา",
                         description = f"{ctx.author.mention} จะต้องระบุปัญหาที่จะเเจ้งให้ทีมงานทราบ",
                         colour = 0x983925
@@ -1061,16 +1061,16 @@ f"""**General Information**
                     await ctx.send(embed=embed)
 
             if server_language == "English":
-                channel = self.bot.get_channel(id = int(settings.supportchannel))
+                channel = self.bot.get_channel(int(settings.supportchannel))
                 if not message is None: 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"ปัญหาบอทโดย {ctx.author}",
                         description = message,
                         colour = 0x00FFFF,
                     )
                     await channel.send(embed=embed)
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"Thank you",
                         description = "Bot developer will fix this soon",
                         colour = 0x00FFFF,
@@ -1078,7 +1078,7 @@ f"""**General Information**
                     await ctx.send(embed=embed)
                 
                 else: 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = "Specify problem",
                         description = f"{ctx.author.mention} Must specify the problem that will be notified to the team.",
                         colour = 0x983925

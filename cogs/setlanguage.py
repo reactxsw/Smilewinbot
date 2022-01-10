@@ -1,6 +1,6 @@
 import settings
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 
 class SetLanguage(commands.Cog):
@@ -9,7 +9,7 @@ class SetLanguage(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def setlanguage(self,ctx):
-        embed = discord.Embed(
+        embed = nextcord.Embed(
             colour = 0xFED000,
             description = "specify language / ต้องระบุภาษา : thai / english"
 
@@ -21,7 +21,7 @@ class SetLanguage(commands.Cog):
     @setlanguage.error
     async def setlanguage_error(self,ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x983925,
                 title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"""
@@ -45,7 +45,7 @@ English : You must have ``Administrator`` to be able to use this command
             "Language":"Thai"
             }
             await settings.collectionlanguage.insert_one(newserver)
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour= 0xFED000,
                 title = "ตั้งค่าภาษา",
                 description= f"ภาษาได้ถูกตั้งเป็น Thai"
@@ -57,7 +57,7 @@ English : You must have ``Administrator`` to be able to use this command
         
         else:
             await settings.collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"Thai"}})
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour= 0xFED000,
                 title = "ตั้งค่าภาษา",
                 description= f"ภาษาได้ถูกอัพเดตเป็น Thai"
@@ -70,7 +70,7 @@ English : You must have ``Administrator`` to be able to use this command
     @thai.error
     async def thai_error(self,ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x983925,
                 title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"""
@@ -95,7 +95,7 @@ English : You must have ``Administrator`` to be able to use this command
             }
 
             await settings.collectionlanguage.insert_one(newserver)
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour= 0xFED000,
                 title = "Language setting",
                 description= f"Language have been set to English"
@@ -107,7 +107,7 @@ English : You must have ``Administrator`` to be able to use this command
         
         else:
             await settings.collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"English"}})
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour= 0xFED000,
                 title = "Language setting",
                 description= f"Language have been set to English"
@@ -120,7 +120,7 @@ English : You must have ``Administrator`` to be able to use this command
     @english.error
     async def english_error(self,ctx, error):
         if isinstance(error, commands.MissingPermissions):
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x983925,
                 title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
                 description = f"""

@@ -170,3 +170,105 @@
 2022-01-06 11:18:54: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
 2022-01-06 11:19:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
 2022-01-06 11:36:59: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 11:47:37: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r yellow cold play,command: None}
+2022-01-06 11:50:49: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r adsadsa,command: None}
+2022-01-06 11:50:49: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r adsadsa,command: None}
+2022-01-06 12:08:41: [I'm Just Dog#0001 | 668433997189087232] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r smsh,command: None}
+2022-01-06 12:08:41: [I'm Just Dog#0001 | 668433997189087232] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r smsh,command: None}
+2022-01-06 20:33:03: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-06 23:35:10: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 23:53:53: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 23:58:32: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-06 23:59:26: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 00:01:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 00:02:18: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 00:03:09: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 00:04:09: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 00:26:34: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-07 17:03:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r button,command: button}
+2022-01-07 17:04:35: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r button,command: button}
+2022-01-07 17:29:04: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 17:47:01: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 17:49:59: [I'm Just Dog#0001 | 668433997189087232] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r invite,command: None}
+2022-01-07 18:02:11: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-07 18:05:32: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play รางวัลแด่คนช่างฝัน,command: play}
+2022-01-07 18:24:05: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r ซีวอค,command: None}
+2022-01-07 18:24:12: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play ซีวอค,command: play}
+2022-01-07 23:00:06: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:01:59: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:04:01: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:04:56: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:06:06: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-07 23:08:53: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-08 17:01:33: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play ซีวอค,command: play}
+2022-01-08 17:15:25: [REACT#1120 | 394447088970104833] in [697888371208355841 | " 𝙍𝙀𝘼𝘾𝙏 "'s server]{Error:NoneType: None,userinput: !r love,command: love}
+2022-01-08 17:21:30: [REACT#1120 | 394447088970104833] in [697888371208355841 | " 𝙍𝙀𝘼𝘾𝙏 "'s server]{Error:NoneType: None,userinput: !r love,command: love}
+2022-01-08 17:23:07: [REACT#1120 | 394447088970104833] in [697888371208355841 | " 𝙍𝙀𝘼𝘾𝙏 "'s server]{Error:NoneType: None,userinput: !r love,command: love}
+2022-01-08 17:24:15: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r love,command: love}
+2022-01-08 17:24:27: [REACT#1120 | 394447088970104833] in [394451338140057610 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r love,command: love}
+2022-01-08 18:59:21: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r join,command: None}
+2022-01-08 18:59:57: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 19:00:41: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 19:02:15: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:02:46: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:02:51: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:03:18: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:03:49: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:11:04: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:11:09: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:12:24: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:12:52: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:13:32: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:20:44: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:28:51: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-08 21:59:46: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:29:31: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:29:37: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:30:21: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:31:05: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:31:38: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:31:42: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:31:46: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:31:48: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:32:45: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r queue,command: None}
+2022-01-09 03:54:24: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:55:28: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:56:01: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 03:56:43: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-09 23:00:28: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:02:12: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:17: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:20: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:02:22: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-09 23:04:26: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:06:49: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:14:59: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:16:16: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:16:33: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:18:35: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:25:53: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-09 23:27:13: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-01-10 00:35:40: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:35:58: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:39:09: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:40:53: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:41:44: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:42:09: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:42:28: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:43:30: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:44:06: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:44:51: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:45:56: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:46:53: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:48:27: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:49:10: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:53:43: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands,command: play}
+2022-01-10 00:55:09: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r play 10 bands
+!r play 10 bands,command: play}
+2022-01-10 13:04:21: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:08:33: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:44:05: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:45:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:47:08: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands
+\,command: play}
+2022-01-10 13:47:12: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}

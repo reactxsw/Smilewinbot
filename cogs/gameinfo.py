@@ -1,12 +1,12 @@
 import aiohttp 
-import discord 
+import nextcord 
 import settings 
 import humanize 
 import datetime 
 import bs4
 from utils.languageembed import languageEmbed
 from bs4 import BeautifulSoup
-from discord.ext import commands
+from nextcord.ext import commands
 
 class GameInfo(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
@@ -38,7 +38,7 @@ class GameInfo(commands.Cog):
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น dota2 ในตอนนี้",
                             description = f"""```
@@ -69,7 +69,7 @@ class GameInfo(commands.Cog):
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น dota2 ในตอนนี้",
                             description = f"""```
@@ -110,7 +110,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น CS:GO",
                             description = f"""```
@@ -141,7 +141,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น CS:GO",
                             description = f"""```
@@ -182,7 +182,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น PUBG ในตอนนี้",
                             description = f"""```
@@ -213,7 +213,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น PUBG ในตอนนี้",
                             description = f"""```
@@ -254,7 +254,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น RB6 ในตอนนี้",
                             description = f"""```
@@ -285,7 +285,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น RB6 ในตอนนี้",
                             description = f"""```
@@ -326,7 +326,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น APEX LEGEND ในตอนนี้",
                             description = f"""```
@@ -357,7 +357,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น APEX LEGEND ในตอนนี้",
                             description = f"""```
@@ -398,7 +398,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น GTAV ในตอนนี้",
                             description = f"""```
@@ -429,7 +429,7 @@ Higest player online {playerall}``` """
                         player24 = humanize.intcomma(online24)
                         playerall = humanize.intcomma(onlineall)
 
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             color=0x75ff9f,
                             title = "จํานวนคนที่เล่น GTAV ในตอนนี้",
                             description = f"""```
@@ -473,7 +473,7 @@ Higest player online {playerall}``` """
                         level = int(level)
                         kills = int(kills)
                         kills = humanize.intcomma(kills)
-                        embed= discord.Embed(
+                        embed= nextcord.Embed(
                             colour = 0x00FFFF,
                             title = f"🎮 Stat เกม apex legend ของ {username}",
                             description =f"""```
@@ -490,7 +490,7 @@ Higest player online {playerall}``` """
                         await message.add_reaction('🎮')
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` ไม่พบผู้เล่น ``{username}``"
                         )
@@ -510,7 +510,7 @@ Higest player online {playerall}``` """
                         level = int(level)
                         kills = int(kills)
                         kills = humanize.intcomma(kills)
-                        embed= discord.Embed(
+                        embed= nextcord.Embed(
                             colour = 0x00FFFF,
                             title = f"🎮 apex legend stat of {username}",
                             description =f"""```
@@ -527,7 +527,7 @@ Higest player online {playerall}``` """
                         await message.add_reaction('🎮')
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` Player not found ``{username}``"
                         )
@@ -548,7 +548,7 @@ Higest player online {playerall}``` """
 
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมใส่ชื่อของผู้เล่น ``{settings.COMMAND_PREFIX}apexstat (username)``"
                     )
@@ -559,7 +559,7 @@ Higest player online {playerall}``` """
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a username ``{settings.COMMAND_PREFIX}apexstat (username)``"
                     )

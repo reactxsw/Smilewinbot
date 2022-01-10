@@ -1,5 +1,5 @@
-import discord
-from discord.ext.commands.core import command
+import nextcord
+from nextcord.ext.commands.core import command
 from utils.languageembed import languageEmbed
 import settings
 import asyncio
@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import aiohttp
 from urllib.parse import urlencode
 
-from discord.ext import commands
+from nextcord.ext import commands
 
 class General(commands.Cog): 
     def __init__(self, bot: commands.AutoShardedBot):
@@ -27,7 +27,7 @@ class General(commands.Cog):
             url = (f'<https://lmgtfy.com/?{r}>')
 
             if server_language == "Thai": 
-                embed= discord.Embed(
+                embed= nextcord.Embed(
                     colour =0x00FFFF,
                     title= f"ลิงค์ lmgtfy ของคุณ {ctx.author}",
                     description = f"{url}"
@@ -37,7 +37,7 @@ class General(commands.Cog):
                 await message.add_reaction('👍')
             
             if server_language == "English": 
-                embed= discord.Embed(
+                embed= nextcord.Embed(
                     colour =0x00FFFF,
                     title= f"lmgtfy link for {ctx.author}",
                     description = f"{url}"
@@ -58,7 +58,7 @@ class General(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` จะต้องพิมสิ่งที่จะค้นหาใน lmgtfy ``{settings.COMMAND_PREFIX}lmgtfy [message]``"
                         )
@@ -69,7 +69,7 @@ class General(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                             colour = 0x983925,
                             description = f" ⚠️``{ctx.author}`` need to specify what to search on lmgtfy ``{settings.COMMAND_PREFIX}lmgtfy [message]``"
                         )
@@ -91,7 +91,7 @@ class General(commands.Cog):
             if server_language == "Thai":
 
                 number = second
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับถอยหลัง {second} วินาที",
                         description = f"{number}"
@@ -100,7 +100,7 @@ class General(commands.Cog):
                 message = await ctx.send(embed=embed)
 
                 while number >= 0:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับถอยหลัง {second} วินาที",
                         description = f"```{number}```"
@@ -110,7 +110,7 @@ class General(commands.Cog):
                     await asyncio.sleep(1)
                     await message.edit(embed=embed)
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"⏱️ นับถอยหลัง {second} วินาที",
                     description = "เสร็จ"
@@ -122,7 +122,7 @@ class General(commands.Cog):
             if server_language == "Thai":
 
                 number = second
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ countdown for {second} second",
                         description = f"{number}"
@@ -131,7 +131,7 @@ class General(commands.Cog):
                 message = await ctx.send(embed=embed)
 
                 while number >= 0:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ countdown for {second} second",
                         description = f"```{number}```"
@@ -141,7 +141,7 @@ class General(commands.Cog):
                     await asyncio.sleep(1)
                     await message.edit(embed=embed)
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"⏱️ countdown for {second} second",
                     description = "Finished"
@@ -162,7 +162,7 @@ class General(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับถอยหลัง ``{settings.COMMAND_PREFIX}timer (second)``"
                     )
@@ -173,7 +173,7 @@ class General(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify how long to countdown ``{settings.COMMAND_PREFIX}timer (second)``"
                     )
@@ -194,7 +194,7 @@ class General(commands.Cog):
             
             if server_language == "Thai":
                 number = 0
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับเลขถึง {second} วินาที",
                         description = f"{number}"
@@ -204,7 +204,7 @@ class General(commands.Cog):
                 message = await ctx.send(embed=embed)
 
                 while number <= second:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับเลขถึง {second} วินาที",
                         description = f"```{number}```"
@@ -214,7 +214,7 @@ class General(commands.Cog):
                     await asyncio.sleep(1)
                     await message.edit(embed=embed)
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"⏱️ นับเลขถึง {second} วินาที",
                     description = "เสร็จ"
@@ -225,7 +225,7 @@ class General(commands.Cog):
             
             if server_language == "English":
                 number = 0
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับเลขถึง {second} วินาที",
                         description = f"{number}"
@@ -235,7 +235,7 @@ class General(commands.Cog):
                 message = await ctx.send(embed=embed)
 
                 while number <= second:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = f"⏱️ นับเลขถึง {second} วินาที",
                         description = f"```{number}```"
@@ -245,7 +245,7 @@ class General(commands.Cog):
                     await asyncio.sleep(1)
                     await message.edit(embed=embed)
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = f"⏱️ นับเลขถึง {second} วินาที",
                     description = "เสร็จ"
@@ -266,7 +266,7 @@ class General(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องพิมวินาทีที่ต้องการจะนับ ``{settings.COMMAND_PREFIX}count (second)``"
                     )
@@ -277,7 +277,7 @@ class General(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify how long to coun ``{settings.COMMAND_PREFIX}count (second)``"
                     )
@@ -298,7 +298,7 @@ class General(commands.Cog):
             
             if server_language == "Thai":
                 big = message.upper()
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "UPPERCASE GENERATOR",
                     description = f"""```
@@ -312,7 +312,7 @@ class General(commands.Cog):
             
             if server_language == "English":
                 big = message.upper()
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "UPPERCASE GENERATOR",
                     description = f"""```
@@ -336,7 +336,7 @@ Uppercase text : {big}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมใหญ่ ``{settings.COMMAND_PREFIX}upper (message)``"
                     )
@@ -347,7 +347,7 @@ Uppercase text : {big}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what to make into uppercase ``{settings.COMMAND_PREFIX}upper (message)``"
                     )
@@ -368,7 +368,7 @@ Uppercase text : {big}```"""
             
             if server_language == "Thai":
                 lower = message.lower()
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "LOWERCASE GENERATOR",
                     description = f"""```
@@ -382,7 +382,7 @@ Uppercase text : {big}```"""
             
             if server_language == "English":
                 lower = message.lower()
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "LOWERCASE GENERATOR",
                     description = f"""```
@@ -406,7 +406,7 @@ Lowercase text : {lower}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะทําเป็นพิมเล็ก ``{settings.COMMAND_PREFIX}lower (message)``"
                     )
@@ -417,7 +417,7 @@ Lowercase text : {lower}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what to make into lowercase ``{settings.COMMAND_PREFIX}lower (message)``"
                     )
@@ -439,7 +439,7 @@ Lowercase text : {lower}```"""
             if server_language == "Thai":
 
                 reverse = message[::-1]
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "REVERSE GENERATOR",
                     description = f"""```
@@ -453,7 +453,7 @@ Lowercase text : {lower}```"""
             if server_language == "English":
 
                 reverse = message[::-1]
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "REVERSE GENERATOR",
                     description = f"""```
@@ -476,7 +476,7 @@ Reverse text : {reverse}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะกลับด้าน ``{settings.COMMAND_PREFIX}reverse (message)``"
                     )
@@ -487,7 +487,7 @@ Reverse text : {reverse}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify what to reverse ``{settings.COMMAND_PREFIX}reverse (message)``"
                     )
@@ -513,7 +513,7 @@ Reverse text : {reverse}```"""
 
                 binary = r['binary']
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "Encode Binary",
                     description = f"""```
@@ -532,7 +532,7 @@ Binary : {binary}```"""
 
                 binary = r['binary']
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "Encode Binary",
                     description = f"""```
@@ -561,7 +561,7 @@ Binary : {binary}```"""
 
                 binary = r['text']
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "Encode Binary",
                     description = f"""```
@@ -580,7 +580,7 @@ Normal text : {binary}```"""
 
                 binary = r['text']
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "Encode Binary",
                     description = f"""```
@@ -604,7 +604,7 @@ Normal text : {binary}```"""
 
             num = len(text)
             if server_language == "Thai": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "LENGTH COUNTER",
                     description = f"""```
@@ -617,7 +617,7 @@ Normal text : {binary}```"""
                 await ctx.send(embed=embed)
             
             if server_language == "English": 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "LENGTH COUNTER",
                     description = f"""```
@@ -641,7 +641,7 @@ length : {num}```"""
 
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ประโยคหรือคําที่ต้องการที่จะนับตัวอักษร ``{settings.COMMAND_PREFIX}length (text)``"
                     )
@@ -652,7 +652,7 @@ length : {num}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a text ``{settings.COMMAND_PREFIX}length (text)``"
                     )
@@ -678,7 +678,7 @@ length : {num}```"""
                     async with session.get(url) as req:
                         result = BeautifulSoup(await req.text(), "html.parser")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "เครื่องคิดเลข",
                     description = f"""
@@ -696,7 +696,7 @@ length : {num}```"""
                     async with session.get(url) as req:
                         result = BeautifulSoup(await req.text(), "html.parser")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title = "Calculator",
                     description = f"""
@@ -719,7 +719,7 @@ length : {num}```"""
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "ระบุสิ่งที่จะคําณวน",
                         description = f" ⚠️``{ctx.author}`` จะต้องระบุใส่สิ่งที่จะคําณวน ``{settings.COMMAND_PREFIX}calculator (equation)``"
@@ -731,7 +731,7 @@ length : {num}```"""
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "Specify an equation",
                         description = f" ⚠️``{ctx.author}`` need to specify a math equation ``{settings.COMMAND_PREFIX}calculator (equation)``"

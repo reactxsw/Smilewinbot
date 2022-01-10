@@ -1,11 +1,11 @@
-import discord
+import nextcord
 import random
 import asyncio
 
 from requests.models import Response
 import settings
 from utils.languageembed import languageEmbed
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Game(commands.Cog):
@@ -23,7 +23,7 @@ class Game(commands.Cog):
             server_language = languageserver["Language"]
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
@@ -66,7 +66,7 @@ class Game(commands.Cog):
                         }
                     }
                     botresponse = random.choice(rps)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0xFED000,
                         title = "Rock paper scissor",
                         description = responses[botresponse][answer]
@@ -75,7 +75,7 @@ class Game(commands.Cog):
                     await message.edit(embed=embed)
                 
                 except asyncio.TimeoutError:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "🕑 หมดเวลา" ,
                     )
@@ -87,7 +87,7 @@ class Game(commands.Cog):
 
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0xFED000,
                     title = "เกมเป่ายิ้งฉุบ"
                 )
@@ -129,7 +129,7 @@ class Game(commands.Cog):
                         }
                     }
                     botresponse = random.choice(rps)
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0xFED000,
                         title = "Rock paper scissor",
                         description = responses[botresponse][answer]
@@ -139,7 +139,7 @@ class Game(commands.Cog):
 
                 except asyncio.TimeoutError:
                     
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         title = "🕑 Out of time" ,
                     )
@@ -165,7 +165,7 @@ class Game(commands.Cog):
             }
             
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0xFED000,
                     title = "ทอยเหรียญ",
                     description = f"คุณ ``{ctx.author}`` ทอยได้{responses[flip][0]}"
@@ -177,7 +177,7 @@ class Game(commands.Cog):
                 await ctx.send(embed=embed)
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour =0xFED000,
                     title = "Coin flip",
                     description = f"``{ctx.author}`` got {responses[flip][1]}"

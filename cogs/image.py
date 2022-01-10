@@ -1,8 +1,8 @@
-from discord.ext import commands
+from nextcord.ext import commands
 from utils.languageembed import languageEmbed
 import aiohttp
 import settings
-import discord
+import nextcord
 
 
 class Image(commands.Cog): 
@@ -25,7 +25,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพนก"
 
@@ -35,7 +35,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐦')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="Bird"
 
@@ -60,7 +60,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพเเพนด้า"
 
@@ -70,7 +70,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐼')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="Panda"
 
@@ -95,7 +95,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพเเมว"
 
@@ -105,7 +105,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐱')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพเเมว"
 
@@ -130,7 +130,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพหมา"
 
@@ -140,7 +140,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐶')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="Dog"
 
@@ -165,7 +165,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพสุนัขจิ้งจอก"
 
@@ -175,7 +175,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🦊')
             
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="Fox"
 
@@ -199,7 +199,7 @@ class Image(commands.Cog):
                     url = r['link']
 
             if server_language == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="ภาพหมีโคอาล่า"
 
@@ -209,7 +209,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐨')
 
             if server_language == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title="Koala"
 
@@ -219,7 +219,7 @@ class Image(commands.Cog):
                 await message.add_reaction('🐨')
 
     @commands.command()
-    async def wasted(self,ctx, member: discord.Member=None):
+    async def wasted(self,ctx, member: nextcord.Member=None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -232,9 +232,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "💀 Wasted!",
                     description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/wasted/?avatar={avatar_url})"
@@ -249,9 +249,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "💀 Wasted!",
                     description = f"link: [click here](https://some-random-api.ml/canvas/wasted/?avatar={avatar_url})"
@@ -263,7 +263,7 @@ class Image(commands.Cog):
                 await message.add_reaction('💀')
 
     @commands.command()
-    async def gay(self,ctx, member: discord.Member=None):
+    async def gay(self,ctx, member: nextcord.Member=None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -276,9 +276,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "🏳️‍🌈 Gay!" , 
                     description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/gay/?avatar={avatar_url})"
@@ -293,9 +293,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "🏳️‍🌈 Gay!" , 
                     description = f"link: [click here](https://some-random-api.ml/canvas/gay/?avatar={avatar_url})"
@@ -316,7 +316,7 @@ class Image(commands.Cog):
         else:
 
             if image is None:
-                image = ctx.author.avatar_url
+                image = ctx.author.avatar.url
             
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={image}") as r:
@@ -324,7 +324,7 @@ class Image(commands.Cog):
 
             url = r['message']
 
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x00FFFF,
                 title = "Iphone X"
 
@@ -344,7 +344,7 @@ class Image(commands.Cog):
 
         else: 
 
-            image = ctx.author.avatar_url
+            image = ctx.author.avatar.url
             username = ctx.author
 
             async with aiohttp.ClientSession() as session:
@@ -353,7 +353,7 @@ class Image(commands.Cog):
 
             url = r['message']
 
-            embed = discord.Embed(
+            embed = nextcord.Embed(
                 colour = 0x00FFFF,
                 title = "Pornhub"
 
@@ -376,7 +376,7 @@ class Image(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้อง text ที่จะใส่ใน comment``{settings.COMMAND_PREFIX}phcomment (text)``"
                     )
@@ -387,7 +387,7 @@ class Image(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a text to put as comment ``{settings.COMMAND_PREFIX}phcomment (text)``"
                     )
@@ -397,7 +397,7 @@ class Image(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @commands.command()
-    async def trigger(self,ctx, member: discord.Member=None):
+    async def trigger(self,ctx, member: nextcord.Member=None):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -410,9 +410,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "😠 Triggered",
                     description = f"ลิงค์: [คลิกที่นี้](https://some-random-api.ml/canvas/triggered/?avatar={avatar_url})"
@@ -427,9 +427,9 @@ class Image(commands.Cog):
                 if member is None:
                     member = ctx.author
 
-                avatar_url = member.avatar_url_as(format="png")
+                avatar_url = member.avatar.with_format("png")
 
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     colour=0x00FFFF,
                     title= "😠 Triggered",
                     description = f"link: [click here](https://some-random-api.ml/canvas/triggered/?avatar={avatar_url})"
@@ -451,7 +451,7 @@ class Image(commands.Cog):
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"https://nekobot.xyz/api/imagegen?type=tweet&username={username}&text={message}") as r:
                     response = await r.json()
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         title = "🕊️ Twitter generator"
 
@@ -474,7 +474,7 @@ class Image(commands.Cog):
             
             if server_language == "Thai":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` จะต้องใส่ username เเละ text  ที่จะใส่ในสเตตัส twitter``{settings.COMMAND_PREFIX}tweet (username) (text)``"
                     )
@@ -485,7 +485,7 @@ class Image(commands.Cog):
             
             if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x983925,
                         description = f" ⚠️``{ctx.author}`` need to specify a text and to put as status``{settings.COMMAND_PREFIX}tweet (username) (text)``"
                     )

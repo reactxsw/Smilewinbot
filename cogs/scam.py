@@ -1,6 +1,6 @@
 from aiohttp.helpers import ProxyInfo
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import aiohttp
 import asyncio
 import re
@@ -69,7 +69,7 @@ class Scam(commands.Cog):
         else:
             languageserver = languageserver["language"]
             if languageserver == "Thai":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "ข้อมูลเกี่ยวคำสั่ง scam",
                     colour = 0xFED000,
                 )
@@ -84,7 +84,7 @@ class Scam(commands.Cog):
 ```
 """, Inline=False)
             elif languageserver == "English":
-                embed = discord.Embed(
+                embed = nextcord.Embed(
                     title = "Scam command information",
                     colour = 0xFED000,
                 )

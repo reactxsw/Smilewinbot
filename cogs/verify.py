@@ -1,5 +1,5 @@
 import settings
-import discord
+import nextcord
 import asyncio
 import datetime
 import random
@@ -8,7 +8,7 @@ from utils.languageembed import languageEmbed
 from pathlib import Path
 from PIL import Image, ImageDraw , ImageFont, ImageFilter
 
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 class Verify(commands.Cog): 
@@ -46,7 +46,7 @@ class Verify(commands.Cog):
 
                 if status == "YES":
                     try:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
                             description = "┗[1] ชื่อ")
@@ -63,7 +63,7 @@ class Verify(commands.Cog):
                         await message.delete()
 
                     try:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
                             description = "┗[2] อายุ")
@@ -80,7 +80,7 @@ class Verify(commands.Cog):
                         await message.delete()
             
                     try:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             colour = 0x00FFFF,
                             title = "กรุณาใส่ข้อมูลให้ครบถ้วน 📝",
                             description = "┗[3] เพศ")
@@ -103,7 +103,7 @@ class Verify(commands.Cog):
                             try:
                                 await ctx.author.add_roles(role)
 
-                            except discord.Forbidden:
+                            except nextcord.Forbidden:
                                 pass
 
                     if remove != "None":
@@ -113,10 +113,10 @@ class Verify(commands.Cog):
                             try:
                                 await ctx.author.remove_roles(role)
 
-                            except discord.Forbidden:
+                            except nextcord.Forbidden:
                                 pass
 
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         colour = 0x00FFFF,
                         description = (f"""```
 {frame}
@@ -125,8 +125,8 @@ class Verify(commands.Cog):
 เพศ : {sex}
 {frame}```""")
             )
-                    embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                    embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+                    embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar.url}") 
                     embed.timestamp = datetime.datetime.utcnow()
                     embed.set_footer(text = ctx.author.id)
                     await message.delete()
@@ -147,7 +147,7 @@ class Verify(commands.Cog):
 
                         if channel == "None":
                             try:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     colour = 0x00FFFF,
                                     title = "Please fill in all information. 📝",
                                     description = "┗[1] Name")
@@ -164,7 +164,7 @@ class Verify(commands.Cog):
                                 await message.delete()
 
                             try:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     colour = 0x00FFFF,
                                     title = "Please fill in all information. 📝",
                                     description = "┗[2] Age")
@@ -181,7 +181,7 @@ class Verify(commands.Cog):
                                 await message.delete()
                     
                             try:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     colour = 0x00FFFF,
                                     title = "Please fill in all information. 📝",
                                     description = "┗[3] Gender")
@@ -197,7 +197,7 @@ class Verify(commands.Cog):
                             except asyncio.TimeoutError:
                                 await message.delete()
 
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 colour = 0x00FFFF,
                                 description = (f"""```
 {frame}
@@ -206,8 +206,8 @@ Age : {age}
 Sex : {sex}
 {frame}```""")
                     )
-                            embed.set_thumbnail(url=f"{ctx.author.avatar_url}")
-                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar_url}") 
+                            embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
+                            embed.set_author(name=f"{ctx.author}", icon_url=f"{ctx.author.avatar.url}") 
                             embed.timestamp = datetime.datetime.utcnow()
                             embed.set_footer(text = ctx.author.id)
                             await message.delete()
@@ -221,7 +221,7 @@ Sex : {sex}
                                     try:
                                         await ctx.author.add_roles(role)
 
-                                    except discord.Forbidden:
+                                    except nextcord.Forbidden:
                                         pass
                     
                             if not remove == "None":
@@ -231,7 +231,7 @@ Sex : {sex}
                                     try:
                                         await ctx.author.remove_roles(role)
 
-                                    except discord.Forbidden:
+                                    except nextcord.Forbidden:
                                         pass
 
     @commands.command(aliases =["vfy"])
@@ -276,15 +276,15 @@ Sex : {sex}
                                 imgdraw = ImageDraw.Draw(img)
                                 imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
                                 img.save('image/verify.png')
-                                file = discord.File("image/verify.png", filename="verify.png")
+                                file = nextcord.File("image/verify.png", filename="verify.png")
 
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     colour  = 0x00FFFF,
                                     title = "Captcha"
                                 )
                                 embed.set_image(url = "attachment://verify.png")
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"กรุณาพิมพ์ข้อความตามภาพเพื่อยืนยันตัวตน", icon_url=f"{ctx.author.avatar.url}") 
 
                                 message = await ctx.send(embed=embed , file=file)
 
@@ -296,11 +296,11 @@ Sex : {sex}
                                         await asyncio.sleep(1)
                                         await answer.delete()
                                     
-                                        embed = discord.Embed(
+                                        embed = nextcord.Embed(
                                             description = f":white_check_mark: คุณได้รับการยืนยันแล้ว",
                                             colour =  0xB9E7A5
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -312,7 +312,7 @@ Sex : {sex}
                                                 try:
                                                     await ctx.author.add_roles(role)
 
-                                                except discord.Forbidden:
+                                                except nextcord.Forbidden:
                                                     pass
 
                                         if remove != "None":
@@ -322,18 +322,18 @@ Sex : {sex}
                                                 try:
                                                     await ctx.author.remove_roles(role)
 
-                                                except discord.Forbidden:
+                                                except nextcord.Forbidden:
                                                     pass
                             
                                     else:
                                         await message.delete()
                                         await asyncio.sleep(1)
                                         await answer.delete()
-                                        embed = discord.Embed(
+                                        embed = nextcord.Embed(
                                             description = f":x: คุณพิมพ์ข้อความใน captcha ไม่ถูกต้องกรุณาพิมพ์ {settings.COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                             colour =  0x983925
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -341,25 +341,25 @@ Sex : {sex}
                                 except asyncio.TimeoutError:
                                     await message.delete()
                                     await answer.delete()
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                         description = f":x: คุณใช้เวลานานเกินไป {settings.COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                         colour =  0x983925
                                     )
-                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                     message = await ctx.send(embed=embed) 
                                     await asyncio.sleep(3)
                                     await message.delete()     
 
                             else:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                     colour =  0x983925
                                 )
-                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                 await ctx.send(embed=embed)
                                 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                                 colour =  0x983925
@@ -368,7 +368,7 @@ Sex : {sex}
                             await ctx.send(embed=embed)          
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = f"เซิฟเวอร์นี้ปิดใช้งาน verify",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX} #channel",
                             colour =  0x983925
@@ -377,7 +377,7 @@ Sex : {sex}
                         await ctx.send(embed=embed)   
                 
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}verification on",
                         colour =  0x983925
@@ -417,15 +417,15 @@ Sex : {sex}
                                 imgdraw = ImageDraw.Draw(img)
                                 imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
                                 img.save('image/verify.png')
-                                file = discord.File("image/verify.png", filename="verify.png")
+                                file = nextcord.File("image/verify.png", filename="verify.png")
 
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     colour  = 0x00FFFF,
                                     title = "Captcha"
                                 )
                                 embed.set_image(url = "attachment://verify.png")
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar_url}") 
+                                embed.set_author(name=f"Please type text in the picture to verify", icon_url=f"{ctx.author.avatar.url}") 
 
                                 message = await ctx.send(embed=embed , file=file)
 
@@ -436,11 +436,11 @@ Sex : {sex}
                                         await answer.delete()
                                         await asyncio.sleep(1)
                                         await message.delete()
-                                        embed = discord.Embed(
+                                        embed = nextcord.Embed(
                                         description = f":white_check_mark: You have been verified",
                                         colour =  0xB9E7A5
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -452,7 +452,7 @@ Sex : {sex}
                                                 try:
                                                     await ctx.author.add_roles(role)
 
-                                                except discord.Forbidden:
+                                                except nextcord.Forbidden:
                                                     pass
 
                                         if remove != "None":
@@ -462,18 +462,18 @@ Sex : {sex}
                                                 try:
                                                     await ctx.author.remove_roles(role)
 
-                                                except discord.Forbidden:
+                                                except nextcord.Forbidden:
                                                     pass
                             
                                     else:
                                         await message.delete()
                                         await asyncio.sleep(1)
                                         await answer.delete()
-                                        embed = discord.Embed(
+                                        embed = nextcord.Embed(
                                             description = f":x: Incorrect captcha please try again use {settings.COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                             colour =  0x983925
                                         )
-                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                        embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                         message = await ctx.send(embed=embed)
                                         await asyncio.sleep(3)
                                         await message.delete()
@@ -482,25 +482,25 @@ Sex : {sex}
                                 except asyncio.TimeoutError:
                                     await message.delete()
                                     await answer.delete()
-                                    embed = discord.Embed(
+                                    embed = nextcord.Embed(
                                             description = f":x: timeout please try again use {settings.COMMAND_PREFIX}verify in {ctx.channel.mention} to reverify",
                                             colour =  0x983925
                                         )
-                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                    embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                     message = await ctx.send(embed=embed) 
                                     await asyncio.sleep(3)
                                     await message.delete()     
 
                             else:
-                                embed = discord.Embed(
+                                embed = nextcord.Embed(
                                     description = f":x: คุณสามารถใช้คําสั่งนี้ได้ในห้อง {channel}",
                                     colour =  0x983925
                                 )
-                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
+                                embed.set_author(name=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar.url}")
                                 await ctx.send(embed=embed)  
                                 
                         else:
-                            embed = discord.Embed(
+                            embed = nextcord.Embed(
                                 title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                                 description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                                 colour =  0x983925
@@ -508,7 +508,7 @@ Sex : {sex}
                             await ctx.send(embed=embed)          
 
                     else:
-                        embed = discord.Embed(
+                        embed = nextcord.Embed(
                             title = f"เซิฟเวอร์นี้ปิดใช้งาน verify",
                             description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX} #channel",
                             colour =  0x983925
@@ -517,7 +517,7 @@ Sex : {sex}
                         await ctx.send(embed=embed)   
             
                 else:
-                    embed = discord.Embed(
+                    embed = nextcord.Embed(
                         title = f"เซิฟเวอร์น้ยังไม่ได้ตั้งค่าห้อง verify",
                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}setverify #channel",
                         colour =  0x983925
