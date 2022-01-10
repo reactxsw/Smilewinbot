@@ -238,3 +238,39 @@
 2022-01-10 16:38:36.442  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2022-01-10 16:43:19.580  INFO 20592 --- [XNIO-1 task-25] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57557
 2022-01-10 16:43:19.584  INFO 20592 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:47:23.394  INFO 20592 --- [XNIO-1 task-26] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65038
+2022-01-10 16:47:23.396  INFO 20592 --- [XNIO-1 task-26] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:48:35.648  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:57557 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:48:35.648  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:48:39.493  INFO 20592 --- [XNIO-1 task-27] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53620
+2022-01-10 16:48:39.497  INFO 20592 --- [XNIO-1 task-27] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:50:22.212  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53620 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:50:22.212  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:50:23.832  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65038 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:50:23.833  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:50:38.228  INFO 20592 --- [XNIO-1 task-28] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64819
+2022-01-10 16:50:38.230  INFO 20592 --- [XNIO-1 task-28] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:55:31.123  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64819 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:55:31.123  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:55:42.965  INFO 20592 --- [XNIO-1 task-29] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49919
+2022-01-10 16:55:42.969  INFO 20592 --- [XNIO-1 task-29] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:56:17.345  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49919 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:56:17.345  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:56:32.411  INFO 20592 --- [XNIO-1 task-30] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:51152
+2022-01-10 16:56:32.418  INFO 20592 --- [XNIO-1 task-30] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:58:35.438  INFO 20592 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:51152 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:58:35.438  INFO 20592 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:58:50.483  INFO 20592 --- [XNIO-1 task-31] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63449
+2022-01-10 16:58:50.486  INFO 20592 --- [XNIO-1 task-31] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 16:59:02.653  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63449 -- CloseStatus[code=1006, reason=]
+2022-01-10 16:59:02.654  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 16:59:50.018  INFO 20592 --- [XNIO-1 task-32] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64763
+2022-01-10 16:59:50.021  INFO 20592 --- [XNIO-1 task-32] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 17:00:05.026  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64763 -- CloseStatus[code=1006, reason=]
+2022-01-10 17:00:05.026  INFO 20592 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 17:00:14.977  INFO 20592 --- [XNIO-1 task-33] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65295
+2022-01-10 17:00:14.979  INFO 20592 --- [XNIO-1 task-33] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 17:01:38.150  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65295 -- CloseStatus[code=1006, reason=]
+2022-01-10 17:01:38.151  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 17:01:47.550  INFO 20592 --- [XNIO-1 task-34] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65203
+2022-01-10 17:01:47.553  INFO 20592 --- [XNIO-1 task-34] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6

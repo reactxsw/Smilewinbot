@@ -1,3 +1,4 @@
+from nextcord import colour, embeds
 from nextcord.ui import view
 import pomice
 import datetime
@@ -30,7 +31,7 @@ class MusicButton(nextcord.ui.View):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
-        label=" ⏹ ",
+        label =" ⏹ ",
         style=nextcord.ButtonStyle.red,
         custom_id="stop_song")
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
@@ -255,6 +256,11 @@ class Music(commands.Cog):
         return embed
 
     async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        embed = nextcord.Embed(
+            title = button.custom_id,
+            colour = 0xFED000
+        )
+        message = await interaction.channel.send(embed=embed , delete_after=3)
         print(button.custom_id)
         pass
 
