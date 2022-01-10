@@ -10,10 +10,68 @@ from nextcord.ext import commands
 import nextcord
 import math
 import random
-from utils.button import MusicButton
-class Player(pomice.Player):
-    """Custom pomice Player class."""
 
+class MusicButton(nextcord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @nextcord.ui.button(
+        label=' :play_pause:', 
+        style=nextcord.ButtonStyle.green,
+        custom_id="pause_stop")
+    async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
+    
+    @nextcord.ui.button(
+        label =" :track_next: ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="skip_song")
+    async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :stop_button: ",
+        style=nextcord.ButtonStyle.danger ,
+        custom_id="stop")
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :repeat_one: ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="repeat_song")
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :repeat: ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="loop_playlist")
+    async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :sound: เพิ่มเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="increase_volume")
+    async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :loud_sound: ลดเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="decrease_volume")
+    async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :mute: เพิ่มเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="mute_volume")
+    async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+class Player(pomice.Player):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
  
@@ -87,12 +145,7 @@ class Player(pomice.Player):
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        
-        # In order to initialize a node, or really do anything in this library,
-        # you need to make a node pool
         self.pomice = pomice.NodePool()
-
-        # Start the node
         bot.loop.create_task(self.start_nodes())
     
     async def setnewserver(self,ctx):
@@ -127,11 +180,7 @@ class Music(commands.Cog):
         return newserver
 
     async def start_nodes(self):
-        # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
-        
-        # You can pass in Spotify credentials to enable Spotify querying.
-        # If you do not pass in valid Spotify credentials, Spotify querying will not work 
         await self.pomice.create_node(
             bot=self.bot,
             host=settings.lavalinkip,
@@ -204,6 +253,10 @@ class Music(commands.Cog):
         embed.add_field(name='Requested By', value=track.requester.mention)
         embed.add_field(name='Next', value="-" if next is None else next)
         return embed
+
+    async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        print(button.custom_id)
+        pass
 
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
