@@ -188,3 +188,37 @@
 2022-01-10 13:08:32.727  INFO 20592 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
 2022-01-10 13:08:33.376  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "292c0a37bb84cfb4e1ba24abc7da319a", "event": {"token": "556db73151b36a69", "guild_id": "924999182039801876", "endpoint": "singapore2643.discord.media:443"}}
 2022-01-10 13:08:33.388  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-10 13:28:09.454  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50577 -- CloseStatus[code=1006, reason=]
+2022-01-10 13:28:09.454  INFO 20592 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 13:43:59.323  INFO 20592 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52788
+2022-01-10 13:43:59.329  INFO 20592 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 13:44:04.553  INFO 20592 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-10 13:44:05.223  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-10 13:44:05.413  INFO 20592 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "4c0b39611110a60b43e19deef578c0b6", "event": {"token": "1d644a2930f4e77f", "guild_id": "924999182039801876", "endpoint": "singapore2643.discord.media:443"}}
+2022-01-10 13:45:04.632  INFO 20592 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52788 -- CloseStatus[code=1006, reason=]
+2022-01-10 13:45:04.633  INFO 20592 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 13:45:14.496  INFO 20592 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49942
+2022-01-10 13:45:14.499  INFO 20592 --- [XNIO-1 task-11] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 13:45:16.601  INFO 20592 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-10 13:45:17.111  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-10 13:45:17.385  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "c1be1015cd8ba707b564b07115dd3c23", "event": {"token": "1d644a2930f4e77f", "guild_id": "924999182039801876", "endpoint": "singapore2643.discord.media:443"}}
+2022-01-10 13:46:25.281  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49942 -- CloseStatus[code=1006, reason=]
+2022-01-10 13:46:25.282  INFO 20592 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 13:46:35.312  INFO 20592 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59839
+2022-01-10 13:46:35.314  INFO 20592 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 13:47:06.999  INFO 20592 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands
+\"
+2022-01-10 13:47:07.037  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "1fb06c82c6e22c6e01b528c8107dc365", "event": {"token": "1d644a2930f4e77f", "guild_id": "924999182039801876", "endpoint": "singapore2643.discord.media:443"}}
+2022-01-10 13:47:07.519  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+\
+2022-01-10 13:47:11.786  INFO 20592 --- [XNIO-1 task-17] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-10 13:47:12.269  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-10 13:48:15.361  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59839 -- CloseStatus[code=1006, reason=]
+2022-01-10 13:48:15.362  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-10 13:48:26.489  INFO 20592 --- [XNIO-1 task-19] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54163
+2022-01-10 13:48:26.492  INFO 20592 --- [XNIO-1 task-19] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-10 13:48:30.863  INFO 20592 --- [XNIO-1 task-20] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:10bands"
+2022-01-10 13:48:30.995  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "a29fc847ca3f767c3a7b2ab3395fd27e", "event": {"token": "e357747db9c6b69f", "guild_id": "924999182039801876", "endpoint": "singapore2643.discord.media:443"}}
+2022-01-10 13:48:31.272  INFO 20592 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: 10bands
+2022-01-10 13:48:32.056  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkAIALkpveW5lciBMdWNhcyBmdC4gVGltYmFsYW5kIC0gMTAgQmFuZHMgKEx5cmljcykACFJhcCBDaXR5AAAAAAADR9gAC0lGVFFLd2FiS2ZrAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SUZUUUt3YWJLZmsAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-10 13:52:07.900  INFO 20592 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "924999182039801876"}

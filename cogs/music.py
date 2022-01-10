@@ -193,6 +193,7 @@ class Music(commands.Cog):
         await ctx.send("Player has left the channel.")
     
     async def build_embed(self,track : pomice.Track , next = None):
+        print(track)
         embed = nextcord.Embed(
             title = "Smilewin Music",
             description = f"Now playing {track.title}",
@@ -238,7 +239,7 @@ class Music(commands.Cog):
                         "song_title":s_title,
                         "song_id":s_id,
                         "requester":ctx.author.id})
-                embed = await Music.build_embed(track)
+                embed = await Music.build_embed(self,track,None)
                 await message.edit(embed=embed)
                 await player.play(track)
                 print(data)

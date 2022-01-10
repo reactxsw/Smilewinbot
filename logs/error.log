@@ -267,3 +267,8 @@
 !r play 10 bands,command: play}
 2022-01-10 13:04:21: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
 2022-01-10 13:08:33: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:44:05: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:45:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
+2022-01-10 13:47:08: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands
+\,command: play}
+2022-01-10 13:47:12: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play 10bands,command: play}
