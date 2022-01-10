@@ -1,5 +1,5 @@
 import nextcord
-
+from cogs.music import Music
 class MusicButton(nextcord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)

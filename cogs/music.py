@@ -238,8 +238,10 @@ class Music(commands.Cog):
                         "song_title":s_title,
                         "song_id":s_id,
                         "requester":ctx.author.id})
-                embed = await Music.build_embed(song_Queue["Queue"][0]["song_title"],track,song_Queue["Mode"])
+                embed = await Music.build_embed(track)
                 await message.edit(embed=embed)
+                await player.play(track)
+                print(data)
                 await settings.collectionmusic.insert_one(data)
 
             else:

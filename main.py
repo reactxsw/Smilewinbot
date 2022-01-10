@@ -128,7 +128,7 @@ async def on_ready():
     except RuntimeError:
         pass
     print_ascii_art()
-    #bot.add_view(MusicButton())
+    bot.add_view(MusicButton())
     try:
         channel = bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
