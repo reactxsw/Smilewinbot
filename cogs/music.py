@@ -95,6 +95,9 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @commands.command()
     async def loop(self,ctx):
         pass
+
+    async def handle_click(button, interaction):
+        pass
     
     async def do_next(self,guild_id,player):
         await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
