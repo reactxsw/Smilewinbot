@@ -1,14 +1,3 @@
-
-from discord import colour, embeds
-from wavelink.node import Node
-import settings
-from discord.ext import commands
-from utils.languageembed import languageEmbed
-import discord
-import wavelink
-import settings
-import re
-
 from nextcord.ui import view
 import pomice
 import datetime
@@ -21,10 +10,68 @@ from nextcord.ext import commands
 import nextcord
 import math
 import random
-from utils.button import MusicButton
-class Player(pomice.Player):
-    """Custom pomice Player class."""
 
+class MusicButton(nextcord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @nextcord.ui.button(
+        label=' :play_pause:', 
+        style=nextcord.ButtonStyle.green,
+        custom_id="pause_stop")
+    async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
+    
+    @nextcord.ui.button(
+        label =" :track_next: ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="skip_song")
+    async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :stop_button: ",
+        style=nextcord.ButtonStyle.danger ,
+        custom_id="stop")
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :repeat_one: ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="repeat_song")
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :repeat: ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="loop_playlist")
+    async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :sound: เพิ่มเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="increase_volume")
+    async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :loud_sound: ลดเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="decrease_volume")
+    async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+    @nextcord.ui.button(
+        label=" :mute: เพิ่มเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="mute_volume")
+    async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await self.handle_click(button, interaction)
+
+class Player(pomice.Player):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
  
@@ -98,12 +145,7 @@ class Player(pomice.Player):
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        
-        # In order to initialize a node, or really do anything in this library,
-        # you need to make a node pool
         self.pomice = pomice.NodePool()
-
-        # Start the node
         bot.loop.create_task(self.start_nodes())
     
     async def setnewserver(self,ctx):
@@ -138,56 +180,7 @@ class Music(commands.Cog):
         return newserver
 
     async def start_nodes(self):
-        # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
-        nodes = {
-            "Node_1": {
-                "host": settings.lavalinkip,
-                "port": settings.lavalinkport,
-                "rest_uri": f"http://"+f"{settings.lavalinkip}:{settings.lavalinkport}",
-                "password": settings.lavalinkpass,
-                "identifier": f"{settings.lavalinkindentifier}_1",
-                "region": settings.lavalinkregion
-            }
-        }
-
-        for n in nodes.values():
-            await self.bot.wavelink.initiate_node(**n)
-
-    @wavelink.WavelinkMixin.listener()
-    async def on_node_ready(self, node: wavelink.Node):
-        print(f"Node {node.identifier} is ready")
-
-    @wavelink.WavelinkMixin.listener()
-    async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
-        guild_id = payload.player.guild_id
-        player = payload.player
-        if payload.reason == "FINISHED":
-            print(payload.player.channel_id)
-            await self.do_next(guild_id,player)
-    
-    @commands.command()
-    async def volmusic(self, ctx, volume : int):
-            default_volume = 100    
-            player = self.bot.wavelink.get_player(ctx.guild.id)
-            if isinstance(volume, int):
-                await player.set_volume(int(volume))
-                embed = discord.Embed(title=f'Successfully, Set volume into `{volume}`',color=discord.Colour.green())
-                embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
-                emoji = '\N{THUMBS UP SIGN}'
-                msg = await ctx.send(embed=embed)
-                await msg.add_reaction(emoji)
-            else:
-                await ctx.send("Please input only numbers")
-    @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
-        # You can pass in Spotify credentials to enable Spotify querying.
-        # If you do not pass in valid Spotify credentials, Spotify querying will not work 
         await self.pomice.create_node(
             bot=self.bot,
             host=settings.lavalinkip,
@@ -214,46 +207,6 @@ class Music(commands.Cog):
         """Check whether the user is an Admin or DJ."""
         player: Player = ctx.voice_client
 
-    @commands.command()
-    async def stop(self,ctx):
-        pass
-
-    @commands.command()
-    async def pause(self,ctx):
-        pass
-
-    @commands.command()
-    async def resume(self,ctx):
-        pass
-
-    @commands.command()
-    async def loop(self,ctx):
-        pass
-
-    async def handle_click(button, interaction):
-        pass
-    
-    async def do_next(self,guild_id,player):
-        await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if server["mode"] == "Default":
-            if server["Queue"] == []:
-                return
-
-            else:
-                Song = server["Queue"][0]["song_id"]
-                tracks = await self.bot.wavelink.build_track(Song)
-                await player.play(tracks)
-        
-        if server["mode"] == "Repeat":
-            pass
-
-        if server["mode"] == "Loop":
-            pass
-
-
-    async def build_embed(title,duration,thumbnail,next,author,requester):
-        embed = discord.Embed()
         return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
     @commands.Cog.listener()
@@ -291,60 +244,19 @@ class Music(commands.Cog):
     async def build_embed(self,track : pomice.Track , next = None):
         print(track)
         embed = nextcord.Embed(
-
             title = "Smilewin Music",
             description = f"Now playing {track.title}",
             colour = 0xFED000
         )
-        embed.set_thumbnail(url=thumbnail)
-        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
-        embed.add_field(name='Requested By', value=requester.mention)
-        embed.add_field(name='Next', value=next)
-        return embed
-
-    @commands.command()
-    async def play(self, ctx, *, query: str):
-        tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if tracks:
-            song_id = tracks[0].id
-            song_title = tracks[0].title
-            song_duration = tracks[0].duration
-            song_thumbnail = tracks[0].thumb
-            song_author = tracks[0].author
-
-            Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-            if Queue is None and not player.is_playing:
-
-                data = {
-                    "guild_id":ctx.guild.id,
-                    "Mode":"Default",
-                    "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
-                }
-                await settings.collectionmusic.insert_one(data)
-                player = self.bot.wavelink.get_player(ctx.guild.id)
-                if not player.is_connected:
-                    await ctx.invoke(self.connect_)
-                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-",song_author,ctx.author)
-                await ctx.send(embed=embed)
-                await ctx.send(f'Added {song_title} to the queue.')
-                await player.play(tracks[0])
-            
-            else:
-                if not len(Queue["Queue"]) > 25:
-                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-
-                else:
-                    await ctx.send("คิวห้ามเกิน 25")
-        else:        
-            return await ctx.send('Could not find any songs with that query.')
-def setup(bot):
-=======
         embed.set_thumbnail(url=track.thumbnail)
         embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
         embed.add_field(name='Requested By', value=track.requester.mention)
         embed.add_field(name='Next', value="-" if next is None else next)
         return embed
+
+    async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        print(button.custom_id)
+        pass
 
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str) -> None:
@@ -656,5 +568,4 @@ def setup(bot):
                         pass
 
 def setup(bot: commands.Bot):
->>>>>>> cd9dc3e534abbb1ff748957e8a860a86f2f99f89
     bot.add_cog(Music(bot))
