@@ -6,6 +6,7 @@ import asyncio
 from contextlib import suppress
 from motor.metaprogramming import asynchronize
 from pomice.objects import Playlist
+from pomice.utils import Ping
 import settings
 from nextcord.ext import commands
 import nextcord
@@ -19,129 +20,66 @@ class MusicButton(nextcord.ui.View):
     @nextcord.ui.button(
         label=' ⏯ ', 
         style=nextcord.ButtonStyle.green,
-        custom_id="pause_stop")
+        custom_id="pause_stop",
+        row=0)
     async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
     
     @nextcord.ui.button(
         label =" ⏭ ",
         style=nextcord.ButtonStyle.secondary,
-        custom_id="skip_song")
+        custom_id="skip_song",\
+        row=0)
     async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label =" ⏹ ",
         style=nextcord.ButtonStyle.red,
-        custom_id="stop_song")
+        custom_id="stop_song",
+        row=0)
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label=" 🔂 ",
         style=nextcord.ButtonStyle.secondary ,
-        custom_id="repeat_song")
-    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        custom_id="repeat_song",
+        row=0)
+    async def repeat_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label=" 🔁 ",
         style=nextcord.ButtonStyle.secondary ,
-        custom_id="loop_playlist")
+        custom_id="loop_playlist",
+        row=0)
     async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label=" 🔊 เพิ่มเสียง ",
         style=nextcord.ButtonStyle.primary ,
-        custom_id="increase_volume")
+        custom_id="increase_volume",
+        row=1)
     async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label=" 🔈 ลดเสียง ",
         style=nextcord.ButtonStyle.primary ,
-        custom_id="decrease_volume")
+        custom_id="decrease_volume",
+        row=1)
     async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
 
     @nextcord.ui.button(
         label=" 🔇 เปิด/ปิดเสียง ",
         style=nextcord.ButtonStyle.primary ,
-        custom_id="mute_volume")
+        custom_id="mute_volume",
+        row=1)
     async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
-
-class Player(pomice.Player):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
- 
-        self.queue = asyncio.Queue()
-        self.controller: nextcord.Message = None
-        # Set context here so we can send a now playing embed
-        self.context: commands.Context = None
-        self.dj: nextcord.Member = None
-        self.pause_votes = set()
-        self.resume_votes = set()
-        self.skip_votes = set()
-        self.shuffle_votes = set()
-        self.stop_votes = set()
-
-    async def do_next(self) -> None:
-        # Clear the votes for a new song
-        self.pause_votes.clear()
-        self.resume_votes.clear()
-        self.skip_votes.clear()
-        self.shuffle_votes.clear()
-        self.stop_votes.clear()
-        
-
-        # Check if theres a controller still active and deletes it
-        if self.controller:
-            with suppress(nextcord.HTTPException):
-                await self.controller.delete()
-            
-       # Queue up the next track, else teardown the player
-        try:
-            track: pomice.Track = self.queue.get_nowait()
-        except asyncio.queues.QueueEmpty:  
-            return await self.teardown()
-        
-        await self.play(track)
-
-        # Call the controller (a.k.a: The "Now Playing" embed) and check if one exists
-
-        if track.is_stream:
-            embed = nextcord.Embed(title="Now playing", description=f":red_circle: **LIVE** [{track.title}]({track.uri}) [{track.requester.mention}]")
-            self.controller = await self.context.send(embed=embed)
-
-        else:
-            embed = nextcord.Embed(
-                title=f"Smilewin Music", 
-                description=f"Now playing [{track.title}]({track.uri})",
-                colour = 0xFED000)
-
-            embed.set_thumbnail(url=track.thumbnail)
-            embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
-            embed.add_field(name='Requested By', value=track.requester.mention)
-            embed.add_field(name='Next', value="-")
-            self.controller = await self.context.send(embed=embed)
-
-
-    async def teardown(self):
-        """Clear internal states, remove player controller and disconnect."""
-        with suppress((nextcord.HTTPException), (KeyError)):
-            await self.destroy()
-            if self.controller:
-                await self.controller.delete() 
-
-    async def set_context(self, ctx: commands.Context):
-        """Set context for the player"""
-        self.context = ctx 
-        self.dj = ctx.author 
-
-
-
 
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -194,7 +132,7 @@ class Music(commands.Cog):
 
     async def required(self, ctx: commands.Context):
         """Method which returns required votes based on amount of members in a channel."""
-        player: Player = ctx.voice_client
+        player: pomice.player = ctx.voice_client
         channel = self.bot.get_channel(int(player.channel.id))
         required = math.ceil((len(channel.members) - 1) / 2.5)
 
@@ -206,22 +144,39 @@ class Music(commands.Cog):
 
     async def is_privileged(self, ctx: commands.Context):
         """Check whether the user is an Admin or DJ."""
-        player: Player = ctx.voice_client
+        player: pomice.player = ctx.voice_client
 
         return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
     @commands.Cog.listener()
-    async def on_pomice_track_end(self, player: Player, track, _):
-        await player.do_next()
+    async def on_pomice_track_end(self, player: pomice.player, track, _):
+        await Music.do_next(player)
 
     @commands.Cog.listener()
-    async def on_pomice_track_stuck(self, player: Player, track, _):
-        await player.do_next()
+    async def on_pomice_track_stuck(self, player: pomice.player, track, _):
+        await Music.do_next(player)
 
     @commands.Cog.listener()
-    async def on_pomice_track_exception(self, player: Player, track, _):
-        await player.do_next()
-        
+    async def on_pomice_track_exception(self, player: pomice.player, track, _):
+        await Music.do_next(player)
+    
+    async def do_next(self,player : pomice.player):
+        server = await settings.collectionmusic.find_one({"guild_id":player.Guild.id})
+        if server["Mode"] == "Default":
+            await settings.collectionmusic.update_one({"guild_id": player.Guild.id}, {'$pop': {'Queue': -1}})
+            if server["Queue"] == []:
+                return
+
+            else:
+                tracks = await self.bot.wavelink.build_track(server["Queue"][0]["song_id"])
+                await player.play(tracks)
+
+        elif server["Mode"] == "Repeat":
+            await player.play(player.Track)
+
+        else:
+            pass
+
     @commands.command(aliases=['joi', 'j', 'summon', 'su', 'con'])
     async def join(self, ctx: commands.Context, *, channel: nextcord.VoiceChannel = None) -> None:
         if not channel:
@@ -229,9 +184,7 @@ class Music(commands.Cog):
             if not channel:
                 return await ctx.send("You must be in a voice channel in order to use this command!")
 
-        await ctx.author.voice.channel.connect(cls=Player)
-        player: Player = ctx.voice_client
-        await player.set_context(ctx=ctx)
+        await ctx.author.voice.channel.connect(cls=pomice.Player)
         await ctx.send(f"Joined the voice channel `{channel.name}`")
 
     @commands.command(aliases=['disconnect', 'dc', 'disc', 'lv'])
@@ -272,11 +225,13 @@ class Music(commands.Cog):
                 await ctx.invoke(self.join)   
                 player = ctx.voice_client
 
+            
             results = await player.get_tracks(search, ctx=ctx)   
             if not results:
                 return await ctx.send("No results were found for that search term", delete_after=7)
             
             track : pomice.Track= results[0]
+            print(track)
             s_title = track.title
             s_id = track.track_id
             song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
@@ -301,7 +256,6 @@ class Music(commands.Cog):
                 embed = await Music.build_embed(self,track,None)
                 await message.edit(embed=embed)
                 await player.play(track)
-                print(data)
                 await settings.collectionmusic.insert_one(data)
 
             else:
@@ -345,7 +299,8 @@ class Music(commands.Cog):
                                 "song_title":track.title,
                                 "song_id":track.track_id,
                                 "requester":ctx.author.id})
-
+                            
+                    await player.play(results.tracks[0])
                     await settings.collectionmusic.insert_one(data)
                 
                 else:
@@ -545,7 +500,7 @@ class Music(commands.Cog):
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
-                embed_message = await channel.send(embed=embed, view = MusicButton())
+                embed_message = await channel.send(embed=embed, view =  MusicButton())
                 music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -558,7 +513,7 @@ class Music(commands.Cog):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton())
+                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton())
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
