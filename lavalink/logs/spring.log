@@ -141,3 +141,5 @@
 2022-01-12 19:35:48.110  INFO 38512 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: moaning
 2022-01-12 19:41:20.953  INFO 38512 --- [XNIO-1 task-40] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:sex"
 2022-01-12 19:41:21.526  INFO 38512 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: sex
+2022-01-12 21:38:44.991  INFO 38512 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:51099 -- CloseStatus[code=1006, reason=]
+2022-01-12 21:38:45.005  INFO 38512 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
