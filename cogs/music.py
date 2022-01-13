@@ -221,74 +221,33 @@ class Music(commands.Cog):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
         if data is not None:
             music_channel = data["Music_channel_id"]
-            if music_channel is not None:
-                if ctx.channel.id == music_channel:
-                    player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
-                    if player is None:
-                        await ctx.invoke(self.join)   
-                        player = ctx.voice_client
-                    results = await player.get_tracks(search, ctx=ctx)   
-                    if not results:
-                        return await ctx.send("No results were found for that search term", delete_after=7)
-                    if ctx.author.voice is not None:
+            music_embed = data["Embed_message_id"]
+            music_message = data["Music_message_id"]
+            if music_channel != "None":
+                if music_embed != "None" and music_message != "None":
+                    if ctx.channel.id == music_channel:
                         player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
                         if player is None:
                             await ctx.invoke(self.join)   
                             player = ctx.voice_client
-                            
                         results = await player.get_tracks(search, ctx=ctx)   
                         if not results:
                             return await ctx.send("No results were found for that search term", delete_after=7)
-                        
-                        track : pomice.Track= results[0]
-                        s_title = track.title
-                        s_id = track.track_id
-                        song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
-                        if song_Queue is None and not player.is_playing:
-                            embed = nextcord.Embed(
-                                title = "Searching ..",
-                                colour = 0xFED000
-                            )
-                            message = await ctx.send(embed=embed)
-                            data = {
-                                "guild_id":ctx.guild.id,
-                                "Mode":"Default",
-                                "Request_channel":ctx.channel.id,
-                                "Message_id":message.id,
-                                "Queue":[]
-                            }
-                            data["Queue"].append({
-                                    "position":1,
-                                    "song_title":s_title,
-                                    "song_id":s_id,
-                                    "requester":ctx.author.id})
-                            embed = await Music.build_embed(self,track,None)
-                            await message.edit(embed=embed)
-                            await player.play(track)
-                            await settings.collectionmusic.insert_one(data)
-
-                        else:
-                            if not len(song_Queue["Queue"]) > 20:
-                                await settings.collectionmusic.update_one({
-                                    'guild_id': ctx.guild.id}, {
-                                        '$push': {
-                                            'Queue': {
-                                                "position":len(song_Queue["Queue"])+1,
-                                                "song_title":s_title,
-                                                "song_id":s_id,
-                                                "requester":ctx.author.id}}})
-
-                                if len(song_Queue["Queue"]) == 1:
-                                    message = await self.bot.get_channel(song_Queue["Request_channel"]).fetch_message(song_Queue["Message_id"]) # the message's channel
-                                    embed = await Music.build_embed(song_Queue["Queue"][0]["song_title"],track,song_Queue["Mode"])
-                                    await message.edit(embed=embed)
-
-                        if isinstance(results, pomice.Playlist):
-                            Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
-                            if Queue is None and not player.is_playing:
-                                if len(results.tracks) > 20:
-                                    results.tracks = results.tracks[:21]
-
+                        if ctx.author.voice is not None:
+                            player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
+                            if player is None:
+                                await ctx.invoke(self.join)   
+                                player = ctx.voice_client
+                                
+                            results = await player.get_tracks(search, ctx=ctx)   
+                            if not results:
+                                return await ctx.send("No results were found for that search term", delete_after=7)
+                            
+                            track : pomice.Track= results[0]
+                            s_title = track.title
+                            s_id = track.track_id
+                            song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+                            if song_Queue is None and not player.is_playing:
                                 embed = nextcord.Embed(
                                     title = "Searching ..",
                                     colour = 0xFED000
@@ -301,35 +260,78 @@ class Music(commands.Cog):
                                     "Message_id":message.id,
                                     "Queue":[]
                                 }
-                                num = 0
-                                for track in results.tracks:
-                                    data["Queue"].append({
-                                            "position":num+1,
-                                            "song_title":track.title,
-                                            "song_id":track.track_id,
-                                            "requester":ctx.author.id})
-                                        
-                                await player.play(results.tracks[0])
+                                data["Queue"].append({
+                                        "position":1,
+                                        "song_title":s_title,
+                                        "song_id":s_id,
+                                        "requester":ctx.author.id})
+                                await message.edit(embed=embed)
+                                await player.play(track)
                                 await settings.collectionmusic.insert_one(data)
-                            
+
                             else:
-                                if not len(Queue["Queue"]) > 20:
-                                    availble = 21 - len(Queue["Queue"])
-                                    if len(results.tracks) > availble:
-                                        results.tracks = results.tracks[:availble]
-                                    num = len(Queue["Queue"]) + 1
+                                if not len(song_Queue["Queue"]) > 20:
+                                    await settings.collectionmusic.update_one({
+                                        'guild_id': ctx.guild.id}, {
+                                            '$push': {
+                                                'Queue': {
+                                                    "position":len(song_Queue["Queue"])+1,
+                                                    "song_title":s_title,
+                                                    "song_id":s_id,
+                                                    "requester":ctx.author.id}}})
+
+                                    if len(song_Queue["Queue"]) == 1:
+                                        message = await self.bot.get_channel(song_Queue["Request_channel"]).fetch_message(song_Queue["Message_id"]) # the message's channel
+                                        embed = await Music.build_embed(song_Queue["Queue"][0]["song_title"],track,song_Queue["Mode"])
+                                        await message.edit(embed=embed)
+
+                            if isinstance(results, pomice.Playlist):
+                                Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+                                if Queue is None and not player.is_playing:
+                                    if len(results.tracks) > 20:
+                                        results.tracks = results.tracks[:21]
+
+                                    embed = nextcord.Embed(
+                                        title = "Searching ..",
+                                        colour = 0xFED000
+                                    )
+                                    message = await ctx.send(embed=embed)
+                                    data = {
+                                        "guild_id":ctx.guild.id,
+                                        "Mode":"Default",
+                                        "Request_channel":ctx.channel.id,
+                                        "Message_id":message.id,
+                                        "Queue":[]
+                                    }
+                                    num = 0
                                     for track in results.tracks:
-                                        await settings.collectionmusic.update_one({
-                                            'guild_id': ctx.guild.id}, {
-                                                '$push': {
-                                                    'Queue': {
-                                                        "position":num+1,
-                                                        "song_title":s_title,
-                                                        "song_id":s_id,
-                                                        "requester":ctx.author.id
+                                        data["Queue"].append({
+                                                "position":num+1,
+                                                "song_title":track.title,
+                                                "song_id":track.track_id,
+                                                "requester":ctx.author.id})
+                                            
+                                    await player.play(results.tracks[0])
+                                    await settings.collectionmusic.insert_one(data)
+                                
+                                else:
+                                    if not len(Queue["Queue"]) > 20:
+                                        availble = 21 - len(Queue["Queue"])
+                                        if len(results.tracks) > availble:
+                                            results.tracks = results.tracks[:availble]
+                                        num = len(Queue["Queue"]) + 1
+                                        for track in results.tracks:
+                                            await settings.collectionmusic.update_one({
+                                                'guild_id': ctx.guild.id}, {
+                                                    '$push': {
+                                                        'Queue': {
+                                                            "position":num+1,
+                                                            "song_title":s_title,
+                                                            "song_id":s_id,
+                                                            "requester":ctx.author.id
+                                                            }
                                                         }
-                                                    }
-                                                })
+                                                    })
                                                              
     @commands.command(aliases=['pau', 'pa'])
     async def pause(self, ctx: commands.Context):

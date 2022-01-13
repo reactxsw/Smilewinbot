@@ -17,7 +17,6 @@ class on_message_event(commands.Cog):
         if data != None:
             if message.guild and not message.author.bot:
                 if message.channel.id == data["Music_channel_id"]:
-                    print(message.content)
                     ctx  = await self.bot.get_context(message)
                     await ctx.invoke(self.bot.get_command("play"), search=message.content)
 
