@@ -1,8 +1,10 @@
 from importlib import reload
+from re import search
 import nextcord
 from nextcord.ext import commands
 import settings
 from cogs.scam import check_scam_link
+from cogs.music import Music
 
 class on_message_event(commands.Cog):
     def __init__(self,bot):
@@ -15,7 +17,10 @@ class on_message_event(commands.Cog):
         if data != None:
             if message.guild and not message.author.bot:
                 if message.channel.id == data["Music_channel_id"]:
-                    await message.channel.send(f"หาเพลงเเปป ! {message.content}")
+                    print(message.content)
+                    ctx  = await self.bot.get_context(message)
+                    await ctx.invoke(self.bot.get_command("play"), search=message.content)
+
 
             if message.content.startswith('!r'):
                 return

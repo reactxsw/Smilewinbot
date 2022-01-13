@@ -1,3 +1,4 @@
+from pomice.utils import Ping
 import settings
 import nextcord
 import asyncio
@@ -257,8 +258,9 @@ Sex : {sex}
                         if vfchannel != "None":
                             channel_id = int(vfchannel)
                             channel = self.bot.get_channel(channel_id)
-
+                            print("6")
                             if int(ctx.channel.id) == vfchannel:
+                                print("7")
                                 if not Path('arial.ttf').exists():
                                     dirname = os.path.dirname(os.path.abspath(__file__))
                                     fontfile = os.path.join(dirname, 'arial.ttf')
@@ -277,7 +279,7 @@ Sex : {sex}
                                 imgdraw.text((45,5), text, fill=(255,255,0) , font=font)
                                 img.save('image/verify.png')
                                 file = nextcord.File("image/verify.png", filename="verify.png")
-
+                                print("2")
                                 embed = nextcord.Embed(
                                     colour  = 0x00FFFF,
                                     title = "Captcha"
@@ -340,7 +342,6 @@ Sex : {sex}
                             
                                 except asyncio.TimeoutError:
                                     await message.delete()
-                                    await answer.delete()
                                     embed = nextcord.Embed(
                                         description = f":x: คุณใช้เวลานานเกินไป {settings.COMMAND_PREFIX}verify บนห้อง {ctx.channel.mention} เพื่อยืนยันตัวตนใหม่อีกครั้ง",
                                         colour =  0x983925
