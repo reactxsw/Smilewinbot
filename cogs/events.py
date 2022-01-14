@@ -2,6 +2,7 @@ from typing import Text
 import nextcord
 import datetime
 from nextcord import user
+from cogs.tictactoe import recieve_input
 import settings
 from nextcord.ext import commands
 
@@ -15,7 +16,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self,payload): 
         await self.bot.wait_until_ready()
-        message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
+        await recieve_input(self.bot,payload) # Send a payload to tictactoe cogs
+        message = await self.bot.fetch_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
             roledata = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
             if roledata is None:
