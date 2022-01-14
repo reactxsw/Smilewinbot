@@ -1,14 +1,4 @@
-
-from discord import colour, embeds
-from wavelink.node import Node
-import settings
-from discord.ext import commands
-from utils.languageembed import languageEmbed
-import discord
-import wavelink
-import settings
-import re
-
+from nextcord import colour, embeds
 from nextcord.ui import view
 import pomice
 import datetime
@@ -16,94 +6,85 @@ import asyncio
 from contextlib import suppress
 from motor.metaprogramming import asynchronize
 from pomice.objects import Playlist
+from pomice.utils import Ping
 import settings
 from nextcord.ext import commands
 import nextcord
 import math
 import random
-from utils.button import MusicButton
-class Player(pomice.Player):
-    """Custom pomice Player class."""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
- 
-        self.queue = asyncio.Queue()
-        self.controller: nextcord.Message = None
-        # Set context here so we can send a now playing embed
-        self.context: commands.Context = None
-        self.dj: nextcord.Member = None
-        self.pause_votes = set()
-        self.resume_votes = set()
-        self.skip_votes = set()
-        self.shuffle_votes = set()
-        self.stop_votes = set()
+class MusicButton(nextcord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
 
-    async def do_next(self) -> None:
-        # Clear the votes for a new song
-        self.pause_votes.clear()
-        self.resume_votes.clear()
-        self.skip_votes.clear()
-        self.shuffle_votes.clear()
-        self.stop_votes.clear()
-        
+    @nextcord.ui.button(
+        label=' ⏯ ', 
+        style=nextcord.ButtonStyle.green,
+        custom_id="pause_stop",
+        row=0)
+    async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
+    
+    @nextcord.ui.button(
+        label =" ⏭ ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="skip_song",\
+        row=0)
+    async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-        # Check if theres a controller still active and deletes it
-        if self.controller:
-            with suppress(nextcord.HTTPException):
-                await self.controller.delete()
-            
-       # Queue up the next track, else teardown the player
-        try:
-            track: pomice.Track = self.queue.get_nowait()
-        except asyncio.queues.QueueEmpty:  
-            return await self.teardown()
-        
-        await self.play(track)
+    @nextcord.ui.button(
+        label =" ⏹ ",
+        style=nextcord.ButtonStyle.red,
+        custom_id="stop_song",
+        row=0)
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-        # Call the controller (a.k.a: The "Now Playing" embed) and check if one exists
+    @nextcord.ui.button(
+        label=" 🔂 ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="repeat_song",
+        row=0)
+    async def repeat_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-        if track.is_stream:
-            embed = nextcord.Embed(title="Now playing", description=f":red_circle: **LIVE** [{track.title}]({track.uri}) [{track.requester.mention}]")
-            self.controller = await self.context.send(embed=embed)
+    @nextcord.ui.button(
+        label=" 🔁 ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="loop_playlist",
+        row=0)
+    async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-        else:
-            embed = nextcord.Embed(
-                title=f"Smilewin Music", 
-                description=f"Now playing [{track.title}]({track.uri})",
-                colour = 0xFED000)
+    @nextcord.ui.button(
+        label=" 🔊 เพิ่มเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="increase_volume",
+        row=1)
+    async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-            embed.set_thumbnail(url=track.thumbnail)
-            embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
-            embed.add_field(name='Requested By', value=track.requester.mention)
-            embed.add_field(name='Next', value="-")
-            self.controller = await self.context.send(embed=embed)
+    @nextcord.ui.button(
+        label=" 🔈 ลดเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="decrease_volume",
+        row=1)
+    async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
-
-    async def teardown(self):
-        """Clear internal states, remove player controller and disconnect."""
-        with suppress((nextcord.HTTPException), (KeyError)):
-            await self.destroy()
-            if self.controller:
-                await self.controller.delete() 
-
-    async def set_context(self, ctx: commands.Context):
-        """Set context for the player"""
-        self.context = ctx 
-        self.dj = ctx.author 
-
-
-
+    @nextcord.ui.button(
+        label=" 🔇 เปิด/ปิดเสียง ",
+        style=nextcord.ButtonStyle.primary ,
+        custom_id="mute_volume",
+        row=1)
+    async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(self,button, interaction)
 
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
-        
-        # In order to initialize a node, or really do anything in this library,
-        # you need to make a node pool
         self.pomice = pomice.NodePool()
-
-        # Start the node
         bot.loop.create_task(self.start_nodes())
     
     async def setnewserver(self,ctx):
@@ -138,56 +119,7 @@ class Music(commands.Cog):
         return newserver
 
     async def start_nodes(self):
-        # Waiting for the bot to get ready before connecting to nodes.
         await self.bot.wait_until_ready()
-        nodes = {
-            "Node_1": {
-                "host": settings.lavalinkip,
-                "port": settings.lavalinkport,
-                "rest_uri": f"http://"+f"{settings.lavalinkip}:{settings.lavalinkport}",
-                "password": settings.lavalinkpass,
-                "identifier": f"{settings.lavalinkindentifier}_1",
-                "region": settings.lavalinkregion
-            }
-        }
-
-        for n in nodes.values():
-            await self.bot.wavelink.initiate_node(**n)
-
-    @wavelink.WavelinkMixin.listener()
-    async def on_node_ready(self, node: wavelink.Node):
-        print(f"Node {node.identifier} is ready")
-
-    @wavelink.WavelinkMixin.listener()
-    async def on_track_end(self, node: wavelink.Node, payload:wavelink.events.TrackEnd):
-        guild_id = payload.player.guild_id
-        player = payload.player
-        if payload.reason == "FINISHED":
-            print(payload.player.channel_id)
-            await self.do_next(guild_id,player)
-    
-    @commands.command()
-    async def volmusic(self, ctx, volume : int):
-            default_volume = 100    
-            player = self.bot.wavelink.get_player(ctx.guild.id)
-            if isinstance(volume, int):
-                await player.set_volume(int(volume))
-                embed = discord.Embed(title=f'Successfully, Set volume into `{volume}`',color=discord.Colour.green())
-                embed.add_field(name=f'Current volume : {volume}',value=f'Default volume : `100`')
-                emoji = '\N{THUMBS UP SIGN}'
-                msg = await ctx.send(embed=embed)
-                await msg.add_reaction(emoji)
-            else:
-                await ctx.send("Please input only numbers")
-    @commands.command(name='connect')
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise discord.DiscordException('No channel to join. Please either specify a valid channel or join one.')
-        # You can pass in Spotify credentials to enable Spotify querying.
-        # If you do not pass in valid Spotify credentials, Spotify querying will not work 
         await self.pomice.create_node(
             bot=self.bot,
             host=settings.lavalinkip,
@@ -200,7 +132,7 @@ class Music(commands.Cog):
 
     async def required(self, ctx: commands.Context):
         """Method which returns required votes based on amount of members in a channel."""
-        player: Player = ctx.voice_client
+        player: pomice.player = ctx.voice_client
         channel = self.bot.get_channel(int(player.channel.id))
         required = math.ceil((len(channel.members) - 1) / 2.5)
 
@@ -212,62 +144,46 @@ class Music(commands.Cog):
 
     async def is_privileged(self, ctx: commands.Context):
         """Check whether the user is an Admin or DJ."""
-        player: Player = ctx.voice_client
+        player: pomice.player = ctx.voice_client
 
-    @commands.command()
-    async def stop(self,ctx):
-        pass
-
-    @commands.command()
-    async def pause(self,ctx):
-        pass
-
-    @commands.command()
-    async def resume(self,ctx):
-        pass
-
-    @commands.command()
-    async def loop(self,ctx):
-        pass
-
-    async def handle_click(button, interaction):
-        pass
-    
-    async def do_next(self,guild_id,player):
-        await settings.collectionmusic.update_one({"guild_id": guild_id}, {'$pop': {'Queue': -1}})
-        server = await settings.collectionmusic.find_one({"guild_id":guild_id})
-        if server["mode"] == "Default":
-            if server["Queue"] == []:
-                return
-
-            else:
-                Song = server["Queue"][0]["song_id"]
-                tracks = await self.bot.wavelink.build_track(Song)
-                await player.play(tracks)
-        
-        if server["mode"] == "Repeat":
-            pass
-
-        if server["mode"] == "Loop":
-            pass
-
-
-    async def build_embed(title,duration,thumbnail,next,author,requester):
-        embed = discord.Embed()
         return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
     @commands.Cog.listener()
-    async def on_pomice_track_end(self, player: Player, track, _):
-        await player.do_next()
+    async def on_pomice_track_end(self, player: pomice.player, track , _):
+        await Music.do_next(self,player)
 
     @commands.Cog.listener()
-    async def on_pomice_track_stuck(self, player: Player, track, _):
-        await player.do_next()
+    async def on_pomice_track_stuck(self, player: pomice.player , track , _):
+        await Music.do_next(self,player)
 
     @commands.Cog.listener()
-    async def on_pomice_track_exception(self, player: Player, track, _):
-        await player.do_next()
-        
+    async def on_pomice_track_exception(self, player: pomice.player, track , _):
+        await Music.do_next(self,player)
+    
+    async def do_next(self,player : pomice.player):
+        data = await settings.collection.find_one({"guild_id":player.guild.id})
+        message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
+        server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
+        if server["Mode"] == "Default":
+            await settings.collectionmusic.update_one({"guild_id": player.guild.id}, {'$pop': {'Queue': -1}})
+            if server["Queue"] == []:
+                await settings.collectionmusic.delete_one({"guild_id": player.guild.id})
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                colour = 0xffff00)
+                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
+                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                embed.set_footer(text=f"server : {player.guild.name}")
+                await message.edit(embed=embed)
+            else:
+                tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                await player.play(tracks)
+
+        elif server["Mode"] == "Repeat":
+            await player.play(player.Track)
+
+        else:
+            pass
+
     @commands.command(aliases=['joi', 'j', 'summon', 'su', 'con'])
     async def join(self, ctx: commands.Context, *, channel: nextcord.VoiceChannel = None) -> None:
         if not channel:
@@ -275,9 +191,7 @@ class Music(commands.Cog):
             if not channel:
                 return await ctx.send("You must be in a voice channel in order to use this command!")
 
-        await ctx.author.voice.channel.connect(cls=Player)
-        player: Player = ctx.voice_client
-        await player.set_context(ctx=ctx)
+        await ctx.author.voice.channel.connect(cls=pomice.Player)
         await ctx.send(f"Joined the voice channel `{channel.name}`")
 
     @commands.command(aliases=['disconnect', 'dc', 'disc', 'lv'])
@@ -287,167 +201,150 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
-    
-    async def build_embed(self,track : pomice.Track , next = None):
-        print(track)
-        embed = nextcord.Embed(
 
-            title = "Smilewin Music",
-            description = f"Now playing {track.title}",
+    async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        embed = nextcord.Embed(
+            title = button.custom_id,
             colour = 0xFED000
         )
-        embed.set_thumbnail(url=thumbnail)
-        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(duration))))
-        embed.add_field(name='Requested By', value=requester.mention)
-        embed.add_field(name='Next', value=next)
-        return embed
+        message = await interaction.channel.send(embed=embed , delete_after=3)
+        print(button.custom_id)
 
-    @commands.command()
-    async def play(self, ctx, *, query: str):
-        tracks = await self.bot.wavelink.get_tracks(f'ytsearch:{query}')
-        player = self.bot.wavelink.get_player(ctx.guild.id)
-        if tracks:
-            song_id = tracks[0].id
-            song_title = tracks[0].title
-            song_duration = tracks[0].duration
-            song_thumbnail = tracks[0].thumb
-            song_author = tracks[0].author
-
-            Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id})
-            if Queue is None and not player.is_playing:
-
-                data = {
-                    "guild_id":ctx.guild.id,
-                    "Mode":"Default",
-                    "Queue":[{"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}]
-                }
-                await settings.collectionmusic.insert_one(data)
-                player = self.bot.wavelink.get_player(ctx.guild.id)
-                if not player.is_connected:
-                    await ctx.invoke(self.connect_)
-                embed = await Music.build_embed(song_title,song_duration,song_thumbnail,"-",song_author,ctx.author)
-                await ctx.send(embed=embed)
-                await ctx.send(f'Added {song_title} to the queue.')
-                await player.play(tracks[0])
-            
-            else:
-                if not len(Queue["Queue"]) > 25:
-                    await settings.collectionmusic.update_one({'guild_id': ctx.guild.id}, {'$push': {'Queue': {"song_title":song_title,"song_id":song_id,"requester":ctx.author.id}}})
-
-                else:
-                    await ctx.send("คิวห้ามเกิน 25")
-        else:        
-            return await ctx.send('Could not find any songs with that query.')
-def setup(bot):
-=======
-        embed.set_thumbnail(url=track.thumbnail)
-        embed.add_field(name='Duration', value=str(datetime.timedelta(milliseconds=int(track.length))))
-        embed.add_field(name='Requested By', value=track.requester.mention)
-        embed.add_field(name='Next', value="-" if next is None else next)
-        return embed
-
+    async def song_embed(self, track : pomice.Track):
+        pass
     @commands.command(aliases=['pla', 'p'])
-    async def play(self, ctx: commands.Context, *, search: str) -> None:
-        if ctx.author.voice is not None:
-            player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
-            if player is None:
-                await ctx.invoke(self.join)   
-                player = ctx.voice_client
+    async def play(self, ctx: commands.Context, *, search: str):
+        data = await settings.collection.find_one({"guild_id":ctx.guild.id})
+        if data is not None:
+            music_channel = data["Music_channel_id"]
+            music_embed = data["Embed_message_id"]
+            music_message = data["Music_message_id"]
+            if music_channel != "None":
+                if music_embed != "None" and music_message != "None":
+                    if ctx.channel.id == music_channel:
+                        player : pomice.player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
+                        if player is None:
+                            await ctx.invoke(self.join)   
+                            player = ctx.voice_client
+                        results = await player.get_tracks(search, ctx=ctx)   
+                        if not results:
+                            return await ctx.send("No results were found for that search term", delete_after=7)
+                        if ctx.author.voice is not None:
+                            player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
+                            if player is None:
+                                await ctx.invoke(self.join)   
+                                player = ctx.voice_client
+                                
+                            results = await player.get_tracks(search, ctx=ctx)   
+                            if not results:
+                                return await ctx.send("No results were found for that search term", delete_after=7)
+                            
+                            track : pomice.Track= results[0]
+                            s_title = track.title
+                            s_id = track.track_id
+                            s_thumb = track.thumbnail
+                            song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+                            if song_Queue is None and not player.is_playing:
+                                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                    colour = 0xffff00)
+                                embed.set_author(name=f"กําลังเล่น {track}", icon_url=self.bot.user.avatar.url)
+                                embed.set_image(url =track.thumbnail)
+                                embed.set_footer(text=f"server : {ctx.guild.name}")
+                                data = {
+                                    "guild_id":ctx.guild.id,
+                                    "Mode":"Default",
+                                    "Request_channel":ctx.channel.id,
+                                    "Queue":[]
+                                }
+                                data["Queue"].append({
+                                        "position":1,
+                                        "song_title":s_title,
+                                        "song_id":s_id,
+                                        "song_thum":s_thumb,
+                                        "requester":ctx.author.id})
+                                await player.play(track)
 
-            results = await player.get_tracks(search, ctx=ctx)   
-            if not results:
-                return await ctx.send("No results were found for that search term", delete_after=7)
-            
-            track : pomice.Track= results[0]
-            s_title = track.title
-            s_id = track.track_id
-            song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
-            if song_Queue is None and not player.is_playing:
-                embed = nextcord.Embed(
-                    title = "Searching ..",
-                    colour = 0xFED000
-                )
-                message = await ctx.send(embed=embed)
-                data = {
-                    "guild_id":ctx.guild.id,
-                    "Mode":"Default",
-                    "Request_channel":ctx.channel.id,
-                    "Message_id":message.id,
-                    "Queue":[]
-                }
-                data["Queue"].append({
-                        "position":1,
-                        "song_title":s_title,
-                        "song_id":s_id,
-                        "requester":ctx.author.id})
-                embed = await Music.build_embed(self,track,None)
-                await message.edit(embed=embed)
-                await player.play(track)
-                print(data)
-                await settings.collectionmusic.insert_one(data)
+                                message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
+                                await message.edit(content=f"__รายการเพลง:__\n🎵 [1]. {track}] ",embed=embed)
+                                await settings.collectionmusic.insert_one(data)
 
-            else:
-                if not len(song_Queue["Queue"]) > 20:
-                    await settings.collectionmusic.update_one({
-                        'guild_id': ctx.guild.id}, {
-                            '$push': {
-                                'Queue': {
-                                    "position":len(song_Queue["Queue"])+1,
-                                    "song_title":s_title,
-                                    "song_id":s_id,
-                                    "requester":ctx.author.id}}})
+                            else:
+                                if not len(song_Queue["Queue"]) > 20:
+                                    np = song_Queue["Queue"][0]
+                                    nu = track if len(song_Queue["Queue"]) == 1 else song_Queue["Queue"][1]["song_title"]
+                                    list_song = []
+                                    num = 1
+                                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                        colour = 0xffff00)
+                                    embed.set_author(name=f"กําลังเล่น " + np["song_title"], icon_url=self.bot.user.avatar.url)
+                                    embed.set_image(url =np["song_thum"])
+                                    embed.set_footer(text=f"next up : {nu}")
+                                    await settings.collectionmusic.update_one({
+                                        'guild_id': ctx.guild.id}, {
+                                            '$push': {
+                                                'Queue': {
+                                                    "position":len(song_Queue["Queue"])+1,
+                                                    "song_title":s_title,
+                                                    "song_id":s_id,
+                                                    "song_thum":s_thumb,
+                                                    "requester":ctx.author.id}}})
 
-                    if len(song_Queue["Queue"]) == 1:
-                        message = await self.bot.get_channel(song_Queue["Request_channel"]).fetch_message(song_Queue["Message_id"]) # the message's channel
-                        embed = await Music.build_embed(song_Queue["Queue"][0]["song_title"],track,song_Queue["Mode"])
-                        await message.edit(embed=embed)
+                                    for song in song_Queue["Queue"]:
+                                        list_song.append(f"> [{num}] " + song["song_title"] + "\n")
+                                        num = num +1
+                                    list_song.append(f"> [{num}] " + s_title + "\n")
+                                    list_song = "".join(list_song)
 
-            if isinstance(results, pomice.Playlist):
-                Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
-                if Queue is None and not player.is_playing:
-                    if len(results.tracks) > 20:
-                        results.tracks = results.tracks[:21]
+                                    message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
+                                    await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
 
-                    embed = nextcord.Embed(
-                        title = "Searching ..",
-                        colour = 0xFED000
-                    )
-                    message = await ctx.send(embed=embed)
-                    data = {
-                        "guild_id":ctx.guild.id,
-                        "Mode":"Default",
-                        "Request_channel":ctx.channel.id,
-                        "Message_id":message.id,
-                        "Queue":[]
-                    }
-                    num = 0
-                    for track in results.tracks:
-                        data["Queue"].append({
-                                "position":num+1,
-                                "song_title":track.title,
-                                "song_id":track.track_id,
-                                "requester":ctx.author.id})
+                            if isinstance(results, pomice.Playlist):
+                                Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
+                                if Queue is None and not player.is_playing:
+                                    if len(results.tracks) > 20:
+                                        results.tracks = results.tracks[:21]
 
-                    await settings.collectionmusic.insert_one(data)
-                
-                else:
-                    if not len(Queue["Queue"]) > 20:
-                        availble = 21 - len(Queue["Queue"])
-                        if len(results.tracks) > availble:
-                            results.tracks = results.tracks[:availble]
-                        num = len(Queue["Queue"]) + 1
-                        for track in results.tracks:
-                            await settings.collectionmusic.update_one({
-                                'guild_id': ctx.guild.id}, {
-                                    '$push': {
-                                        'Queue': {
-                                            "position":num+1,
-                                            "song_title":s_title,
-                                            "song_id":s_id,
-                                            "requester":ctx.author.id
-                                            }
-                                        }
-                                    })
+                                    embed = nextcord.Embed(
+                                        title = "Searching ..",
+                                        colour = 0xFED000
+                                    )
+                                    message = await ctx.send(embed=embed)
+                                    data = {
+                                        "guild_id":ctx.guild.id,
+                                        "Mode":"Default",
+                                        "Request_channel":ctx.channel.id,
+                                        "Message_id":message.id,
+                                        "Queue":[]
+                                    }
+                                    num = 0
+                                    for track in results.tracks:
+                                        data["Queue"].append({
+                                                "position":num+1,
+                                                "song_title":track.title,
+                                                "song_id":track.track_id,
+                                                "requester":ctx.author.id})
+                                            
+                                    await player.play(results.tracks[0])
+                                    await settings.collectionmusic.insert_one(data)
+                                
+                                else:
+                                    if not len(Queue["Queue"]) > 20:
+                                        availble = 21 - len(Queue["Queue"])
+                                        if len(results.tracks) > availble:
+                                            results.tracks = results.tracks[:availble]
+                                        num = len(Queue["Queue"]) + 1
+                                        for track in results.tracks:
+                                            await settings.collectionmusic.update_one({
+                                                'guild_id': ctx.guild.id}, {
+                                                    '$push': {
+                                                        'Queue': {
+                                                            "position":num+1,
+                                                            "song_title":s_title,
+                                                            "song_id":s_id,
+                                                            "requester":ctx.author.id
+                                                            }
+                                                        }
+                                                    })
                                                              
     @commands.command(aliases=['pau', 'pa'])
     async def pause(self, ctx: commands.Context):
@@ -627,7 +524,7 @@ def setup(bot):
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
-                embed_message = await channel.send(embed=embed, view = MusicButton())
+                embed_message = await channel.send(embed=embed, view =  MusicButton())
                 music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -640,7 +537,7 @@ def setup(bot):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton())
+                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton())
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -656,5 +553,4 @@ def setup(bot):
                         pass
 
 def setup(bot: commands.Bot):
->>>>>>> cd9dc3e534abbb1ff748957e8a860a86f2f99f89
     bot.add_cog(Music(bot))
