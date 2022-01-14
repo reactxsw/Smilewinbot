@@ -173,7 +173,7 @@ class Music(commands.Cog):
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {player.guild.name}")
-                await message.edit(embed=embed)
+                await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
             else:
                 tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                 await player.play(tracks)
@@ -243,6 +243,7 @@ class Music(commands.Cog):
                             s_title = track.title
                             s_id = track.track_id
                             s_thumb = track.thumbnail
+                            s_uri  = track.uri
                             song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
                             if song_Queue is None and not player.is_playing:
                                 embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
@@ -261,11 +262,12 @@ class Music(commands.Cog):
                                         "song_title":s_title,
                                         "song_id":s_id,
                                         "song_thum":s_thumb,
-                                        "requester":ctx.author.id})
+                                        "song_url":s_uri,
+                                        "requester":ctx.author.id,})
                                 await player.play(track)
 
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                await message.edit(content=f"__รายการเพลง:__\n🎵 [1]. {track}] ",embed=embed)
+                                await message.edit(content=f"__รายการเพลง:__🎵\n [1]. {track}] ",embed=embed)
                                 await settings.collectionmusic.insert_one(data)
 
                             else:
