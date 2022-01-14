@@ -297,3 +297,6 @@
 2022-01-12 15:27:25: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r vfy,command: verify}
 2022-01-12 15:27:51: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r vfy,command: verify}
 2022-01-12 15:28:00: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r vfy,command: verify}
+2022-01-14 19:46:12: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: play}
+2022-01-14 19:47:14: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: play}
+2022-01-14 20:16:14: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: None}

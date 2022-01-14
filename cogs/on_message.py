@@ -1,5 +1,6 @@
 from importlib import reload
 from re import search
+from async_timeout import asyncio
 import nextcord
 from nextcord.ext import commands
 import settings
@@ -17,9 +18,17 @@ class on_message_event(commands.Cog):
         if data != None:
             if message.guild and not message.author.bot:
                 if message.channel.id == data["Music_channel_id"]:
+                    if settings.COMMAND_PREFIX in message.content:
+                        song = message.content.split(settings.COMMAND_PREFIX)[1]
+                    
+                    else:
+                        song = message.content
+                    
+                    print(song)
                     ctx  = await self.bot.get_context(message)
-                    await ctx.invoke(self.bot.get_command("play"), search=message.content)
-
+                    await ctx.invoke(self.bot.get_command("play"), search=song)
+                    await asyncio.sleep(5)
+                    await message.delete()
 
             if message.content.startswith('!r'):
                 return
