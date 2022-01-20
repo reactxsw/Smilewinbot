@@ -263,7 +263,7 @@ class Music(commands.Cog):
                                         "song_id":s_id,
                                         "song_thum":s_thumb,
                                         "song_url":s_uri,
-                                        "requester":ctx.author.id,})
+                                        "requester":ctx.author.id})
                                 await player.play(track)
 
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)

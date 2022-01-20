@@ -225,7 +225,7 @@ class Level(commands.Cog):
                         description = description
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                    embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
                 
@@ -325,7 +325,7 @@ class Level(commands.Cog):
                         description = description
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                    embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                     message = await ctx.send(embed=embed)
                     await message.add_reaction('✅')
                 

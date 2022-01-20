@@ -17,7 +17,7 @@ class Events(commands.Cog):
     async def on_raw_reaction_add(self,payload): 
         await self.bot.wait_until_ready()
         await recieve_input(self.bot,payload) # Send a payload to tictactoe cogs
-        message = await self.bot.fetch_channel(payload.channel_id).fetch_message(payload.message_id)
+        message = await self.bot.get_channel(payload.channel_id).fetch_message(payload.message_id)
         if message.author == self.bot.user:
             roledata = await settings.collectionrole.find_one({"guild_id":payload.guild_id,"message_id":message.id})
             if roledata is None:
@@ -188,7 +188,7 @@ class Events(commands.Cog):
 
                             embed.set_thumbnail(url=f"{member.avatar.url}")
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon.url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
                             channel = self.bot.get_channel( int(welcome))
@@ -212,7 +212,7 @@ class Events(commands.Cog):
 
                             embed.set_thumbnail(url=f"{member.avatar.url}")
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon.url}")
                             embed.timestamp = datetime.datetime.utcnow()
                             
                             channel = self.bot.get_channel( int(welcome))
@@ -246,7 +246,7 @@ class Events(commands.Cog):
 
                             embed.set_thumbnail(url=f"{member.avatar.url}")
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon.url}")
                             embed.timestamp = datetime.datetime.utcnow()
 
                             channel = self.bot.get_channel(int(data["leave_id"]))
@@ -269,7 +269,7 @@ class Events(commands.Cog):
 
                             embed.set_thumbnail(url=f"{member.avatar.url}")
                             embed.set_author(name=f"{member.name}", icon_url=f"{member.avatar.url}") 
-                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon_url}")
+                            embed.set_footer(text=f"{member.guild}", icon_url=f"{member.guild.icon.url}")
                             embed.timestamp = datetime.datetime.utcnow()
  
                             channel = self.bot.get_channel( int(data["leave_id"]))
@@ -297,10 +297,7 @@ class Events(commands.Cog):
                                     description =
 f"""สวัสดีครับ {entry.user.name}
 ขอบคุณที่เชิญบอท{self.bot.user.name} เข้าร่วมเซิร์ฟเวอร์ {entry.user.mention}
-
 เว็บไซต์บอท : [Smilewin](https://smilewinnextcord-th.web.app/)
-
-
                                     """) 
                 uembed.add_field(name="🤝Partner : ",value=f"-")
                 await entry.user.send(embed=uembed)
@@ -316,10 +313,8 @@ f"""สวัสดีครับ {entry.user.name}
                     description = f"""
                     พิม ``{settings.COMMAND_PREFIX}help`` เพื่อดูคําสั่งของบอท
                     Support : https://nextcord.com/invite/R8RYXyB4Cg
-
                     use ``{settings.COMMAND_PREFIX}help`` to view bot commands
                     support : https://nextcord.com/invite/R8RYXyB4Cg
-
                     """
 
                 )

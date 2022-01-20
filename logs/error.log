@@ -300,3 +300,20 @@
 2022-01-14 19:46:12: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: play}
 2022-01-14 19:47:14: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: play}
 2022-01-14 20:16:14: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r play humble skrillx remi,command: None}
+2022-01-15 03:18:49: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt https://www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ,command: setyt}
+2022-01-15 03:19:17: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ,command: setyt}
+2022-01-15 03:19:26: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel//UCK6W10JbStSDv03F0mynVTQ,command: setyt}
+2022-01-15 03:20:27: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 03:21:03: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel//UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 03:21:33: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel//UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 03:22:29: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel//UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 03:24:28: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ,command: setyt}
+2022-01-15 03:36:28: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 03:37:42: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ <#924999356191481874>,command: setyt}
+2022-01-15 20:21:16: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ #command-testing,command: setyt}
+2022-01-15 20:23:41: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r setting,command: setting}
+2022-01-15 20:23:45: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r botsetup,command: None}
+2022-01-15 20:25:01: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ <#905055872034684976>,command: setyt}
+2022-01-15 20:25:29: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r setyt www.youtube.com/channel/UCK6W10JbStSDv03F0mynVTQ <#905055872034684976>,command: setyt}
+2022-01-16 20:01:11: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r youtube https://www.youtube.com/watch?v=Rm9r0m52Po4,command: youtube}
+2022-01-16 20:01:11: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r youtube kuy,command: youtube}
