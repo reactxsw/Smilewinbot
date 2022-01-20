@@ -116,8 +116,9 @@ class TicTacToe(commands.Cog):
         else:
             # fetch message object 
             data = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id})
-            message = await self.bot.fetch_channel(data["channel_id"]).fetch_message(data["message_id"])
-            
+            channel = await self.bot.fetch_channel(data["channel_id"])
+            message = await channel.fetch_message(data["message_id"])
+
             # Clear message reactions
             await message.clear_reactions()
             # Delete message
@@ -179,7 +180,8 @@ async def recieve_input(bot,payload):
     if data is None:
         return
     # Get the message object
-    message = await bot.fetch_message(payload.channel_id).fetch_message(payload.message_id)
+    channel = await bot.fetch_message(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
     # Check Is the message is the same as the one in the database if not return
     if message.id != data["message_id"]:
         return
