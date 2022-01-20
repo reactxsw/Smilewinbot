@@ -111,7 +111,7 @@ class DiscordInfo(commands.Cog):
 
             )  
 
-                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -134,7 +134,7 @@ class DiscordInfo(commands.Cog):
 
             )  
 
-                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.timestamp = datetime.datetime.utcnow()
 
@@ -286,7 +286,7 @@ f"""**ข้อมูลทั่วไป**
 ❯❯ 🎤**สมาชิกในห้องเสียง**: {connect}
 """)
                 embed.timestamp = datetime.datetime.utcnow()
-                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
@@ -367,7 +367,7 @@ f"""**General Information**
 ❯❯ 🎤**Voice connected**: {connect}
 """)
                 embed.timestamp = datetime.datetime.utcnow()
-                embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('🤖')
@@ -662,7 +662,7 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"เซิฟเวอร์: {ctx.guild.name}")
-                embed.set_image(url=ctx.guild.icon_url)
+                embed.set_image(url=ctx.guild.icon.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -672,7 +672,7 @@ f"""**General Information**
                 embed = nextcord.Embed(
                     colour = 0x00FFFF,
                     title=f"Server: {ctx.guild.name}")
-                embed.set_image(url=ctx.guild.icon_url)
+                embed.set_image(url=ctx.guild.icon.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -827,7 +827,7 @@ f"""**General Information**
                     embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```")
                     embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}```")
                     embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
-                    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                    embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                     message = await ctx.send(embed=embed)
@@ -937,7 +937,7 @@ f"""**General Information**
                     embed.add_field(name = "ตั้งค่ายศ",value= f"```ให้ยศเเนะนําตัว : \n{introduce_give}\nลบยศเเนะนําตัว : \n{introduce_remove}\nให้ยศยืนยันตัวตน : \n{verify_give}\nลบยศยืนยันตัวตน : \n{verify_remove}```")
                     embed.add_field(name = "ตั้งค่าระบบ",value= f"```คุยกับคนเเปลกหน้า : {webhook_stat}\nระบบเลเวล : {level_stat}\nระบบเศรษฐกิจ : {economy_stat}\nระบบยืนยันตัวตน : {verification_stat}\nระบบเเนะนําตัว : {introduce_stat}\nลงบันทึกเข้าห้อง : {log_voice}```")
                     embed.add_field(name = "ตั้งค่าอื่นๆ",value= f"```ค่าเงิน : {server_currency}\nกรอบเเนะนําตัว : {intro_frame}\nเวลายืนยันตัว : {verify_time}วิ```",inline=False)
-                    embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
+                    embed.set_thumbnail(url=f"{ctx.guild.icon.url}")
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                     message = await ctx.send(embed=embed)
