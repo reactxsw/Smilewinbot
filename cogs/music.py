@@ -1,3 +1,4 @@
+from turtle import color
 from nextcord import colour, embeds
 from nextcord.ui import view
 import pomice
@@ -548,11 +549,27 @@ class Music(commands.Cog):
                     try:
                         embed_message = await channel.fetch_message(data["Embed_message_id"])
                         music_message = await channel.fetch_message(data["Music_message_id"])
-
-
-
+                        embed = nextcord.embeds(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
+                        await ctx.send(embed=embed)
                     except nextcord.NotFound:
-                        pass
+                        try:
+                            embed_message = await channel.fetch_message(data["Embed_message_id"])
+
+                        except nextcord.NotFound:
+                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                colour = 0xffff00)
+                            embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
+                            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                            embed.set_footer(text=f"server : {ctx.guild.name}")
+                            embed_message = await channel.send(embed=embed, view =  MusicButton())
+                            await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})
+                        
+                        try:
+                            music_message = await channel.fetch_message(data["Music_message_id"])
+                        except nextcord.NotFound:
+                            music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                            await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_message_id":music_message.id}})
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
