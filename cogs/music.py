@@ -247,9 +247,10 @@ class Music(commands.Cog):
                             s_uri  = track.uri
                             song_Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
                             if song_Queue is None and not player.is_playing:
-                                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                embed=nextcord.Embed(
+                                    description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
-                                embed.set_author(name=f"กําลังเล่น {track}", icon_url=self.bot.user.avatar.url)
+                                embed.set_author(name=f"กําลังเล่น {track}", icon_url=self.bot.user.avatar.url , url=track.uri)
                                 embed.set_image(url =track.thumbnail)
                                 embed.set_footer(text=f"server : {ctx.guild.name}")
                                 data = {
@@ -273,14 +274,13 @@ class Music(commands.Cog):
 
                             else:
                                 if not len(song_Queue["Queue"]) > 20:
-                                    np = song_Queue["Queue"][0]
                                     nu = track if len(song_Queue["Queue"]) == 1 else song_Queue["Queue"][1]["song_title"]
                                     list_song = []
                                     num = 1
                                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
-                                    embed.set_author(name=f"กําลังเล่น " + np["song_title"], icon_url=self.bot.user.avatar.url)
-                                    embed.set_image(url =np["song_thum"])
+                                    embed.set_author(name=f"กําลังเล่น " + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
+                                    embed.set_image(url =player.current.thumbnail)
                                     embed.set_footer(text=f"next up : {nu}")
                                     await settings.collectionmusic.update_one({
                                         'guild_id': ctx.guild.id}, {
