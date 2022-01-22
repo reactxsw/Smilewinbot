@@ -268,7 +268,7 @@ class Music(commands.Cog):
                                 await player.play(track)
 
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                await message.edit(content=f"__รายการเพลง:__🎵\n [1]. {track}] ",embed=embed)
+                                await message.edit(content=f"__รายการเพลง:__🎵\n [1]. {track} ",embed=embed)
                                 await settings.collectionmusic.insert_one(data)
 
                             else:
