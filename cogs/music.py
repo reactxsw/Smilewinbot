@@ -15,7 +15,8 @@ import math
 import random
 
 class MusicButton(nextcord.ui.View):
-    def __init__(self):
+    def __init__(self,bot):
+        self.bot = bot
         super().__init__(timeout=None)
 
     @nextcord.ui.button(
@@ -25,6 +26,7 @@ class MusicButton(nextcord.ui.View):
         row=0)
     async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
+    
     
     @nextcord.ui.button(
         label =" ⏭ ",
@@ -41,7 +43,6 @@ class MusicButton(nextcord.ui.View):
         row=0)
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
-
     @nextcord.ui.button(
         label=" 🔂 ",
         style=nextcord.ButtonStyle.secondary ,
@@ -208,8 +209,17 @@ class Music(commands.Cog):
             title = button.custom_id,
             colour = 0xFED000
         )
-        message = await interaction.channel.send(embed=embed , delete_after=3)
-        print(button.custom_id)
+
+        # get player object
+        player = self.bot.get_guild(int(button.custom_id)).voice_client
+
+
+        # player : self.Music.pomice.player = self.Music.pomice._nodes[settings.lavalinkindentifier].get_player(interaction.guild_id)
+
+        if not player is None:
+            print("Player is not None")
+        # message = await interaction.channel.send(embed=embed , delete_after=3)
+        # print(button.custom_id)
 
     async def song_embed(self, track : pomice.Track):
         pass
@@ -517,7 +527,7 @@ class Music(commands.Cog):
             embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
             embed.set_footer(text=f"server : {ctx.guild.name}")
             try:
-                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton())
+                embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton(self))
             except Exception as e:
                 print(e)
             music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
@@ -532,7 +542,7 @@ class Music(commands.Cog):
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
-                embed_message = await channel.send(embed=embed, view =  MusicButton())
+                embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
                 music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -545,7 +555,7 @@ class Music(commands.Cog):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton())
+                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton(self.bot))
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
 
@@ -566,7 +576,7 @@ class Music(commands.Cog):
                             embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                             embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                             embed.set_footer(text=f"server : {ctx.guild.name}")
-                            embed_message = await channel.send(embed=embed, view =  MusicButton())
+                            embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
                             await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})
                         
                         try:
@@ -578,3 +588,4 @@ class Music(commands.Cog):
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
+    bot.add_view(MusicButton(bot))
