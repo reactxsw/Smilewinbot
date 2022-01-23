@@ -1,8 +1,3 @@
-
-from tkinter import Label
-from turtle import title
-from nextcord import colour, embeds
-from nextcord.ui import view
 import pomice
 import datetime
 import asyncio
