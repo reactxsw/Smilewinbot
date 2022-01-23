@@ -405,7 +405,7 @@ f"""**General Information**
                 embed.add_field(name='💻 ``ระบบปฏิบัติการ``', value=f'{OS}')
                 embed.add_field(name='💻 ``เเรมที่ใช้``', value=f"{psutil.virtual_memory().percent} %" )
                 embed.add_field(name='🤖 ``ภาษาที่ใช้เขียนบอท``', value=f'Python {PYTHON_VERSION}')
-                embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
+                embed.add_field(name='🤖 ``Nextcord.py``', value=f'Nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
 
@@ -432,7 +432,7 @@ f"""**General Information**
                 embed.add_field(name='💻 ``OS``', value=f'{OS}')
                 embed.add_field(name='💻 ``RAM``', value=f"{psutil.virtual_memory().percent} %" )
                 embed.add_field(name='🤖 ``Programming language``', value=f'Python {PYTHON_VERSION}')
-                embed.add_field(name='🤖 ``nextcord.py``', value=f'nextcord.py {nextcord.__version__}')
+                embed.add_field(name='🤖 ``Nextcord.py``', value=f'Nextcord.py {nextcord.__version__}')
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
 

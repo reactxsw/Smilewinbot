@@ -1,5 +1,6 @@
 
 from tkinter import Label
+from turtle import title
 from nextcord import colour, embeds
 from nextcord.ui import view
 import pomice
@@ -148,6 +149,7 @@ class Music(commands.Cog):
         server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
         if server["Mode"] == "Default":
             await settings.collectionmusic.update_one({"guild_id": player.guild.id}, {'$pop': {'Queue': -1}})
+            server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
             if server["Queue"] == []:
                 await settings.collectionmusic.delete_one({"guild_id": player.guild.id})
                 embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
@@ -157,7 +159,20 @@ class Music(commands.Cog):
                 embed.set_footer(text=f"server : {player.guild.name}")
                 await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
             else:
+                list_song = [] 
+                num = 1
+                for song in server["Queue"]:
+                    list_song.append(f"> [{num}] " + song["song_title"] + "\n")
+                    num = num +1
+                list_song = "".join(list_song)
                 tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    colour = 0xffff00)
+                embed.set_author(name=f"กําลังเล่น " + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                embed.set_image(url =tracks.thumbnail)
+                embed.set_footer(text=f"next up : {nu}")
+                await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                 await player.play(tracks)
 
         elif server["Mode"] == "Repeat":
@@ -192,28 +207,34 @@ class Music(commands.Cog):
         
         player = self.bot.get_guild(interaction.guild.id).voice_client
         if not player is None:
-            if button.custom_id == "pause_stop":
-                if player.is_paused and player.is_connected:
-                    await player.set_pause(False)
-                
-                elif not player.is_paused and player.is_connected:
-                    await player.set_pause(True)
+            if interaction.user == player.dj or interaction.user.guild_permissions.administrator:
+                if button.custom_id == "pause_stop":
+                    if player.is_paused and player.is_connected:
+                        await player.set_pause(False)
+                    
+                    elif not player.is_paused and player.is_connected:
+                        await player.set_pause(True)
 
-            elif button.custom_id == "increase_volume":
-                if player.volume < 100:
-                    await player.set_volume(player.volume + 10)
-            
-            elif button.custom_id == "decrease_volume":
-                if player.volume > 0:
-                    await player.set_volume(player.volume - 10)
-            
-            elif button.custom_id == "mute_unmute_volume":
-                if player.volume == 0:
-                    await player.set_volume(80)
+                elif button.custom_id == "increase_volume":
+                    if player.volume < 100:
+                        await player.set_volume(player.volume + 10)
                 
-                else:
-                    await player.set_volume(0)
-        
+                elif button.custom_id == "decrease_volume":
+                    if player.volume > 0:
+                        await player.set_volume(player.volume - 10)
+                
+                elif button.custom_id == "mute_unmute_volume":
+                    if player.volume == 0:
+                        await player.set_volume(80)
+                    
+                    else:
+                        await player.set_volume(0)
+            else:
+                embed= nextcord.embeds(
+                    title = f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",
+                    colour = 0x983925
+                )
+                await interaction.send
         else:
             pass
     
@@ -254,7 +275,7 @@ class Music(commands.Cog):
                                             "song_id":track.track_id,
                                             "requester":ctx.author.id})
                                     num = num+1
-                                nu = track if len(Queue["Queue"]) == 1 else Queue["Queue"][1]["song_title"]
+                                nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                 embed=nextcord.Embed(
                                     description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
@@ -290,7 +311,7 @@ class Music(commands.Cog):
                                                     }
                                                 })
                                         num = num+1
-                                    nu = track if len(Queue["Queue"]) == 1 else Queue["Queue"][1]["song_title"]
+                                    nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                     embed=nextcord.Embed(
                                         description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
@@ -333,7 +354,7 @@ class Music(commands.Cog):
 
                             else:
                                 if not len(Queue["Queue"]) > 20:
-                                    nu = track if len(Queue["Queue"]) == 1 else Queue["Queue"][1]["song_title"]
+                                    nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                     list_song = []
                                     num = 1
                                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
