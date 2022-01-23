@@ -47,8 +47,7 @@ ASCII_ART = """
                                                                    REACT#1120 
 """ 
 
-bot = commands.AutoShardedBot(command_prefix = ([settings.COMMAND_PREFIX,"/r "]),case_insensitive=True ,intents=intent , strip_after_prefix=True)
-bot.remove_command('help')
+bot = commands.AutoShardedBot(command_prefix = (settings.COMMAND_PREFIX),case_insensitive=True ,help_command=None,intents=intent , strip_after_prefix=True)
 
 start_time = datetime.datetime.utcnow()
 
@@ -128,7 +127,7 @@ async def on_ready():
         serverstat.start()
     except RuntimeError:
         pass
-    print_ascii_art()
+    await print_ascii_art()
     # bot.add_view(MusicButton())
     try:
         channel = bot.get_channel(int(settings.logchannel))
@@ -142,21 +141,21 @@ async def on_ready():
         print(e)
         pass
 
-def print_ascii_art():
+async def print_ascii_art():
+    name_space = (25 - (len(str(bot.user))))*(" ")
     server= (str(len(bot.guilds)))
     server_space = (27 - int(len(server)))*(" ")
     user = (str(len(bot.users)))
     user_space = (29 - int(len(user)))*(" ")
     print(f"{ASCII_ART}")
     print(f"                                   ╔══════════════════════════════════════╗")
-    print(f"                                   ║  BOT NAME : {bot.user}            ║")
+    print(f"                                   ║  BOT NAME : {bot.user}{name_space}║")
     print(f"                                   ║  BOT ID : {bot.user.id}         ║")
     print(f"                                   ║  BOT STATUS : ONLINE                 ║")
     print(f"                                   ║  SERVER : {server}{server_space}║")
     print(f"                                   ║  USER : {user}{user_space}║")
     print(f"                                   ║                                      ║")
-    print(f"                                   ╚══════════════════════════════════════╝")  
-    print("")
+    print(f"                                   ╚══════════════════════════════════════╝\n")  
 
 @bot.command(aliases=["reload"])
 @commands.is_owner()
@@ -167,7 +166,7 @@ async def reloadcogs(ctx):
     loadcogs()
     await clearcmd()
     await asyncio.sleep(0.2)
-    print_ascii_art()
+    await print_ascii_art()
     print("Reloaded all cogs!")
     await ctx.send("Reloaded all cogs successfully!")
 
@@ -176,7 +175,7 @@ async def reloadcogs(ctx):
 async def cleancmd(ctx):
     await clearcmd()
     await checkMongo()
-    print_ascii_art()
+    await print_ascii_art()
     await ctx.send("Cmd cleared")
 
 @bot.event

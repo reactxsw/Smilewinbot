@@ -195,10 +195,6 @@ class Music(commands.Cog):
         await ctx.send("Player has left the channel.")
 
     async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
-        embed = nextcord.Embed(
-            title = button.custom_id,
-            colour = 0xFED000
-        )
         data = await settings.collectionmusic.find_one({"guild_id":interaction.guild.id})
         player = self.bot.get_guild(interaction.guild.id).voice_client
         if not player is None:
@@ -206,6 +202,10 @@ class Music(commands.Cog):
                 if button.custom_id == "pause_stop":
                     if player.is_paused and player.is_connected:
                         await player.set_pause(False)
+                        embed = nextcord.Embed(
+                            title = "เพลงเล่นต่อ",
+                            colour = 0xFED000
+                        )
                     
                     elif not player.is_paused and player.is_connected:
                         await player.set_pause(True)
