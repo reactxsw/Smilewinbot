@@ -199,10 +199,10 @@ class Music(commands.Cog):
             title = button.custom_id,
             colour = 0xFED000
         )
-        
+        data = await settings.collectionmusic.find_one({"guild_id":interaction.guild.id})
         player = self.bot.get_guild(interaction.guild.id).voice_client
         if not player is None:
-            if interaction.user == player.dj or interaction.user.guild_permissions.administrator:
+            if interaction.user.id == data["Queue"][0]["requester"] or interaction.user.guild_permissions.administrator:
                 if button.custom_id == "pause_stop":
                     if player.is_paused and player.is_connected:
                         await player.set_pause(False)
@@ -338,8 +338,6 @@ class Music(commands.Cog):
                                         "position":1,
                                         "song_title":s_title,
                                         "song_id":s_id,
-                                        "song_thum":s_thumb,
-                                        "song_url":s_uri,
                                         "requester":ctx.author.id})
                                 await player.play(track)
 
@@ -364,7 +362,6 @@ class Music(commands.Cog):
                                                     "position":len(Queue["Queue"])+1,
                                                     "song_title":s_title,
                                                     "song_id":s_id,
-                                                    "song_thum":s_thumb,
                                                     "requester":ctx.author.id}}})
 
                                     for song in Queue["Queue"]:
