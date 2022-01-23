@@ -217,7 +217,7 @@ class Music(commands.Cog):
         if not player is None:
             if button.custom_id == "pause_stop":
                 if player.is_paused and player.is_connected:
-                    player.set_pause(False)
+                    await player.set_pause(False)
                 
                 elif not player.is_paused and player.is_connected:
                     await player.set_pause(True)
