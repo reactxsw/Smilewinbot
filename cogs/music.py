@@ -24,15 +24,15 @@ class MusicButton(nextcord.ui.View):
         custom_id="pause_stop",
         row=0)
     async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
     
     @nextcord.ui.button(
         label =" ⏭ ",
         style=nextcord.ButtonStyle.secondary,
         custom_id="skip_song",\
         row=0)
-    async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+    async def skip_button(self, button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label =" ⏹ ",
@@ -40,7 +40,7 @@ class MusicButton(nextcord.ui.View):
         custom_id="stop_song",
         row=0)
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label=" 🔂 ",
@@ -48,7 +48,7 @@ class MusicButton(nextcord.ui.View):
         custom_id="repeat_song",
         row=0)
     async def repeat_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label=" 🔁 ",
@@ -56,7 +56,7 @@ class MusicButton(nextcord.ui.View):
         custom_id="loop_playlist",
         row=0)
     async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label=" 🔊 เพิ่มเสียง ",
@@ -64,7 +64,7 @@ class MusicButton(nextcord.ui.View):
         custom_id="increase_volume",
         row=1)
     async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label=" 🔈 ลดเสียง ",
@@ -72,7 +72,7 @@ class MusicButton(nextcord.ui.View):
         custom_id="decrease_volume",
         row=1)
     async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
     @nextcord.ui.button(
         label=" 🔇 เปิด/ปิดเสียง ",
@@ -80,10 +80,11 @@ class MusicButton(nextcord.ui.View):
         custom_id="mute_volume",
         row=1)
     async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
-        await Music.handle_click(self,button, interaction)
+        await Music.handle_click(button, interaction)
 
 class Music(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
+        
         self.bot = bot
         self.pomice = pomice.NodePool()
         bot.loop.create_task(self.start_nodes())
@@ -203,16 +204,20 @@ class Music(commands.Cog):
         await player.destroy()
         await ctx.send("Player has left the channel.")
 
-    async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+    async def handle_click(button: nextcord.ui.Button, interaction : nextcord.Interaction):
         embed = nextcord.Embed(
             title = button.custom_id,
             colour = 0xFED000
         )
-        message = await interaction.channel.send(embed=embed , delete_after=3)
-        print(button.custom_id)
+        
+        if button.custom_id == "pause_stop":
+            if player.is_paused and player.is_connected:
+                player.set_pause(False)
+            
+            elif not player.is_paused and player.is_connected:
+                await player.set_pause(True)
 
-    async def song_embed(self, track : pomice.Track):
-        pass
+
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -353,56 +358,7 @@ class Music(commands.Cog):
 
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
-                                                             
-    @commands.command(aliases=['pau', 'pa'])
-    async def pause(self, ctx: commands.Context):
-        """Pause the currently playing song."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if player.is_paused or not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has paused the player.', delete_after=10)
-            player.pause_votes.clear()
-
-            return await player.set_pause(True)
-
-        required = self.required(ctx)
-        player.pause_votes.add(ctx.author)
-
-        if len(player.pause_votes) >= required:
-            await ctx.send('Vote to pause passed. Pausing player.', delete_after=10)
-            player.pause_votes.clear()
-            await player.set_pause(True)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to pause the player. Votes: {len(player.pause_votes)}/{required}', delete_after=15)
-
-    @commands.command(aliases=['res', 'r'])
-    async def resume(self, ctx: commands.Context):
-        """Resume a currently paused player."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_paused or not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has resumed the player.', delete_after=10)
-            player.resume_votes.clear()
-
-            return await player.set_pause(False)
-
-        required = self.required(ctx)
-        player.resume_votes.add(ctx.author)
-
-        if len(player.resume_votes) >= required:
-            await ctx.send('Vote to resume passed. Resuming player.', delete_after=10)
-            player.resume_votes.clear()
-            await player.set_pause(False)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to resume the player. Votes: {len(player.resume_votes)}/{required}', delete_after=15)
+                                                            
 
     @commands.command(aliases=['n', 'nex', 'next', 'sk'])
     async def skip(self, ctx: commands.Context):
