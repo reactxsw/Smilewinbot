@@ -121,6 +121,7 @@ def unloadcogs():
 
 @bot.event
 async def on_ready():
+    loadcogs()
     await settings.collectionmusic.delete_many({})
     try:
         change_status.start()
@@ -128,7 +129,7 @@ async def on_ready():
     except RuntimeError:
         pass
     print_ascii_art()
-    bot.add_view(MusicButton())
+    # bot.add_view(MusicButton())
     try:
         channel = bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
@@ -183,7 +184,7 @@ async def on_connect():
     print("Connected to discord API")
 
 def main():
-    loadcogs()
+    # loadcogs()
     try:
         bot.run(settings.TOKEN ,reconnect=True)
     except Exception as e:
