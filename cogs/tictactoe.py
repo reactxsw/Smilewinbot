@@ -180,7 +180,7 @@ async def recieve_input(bot,payload):
     if data is None:
         return
     # Get the message object
-    channel = await bot.fetch_message(payload.channel_id)
+    channel = bot.get_channel(payload.channel_id)
     message = await channel.fetch_message(payload.message_id)
     # Check Is the message is the same as the one in the database if not return
     if message.id != data["message_id"]:

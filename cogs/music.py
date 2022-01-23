@@ -209,11 +209,8 @@ class Music(commands.Cog):
             title = button.custom_id,
             colour = 0xFED000
         )
-
         
         player = self.bot.get_guild(interaction.guild.id).voice_client
-        
-
         if not player is None:
             if button.custom_id == "pause_stop":
                 if player.is_paused and player.is_connected:

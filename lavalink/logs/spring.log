@@ -164,3 +164,11 @@
 2022-01-23 11:41:13.903  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "924999182039801876", "pause": false}
 2022-01-23 11:41:15.712  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "924999182039801876", "pause": true}
 2022-01-23 11:41:17.028  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "924999182039801876", "pause": false}
+2022-01-23 11:41:34.848  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58383 -- CloseStatus[code=1006, reason=]
+2022-01-23 11:41:34.848  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-23 11:49:44.501  INFO 53872 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62025
+2022-01-23 11:49:44.503  INFO 53872 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-23 11:53:18.970  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62025 -- CloseStatus[code=1006, reason=]
+2022-01-23 11:53:18.972  INFO 53872 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-23 11:53:30.602  INFO 53872 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56203
+2022-01-23 11:53:30.604  INFO 53872 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
