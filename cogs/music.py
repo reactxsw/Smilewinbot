@@ -1,13 +1,11 @@
-from turtle import color
+
+from tkinter import Label
 from nextcord import colour, embeds
 from nextcord.ui import view
 import pomice
 import datetime
 import asyncio
 from contextlib import suppress
-from motor.metaprogramming import asynchronize
-from pomice.objects import Playlist
-from pomice.utils import Ping
 import settings
 from nextcord.ext import commands
 import nextcord
@@ -31,7 +29,7 @@ class MusicButton(nextcord.ui.View):
     @nextcord.ui.button(
         label =" ⏭ ",
         style=nextcord.ButtonStyle.secondary,
-        custom_id="skip_song",\
+        custom_id="skip_song",
         row=0)
     async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
@@ -78,7 +76,7 @@ class MusicButton(nextcord.ui.View):
     @nextcord.ui.button(
         label=" 🔇 เปิด/ปิดเสียง ",
         style=nextcord.ButtonStyle.primary ,
-        custom_id="mute_volume",
+        custom_id="mute_unmute_volume",
         row=1)
     async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
@@ -131,24 +129,6 @@ class Music(commands.Cog):
             region=settings.lavalinkregion
         )
         print(f"Node is ready!")
-
-    async def required(self, ctx: commands.Context):
-        """Method which returns required votes based on amount of members in a channel."""
-        player: pomice.player = ctx.voice_client
-        channel = self.bot.get_channel(int(player.channel.id))
-        required = math.ceil((len(channel.members) - 1) / 2.5)
-
-        if ctx.command.name == 'stop':
-            if len(channel.members) == 3:
-                required = 2
-
-        return required
-
-    async def is_privileged(self, ctx: commands.Context):
-        """Check whether the user is an Admin or DJ."""
-        player: pomice.player = ctx.voice_client
-
-        return player.dj == ctx.author or ctx.author.guild_permissions.kick_members
 
     @commands.Cog.listener()
     async def on_pomice_track_end(self, player: pomice.player, track , _):
@@ -218,9 +198,25 @@ class Music(commands.Cog):
                 
                 elif not player.is_paused and player.is_connected:
                     await player.set_pause(True)
-        # message = await interaction.channel.send(embed=embed , delete_after=3)
-        # print(button.custom_id)
 
+            elif button.custom_id == "increase_volume":
+                if player.volume < 100:
+                    await player.set_volume(player.volume + 10)
+            
+            elif button.custom_id == "decrease_volume":
+                if player.volume > 0:
+                    await player.set_volume(player.volume - 10)
+            
+            elif button.custom_id == "mute_unmute_volume":
+                if player.volume == 0:
+                    await player.set_volume(80)
+                
+                else:
+                    await player.set_volume(0)
+        
+        else:
+            pass
+    
     async def song_embed(self, track : pomice.Track):
         pass
     @commands.command(aliases=['pla', 'p'])
@@ -364,155 +360,6 @@ class Music(commands.Cog):
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                                                              
-    @commands.command(aliases=['pau', 'pa'])
-    async def pause(self, ctx: commands.Context):
-        """Pause the currently playing song."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if player.is_paused or not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has paused the player.', delete_after=10)
-            player.pause_votes.clear()
-
-            return await player.set_pause(True)
-
-        required = self.required(ctx)
-        player.pause_votes.add(ctx.author)
-
-        if len(player.pause_votes) >= required:
-            await ctx.send('Vote to pause passed. Pausing player.', delete_after=10)
-            player.pause_votes.clear()
-            await player.set_pause(True)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to pause the player. Votes: {len(player.pause_votes)}/{required}', delete_after=15)
-
-    @commands.command(aliases=['res', 'r'])
-    async def resume(self, ctx: commands.Context):
-        """Resume a currently paused player."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_paused or not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has resumed the player.', delete_after=10)
-            player.resume_votes.clear()
-
-            return await player.set_pause(False)
-
-        required = self.required(ctx)
-        player.resume_votes.add(ctx.author)
-
-        if len(player.resume_votes) >= required:
-            await ctx.send('Vote to resume passed. Resuming player.', delete_after=10)
-            player.resume_votes.clear()
-            await player.set_pause(False)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to resume the player. Votes: {len(player.resume_votes)}/{required}', delete_after=15)
-
-    @commands.command(aliases=['n', 'nex', 'next', 'sk'])
-    async def skip(self, ctx: commands.Context):
-        """Skip the currently playing song."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has skipped the song.', delete_after=10)
-            player.skip_votes.clear()
-
-            return await player.stop()
-
-        if ctx.author == player.current.requester:
-            await ctx.send('The song requester has skipped the song.', delete_after=10)
-            player.skip_votes.clear()
-
-            return await player.stop()
-
-        required = self.required(ctx)
-        player.skip_votes.add(ctx.author)
-
-        if len(player.skip_votes) >= required:
-            await ctx.send('Vote to skip passed. Skipping song.', delete_after=10)
-            player.skip_votes.clear()
-            await player.stop()
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to skip the song. Votes: {len(player.skip_votes)}/{required} ', delete_after=15)
-
-    @commands.command()
-    async def stop(self, ctx: commands.Context):
-        """Stop the player and clear all internal states."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_connected:
-            return
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has stopped the player.', delete_after=10)
-            return await player.teardown()
-
-        required = self.required(ctx)
-        player.stop_votes.add(ctx.author)
-
-        if len(player.stop_votes) >= required:
-            await ctx.send('Vote to stop passed. Stopping the player.', delete_after=10)
-            await player.teardown()
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to stop the player. Votes: {len(player.stop_votes)}/{required}', delete_after=15)
-
-    @commands.command(aliases=['mix', 'shuf'])
-    async def shuffle(self, ctx: commands.Context):
-        """Shuffle the players queue."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_connected:
-            return
-
-        if player.queue.qsize() < 3:
-            return await ctx.send('The queue is empty. Add some songs to shuffle the queue.', delete_after=15)
-
-        if self.is_privileged(ctx):
-            await ctx.send('An admin or DJ has shuffled the queue.', delete_after=10)
-            player.shuffle_votes.clear()
-            return random.shuffle(player.queue._queue)
-
-        required = self.required(ctx)
-        player.shuffle_votes.add(ctx.author)
-
-        if len(player.shuffle_votes) >= required:
-            await ctx.send('Vote to shuffle passed. Shuffling the queue.', delete_after=10)
-            player.shuffle_votes.clear()
-            random.shuffle(player.queue._queue)
-        else:
-            await ctx.send(f'{ctx.author.mention} has voted to shuffle the queue. Votes: {len(player.shuffle_votes)}/{required}', delete_after=15)
-
-    @commands.command(aliases=['v', 'vol'])
-    async def volume(self, ctx: commands.Context, *, vol: int):
-        """Change the players volume, between 1 and 100."""
-        if not (player := ctx.voice_client):
-            return await ctx.send("You must have the bot in a channel in order to use this command", delete_after=7)
-
-        if not player.is_connected:
-            return
-
-        if not self.is_privileged(ctx):
-            return await ctx.send('Only the DJ or admins may change the volume.')
-
-        if not 0 < vol < 101:
-            return await ctx.send('Please enter a value between 1 and 100.')
-
-        await player.set_volume(vol)
-        await ctx.send(f'Set the volume to **{vol}**%', delete_after=7)
-
-    
     @commands.command()
     async def musicsetup(self,ctx):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})

@@ -319,3 +319,6 @@
 2022-01-16 20:01:11: [REACT#1120 | 394447088970104833] in [905055870201782282 | -=𝙎𝙢𝙞𝙡𝙚𝙬𝙞𝙣=-]{Error:NoneType: None,userinput: !r youtube kuy,command: youtube}
 2022-01-23 11:50:33: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r tictactoe start <@!485027400120532993>,command: tictactoe start}
 2022-01-23 11:50:39: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r tictactoe start <@!485027400120532993><@!394447088970104833>,command: tictactoe start}
+2022-01-23 14:08:36: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: None}
+2022-01-23 14:08:51: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setupmusic,command: None}
+2022-01-23 14:08:56: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: None}
