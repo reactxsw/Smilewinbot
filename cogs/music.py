@@ -153,6 +153,7 @@ class Music(commands.Cog):
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {player.guild.name}")
                 await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
+                
             else:
                 list_song = [] 
                 num = 1
@@ -203,20 +204,35 @@ class Music(commands.Cog):
                     if player.is_paused and player.is_connected:
                         await player.set_pause(False)
                         embed = nextcord.Embed(
-                            title = "เพลงเล่นต่อ",
+                            title = "เล่นเพลงต่อ",
                             colour = 0xFED000
                         )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                     
                     elif not player.is_paused and player.is_connected:
                         await player.set_pause(True)
+                        embed = nextcord.Embed(
+                            title = "หยุดเล่นพลง",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
 
                 elif button.custom_id == "increase_volume":
                     if player.volume < 100:
                         await player.set_volume(player.volume + 10)
+                        embed = nextcord.Embed(
+                            title = f"ตั้งระดับเสียง : {player.volume + 10}",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                 
                 elif button.custom_id == "decrease_volume":
                     if player.volume > 0:
                         await player.set_volume(player.volume - 10)
+                        embed = nextcord.Embed(
+                            title = f"ตั้งระดับเสียง : {player.volume - 10}",
+                            colour = 0xFED000
+                        )
                 
                 elif button.custom_id == "mute_unmute_volume":
                     if player.volume == 0:
@@ -224,6 +240,20 @@ class Music(commands.Cog):
                     
                     else:
                         await player.set_volume(0)
+                
+                elif button.custom_id == "skip_song":
+                    if player.is_connected and player.is_playing:
+                        await player.stop()
+                
+                elif button.custom_id == "repeat_song":
+                    if player.is_connected and player.is_playing:
+                        pass
+
+                elif button.custom_id == "loop_playlist":
+                    if player.is_connected and player.is_playing:
+                        pass
+
+                
             else:
                 embed= nextcord.embeds(
                     title = f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",

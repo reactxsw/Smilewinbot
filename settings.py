@@ -210,15 +210,15 @@ else:
         )
 
 client = motor.motor_asyncio.AsyncIOMotorClient(mongodb)
-db = client['Smilewin']
-collection = db["Data"]
-collectionlevel = db["Level"]
-collectionmoney = db["Money"]
-collectionlanguage = db["Language"]
-collectionrole = db["Role"]
-collectionstatus = db["Status"]
-collectionmusic = db["Music"]
-collectiontest = db["test"]
-collectiontictactoe = db["TicTacToe"]
-collectiontictactoe_user = db["TicTacToe_user"]
-collectionyoutube = db["Youtube"]
+db = client.Smilewin
+collection = db.Data
+collectionlevel = db.Level
+collectionmoney = db.Money
+collectionlanguage = db.Language
+collectionrole = db.Role
+collectionstatus = db.Status
+collectionmusic = db.Music
+collectiontest = db.test
+collectiontictactoe = db.TicTacToe
+collectiontictactoe_user = db.TicTacToe_user
+collectionyoutube = db.Youtube
