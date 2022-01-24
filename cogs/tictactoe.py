@@ -23,7 +23,8 @@ class TicTacToe(commands.Cog):
         # Display information about this game
         if serverlanguage == "Thai":
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
-            embed.add_field(name="Start", value=f"เริ่มเกม | `{settings.COMMAND_PREFIX} tictactoe start` [@ผู้เล่นคนที่ 1] [@ผู้เล่นคนที่2]", inline=False)
+            embed.add_field(name="Start", value=f"เริ่มเกม | `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่นคนที่2]`", inline=False)
+            embed.add_field(name="Start", value=f"หยุดเกม | `{settings.COMMAND_PREFIX} tictactoe stop`", inline=False)
             embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -34,7 +35,8 @@ class TicTacToe(commands.Cog):
 """, inline=False)
         elif serverlanguage == "English":
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
-            embed.add_field(name="Start", value=f"Start the game | `{settings.COMMAND_PREFIX} fortictactoe start [@player1] [@player2]`", inline=False)
+            embed.add_field(name="Start", value=f"Start the game | `{settings.COMMAND_PREFIX} tictactoe start [@player2]`", inline=False)
+            embed.add_field(name="Start", value=f"Stop the game | `{settings.COMMAND_PREFIX} tictactoe stop [@player2]`", inline=False)
             embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -47,28 +49,39 @@ class TicTacToe(commands.Cog):
 
     #Start the game
     @tictactoe.command(aliases=["s","play"])
-    async def start(self, ctx, player1:nextcord.Member, player2:nextcord.Member):
+    async def start(self, ctx, player2:nextcord.Member):
         serverlanguage = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if serverlanguage is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
             await message.add_reaction('👍')
+        else:
+            serverlanguage = serverlanguage["Language"]
+        
+        #You cannnot play with yourself
+        if ctx.author.id == player2.id or player2.id == self.bot.user.id:
+            if serverlanguage == "Thai":
+                await ctx.send("คุณไม่สามารถเล่นกับตัวเองได้")
+            elif serverlanguage == "English":
+                await ctx.send("You cannot play with yourself")
+            return
 
         # Check if the game is already running
         server_data = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id})
         if server_data is not None:
-            await ctx.send("The game is already starting.")
+            if serverlanguage == "Thai":
+                await ctx.send("เกมเริ่มอยู่แล้ว")
+            elif serverlanguage == "English":
+                await ctx.send("The game is already starting.")
             return
         
         # Prepare data for the game
-        p1 = [str(player1),player1.id]
+        p1 = [str(ctx.author),ctx.author.id]
         p2 = [str(player2),player2.id]
-        board = [[0,0,0],
-                [0,0,0],
-                [0,0,0]]
+        board = [0,0,0,0,0,0,0,0,0]
         turn = random.randint(1,2)
 
         embed = await draw_board(board,turn,p1,p2)
-        message = await ctx.send(embed=embed)
+        message = await ctx.send(embed=embed, view= MusicButton(self.bot))
         # Insert data into database
         data = {"guild_id":ctx.guild.id,
                 "p1":p1,
@@ -80,16 +93,6 @@ class TicTacToe(commands.Cog):
         
         await settings.collectiontictactoe.insert_one(data)
         
-        # Add reactions for recieving input
-        await message.add_reaction("1️⃣")
-        await message.add_reaction("2️⃣")
-        await message.add_reaction("3️⃣")
-        await message.add_reaction("4️⃣")
-        await message.add_reaction("5️⃣")
-        await message.add_reaction("6️⃣")
-        await message.add_reaction("7️⃣")
-        await message.add_reaction("8️⃣")
-        await message.add_reaction("9️⃣")
     
     @tictactoe.command(aliases=["end","cancel","leave","exit","quit","stopgame","endgame","cancelgame","leavegame","exitgame","quitgame"])
     async def stop(self,ctx):
@@ -119,8 +122,6 @@ class TicTacToe(commands.Cog):
             channel = await self.bot.fetch_channel(data["channel_id"])
             message = await channel.fetch_message(data["message_id"])
 
-            # Clear message reactions
-            await message.clear_reactions()
             # Delete message
             await settings.collectiontictactoe.delete_one({"guild_id":ctx.guild.id})
             
@@ -130,7 +131,28 @@ class TicTacToe(commands.Cog):
             elif serverlanguage == "English":
                 await ctx.send("The game has been stopped.")
     
+    @tictactoe.command(aliases=["level","xp","win","wins","loss","losses","draw","draws","winrate","winrates","win_rate"])
+    async def profile(self,ctx):
+        embed = nextcord.Embed(
+            title=f"{ctx.author}",
+            color = 0xFED000
+        )
+        user_data = await settings.collectiontictactoe_user.find_one({"user_id":ctx.author.id})
+        if user_data is None:
+            embed.add_field(name="Please play at least one game before use this command.", value=f"{settings.COMMAND_PREFIX} tictactoe start [@player2]", inline=False)
+        else:
+            embed.add_field(name="Wins", value= f"{user_data['wins']}", inline=True)
+            embed.add_field(name="Losses", value= f"{user_data['losses']}", inline=True)
+            embed.add_field(name="Draws", value= f"{user_data['draws']}", inline=True)
+            embed.add_field(name="Total Games", value= f"{user_data['games']}", inline=False)
+            embed.add_field(name="Win Rate", value= f"{user_data['win_rate']}%", inline=False)
+            if ctx.author.avatar.url is not None:
+                embed.set_thumbnail(url=ctx.author.avatar.url)
+        await ctx.send(embed=embed)
+        
 
+
+number_emoji = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
     
 async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
     # Create embed
@@ -142,16 +164,37 @@ async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
 
     # Create a board text for the value of the embed
     display = ""
-    for i in board:
-        for j in i:
-            if j == 0:
-                display += "⬜ | "
-            elif j == 1:
-                display += "❎ | "
-            elif j == 2:
-                display += "⭕ | "
-        display += "\n"
-        display += "━━━━━━━\n"
+    for index,item in enumerate(board):
+        if item == 0:
+            display += f"{number_emoji[index]} | "
+        
+        elif item == 1:
+            display += ":x: | "
+
+        elif item == 2:
+            display += ":o: | "
+        
+        if (index+1) %3 != 0:
+            display += "|  "
+            # display += ":white_large_square:  "
+        
+        if (index+1) % 3 == 0:
+            display +=  "\n\n"
+        
+        if ((index+1)%3 == 0) and ((index+1) %9 != 0):
+            display += "━━━━━━━━━\n\n"
+    
+    # for i in board:
+    #     for j in i:
+    #         if j == 0:
+
+    #             display += "⬜ | "
+    #         elif j == 1:
+    #             display += "❎ | "
+    #         elif j == 2:
+    #             display += "⭕ | "
+    #     display += "\n"
+    #     display += "━━━━━━━\n"
 
     #Display Turn
     if turn == 1:
@@ -165,91 +208,165 @@ async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
     elif is_draw:
         embed.add_field(name="Draw!", value=display, inline=False)
     else:
-        embed.add_field(name=f"{Turn} Turn!", value=display, inline=False)
+        if turn == 1:
+            embed.add_field(name=f"{Turn} Turn! | :x:", value=display, inline=False)
+        else:
+            embed.add_field(name=f"{Turn} Turn! | :o:", value=display, inline=False)
     
     # Return embed object
     return embed
-        
-async def recieve_input(bot,payload):
+
+class MusicButton(nextcord.ui.View):
+    def __init__(self,bot):
+        self.bot = bot
+        super().__init__(timeout=None)
+
+    @nextcord.ui.button(
+        label=' 1️⃣ ', 
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="1",
+        row=0)
+    async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+    
+    
+    @nextcord.ui.button(
+        label =" 2️⃣ ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="2",
+        row=0)
+    async def skip_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label =" 3️⃣ ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id="3",
+        row=0)
+    async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 4️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="4",
+        row=1)
+    async def repeat_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 5️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="5",
+        row=1)
+    async def loop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 6️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="6",
+        row=1)
+    async def vol_up_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 7️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="7",
+        row=2)
+    async def vol_down_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 8️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="8",
+        row=2)
+    async def vol_mute_btn(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot ,button, interaction)
+
+    @nextcord.ui.button(
+        label=" 9️⃣ ",
+        style=nextcord.ButtonStyle.secondary ,
+        custom_id="9",
+        row=2
+    )
+    async def nine_button(self, button : nextcord.ui.Button, interaction: nextcord.Interaction):
+        await recieve_input(self.bot, button, interaction)
+
+async def recieve_input(bot, button, interaction):
     # if It is a bot return
-    if payload.user_id == bot.user.id:
+    if bot.user.id == interaction.user.id:
         return
     # Get data from database
-    data = await settings.collectiontictactoe.find_one({"guild_id":payload.guild_id})
-    # If the game is not running reutrn
+    data = await settings.collectiontictactoe.find_one({"guild_id":interaction.guild_id})
+    # If the game is not running return
     if data is None:
+        return data
+    
+    #Check interaction message id and game message id
+    if interaction.message.id != data["message_id"]:
         return
-    # Get the message object
-    channel = bot.get_channel(payload.channel_id)
-    message = await channel.fetch_message(payload.message_id)
-    # Check Is the message is the same as the one in the database if not return
-    if message.id != data["message_id"]:
-        return
+    
     # Get the player's id
-    if payload.user_id == data["p1"][1]:
+    if interaction.user.id == data["p1"][1]:
         player = 1
-    elif payload.user_id == data["p2"][1]:
+    elif interaction.user.id == data["p2"][1]:
         player = 2
+    
     else:
-        # Clear the reactions
-        await message.remove_reaction(payload.emoji.name,payload.member)
         return
 
     # Check turn is the same as the player's id
     if player != data["turn"]:
-        # Clear the reactions
-        await message.remove_reaction(payload.emoji.name,payload.member)
         return
 
     # Get the position of the player
-    if payload.emoji.name == "1️⃣":
+    if button.custom_id == "1":
         position = 1
-    elif payload.emoji.name == "2️⃣":
+    elif button.custom_id == "2":
         position = 2
-    elif payload.emoji.name == "3️⃣":
+    elif button.custom_id == "3":
         position = 3
-    elif payload.emoji.name == "4️⃣":
+    elif button.custom_id == "4":
         position = 4
-    elif payload.emoji.name == "5️⃣":
+    elif button.custom_id == "5":
         position = 5
-    elif payload.emoji.name == "6️⃣":
+    elif button.custom_id == "6":
         position = 6
-    elif payload.emoji.name == "7️⃣":
+    elif button.custom_id == "7":
         position = 7
-    elif payload.emoji.name == "8️⃣":
+    elif button.custom_id == "8":
         position = 8
-    elif payload.emoji.name == "9️⃣":
+    elif button.custom_id == "9":
         position = 9
     else:
-        # Clear the reactions
-        await message.remove_reaction(payload.emoji.name,payload.member)
         return
-
-    #                                                     row,col                row,col
-    # Turn position to array | for example position = 4 => [1,0], position = 7 => [2,0]
-    if position <= 3:
-        position = [0,position-1]
-    elif position >= 4 and position <= 6:
-        position = [1,position-4]
-    elif position >= 7 and position <= 9:
-        position = [2,position-7]
 
     # Check if the position is already taken
-    if data["board"][position[0]][position[1]] != 0:
-        # Clear the reactions
-        await message.remove_reaction(payload.emoji.name,payload.member)
+    if data["board"][position-1] != 0:
         return
+
     # Change the board
-    data["board"][position[0]][position[1]] = player
+    data["board"][position-1] = player
+
     # Check if the player won
     win = await check_win(data["board"],player)
     draw = await check_draw(data["board"])
     if win or draw:
         if win:
-            await message.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],True,False))
+            await interaction.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],True,False))
+
+            # Update user profile of this game
+            await update_user_profile(data["turn"],data["p1"],data["p2"],True,False)
+
         elif draw:
-            await message.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],False,True))
-        await message.clear_reactions()
+            await interaction.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],False,True))
+
+            # Update user profile of this game
+            await update_user_profile(data["turn"],data["p1"],data["p2"],False,True)
+
         #Clear the database
         await settings.collectiontictactoe.delete_one({"guild_id":data["guild_id"]})
         return
@@ -260,39 +377,81 @@ async def recieve_input(bot,payload):
         data["turn"] = 1
     
     # Edit the message
-    await message.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"]))
+    await interaction.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"]))
     # Update the database
-    await settings.collectiontictactoe.update_one({"guild_id":payload.guild_id}, {"$set":data})
-    # Clear the reactions
-    await message.remove_reaction(payload.emoji.name,payload.member)
+    await settings.collectiontictactoe.update_one({"guild_id":interaction.guild_id}, {"$set":data})
+
+async def update_user_profile(turn,p1,p2,win,draw):
+
+    # Get the user profiles
+    p1_profile = await settings.collectiontictactoe_user.find_one({"user_id":p1[1]})
+    p2_profile = await settings.collectiontictactoe_user.find_one({"user_id":p2[1]})
+    
+    # if the user is not in the database
+    if p1_profile is None:
+        p1_profile = {"user_id":p1[1],"username":p1[0],"wins":0,"losses":0,"draws":0,"games":0,"win_rate":0}
+        await settings.collectiontictactoe_user.insert_one(p1_profile)
+    if p2_profile is None:
+        p2_profile = {"user_id":p2[1],"username":p1[0],"wins":0,"losses":0,"draws":0,"games":0,"win_rate":0}
+        await settings.collectiontictactoe_user.insert_one(p2_profile)
+    
+    # Update username in case it changed
+    p1_profile['username'] = p1[0]
+    p2_profile['username'] = p2[0]
+    
+    # Update the user profiles
+    if win:
+        if turn == 1:
+            p1_profile["wins"] += 1
+            p2_profile["losses"] += 1
+        else:
+            p1_profile["losses"] += 1
+            p2_profile["wins"] += 1
+    elif draw:
+        p1_profile["draws"] += 1
+        p2_profile["draws"] += 1
+    p1_profile["games"] += 1
+    p2_profile["games"] += 1
+
+    # Calculate the win rate
+    p1_profile["win_rate"] = round((p1_profile["wins"]/p1_profile["games"])*100,2)
+    p2_profile["win_rate"] = round((p2_profile["wins"]/p2_profile["games"])*100,2)
+
+    
+    # Update the database
+    await settings.collectiontictactoe_user.update_one({"user_id":p1[1]}, {"$set":p1_profile})
+    await settings.collectiontictactoe_user.update_one({"user_id":p2[1]}, {"$set":p2_profile})
 
 async def check_draw(board):
     for i in board:
-        for j in i:
-            if j == 0:
-                return False
+        if i == 0:
+            return False
     return True
     
 async def check_win(board,turn):
-    # Check horizontal
+    
+    # Check horizontal -
     for i in range(3):
-        if board[i][0] == turn and board[i][1] == turn and board[i][2] == turn:
+        #0 3 6    1 4 7    2 5 8
+        if board[i*3] == turn and board[i*3+1] == turn and board[i*3+2] == turn:
             return True
-
-    # Check vertical
+        
+    # Check vertical |
     for i in range(3):
-        if board[0][i] == turn and board[1][i] == turn and board[2][i] == turn:
+        #0 1 2    3 4 5    6 7 8
+        if board[i] == turn and board[i+3] == turn and board[i+6] == turn:
             return True
     
     # Check diagonal \
-    if board[0][0] == turn and board[1][1] == turn and board[2][2] == turn:
+    if board[0] == turn and board[4] == turn and board[8] == turn:
         return True
-    
-    # Check diagonal (reversed) /
-    if board[0][2] == turn and board[1][1] == turn and board[2][0] == turn:
+
+    # Check diagonal /
+    if board[2] == turn and board[4] == turn and board[6] == turn:
         return True
     
     return False
 
 def setup(bot):
     bot.add_cog(TicTacToe(bot))
+    bot.add_view(MusicButton(bot))
