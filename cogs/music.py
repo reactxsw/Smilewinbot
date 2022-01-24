@@ -1,3 +1,4 @@
+from discord import guild
 import pomice
 import datetime
 import asyncio
@@ -153,12 +154,12 @@ class Music(commands.Cog):
                 embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                 embed.set_footer(text=f"server : {player.guild.name}")
                 await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
-                
+
             else:
                 list_song = [] 
                 num = 1
                 for song in server["Queue"]:
-                    list_song.append(f"> [{num}] " + song["song_title"] + "\n")
+                    list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
                     num = num +1
                 list_song = "".join(list_song)
                 tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
@@ -225,6 +226,13 @@ class Music(commands.Cog):
                             colour = 0xFED000
                         )
                         await interaction.channel.send(embed =embed , delete_after=2)
+                    
+                    else:
+                        embed = nextcord.Embed(
+                            title = f"ระดับเสียงสูงสุดเเล้ว",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                 
                 elif button.custom_id == "decrease_volume":
                     if player.volume > 0:
@@ -233,13 +241,31 @@ class Music(commands.Cog):
                             title = f"ตั้งระดับเสียง : {player.volume - 10}",
                             colour = 0xFED000
                         )
+                        await interaction.channel.send(embed =embed , delete_after=2)
+                    
+                    else:
+                        embed = nextcord.Embed(
+                            title = f"ระดับเสียงตํ่าสุดเเล้ว",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                 
                 elif button.custom_id == "mute_unmute_volume":
                     if player.volume == 0:
                         await player.set_volume(80)
+                        embed = nextcord.Embed(
+                            title = f"เปิดเสียง",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                     
                     else:
                         await player.set_volume(0)
+                        embed = nextcord.Embed(
+                            title = f"ปิดเสียง",
+                            colour = 0xFED000
+                        )
+                        await interaction.channel.send(embed =embed , delete_after=2)
                 
                 elif button.custom_id == "skip_song":
                     if player.is_connected and player.is_playing:
@@ -247,12 +273,22 @@ class Music(commands.Cog):
                 
                 elif button.custom_id == "repeat_song":
                     if player.is_connected and player.is_playing:
-                        pass
+                        if not data["Mode"] == "Repeat":
+                            await settings.collectionmusic.update_one({"guild_id":interaction.guild.id}, {'$set': {'Mode': "Repeat"}})
+                        
+                        elif data["Mode"] == "Repeat":
+                            await settings.collectionmusic.update_one({"guild_id":interaction.guild.id}, {'$set': {'Mode': "Default"}})
 
                 elif button.custom_id == "loop_playlist":
                     if player.is_connected and player.is_playing:
-                        pass
+                        if not data["Mode"] == "Loop":
+                            await settings.collectionmusic.update_one({"guild_id":interaction.guild.id}, {'$set': {'Mode': "Loop"}})
+                        
+                        elif data["Mode"] == "Loop":
+                            await settings.collectionmusic.update_one({"guild_id":interaction.guild.id}, {'$set': {'Mode': "Default"}})
 
+                else:
+                    pass
                 
             else:
                 embed= nextcord.embeds(
@@ -372,7 +408,7 @@ class Music(commands.Cog):
                                 await player.play(track)
 
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                await message.edit(content=f"__รายการเพลง:__🎵\n [1]. {track} ",embed=embed)
+                                await message.edit(content=f"__รายการเพลง:__🎵\n > [1]. {track}\n> ╰━{ctx.author.mention}",embed=embed)
                                 await settings.collectionmusic.insert_one(data)
 
                             else:
@@ -395,9 +431,9 @@ class Music(commands.Cog):
                                                     "requester":ctx.author.id}}})
 
                                     for song in Queue["Queue"]:
-                                        list_song.append(f"> [{num}] " + song["song_title"] + "\n")
+                                        list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + ctx.guild.get_member(song["requester"]).mention+"\n")
                                         num = num +1
-                                    list_song.append(f"> [{num}] " + s_title + "\n")
+                                    list_song.append(f"> [{num}] {s_title}\n> ╰━{ctx.author.mention}\n")
                                     list_song = "".join(list_song)
 
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
