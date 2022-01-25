@@ -245,7 +245,7 @@ class Music(commands.Cog):
                         await interaction.channel.send(embed =embed , delete_after=2)
 
                 elif button.custom_id == "increase_volume":
-                    if player.volume < 100:
+                    if player.volume < 90:
                         await player.set_volume(player.volume + 10)
                         embed = nextcord.Embed(
                             title = f"ตั้งระดับเสียง : {player.volume + 10}",
@@ -261,7 +261,7 @@ class Music(commands.Cog):
                         await interaction.channel.send(embed =embed , delete_after=2)
                 
                 elif button.custom_id == "decrease_volume":
-                    if player.volume > 0:
+                    if player.volume > 10:
                         await player.set_volume(player.volume - 10)
                         embed = nextcord.Embed(
                             title = f"ตั้งระดับเสียง : {player.volume - 10}",
@@ -456,7 +456,8 @@ class Music(commands.Cog):
 
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
-                                                             
+                    else:
+                        return                                         
     @commands.command()
     async def musicsetup(self,ctx):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -492,7 +493,8 @@ class Music(commands.Cog):
                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
                 await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
             else:
-                if data["Music_channel_id"] not in ctx.guild.text_channels:
+                channel = self.bot.get_channel(data["Music_channel_id"])
+                if channel is None:
                     channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง:arrows_counterclockwise: เริ่มเพลงที่กำลังเล่นใหม่:repeat: เปลี่ยนโหมดการวนเล่นเพลง:twisted_rightwards_arrows: สุ่มเพลงในคิว:sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
