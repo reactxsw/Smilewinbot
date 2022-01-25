@@ -24,7 +24,6 @@ class on_message_event(commands.Cog):
                     else:
                         song = message.content
                     
-                    await asyncio.sleep(5)
                     await message.delete()
                     ctx  = await self.bot.get_context(message)
                     await ctx.invoke(self.bot.get_command("play"), search=song)

@@ -1,4 +1,4 @@
-2022-01-24 09:17:58.960  INFO 26384 --- [main] lavalink.server.Launcher                 : 
+2022-01-25 10:38:21.682  INFO 46768 --- [main] lavalink.server.Launcher                 : 
 
 [32m       .  [31m _                  _ _       _    [32m__ _ _
 [32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
@@ -16,167 +16,185 @@
 	JVM:            16.0.2
 	Lavaplayer      1.3.96-original
 
-2022-01-24 09:17:59.049  INFO 26384 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 26384 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
-2022-01-24 09:17:59.050  INFO 26384 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
-2022-01-24 09:17:59.229  WARN 26384 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
-2022-01-24 09:18:00.361  WARN 26384 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2022-01-24 09:18:00.394  INFO 26384 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
-2022-01-24 09:18:00.394  INFO 26384 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1289 ms
-2022-01-24 09:18:00.747  WARN 26384 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
-2022-01-24 09:18:01.075  INFO 26384 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
-2022-01-24 09:18:01.287  INFO 26384 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
-2022-01-24 09:18:01.288  WARN 26384 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
-2022-01-24 09:18:01.508  INFO 26384 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2022-01-24 09:18:01.833  INFO 26384 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
-2022-01-24 09:18:01.844  INFO 26384 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
-2022-01-24 09:18:01.911  INFO 26384 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
-2022-01-24 09:18:01.914  INFO 26384 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.372 seconds (JVM running for 3.853)
-2022-01-24 09:18:01.916  INFO 26384 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
-2022-01-24 09:18:32.907  INFO 26384 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2022-01-24 09:18:32.907  INFO 26384 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2022-01-24 09:18:32.913  INFO 26384 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
-2022-01-24 09:18:32.930  INFO 26384 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63264
-2022-01-24 09:18:32.984  INFO 26384 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 09:18:38.084  INFO 26384 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:18:38.173  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "4e13aa82658e3b52568c3fa3c7b17c6c", "event": {"token": "a8847a894d0a6f8c", "guild_id": "924999182039801876", "endpoint": "singapore8323.discord.media:443"}}
-2022-01-24 09:18:38.986  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:18:39.036  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:18:48.175  INFO 26384 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:18:48.262  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:18:48.297  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:18:48.923  INFO 26384 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:18:49.006  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:19:02.585  INFO 26384 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:19:02.676  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:19:02.712  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:19:05.081  INFO 26384 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:19:05.168  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:19:17.101  INFO 26384 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:19:17.191  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:19:17.226  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:19:17.810  INFO 26384 --- [XNIO-1 task-14] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:19:17.951  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:19:19.865  INFO 26384 --- [XNIO-1 task-16] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 09:19:20.216  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:20:28.334  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63264 -- CloseStatus[code=1006, reason=]
-2022-01-24 09:20:28.334  INFO 26384 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2022-01-24 09:20:38.044  INFO 26384 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63650
-2022-01-24 09:20:38.048  INFO 26384 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 09:20:55.763  INFO 26384 --- [XNIO-1 task-18] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:20:55.904  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:20:55.942  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:20:56.327  INFO 26384 --- [XNIO-1 task-20] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:20:56.409  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:20:56.445  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAfwIAF1RoaXMgVmlkZW8gSXMgMyBTZWNvbmRzAA5NckJlYXN0IFNob3J0cwAAAAAAAAfQAAtzLU1zWm8wMmRvcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXMtTXNabzAyZG9zAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 09:20:56.589  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "af1669100c6e54d4c9e51f56c6c851e9", "event": {"token": "a8847a894d0a6f8c", "guild_id": "924999182039801876", "endpoint": "singapore8323.discord.media:443"}}
-2022-01-24 09:21:17.209  INFO 26384 --- [XNIO-1 task-22] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:21:17.297  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:21:17.708  INFO 26384 --- [XNIO-1 task-24] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=s-MsZo02dos"
-2022-01-24 09:21:17.798  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track This Video Is 3 Seconds
-2022-01-24 09:21:45.300  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63650 -- CloseStatus[code=1006, reason=]
-2022-01-24 09:21:45.301  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2022-01-24 10:26:10.204  INFO 26384 --- [XNIO-1 task-26] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:55544
-2022-01-24 10:26:10.229  INFO 26384 --- [XNIO-1 task-26] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 10:27:01.709  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "0e7873bf095eb760df357744151522d3", "event": {"token": "fc687a5556e7de82", "guild_id": "924999182039801876", "endpoint": "singapore2310.discord.media:443"}}
-2022-01-24 10:27:01.858  INFO 26384 --- [XNIO-1 task-27] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:27:02.400  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:27:02.449  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 10:27:17.860  INFO 26384 --- [XNIO-1 task-29] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:27:18.301  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:28:33.797  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:55544 -- CloseStatus[code=1006, reason=]
-2022-01-24 10:28:33.797  INFO 26384 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 10:31:22.546  INFO 26384 --- [XNIO-1 task-31] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50511
-2022-01-24 10:31:22.549  INFO 26384 --- [XNIO-1 task-31] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 10:31:30.253  INFO 26384 --- [XNIO-1 task-32] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:31:30.876  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:31:30.917  INFO 26384 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 10:31:31.077  INFO 26384 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "a7cf06c73c5ac64f79406e960372d150", "event": {"token": "1c182e8beef6d175", "guild_id": "924999182039801876", "endpoint": "singapore2310.discord.media:443"}}
-2022-01-24 10:31:36.747  INFO 26384 --- [XNIO-1 task-34] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:31:37.385  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:33:10.044  INFO 26384 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50511 -- CloseStatus[code=1006, reason=]
-2022-01-24 10:33:10.045  INFO 26384 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 10:33:19.340  INFO 26384 --- [XNIO-1 task-36] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49207
-2022-01-24 10:33:19.343  INFO 26384 --- [XNIO-1 task-36] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 10:33:28.224  INFO 26384 --- [XNIO-1 task-37] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:33:28.257  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "6d72cf351a1394e038c3e0806d39fc31", "event": {"token": "1c182e8beef6d175", "guild_id": "924999182039801876", "endpoint": "singapore2310.discord.media:443"}}
-2022-01-24 10:33:28.747  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:33:28.784  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 10:33:33.343  INFO 26384 --- [XNIO-1 task-39] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 10:33:33.887  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 10:34:41.266  INFO 26384 --- [XNIO-1 task-41] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:??????????"
-2022-01-24 10:34:41.833  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ??????????
-2022-01-24 10:34:53.508  INFO 26384 --- [XNIO-1 task-43] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:?????????????????? hangman"
-2022-01-24 10:34:54.008  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ?????????????????? hangman
-2022-01-24 10:35:08.335  INFO 26384 --- [XNIO-1 task-45] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Chocolate ?? Hang man"
-2022-01-24 10:35:08.776  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Chocolate ?? Hang man
-2022-01-24 10:35:56.184  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
-2022-01-24 10:35:56.643  INFO 26384 --- [XNIO-1 task-47] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 10:35:57.015  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 10:36:02.142  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
-2022-01-24 10:36:02.617  INFO 26384 --- [XNIO-1 task-48] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 10:36:02.928  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
-2022-01-24 10:37:23.698  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
-2022-01-24 10:37:24.228  INFO 26384 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 10:37:24.562  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAuQIATOC4nuC4ouC4suC4ouC4suC4oeC4geC4teC5iOC4hOC4o+C4seC5ieC4h+C4geC5h+C4leC4suC4oeC5geC4leC5iCAtIEhhbmdtYW4AE3N1cGFuYXQgU2V2ZW5Eb3VibGUAAAAAAAP3oAALMGR4RWc5TTJ6bk0AAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj0wZHhFZzlNMnpuTQAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
-2022-01-24 10:41:44.972  INFO 26384 --- [XNIO-1 task-2] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 10:41:45.360  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkQIAJENob2NvbGF0ZSAtIEhBTkdNQU7jgJBPRkZJQ0lBTCBNVuOAkQATR01NIEdSQU1NWSBPRkZJQ0lBTAAAAAAAA9xIAAtLVWFYOTZPZHFBQQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUtVYVg5Nk9kcUFBAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 12:48:25.327  INFO 26384 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Shape of you"
-2022-01-24 12:48:26.198  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Shape of you
-2022-01-24 12:48:26.239  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlAIAMEVkIFNoZWVyYW4gLSBTaGFwZSBvZiBZb3UgKE9mZmljaWFsIE11c2ljIFZpZGVvKQAKRWQgU2hlZXJhbgAAAAAABAdAAAtKR3dXTkdKZHZ4OAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUpHd1dOR0pkdng4AAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
-2022-01-24 12:48:40.541  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49207 -- CloseStatus[code=1006, reason=]
-2022-01-24 12:48:40.541  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 12:48:51.782  INFO 26384 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62597
-2022-01-24 12:48:51.785  INFO 26384 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 12:49:04.718  INFO 26384 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:49:04.870  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "4b2e18c71409027c0f7f90ac6197eac8", "event": {"token": "0712b5d03d905e01", "guild_id": "924999182039801876", "endpoint": "singapore2471.discord.media:443"}}
-2022-01-24 12:49:05.273  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:49:05.311  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 12:49:14.877  INFO 26384 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:49:15.344  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:49:36.103  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62597 -- CloseStatus[code=1006, reason=]
-2022-01-24 12:49:36.104  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 12:52:22.261  INFO 26384 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65381
-2022-01-24 12:52:22.266  INFO 26384 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 12:52:30.105  INFO 26384 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:52:30.263  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "200b03fad1c41f8824800ad10725840c", "event": {"token": "81cbe49ffc95e2ed", "guild_id": "924999182039801876", "endpoint": "singapore2471.discord.media:443"}}
-2022-01-24 12:52:30.815  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:52:30.851  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 12:52:38.310  INFO 26384 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:52:38.852  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:53:30.398  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65381 -- CloseStatus[code=1006, reason=]
-2022-01-24 12:53:30.399  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 12:53:41.513  INFO 26384 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52777
-2022-01-24 12:53:41.516  INFO 26384 --- [XNIO-1 task-15] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 12:53:52.767  INFO 26384 --- [XNIO-1 task-16] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:53:53.290  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:53:53.328  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 12:53:53.615  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "b827e9e18d9edad2009a0ca09a5ad221", "event": {"token": "81cbe49ffc95e2ed", "guild_id": "924999182039801876", "endpoint": "singapore2471.discord.media:443"}}
-2022-01-24 12:54:01.546  INFO 26384 --- [XNIO-1 task-18] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:54:02.051  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:54:32.660  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "924999182039801876", "volume": 90}
-2022-01-24 12:54:32.670  INFO 26384 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library libmpg123-0: loading with filter com.sedmelluq.discord.lavaplayer.natives.ConnectorNativeLibLoader$$Lambda$633/0x00000008010d0000@30cc4dac
-2022-01-24 12:54:32.680  INFO 26384 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library libmpg123-0: successfully loaded.
-2022-01-24 12:54:32.681  INFO 26384 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: loading with filter null
-2022-01-24 12:54:32.705  INFO 26384 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: successfully loaded.
-2022-01-24 12:54:35.094  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "924999182039801876", "volume": 100}
-2022-01-24 12:55:12.672  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52777 -- CloseStatus[code=1006, reason=]
-2022-01-24 12:55:12.673  INFO 26384 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
-2022-01-24 12:55:22.413  INFO 26384 --- [XNIO-1 task-20] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59645
-2022-01-24 12:55:22.415  INFO 26384 --- [XNIO-1 task-20] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
-2022-01-24 12:57:51.437  INFO 26384 --- [XNIO-1 task-21] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:57:51.516  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "fbc07254d95de834c28973ab963f5e78", "event": {"token": "4eac09670b92681a", "guild_id": "924999182039801876", "endpoint": "singapore2471.discord.media:443"}}
-2022-01-24 12:57:51.964  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 12:57:52.004  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 12:57:58.756  INFO 26384 --- [XNIO-1 task-23] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
-2022-01-24 12:57:59.403  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
-2022-01-24 13:02:47.899  INFO 26384 --- [XNIO-1 task-25] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 13:02:48.297  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 13:03:50.306  INFO 26384 --- [XNIO-1 task-26] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:???????????????"
-2022-01-24 13:03:51.116  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ???????????????
-2022-01-24 13:03:58.663  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
-2022-01-24 13:03:59.151  INFO 26384 --- [XNIO-1 task-28] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
-2022-01-24 13:03:59.516  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAA9gIAc+C4ieC4seC4meC5gOC4iOC4reC4p+C4seC4p+C4m+C5iOC4suC5guC4hOC5guC4o+C5guC4p+C5gOC4geC5iSAtIOC5hOC4m+C4quC5iOC4h+C4geC4uSDguJrguILguKouIOC4lOC4ueC5iiBbMjU1OF0AKeC5hOC4m+C4quC5iOC4h+C4geC4uSDguJrguILguKou4LiU4Li54LmKAAAAAAAD3EgAC1lkemVmSnBYM0g4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9WWR6ZWZKcFgzSDgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
-2022-01-24 13:04:42.423  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
-2022-01-24 13:09:31.411  INFO 26384 --- [XNIO-1 task-29] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=j6hwb1IE0xk"
-2022-01-24 13:09:31.620  INFO 26384 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Mood ~ Chill Vibes ~ English Chill Playlist
-2022-01-24 13:09:31.658  INFO 26384 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIAK01vb2QgfiBDaGlsbCBWaWJlcyB+IEVuZ2xpc2ggQ2hpbGwgUGxheWxpc3QADkRlZXAgQ2hpbGwgTWl4AAAAAABAXJAAC2o2aHdiMUlFMHhrAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9ajZod2IxSUUweGsAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:38:21.767  INFO 46768 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 46768 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
+2022-01-25 10:38:21.767  INFO 46768 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2022-01-25 10:38:22.012  WARN 46768 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2022-01-25 10:38:22.996  WARN 46768 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2022-01-25 10:38:23.033  INFO 46768 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2022-01-25 10:38:23.035  INFO 46768 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1227 ms
+2022-01-25 10:38:23.472  WARN 46768 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2022-01-25 10:38:23.770  INFO 46768 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2022-01-25 10:38:23.977  INFO 46768 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
+2022-01-25 10:38:23.978  WARN 46768 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
+2022-01-25 10:38:24.192  INFO 46768 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2022-01-25 10:38:24.514  INFO 46768 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2022-01-25 10:38:24.526  INFO 46768 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2022-01-25 10:38:24.601  INFO 46768 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
+2022-01-25 10:38:24.605  INFO 46768 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.359 seconds (JVM running for 3.761)
+2022-01-25 10:38:24.607  INFO 46768 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2022-01-25 10:38:33.596  INFO 46768 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-25 10:38:33.597  INFO 46768 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-01-25 10:38:33.604  INFO 46768 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2022-01-25 10:38:33.621  INFO 46768 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54536
+2022-01-25 10:38:33.680  INFO 46768 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 10:38:47.619  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54536 -- CloseStatus[code=1006, reason=]
+2022-01-25 10:38:47.620  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-25 10:39:49.360  INFO 46768 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59216
+2022-01-25 10:39:49.363  INFO 46768 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 10:40:03.921  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "379ee95e20540a2cb1f261841a7de476", "event": {"token": "d9c36023bbd19c6d", "guild_id": "924999182039801876", "endpoint": "singapore54.discord.media:443"}}
+2022-01-25 10:40:03.991  INFO 46768 --- [XNIO-1 task-3] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:ACADEMY - SARAN"
+2022-01-25 10:40:04.911  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ACADEMY - SARAN
+2022-01-25 10:40:04.968  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:40:15.915  INFO 46768 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:??????????"
+2022-01-25 10:40:16.449  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ??????????
+2022-01-25 10:41:01.077  INFO 46768 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:???????????"
+2022-01-25 10:41:01.596  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ???????????
+2022-01-25 10:42:52.612  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:42:53.132  INFO 46768 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:42:53.465  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAoQIAN+C5gOC4peC5iOC4meC4guC4reC4h+C4quC4ueC4hyAtICBCaWcgQXNzIChBdWRpbyBNdXNpYykAEFVQU0lORyBDSEFORUwgVFYAAAAAAAPMqAALX1VaZkZXWkpEV2sAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1fVVpmRldaSkRXawAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:43:16.021  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:43:16.544  INFO 46768 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:43:16.894  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:43:18.314  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:43:18.795  INFO 46768 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:43:19.187  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:43:38.795  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59216 -- CloseStatus[code=1006, reason=]
+2022-01-25 10:43:38.795  INFO 46768 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-25 10:43:48.997  INFO 46768 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:59032
+2022-01-25 10:43:49.000  INFO 46768 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 10:43:51.894  INFO 46768 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
+2022-01-25 10:43:52.434  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
+2022-01-25 10:43:52.473  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:43:52.711  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "c4e30c2fdbca5b0e3cebb655fe3daebe", "event": {"token": "d9c36023bbd19c6d", "guild_id": "924999182039801876", "endpoint": "singapore54.discord.media:443"}}
+2022-01-25 10:43:57.930  INFO 46768 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:??????????"
+2022-01-25 10:43:58.399  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ??????????
+2022-01-25 10:44:01.399  INFO 46768 --- [XNIO-1 task-17] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:???????????"
+2022-01-25 10:44:01.807  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ???????????
+2022-01-25 10:44:04.105  INFO 46768 --- [XNIO-1 task-19] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:?????"
+2022-01-25 10:44:04.495  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ?????
+2022-01-25 10:44:27.556  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:28.015  INFO 46768 --- [XNIO-1 task-21] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:28.409  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAoQIAN+C5gOC4peC5iOC4meC4guC4reC4h+C4quC4ueC4hyAtICBCaWcgQXNzIChBdWRpbyBNdXNpYykAEFVQU0lORyBDSEFORUwgVFYAAAAAAAPMqAALX1VaZkZXWkpEV2sAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1fVVpmRldaSkRXawAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:44:35.714  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:36.151  INFO 46768 --- [XNIO-1 task-22] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:36.932  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:44:42.214  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:42.690  INFO 46768 --- [XNIO-1 task-23] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:43.012  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAxAIAWuC4m+C4teC5g+C4q+C4oeC5iOC4guC4reC4h+C4m+C4tOC4h+C4geC4uSB8IFBpbmd14oCZcyBOZXcgWWVhciBpbiBUaGFpIHwgVGhhaSBGYWlyeSBUYWxlcwAQVGhhaSBGYWlyeSBUYWxlcwAAAAAAC8uIAAtSRGFPMnBvOTBoRQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVJEYU8ycG85MGhFAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-25 10:44:44.357  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:44.824  INFO 46768 --- [XNIO-1 task-24] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:45.254  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:44:46.810  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:47.287  INFO 46768 --- [XNIO-1 task-25] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:54.229  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "924999182039801876", "pause": true}
+2022-01-25 10:44:54.885  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAxAIAWuC4m+C4teC5g+C4q+C4oeC5iOC4guC4reC4h+C4m+C4tOC4h+C4geC4uSB8IFBpbmd14oCZcyBOZXcgWWVhciBpbiBUaGFpIHwgVGhhaSBGYWlyeSBUYWxlcwAQVGhhaSBGYWlyeSBUYWxlcwAAAAAAC8uIAAtSRGFPMnBvOTBoRQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVJEYU8ycG85MGhFAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-25 10:44:58.658  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:44:59.145  INFO 46768 --- [XNIO-1 task-26] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:44:59.476  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:45:02.076  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:45:02.549  INFO 46768 --- [XNIO-1 task-27] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:45:02.939  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAxAIAWuC4m+C4teC5g+C4q+C4oeC5iOC4guC4reC4h+C4m+C4tOC4h+C4geC4uSB8IFBpbmd14oCZcyBOZXcgWWVhciBpbiBUaGFpIHwgVGhhaSBGYWlyeSBUYWxlcwAQVGhhaSBGYWlyeSBUYWxlcwAAAAAAC8uIAAtSRGFPMnBvOTBoRQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVJEYU8ycG85MGhFAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-25 10:45:06.828  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:45:07.342  INFO 46768 --- [XNIO-1 task-28] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:45:13.190  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAApAIAQeC4iOC4sOC5gOC4m+C5h+C4meC4iOC4sOC4leC4suC4oiAtIFN3ZWV0IE11bGxldOOAjEx5cmljIFZpZGVv44CNAAlHZW5pZXJvY2sAAAAAAAQPEAALaFNjLWE5R3B4Q3cAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1oU2MtYTlHcHhDdwAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-01-25 10:45:13.532  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:45:18.731  INFO 46768 --- [XNIO-1 task-29] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
+2022-01-25 10:45:19.185  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
+2022-01-25 10:45:19.238  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:45:31.001  INFO 46768 --- [XNIO-1 task-31] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:MUSKETEERS - ????? (Official MV)"
+2022-01-25 10:45:31.434  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: MUSKETEERS - ????? (Official MV)
+2022-01-25 10:45:37.324  INFO 46768 --- [XNIO-1 task-33] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:???????? bdslam"
+2022-01-25 10:45:37.802  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ???????? bdslam
+2022-01-25 10:47:57.711  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:47:58.208  INFO 46768 --- [XNIO-1 task-35] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:47:58.615  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIAKk1VU0tFVEVFUlMgLSDguJnguLTguJfguLLguJkgKE9mZmljaWFsIE1WKQAPYmVsaWV2ZSByZWNvcmRzAAAAAAAD1HgAC0lrMjI4VWtCcDZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SWsyMjhVa0JwNncAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:48:03.874  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:48:04.343  INFO 46768 --- [XNIO-1 task-36] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:48:04.683  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAhQIAI0JvZHlzbGFtIC0g4LmA4Lib4Lij4Liy4Liw4Lia4Liy4LiHAAhib2R5c2xhbQAAAAAABW6gAAtMNWt1eUNYSEdxcwABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PUw1a3V5Q1hIR3FzAAd5b3V0dWJlAAAAAAAAAAA=", "startTime": "0", "noReplace": false}
+2022-01-25 10:48:08.097  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:48:08.578  INFO 46768 --- [XNIO-1 task-37] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:48:08.956  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAlgIAN0FDQURFTVkgLSBTQVJBTiBGdC4gUDZpY2sgJiBCbGFja2hlYXJ0IFtGdWxsIEJhbmQgVmVyLl0ABVNBUkFOAAAAAAAEbNAAC3FoV0xsVmNZT3I4AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9cWhXTGxWY1lPcjgAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:49:08.315  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:49:59.115  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:59032 -- CloseStatus[code=1006, reason=]
+2022-01-25 10:49:59.116  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-25 10:50:10.476  INFO 46768 --- [XNIO-1 task-38] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:51273
+2022-01-25 10:50:10.478  INFO 46768 --- [XNIO-1 task-38] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 10:50:20.775  INFO 46768 --- [XNIO-1 task-39] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Academy saran"
+2022-01-25 10:50:21.285  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "4ccd0a82dfadcfbfec21da2082ef34cd", "event": {"token": "d9c36023bbd19c6d", "guild_id": "924999182039801876", "endpoint": "singapore54.discord.media:443"}}
+2022-01-25 10:50:21.360  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Academy saran
+2022-01-25 10:50:21.406  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:50:25.999  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:50:26.434  INFO 46768 --- [XNIO-1 task-41] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:50:26.437  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:50:29.664  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 10:50:30.078  INFO 46768 --- [XNIO-1 task-42] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:50:30.080  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 10:55:25.835  INFO 46768 --- [XNIO-1 task-43] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 10:55:25.837  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:00:21.752  INFO 46768 --- [XNIO-1 task-44] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 11:00:21.754  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:05:17.700  INFO 46768 --- [XNIO-1 task-45] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 11:05:17.702  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:10:13.574  INFO 46768 --- [XNIO-1 task-46] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 11:10:13.576  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:15:09.407  INFO 46768 --- [XNIO-1 task-47] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 11:15:09.411  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:19:18.313  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:51273 -- CloseStatus[code=1006, reason=]
+2022-01-25 11:19:18.314  INFO 46768 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-25 11:19:23.401  INFO 46768 --- [XNIO-1 task-48] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49297
+2022-01-25 11:19:23.404  INFO 46768 --- [XNIO-1 task-48] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 11:20:12.500  INFO 46768 --- [XNIO-1 task-1] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:[1]. SARAN - ACADEMY FT. P6ICK / BlackHeart (Official MV)"
+2022-01-25 11:20:12.648  INFO 46768 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "43fb93c316b9c454722372b6b3965f4e", "event": {"token": "d9c36023bbd19c6d", "guild_id": "924999182039801876", "endpoint": "singapore54.discord.media:443"}}
+2022-01-25 11:20:13.275  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: [1]. SARAN - ACADEMY FT. P6ICK / BlackHeart (Official MV)
+2022-01-25 11:20:13.315  INFO 46768 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:24:09.969  INFO 46768 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49297 -- CloseStatus[code=1006, reason=]
+2022-01-25 11:24:09.970  INFO 46768 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2022-01-25 11:24:19.911  INFO 46768 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:54005
+2022-01-25 11:24:19.913  INFO 46768 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 11:31:41.859  INFO 46768 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:54005 -- CloseStatus[code=1006, reason=]
+2022-01-25 11:31:41.860  INFO 46768 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-01-25 11:31:57.461  INFO 46768 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61486
+2022-01-25 11:31:57.463  INFO 46768 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from Pomice/1.1.6
+2022-01-25 11:42:49.778  INFO 46768 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:SARAN - ACADEMY FT. P6ICK / BlackHeart (Official MV)"
+2022-01-25 11:42:50.414  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: SARAN - ACADEMY FT. P6ICK / BlackHeart (Official MV)
+2022-01-25 11:42:50.466  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 11:42:50.606  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "1217fd4acbe629574b864b5ef3e63705", "event": {"token": "dc08e889800641a3", "guild_id": "924999182039801876", "endpoint": "singapore54.discord.media:443"}}
+2022-01-25 12:16:14.828  INFO 46768 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:saran adacemy"
+2022-01-25 12:16:15.489  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: saran adacemy
+2022-01-25 12:16:15.532  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 12:16:21.328  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 12:16:21.756  INFO 46768 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 12:16:21.758  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 12:21:17.545  INFO 46768 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 12:21:17.547  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 12:26:13.430  INFO 46768 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 12:26:13.432  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 12:31:09.295  INFO 46768 --- [XNIO-1 task-12] l.server.player.AudioLoaderRestHandler   : GET /decodetrack
+2022-01-25 12:31:09.297  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIANFNBUkFOIC0gQUNBREVNWSBGVC4gUDZJQ0sgLyBCbGFja0hlYXJ0IChPZmZpY2lhbCBNVikABVNBUkFOAAAAAAAEhEAAC0h1MXdxOWc1Xy13AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SHUxd3E5ZzVfLXcAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 12:32:17.324  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "924999182039801876"}
+2022-01-25 12:32:28.758  INFO 46768 --- [XNIO-1 task-13] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:????? muskeeter"
+2022-01-25 12:32:29.333  INFO 46768 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ????? muskeeter
+2022-01-25 12:32:29.374  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAkwIAKk1VU0tFVEVFUlMgLSDguJnguLTguJfguLLguJkgKE9mZmljaWFsIE1WKQAPYmVsaWV2ZSByZWNvcmRzAAAAAAAD1HgAC0lrMjI4VWtCcDZ3AAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9SWsyMjhVa0JwNncAB3lvdXR1YmUAAAAAAAAAAA==", "startTime": "0", "noReplace": false}
+2022-01-25 15:18:07.045  INFO 29024 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        3.4
+	Build:          1257
+	Build time:     26.10.2021 14:18:37 UTC
+	Branch          master
+	Commit:         a364833
+	Commit time:    26.10.2021 14:15:20 UTC
+	JVM:            16.0.2
+	Lavaplayer      1.3.96-original
+
+2022-01-25 15:18:07.126  INFO 29024 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 29024 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
+2022-01-25 15:18:07.127  INFO 29024 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2022-01-25 15:18:07.491  WARN 29024 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2022-01-25 15:26:10.730  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:61486 -- CloseStatus[code=1006, reason=]
+2022-01-25 15:26:10.756  INFO 46768 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.

@@ -1,3 +1,4 @@
+from queue import Queue
 from discord import guild
 import pomice
 import datetime
@@ -173,10 +174,35 @@ class Music(commands.Cog):
                 await player.play(tracks)
 
         elif server["Mode"] == "Repeat":
-            await player.play(player.Track)
+            tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+            await player.play(tracks)
 
         else:
-            pass
+            if server["Queue"] != []:
+                await settings.collectionmusic.update_one({"guild_id": player.guild.id}, {'$pop': {'Queue': -1}})
+                await settings.collectionmusic.update_one({
+                                            "guild_id":player.guild.id}, {
+                                                '$push': {
+                                                    'Queue': {
+                                                        "song_title":server["Queue"][0]["song_title"],
+                                                        "song_id":server["Queue"][0]["song_id"],
+                                                        "requester":server["Queue"][0]["requester"]}}})
+                server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
+                list_song = [] 
+                num = 1
+                for song in server["Queue"]:
+                    list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                    num = num +1
+                list_song = "".join(list_song)
+                tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    colour = 0xffff00)
+                embed.set_author(name=f"กําลังเล่น " + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                embed.set_image(url =tracks.thumbnail)
+                embed.set_footer(text=f"next up : {nu}")
+                await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
+                await player.play(tracks)
 
     @commands.command(aliases=['joi', 'j', 'summon', 'su', 'con'])
     async def join(self, ctx: commands.Context, *, channel: nextcord.VoiceChannel = None) -> None:
@@ -295,7 +321,7 @@ class Music(commands.Cog):
                     title = f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",
                     colour = 0x983925
                 )
-                await interaction.send
+                await interaction.channel.send(embed =embed , delete_after=2)
         else:
             pass
     
@@ -331,7 +357,6 @@ class Music(commands.Cog):
                                 for track in results.tracks:
                                     list_song.append(f"> [{num}] " + track.title + "\n")
                                     data["Queue"].append({
-                                            "position":num,
                                             "song_title":track.title,
                                             "song_id":track.track_id,
                                             "requester":ctx.author.id})
@@ -357,14 +382,11 @@ class Music(commands.Cog):
                                     for track in results.tracks:
                                         s_title = track.title
                                         s_id = track.track_id
-                                        s_thumb = track.thumbnail
-                                        s_uri  = track.uri
                                         list_song.append(f"> [{num}] " + track.title + "\n")
                                         await settings.collectionmusic.update_one({
                                             'guild_id': ctx.guild.id}, {
                                                 '$push': {
                                                     'Queue': {
-                                                        "position":num,
                                                         "song_title":s_title,
                                                         "song_id":s_id,
                                                         "requester":ctx.author.id
@@ -385,8 +407,6 @@ class Music(commands.Cog):
                             track : pomice.Track= results[0]
                             s_title = track.title
                             s_id = track.track_id
-                            s_thumb = track.thumbnail
-                            s_uri  = track.uri
                             if Queue is None and not player.is_playing:
                                 embed=nextcord.Embed(
                                     description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
@@ -401,7 +421,6 @@ class Music(commands.Cog):
                                     "Queue":[]
                                 }
                                 data["Queue"].append({
-                                        "position":1,
                                         "song_title":s_title,
                                         "song_id":s_id,
                                         "requester":ctx.author.id})
@@ -425,7 +444,6 @@ class Music(commands.Cog):
                                         "guild_id":ctx.guild.id}, {
                                             '$push': {
                                                 'Queue': {
-                                                    "position":len(Queue["Queue"])+1,
                                                     "song_title":s_title,
                                                     "song_id":s_id,
                                                     "requester":ctx.author.id}}})

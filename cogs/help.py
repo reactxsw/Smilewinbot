@@ -103,13 +103,7 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}play [ชื่อเพลง/ลิงค์YouTube]``',value='เล่นเพลง')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}repeat``',value='เล่นเพลงที่กําลังเล่นอยู่ซํ้า')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}loop``',value='เล่นเพลงทั้งคิวซํ้า')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pause``',value='พักเพลง')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}resume``',value='เล่นเพลงต่อ')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}stop``',value='เลิกเล่นเพลง')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}nowplaying``',value='โชว์เพลงที่กําลังเล่นอยู่')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}musicsetup ``',value='ตั้งค่าห้องเล่นเพลง')
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -131,12 +125,7 @@ class Help(commands.Cog):
                     description=f'{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``',
                     color=0xFED000   
                     )
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}play [song/YouTube url]``',value='เล่นเพลง')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}repeat``',value='เล่นเพลงที่กําลังเล่นอยู่ซํ้า')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}loop``',value='เล่นเพลงทั้งคิวซํ้า')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}pause``',value='พักเพลง')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}resume``',value='เล่นเพลงต่อ')
-                embed.add_field(name=f'``{settings.COMMAND_PREFIX}stop``',value='เลิกเล่นเพลง')
+                embed.add_field(name=f'``{settings.COMMAND_PREFIX}musicsetup ``',value='music room setup')
                 embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
