@@ -24,7 +24,7 @@ class TicTacToe(commands.Cog):
         if serverlanguage == "Thai":
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(name="Start", value=f"เริ่มเกม | `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่นคนที่2]`", inline=False)
-            embed.add_field(name="Start", value=f"หยุดเกม | `{settings.COMMAND_PREFIX} tictactoe stop`", inline=False)
+            embed.add_field(name="Stop", value=f"หยุดเกม | `{settings.COMMAND_PREFIX} tictactoe stop`", inline=False)
             embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -36,7 +36,7 @@ class TicTacToe(commands.Cog):
         elif serverlanguage == "English":
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(name="Start", value=f"Start the game | `{settings.COMMAND_PREFIX} tictactoe start [@player2]`", inline=False)
-            embed.add_field(name="Start", value=f"Stop the game | `{settings.COMMAND_PREFIX} tictactoe stop [@player2]`", inline=False)
+            embed.add_field(name="Stop", value=f"Stop the game | `{settings.COMMAND_PREFIX} tictactoe stop [@player2]`", inline=False)
             embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -58,21 +58,37 @@ class TicTacToe(commands.Cog):
             serverlanguage = serverlanguage["Language"]
         
         #You cannnot play with yourself
-        if ctx.author.id == player2.id or player2.id == self.bot.user.id:
+        if ctx.author.id == player2.id:
             if serverlanguage == "Thai":
                 await ctx.send("คุณไม่สามารถเล่นกับตัวเองได้")
             elif serverlanguage == "English":
                 await ctx.send("You cannot play with yourself")
             return
-
-        # Check if the game is already running
-        server_data = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id})
-        if server_data is not None:
+        
+        #if player2 is bot then you cannot play with bot
+        elif player2.bot:
             if serverlanguage == "Thai":
-                await ctx.send("เกมเริ่มอยู่แล้ว")
+                await ctx.send("คุณไม่สามารถเล่นกับบอทได้")
             elif serverlanguage == "English":
-                await ctx.send("The game is already starting.")
+                await ctx.send("You cannot play with bot")
+            
+
+        p1_game = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id,"$or":[{"p1":ctx.author.id},{"p2":ctx.author.id}]})
+        if p1_game is not None:
+            if serverlanguage == "Thai":
+                await ctx.send(f"คุณได้เริ่มเกมไปแล้ว กรุณาพิมพ์ `{settings.COMMAND_PREFIX} tictactoe stop` เพื่อหยุดเกม")
+            elif serverlanguage == "English":
+                await ctx.send(f"You have started the game already. Please type `{settings.COMMAND_PREFIX} tictactoe stop` to stop the game.")
             return
+
+        p2_game = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id,"$or":[{"p1":player2.id},{"p2":player2.id}]})
+        if p2_game is not None:
+            if serverlanguage == "Thai":
+                await ctx.send(f"{player2.mention} กำลังเล่นอยู่")
+            elif serverlanguage == "English":
+                await ctx.send(f"{player2.mention} is playing.")    
+            return
+        
         
         # Prepare data for the game
         p1 = [str(ctx.author),ctx.author.id]
@@ -104,32 +120,24 @@ class TicTacToe(commands.Cog):
         else:
             serverlanguage = serverlanguage["Language"]
         
-        # Try to fetch game data from database
-        server_data = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id})
-        # If isn't found = game has not started
-        if server_data is None:
-            # Respond to user
+        # Try to find the game in that guild that has the author as player 1 or 2
+        game = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id,"$or":[{"p1.1":ctx.author.id},{"p2.1":ctx.author.id}]})
+        if game is None:
             if serverlanguage == "Thai":
-                await ctx.send("เกมยังไม่ถูกเริ่มต้น")
+                await ctx.send(f"ยังไม่มีเกมที่คุณเล่นอยู่ กรุณาพิมพ์ `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่น2]` เพื่อเริ่มเกม")
             elif serverlanguage == "English":
-                await ctx.send("The game is not running.")
+                await ctx.send(f"You don't have any game. Please type `{settings.COMMAND_PREFIX} tictactoe start [@player2]` to start the game.")
             return
-
-        # If game has started
         else:
-            # fetch message object 
-            data = await settings.collectiontictactoe.find_one({"guild_id":ctx.guild.id})
-            channel = await self.bot.fetch_channel(data["channel_id"])
-            message = await channel.fetch_message(data["message_id"])
-
-            # Delete message
-            await settings.collectiontictactoe.delete_one({"guild_id":ctx.guild.id})
-            
-            # Respond a message to user
+            # If the game is found, delete it from the database
+            await settings.collectiontictactoe.delete_one({"guild_id":ctx.guild.id,"$or":[{"p1.1":ctx.author.id},{"p2.1":ctx.author.id}]})
             if serverlanguage == "Thai":
-                await ctx.send("เกมถูกยกเลิกแล้ว")
+                await ctx.send("ยกเลิกเกมเรียบร้อยแล้ว")
             elif serverlanguage == "English":
-                await ctx.send("The game has been stopped.")
+                await ctx.send("Canceled the game")
+
+
+
     
     @tictactoe.command(aliases=["level","xp","win","wins","loss","losses","draw","draws","winrate","winrates","win_rate"])
     async def profile(self,ctx):
@@ -300,11 +308,12 @@ async def recieve_input(bot, button, interaction):
     if bot.user.id == interaction.user.id:
         return
     # Get data from database
-    data = await settings.collectiontictactoe.find_one({"guild_id":interaction.guild_id})
-    # If the game is not running return
-    if data is None:
-        return data
+    data = await settings.collectiontictactoe.find_one({"guild_id":interaction.guild_id,"$or":[{'p1':interaction.user.id},{'p2':interaction.user.id}]})
     
+    # If the game is not found return
+    if data is None:
+        return
+
     #Check interaction message id and game message id
     if interaction.message.id != data["message_id"]:
         return
@@ -368,7 +377,7 @@ async def recieve_input(bot, button, interaction):
             await update_user_profile(data["turn"],data["p1"],data["p2"],False,True)
 
         #Clear the database
-        await settings.collectiontictactoe.delete_one({"guild_id":data["guild_id"]})
+        await settings.collectiontictactoe.delete_one({"guild_id":interaction.guild_id,"$or":[{'p1':interaction.user.id},{'p2':interaction.user.id}]})
         return
     # Change the turn
     if data["turn"] == 1:
