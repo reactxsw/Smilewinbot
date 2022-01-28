@@ -1,5 +1,4 @@
 from queue import Queue
-from discord import guild
 import pomice
 import datetime
 import asyncio
@@ -9,6 +8,22 @@ from nextcord.ext import commands
 import nextcord
 import math
 import random
+
+async def time_format(seconds: int): 
+    if seconds is not None:
+        seconds = int(seconds)
+        h = seconds // 3600 % 24
+        m = seconds % 3600 // 60
+        s = seconds % 3600 % 60
+        if h > 0:
+            return '[{:02d}:{:02d}:{:02d}]'.format(h, m, s)
+        elif m > 0:
+            return '[{:02d}:{:02d}]'.format(m, s)
+        elif s > 0:
+            return '[00:{:02d}]'.format(s)
+        
+        else:
+            return("[0:00]")
 
 class MusicButton(nextcord.ui.View):
     def __init__(self,bot):
@@ -149,13 +164,13 @@ class Music(commands.Cog):
             await settings.collectionmusic.delete_one({"guild_id":member.guild.id})
         
         else:
-            if (after.channel is None and member.bot):
+            if (after.channel is None and member == self.bot.user):
                 player : pomice.player = self.pomice._nodes[settings.lavalinkindentifier].get_player(member.guild.id)
                 if player != None:
                     await player.destroy()
                 await settings.collectionmusic.delete_one({"guild_id":member.guild.id})
         
-    async def do_next(self,player : pomice.player):
+    async def do_next(self,player : pomice.Player):
         data = await settings.collection.find_one({"guild_id":player.guild.id})
         message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
         server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
@@ -180,14 +195,21 @@ class Music(commands.Cog):
                     for song in server["Queue"]:
                         list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
+
+                    left = len(Queue["Queue"])
                     list_song = "".join(list_song)
-                    tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    time = await time_format(tracks.length)
                     nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                         colour = 0xffff00)
-                    embed.set_author(name=f"กําลังเล่น " + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                    embed.set_author(name=f"กําลังเล่น {time}" + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                    embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel)
+                    embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
+                    embed.add_field(name="``🔁`` โหมด" ,value="Default")
+                    embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=player.guild.get_member(server["Queue"][0]["requester"]).mention)
                     embed.set_image(url =tracks.thumbnail)
-                    embed.set_footer(text=f"next up : {nu}")
+                    embed.set_footer(text=f"next up : {nu} เพลงในคิว :{left}")
                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     await player.play(tracks)
 
@@ -212,13 +234,19 @@ class Music(commands.Cog):
                         list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
                     list_song = "".join(list_song)
+                    left = len(Queue["Queue"])
                     tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    time = await time_format(tracks.length)
                     nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                         colour = 0xffff00)
-                    embed.set_author(name=f"กําลังเล่น " + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                    embed.set_author(name=f"กําลังเล่น {time}" + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
+                    embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel)
+                    embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
+                    embed.add_field(name="``🔁`` โหมด" ,value="Default")
+                    embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=player.guild.get_member(server["Queue"][0]["requester"]).mention)
                     embed.set_image(url =tracks.thumbnail)
-                    embed.set_footer(text=f"next up : {nu}")
+                    embed.set_footer(text=f"next up : {nu} เพลงในคิว :{left}")
                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     await player.play(tracks)
 
@@ -356,7 +384,7 @@ class Music(commands.Cog):
             if music_channel != "None":
                 if music_embed != "None" and music_message != "None":
                     if ctx.channel.id == music_channel:
-                        player : pomice.player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
+                        player : pomice.Player = self.pomice._nodes[settings.lavalinkindentifier].get_player(ctx.guild.id)
                         if player is None:
                             await ctx.invoke(self.join)   
                             player = ctx.voice_client
@@ -378,12 +406,14 @@ class Music(commands.Cog):
                                     data["Queue"].append({
                                             "song_title":track.title,
                                             "song_id":track.track_id,
+                                            "duration":track.length,
                                             "requester":ctx.author.id})
+
                                     num = num+1
                                 nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                 embed=nextcord.Embed(
                                     description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                    colour = 0xffff00)
+                                    colour = 0xffff00)  
                                 embed.set_author(name=f"กําลังเล่น {results.tracks[0].title}", icon_url=self.bot.user.avatar.url , url=results.tracks[0].uri)
                                 embed.set_image(url =results.tracks[0].thumbnail)
                                 embed.set_footer(text=f"next up : {nu}")
@@ -399,15 +429,14 @@ class Music(commands.Cog):
                                     num = len(Queue["Queue"]) + 1
                                     list_song = []
                                     for track in results.tracks:
-                                        s_title = track.title
-                                        s_id = track.track_id
                                         list_song.append(f"> [{num}] " + track.title + "\n")
                                         await settings.collectionmusic.update_one({
                                             'guild_id': ctx.guild.id}, {
                                                 '$push': {
                                                     'Queue': {
-                                                        "song_title":s_title,
-                                                        "song_id":s_id,
+                                                        "song_title":track.title,
+                                                        "song_id":track.track_id,
+                                                        "duration":track.length,
                                                         "requester":ctx.author.id
                                                         }
                                                     }
@@ -418,6 +447,7 @@ class Music(commands.Cog):
                                         description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                                     embed.set_author(name=f"กําลังเล่น {player.current.title}", icon_url=self.bot.user.avatar.url , url=player.current.uri)
+                                    
                                     embed.set_image(url =player.current.thumbnail)
                                     embed.set_footer(text=f"next up : {nu}")
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
@@ -426,13 +456,20 @@ class Music(commands.Cog):
                             track : pomice.Track= results[0]
                             s_title = track.title
                             s_id = track.track_id
+                            s_len = track.length
                             if Queue is None and not player.is_playing:
+                                time = await time_format(s_len)
                                 embed=nextcord.Embed(
                                     description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
-                                embed.set_author(name=f"กําลังเล่น {track}", icon_url=self.bot.user.avatar.url , url=track.uri)
+                                
+                                embed.set_author(name=f"กําลังเล่น {time}{track}", icon_url=self.bot.user.avatar.url , url=track.uri)
+                                embed.add_field(name="``📞`` ช่องเสียง" ,value=ctx.guild.me.voice.channel.mention)
+                                embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
+                                embed.add_field(name="``🔁`` โหมด" ,value="Default")
+                                embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=ctx.author.mention)
                                 embed.set_image(url =track.thumbnail)
-                                embed.set_footer(text=f"server : {ctx.guild.name}")
+                                embed.set_footer(text=f"server : {ctx.guild.name} เพลงในคิว : 0")
                                 data = {
                                     "guild_id":ctx.guild.id,
                                     "Mode":"Default",
@@ -442,6 +479,7 @@ class Music(commands.Cog):
                                 data["Queue"].append({
                                         "song_title":s_title,
                                         "song_id":s_id,
+                                        "duration":s_len,
                                         "requester":ctx.author.id})
                                 await player.play(track)
 
@@ -452,19 +490,27 @@ class Music(commands.Cog):
                             else:
                                 if not len(Queue["Queue"]) > 20:
                                     nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
+                                    time = await time_format(player.current.length)
+                                    left = len(Queue["Queue"]) -1
                                     list_song = []
                                     num = 1
                                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
-                                    embed.set_author(name=f"กําลังเล่น " + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
+                                    member : nextcord.Member = await ctx.guild.fetch_member(Queue["Queue"][0]["requester"])
+                                    embed.set_author(name=f"กําลังเล่น {time}" + player.current.length + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
+                                    embed.add_field(name="``📞`` ช่องเสียง" ,value=ctx.guild.me.voice.channel.mention)
+                                    embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
+                                    embed.add_field(name="``🔁`` โหมด" ,value=Queue["Mode"])
+                                    embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=member.mention)
                                     embed.set_image(url =player.current.thumbnail)
-                                    embed.set_footer(text=f"next up : {nu}")
+                                    embed.set_footer(text=f"next up : {nu} เพลงในคิว :{left}")
                                     await settings.collectionmusic.update_one({
                                         "guild_id":ctx.guild.id}, {
                                             '$push': {
                                                 'Queue': {
                                                     "song_title":s_title,
                                                     "song_id":s_id,
+                                                    "duration":s_len,
                                                     "requester":ctx.author.id}}})
 
                                     for song in Queue["Queue"]:

@@ -505,7 +505,9 @@ https://hastebin.com/{r['key']}```"""
                     for i, item in enumerate(all_webhook):
                         try:
                             async with aiohttp.ClientSession() as session:
+                                print(item)
                                 webhook = Webhook.from_url(item, session=session)
+                                print(webhook)
                                 await webhook.send(message , avatar_url = self.bot.user.avatar.url , username = "Smilewinbot")
 
                         except nextcord.InvalidArgument:

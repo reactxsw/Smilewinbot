@@ -1,4 +1,3 @@
-from importlib import reload
 from re import search
 from async_timeout import asyncio
 import nextcord
@@ -24,9 +23,10 @@ class on_message_event(commands.Cog):
                     else:
                         song = message.content
                     
-                    await message.delete()
                     ctx  = await self.bot.get_context(message)
                     await ctx.invoke(self.bot.get_command("play"), search=song)
+                    await asyncio.sleep(1)
+                    await message.delete()
 
             if message.content.startswith('!r'):
                 return

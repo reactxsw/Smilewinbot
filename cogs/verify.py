@@ -1,4 +1,3 @@
-from pomice.utils import Ping
 import settings
 import nextcord
 import asyncio

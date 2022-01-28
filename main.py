@@ -13,7 +13,6 @@ import nextcord
 from nextcord.ext import commands ,tasks
 from datetime import date, timedelta
 from itertools import cycle
-from cogs.music import MusicButton
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)

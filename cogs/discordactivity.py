@@ -2,12 +2,16 @@ import nextcord
 import settings
 from utils.languageembed import languageEmbed
 from nextcord.ext import commands
-from discordTogether import DiscordTogether
+from discord_together import DiscordTogether
 
 class DiscordActivity(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
-        self.togetherControl = DiscordTogether(bot)
+        bot.loop.create_task(self.start_dtg())
+
+    async def start_dtg(self):
+        await self.bot.wait_until_ready()
+        self.togetherControl = await DiscordTogether(settings.TOKEN)
 
     @commands.command()
     async def watchyt(self, ctx):
