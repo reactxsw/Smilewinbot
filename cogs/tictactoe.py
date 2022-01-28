@@ -25,6 +25,7 @@ class TicTacToe(commands.Cog):
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(name="Start", value=f"เริ่มเกม | `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่นคนที่2]`", inline=False)
             embed.add_field(name="Stop", value=f"หยุดเกม | `{settings.COMMAND_PREFIX} tictactoe stop`", inline=False)
+            embed.add_field(name="Profile",value=f"ดูข้อมูลผู้เล่น | `{settings.COMMAND_PREFIX} tictactoe profile`", inline=False)
             embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -37,6 +38,7 @@ class TicTacToe(commands.Cog):
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(name="Start", value=f"Start the game | `{settings.COMMAND_PREFIX} tictactoe start [@player2]`", inline=False)
             embed.add_field(name="Stop", value=f"Stop the game | `{settings.COMMAND_PREFIX} tictactoe stop [@player2]`", inline=False)
+            embed.add_field(name="Profile",value=f"View player's profile | `{settings.COMMAND_PREFIX} tictactoe profile`", inline=False)
             embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -54,6 +56,7 @@ class TicTacToe(commands.Cog):
         if serverlanguage is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
             await message.add_reaction('👍')
+            return
         else:
             serverlanguage = serverlanguage["Language"]
         
@@ -117,6 +120,7 @@ class TicTacToe(commands.Cog):
         if serverlanguage is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
             await message.add_reaction('👍')
+            return
         else:
             serverlanguage = serverlanguage["Language"]
         
@@ -187,10 +191,10 @@ async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
             # display += ":white_large_square:  "
         
         if (index+1) % 3 == 0:
-            display +=  "\n\n"
+            display +=  "\n"
         
         if ((index+1)%3 == 0) and ((index+1) %9 != 0):
-            display += "━━━━━━━━━\n\n"
+            display += "━━━━━━━━━\n"
     
     # for i in board:
     #     for j in i:
