@@ -24,9 +24,29 @@ class on_message_event(commands.Cog):
                         song = message.content
                     
                     ctx  = await self.bot.get_context(message)
-                    await ctx.invoke(self.bot.get_command("play"), search=song)
-                    await asyncio.sleep(1)
-                    await message.delete()
+                    bot_voice_client = nextcord.utils.get(self.bot.voice_clients, guild=ctx.guild)
+                    #if a bot is connected to a voice channel
+                    #then if the bot found the message in the music channel then it will play the song but author will in that channel
+                    if bot_voice_client is not None:
+                        if ctx.author.voice.channel.id == bot_voice_client.channel.id:
+                            await ctx.invoke(self.bot.get_command("play"), search=song)
+                            await asyncio.sleep(1)
+                            await message.delete()
+                        else:
+                            embed = nextcord.Embed(
+                                title="คุณจะต้องอยู่ในห้องเดียวกับบอทถึงจะสามรถสั่งเพลงได้",
+                                description=f"{message.author.mention} บอทเล่นเพลงอยู่ที่ {bot_voice_client.channel.mention}",
+                                color=0xFED000
+                            )
+                            await message.channel.send(embed=embed, delete_after=5)
+                            await asyncio.sleep(1)
+                            await message.delete()
+                    else:
+                        await ctx.invoke(self.bot.get_command("play"), search=song)
+                        await asyncio.sleep(1)
+                        await message.delete()
+
+
 
             if message.content.startswith('!r'):
                 return
