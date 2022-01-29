@@ -139,6 +139,8 @@ class TicTacToe(commands.Cog):
                 await ctx.send("ยกเลิกเกมเรียบร้อยแล้ว")
             elif serverlanguage == "English":
                 await ctx.send("Canceled the game")
+            message = await ctx.fetch_message(game["message_id"])
+            await message.edit(embed=await draw_board(game["board"],game["turn"],game["p1"],game["p2"],cancel=True),view= None)
 
 
 
@@ -166,7 +168,7 @@ class TicTacToe(commands.Cog):
 
 number_emoji = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣"]
     
-async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
+async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False,cancel=False):
     # Create embed
     embed = nextcord.Embed(
         title="Tic Tac Toe",
@@ -219,6 +221,8 @@ async def draw_board(board,turn,p1,p2,is_win=False,is_draw=False):
         embed.add_field(name=f"{Turn} Win!", value=display, inline=False)
     elif is_draw:
         embed.add_field(name="Draw!", value=display, inline=False)
+    elif cancel:
+        embed = nextcord.Embed(title="Tictactoe",description="Game Ended",color=0xFED000)
     else:
         if turn == 1:
             embed.add_field(name=f"{Turn} Turn! | :x:", value=display, inline=False)
@@ -369,13 +373,13 @@ async def recieve_input(bot, button, interaction):
     draw = await check_draw(data["board"])
     if win or draw:
         if win:
-            await interaction.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],True,False))
+            await interaction.message.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],True,False),view=None)
 
             # Update user profile of this game
             await update_user_profile(data["turn"],data["p1"],data["p2"],True,False)
 
         elif draw:
-            await interaction.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],False,True))
+            await interaction.message.edit(embed=await draw_board(data["board"],data["turn"],data["p1"],data["p2"],False,True),view=None)
 
             # Update user profile of this game
             await update_user_profile(data["turn"],data["p1"],data["p2"],False,True)
