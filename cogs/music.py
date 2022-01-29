@@ -243,7 +243,7 @@ class Music(commands.Cog):
                     embed.set_author(name=f"กําลังเล่น {time}" + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
                     embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel)
                     embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
-                    embed.add_field(name="``🔁`` โหมด" ,value="Default")
+                    embed.add_field(name="``🔁`` โหมด" ,value="Loop")
                     embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=player.guild.get_member(server["Queue"][0]["requester"]).mention)
                     embed.set_image(url =tracks.thumbnail)
                     embed.set_footer(text=f"next up : {nu} เพลงในคิว :{left}")
