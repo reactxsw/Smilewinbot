@@ -67,14 +67,14 @@ class Scam(commands.Cog):
             await message.add_reaction('👍')
         
         else:
-            languageserver = languageserver["language"]
+            languageserver = languageserver["Language"]
             if languageserver == "Thai":
                 embed = nextcord.Embed(
                     title = "ข้อมูลเกี่ยวคำสั่ง scam",
                     colour = 0xFED000,
                 )
-                embed.add_field(name="Add",value="`scam add [link]`")
-                embed.add_field(name="Remove",value="`scam remove [link]`")
+                embed.add_field(name="Add",value="ส่งคำขอเพิ่มลิ้งที่ไม่ปลอดภัยไปให้ผู้พัฒนา | `scam add [link]`")
+                embed.add_field(name="Remove",value="ส่งคำขอลบลิ้งที่ไม่ปลอดภัยไปให้ผู้พัฒนา | `scam remove [link]`")
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -82,14 +82,14 @@ class Scam(commands.Cog):
 • เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
 • ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
 ```
-""", Inline=False)
+""", inline=False)
             elif languageserver == "English":
                 embed = nextcord.Embed(
                     title = "Scam command information",
                     colour = 0xFED000,
                 )
-                embed.add_field(name="Add",value="`scam add [link]`")
-                embed.add_field(name="Remove",value="`scam remove [link]`")
+                embed.add_field(name="Add",value="Request to add scam link to developer | `scam add [link]`",inline=False)
+                embed.add_field(name="Remove",value="Request to remove scam link to developer | `scam remove [link]`",inline=False)
                 embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -97,7 +97,8 @@ class Scam(commands.Cog):
 • In order for bots to use all functions, bots should have Administrator permission.
 • The function cannot work in private chat.
 ```
-""", Inline=False)
+""", inline=False)
+            await ctx.send(embed=embed)
 
 
     @scam.command()
