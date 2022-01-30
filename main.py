@@ -72,16 +72,13 @@ async def serverstat():
             total_member_channel = bot.get_channel(data["status_total_id"])
             member_channel = bot.get_channel(data["status_members_id"])
             bot_channel = bot.get_channel(data["status_bots_id"])
-            online_channel = bot.get_channel(data["status_online_id"])
-            memberonline = len([member for member in guild.members if not member.bot and member.status is nextcord.Status.online])
+
             if total_member_channel:
                 await total_member_channel.edit(name = f"︱👥 Total : {guild.member_count}")
             if member_channel:
                 await member_channel.edit(name=f"︱👥 Members : {memberonly}")
             if bot_channel:
                 await bot_channel.edit(name = f"︱👥 Bots : {botonly}")
-            if online_channel:
-                await online_channel.edit(name = f"︱🟢 Online {memberonline}")
         
         else:
             pass

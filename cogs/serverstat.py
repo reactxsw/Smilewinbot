@@ -15,9 +15,7 @@ class ServerStat(commands.Cog):
                     "category_id":"None",
                     "status_total_id":"None",
                     "status_members_id":"None",
-                    "status_bots_id":"None",
-                    "status_online_id":"None"
-                    }
+                    "status_bots_id":"None"}
         return newserver
     
     @commands.command()
@@ -35,7 +33,6 @@ class ServerStat(commands.Cog):
 
             server = await settings.collectionstatus.find_one({"guild_id":ctx.guild.id})
             memberonly = len([member for member in ctx.guild.members if not member.bot])
-            memberonline = len([member for member in ctx.guild.members if not member.bot and member.status is nextcord.Status.online])
             botonly = int(ctx.guild.member_count) - int(memberonly)
 
             if server is None:
@@ -43,9 +40,8 @@ class ServerStat(commands.Cog):
                 await settings.collectionstatus.insert_one(newserver)
                 category = await ctx.guild.create_category("📊 SERVER STATS 📊",position = 0)
                 totalvc = await ctx.guild.create_voice_channel(f"︱👥 Total : {ctx.guild.member_count}", overwrites=overwrites , category=category)
-                membervc = await ctx.guild.create_voice_channel(f"︱👥 Members : {memberonline}", overwrites=overwrites, category=category)
+                membervc = await ctx.guild.create_voice_channel(f"︱👥 Members : {memberonly}", overwrites=overwrites, category=category)
                 botvc = await ctx.guild.create_voice_channel(f"︱👥 Bots : {botonly}", overwrites=overwrites, category=category)
-                onlinesvc = await ctx.guild.create_voice_channel(f"︱🟢 Online : {memberonline}", overwrites=overwrites, category=category)
 
                 await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{
                     "status_system":status, 
@@ -53,8 +49,6 @@ class ServerStat(commands.Cog):
                     "status_total_id":totalvc.id,
                     "status_members_id":membervc.id,
                     "status_bots_id":botvc.id,
-                    "status_online_id":onlinesvc.id
-                    
                     }})
                 
             else:
@@ -62,7 +56,6 @@ class ServerStat(commands.Cog):
                 total = self.bot.get_channel(server["status_total_id"])
                 members = self.bot.get_channel(server["status_members_id"])
                 bots = self.bot.get_channel(server["status_bots_id"])
-                onlines = self.bot.get_channel(server["status_online_id"])
                 category = self.bot.get_channel(server["category_id"])
 
                 if category:
@@ -111,20 +104,6 @@ class ServerStat(commands.Cog):
                         botvc = await ctx.guild.create_voice_channel(f"︱👥 Bots : {botonly}", overwrites=overwrites, category=category)
                         await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_bots_id":botvc.id}})
                     
-                    if onlines:
-                        if onlines.category_id == server["category_id"]:
-                            if onlines.position == 3:
-                                pass
-
-                            else:
-                                await onlines.edit(position= 3)
-
-                        else:
-                            await onlines.edit(name = f"︱🟢 Online : {memberonline}", category = category , position = 3)
-                    
-                    else:           
-                        onlinesvc = await ctx.guild.create_voice_channel(f"︱🟢 Online : {memberonline}", overwrites=overwrites, category=category)
-                        await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_online_id":onlinesvc.id}})
 
                 else:
                     category = await ctx.guild.create_category("📊 SERVER STATS 📊",position = 0)
@@ -173,31 +152,18 @@ class ServerStat(commands.Cog):
                     else:           
                         botvc = await ctx.guild.create_voice_channel(f"︱👥 Bots : {botonly}", overwrites=overwrites, category=category)
                         await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_bots_id":botvc.id}})
-                    
-                    if onlines:
-                        if onlines.category_id == server["category_id"]:
-                            if onlines.position == 3:
-                                pass
-
-                            else:
-                                await onlines.edit(position= 3)
-
-                        else:
-                            await onlines.edit(name = f"︱🟢 Online : {memberonline}", category = category , position = 3)
-                    
-                    else:           
-                        onlinesvc = await ctx.guild.create_voice_channel(f"︱🟢 Online : {memberonline}", overwrites=overwrites, category=category)
-                        await settings.collectionstatus.update_one({"guild_id":ctx.guild.id},{"$set":{"status_online_id":onlinesvc.id}})
 
                 if server_language == "Thai":
                     embed = nextcord.Embed(
-
+                        title = "ตั้งค่าสําเร็จ",
+                        colour = 0xFED000
                     )
                     await ctx.send(embed = embed)
                 
                 if server_language == "English":
                     embed = nextcord.Embed(
-
+                        title="Setup complete",
+                        colour = 0xFED000
                     )
                     await ctx.send(embed = embed)
 
