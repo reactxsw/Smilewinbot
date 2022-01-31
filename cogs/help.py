@@ -39,6 +39,8 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='ช่วยเหลือคําสั่งเกี่ยวกับระบบเศรษฐกิจ')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='ช่วยเหลือคําสั่งข้อมูลของสมาชิกเช่น เลเวล')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='ช่วยเหลือคําสั่ง 18 +')
+                embed.add_field(name=f"``{settings.COMMAND_PREFIX}helpscam``",value='ช่วยเหลือคําสั่งกันลิ้งค์ที่ไม่ปลอดภัย')
+                embed.add_field(name=f"``{settings.COMMAND_PREFIX}helptictactoe``",value='ช่วยเหลือคําสั่งเกม tictactoe(xo)')
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -73,6 +75,8 @@ class Help(commands.Cog):
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpeconomy``',value='help commands related to economy')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpuser``',value='help commands related to user')
                 embed.add_field(name=f'``{settings.COMMAND_PREFIX}helpnsfw``',value='help commands related to NSFW')
+                embed.add_field(name=f"``{settings.COMMAND_PREFIX}helpscam``",value='help commands related to scam')
+                embed.add_field(name=f"``{settings.COMMAND_PREFIX}helptictactoe``",value='help commands related to tictactoe')
                 embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
@@ -973,6 +977,14 @@ class Help(commands.Cog):
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('👍')
+    
+    @commands.command()
+    async def helpscam(self,ctx):
+        await ctx.invoke(self.bot.get_command("scam"))
+    
+    @commands.command()
+    async def helptictactoe(self,ctx):
+        await ctx.invoke(self.bot.get_command("tictactoe"))
 
 
 def setup(bot: commands.Bot):
