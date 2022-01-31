@@ -1,4 +1,3 @@
-from typing import Text
 import nextcord
 import datetime
 from nextcord import user
@@ -283,12 +282,6 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self,guild):
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel( int(settings.logchannel))
-        embed = nextcord.Embed(
-            title = f"Bot have joined a new server {guild.name} with {guild.member_count} members",
-            colour = 0x00FFFF
-        )
-        await channel.send(embed=embed)
         try:
             async for entry in guild.audit_logs(limit= 1 ,action=nextcord.AuditLogAction.bot_add):
                 uembed = nextcord.Embed(
@@ -304,6 +297,14 @@ f"""สวัสดีครับ {entry.user.name}
         except nextcord.Forbidden:
             pass
 
+        channel = self.bot.get_channel(int(settings.logchannel))
+        embed = nextcord.Embed(
+            title = f"Bot have joined a new server {guild.name} with {guild.member_count} members",
+            description=f"Inviter : {entry.user}",
+            colour = 0x00FFFF
+        )
+        await channel.send(embed=embed)
+
         for channel in guild.text_channels:
             if channel.permissions_for(guild.me).send_messages:
                 embed = nextcord.Embed(
@@ -311,9 +312,9 @@ f"""สวัสดีครับ {entry.user.name}
                     title = f"🙏 สวัสดีครับเซิฟเวอร์ / Hello {guild.name}",
                     description = f"""
                     พิม ``{settings.COMMAND_PREFIX}help`` เพื่อดูคําสั่งของบอท
-                    Support : https://nextcord.com/invite/R8RYXyB4Cg
+                    Support : https://discord.com/invite/R8RYXyB4Cg
                     use ``{settings.COMMAND_PREFIX}help`` to view bot commands
-                    support : https://nextcord.com/invite/R8RYXyB4Cg
+                    support : https://discord.com/invite/R8RYXyB4Cg
                     """
 
                 )
@@ -329,13 +330,24 @@ f"""สวัสดีครับ {entry.user.name}
     @commands.Cog.listener()
     async def on_guild_remove(self,guild):
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel( int(settings.logchannel))
+        channel = self.bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
             title = f"Bot have left {guild.name}",
             colour = 0x983925
         )  
         await channel.send(embed=embed)
         print(f"Bot have left {guild.name}")
+        if settings.collectionlanguage.find_one({"guild_id":guild.id}) != None:
+            await settings.collectionlanguage.delete_one({"guild_id":guild.id})
+
+        if settings.collection.find_one({"guild_id":guild.id}) != None:    
+            await settings.collection.delete_one({"guild_id":guild.id})
+
+        if settings.collectionmusic.find_one({"guild_id":guild.id}) != None:
+            await settings.collectionmusic.delete_one({"guild_id":guild.id})
+        
+        await settings.collectionlevel.delete_many({"guild_id":guild.id})
+        await settings.collectionmoney.delete_many({"guild_id":guild.id})
 
 def setup(bot: commands.Bot):
     bot.add_cog(Events(bot))

@@ -41,6 +41,7 @@ class on_message_event(commands.Cog):
                             await message.channel.send(embed=embed, delete_after=5)
                             await asyncio.sleep(1)
                             await message.delete()
+                        
                     else:
                         await ctx.invoke(self.bot.get_command("play"), search=song)
                         await asyncio.sleep(1)

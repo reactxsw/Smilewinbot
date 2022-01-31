@@ -46,7 +46,7 @@ ASCII_ART = """
                                                                    REACT#1120 
 """ 
 
-bot = commands.AutoShardedBot(command_prefix = (settings.COMMAND_PREFIX),case_insensitive=True ,help_command=None,intents=intent , strip_after_prefix=True)
+bot = commands.AutoShardedBot(command_prefix =settings.COMMAND_PREFIX,case_insensitive=True ,help_command=None,intents=intent , strip_after_prefix=True)
 
 start_time = datetime.datetime.utcnow()
 
@@ -56,7 +56,7 @@ async def clearcmd():
 @tasks.loop(seconds=5)
 async def change_status():
     await bot.wait_until_ready()
-    await bot.change_presence(status = nextcord.Status.idle, activity=nextcord.Game(next(status)))
+    await bot.change_presence(status = nextcord.Status.idle, activity=nextcord.Streaming(name = next(status) , url="https://www.twitch.tv/smilewinbot"))
 
 
 @tasks.loop(seconds=120)
@@ -124,7 +124,6 @@ async def on_ready():
     except RuntimeError:
         pass
     await print_ascii_art()
-    # bot.add_view(MusicButton())
     try:
         channel = bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
