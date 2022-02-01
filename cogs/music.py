@@ -140,23 +140,22 @@ class Music(commands.Cog):
             port=settings.lavalinkport,
             password=settings.lavalinkpass,
             identifier=settings.lavalinkindentifier,
-            region=settings.lavalinkregion
+            region=settings.lavalinkregion,
+            spotify_client_id = settings.lavalinkspotifyid,
+            spotify_client_secret = settings.lavalinkspotifysecret
         )
         print(f"Node is ready!")
 
     @commands.Cog.listener()
     async def on_pomice_track_end(self, player: pomice.player, track , _):
-        print("track end")
         await Music.do_next(self,player)
 
     @commands.Cog.listener()
     async def on_pomice_track_stuck(self, player: pomice.player , track , _):
-        print("track stuck")
         await Music.do_next(self,player)
 
     @commands.Cog.listener()
     async def on_pomice_track_exception(self, player: pomice.player, track , _):
-        print("track on_pomice_track_exception")
         await Music.do_next(self,player)
     
     @commands.Cog.listener()
@@ -567,7 +566,11 @@ class Music(commands.Cog):
                 )
                 await interaction.channel.send(embed =embed , delete_after=2)
         else:
-            pass
+            embed= nextcord.embeds(
+                title = f"{interaction.user.mention} ไม่มีเพลงเล่นอยู่",
+                colour = 0x983925
+                )
+            await interaction.channel.send(embed =embed , delete_after=2)
     
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str):
