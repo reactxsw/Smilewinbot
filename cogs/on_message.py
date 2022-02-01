@@ -30,8 +30,6 @@ class on_message_event(commands.Cog):
                     if bot_voice_client is not None:
                         if ctx.author.voice.channel.id == bot_voice_client.channel.id:
                             await ctx.invoke(self.bot.get_command("play"), search=song)
-                            await asyncio.sleep(1)
-                            await message.delete()
                         else:
                             embed = nextcord.Embed(
                                 title="คุณจะต้องอยู่ในห้องเดียวกับบอทถึงจะสามรถสั่งเพลงได้",
