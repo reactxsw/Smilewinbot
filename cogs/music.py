@@ -318,12 +318,12 @@ class Music(commands.Cog):
     async def handle_click(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
         data = await settings.collectionmusic.find_one({"guild_id":interaction.guild.id})
         server = await settings.collection.find_one({"guild_id":interaction.guild.id})
-        nu = None if len(data["Queue"]) < 2 else data["Queue"][1]["song_title"]
-        left = len(data["Queue"]) 
         num = 1
         list_song=[]
         player: pomice.Player = self.bot.get_guild(interaction.guild.id).voice_client
         if not player is None and not data is None:
+            nu = None if len(data["Queue"]) < 2 else data["Queue"][1]["song_title"]
+            left = len(data["Queue"]) 
             if interaction.user.id == data["Queue"][0]["requester"] or interaction.user.guild_permissions.administrator:
                 if button.custom_id == "pause_stop":
                     if player.is_paused and player.is_connected:
@@ -384,7 +384,7 @@ class Music(commands.Cog):
                         colour = 0xFED000
                     )
                     await interaction.channel.send(embed =embed , delete_after=2)
-                    await Music.do_next(self,player)
+                    await player.destroy()
                 
                 elif button.custom_id == "decrease_volume":
                     if player.volume > 10:
@@ -560,14 +560,14 @@ class Music(commands.Cog):
                             await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                 
             else:
-                embed= nextcord.embeds(
-                    title = f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",
+                embed= nextcord.Embed(
+                    description = f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",
                     colour = 0x983925
                 )
                 await interaction.channel.send(embed =embed , delete_after=2)
         else:
-            embed= nextcord.embeds(
-                title = f"{interaction.user.mention} ไม่มีเพลงเล่นอยู่",
+            embed= nextcord.Embed(
+                description = f"{interaction.user.mention} ไม่มีเพลงเล่นอยู่",
                 colour = 0x983925
                 )
             await interaction.channel.send(embed =embed , delete_after=2)
@@ -775,7 +775,7 @@ class Music(commands.Cog):
                     try:
                         embed_message = await channel.fetch_message(data["Embed_message_id"])
                         music_message = await channel.fetch_message(data["Music_message_id"])
-                        embed = nextcord.embeds(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
+                        embed = nextcord.Embed(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
                         await ctx.send(embed=embed)
                     except nextcord.NotFound:
                         try:

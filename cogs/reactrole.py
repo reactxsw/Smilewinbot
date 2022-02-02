@@ -1,5 +1,4 @@
 import nextcord
-from nextcord.embeds import Embed
 import settings
 from utils.languageembed import languageEmbed
 from nextcord.ext import commands
