@@ -26,7 +26,7 @@ class Economy(commands.Cog):
                 if not guild is None:
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             newbalance = {"guild_id": ctx.guild.id, "user_id":ctx.author.id,"bank":0 , "wallet":0}
                             await settings.collectionmoney.insert_one(newbalance)
@@ -74,7 +74,7 @@ class Economy(commands.Cog):
                 if not guild is None:
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             newbalance = {"guild_id": ctx.guild.id, "user_id":ctx.author.id,"bank":0 , "wallet":0}
                             await settings.collectionmoney.insert_one(newbalance)
@@ -592,7 +592,7 @@ class Economy(commands.Cog):
             
                                 else:
                                     embed = nextcord.Embed(
-                                        title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                        title = "จํานวนเงินในธนาคารตังไม่พอ",
                                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                         colour = 0x983925
                                         )
@@ -1318,7 +1318,7 @@ class Economy(commands.Cog):
 
                                 else:
                                     embed = nextcord.Embed(
-                                        title = "จํานวนเงินในธนาคารไม่พอ",
+                                        title = "จํานวนเงินในกระเป๋าตังไม่พอ",
                                         description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                         colour = 0x983925
                                         )
@@ -1765,7 +1765,7 @@ class Economy(commands.Cog):
                     currency = guild["currency"]
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             embed = nextcord.Embed(
                                 title = f"{ctx.author.name} ยังไม่มีบัญชี",
@@ -1819,7 +1819,7 @@ class Economy(commands.Cog):
                     currency = guild["currency"]
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             embed = nextcord.Embed(
                                     title = f"{ctx.author.name} don't have a balance",
@@ -1883,7 +1883,7 @@ class Economy(commands.Cog):
                     currency = guild["currency"]
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             embed = nextcord.Embed(
                                 title = f"{ctx.author.name} ยังไม่มีบัญชี",
@@ -1935,7 +1935,7 @@ class Economy(commands.Cog):
                     currency = guild["currency"]
                     status = guild["economy_system"]
                     if status == "YES":
-                        user = await settings.collectionmoney.find_one({"user_id":ctx.author.id})
+                        user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                         if user is None:
                             embed = nextcord.Embed(
                                     title = f"{ctx.author.name} don't have a balance",

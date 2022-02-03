@@ -1,4 +1,3 @@
-from queue import Queue
 import pomice
 import datetime
 import asyncio
@@ -228,7 +227,7 @@ class Music(commands.Cog):
                     embed.add_field(name="``🔁`` โหมด" ,value="Default")
                     embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=player.guild.get_member(server["Queue"][0]["requester"]).mention)
                     embed.set_image(url =tracks.thumbnail)
-                    if nu == None:
+                    if nu is None:
                         embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : 1")
                     else:
                         embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
@@ -574,11 +573,11 @@ class Music(commands.Cog):
     
     @commands.command(aliases=['pla', 'p'])
     async def play(self, ctx: commands.Context, *, search: str):
-        data = await settings.collection.find_one({"guild_id":ctx.guild.id})
-        if data is not None:
-            music_channel = data["Music_channel_id"]
-            music_embed = data["Embed_message_id"]
-            music_message = data["Music_message_id"]
+        server = await settings.collection.find_one({"guild_id":ctx.guild.id})
+        if server is not None:
+            music_channel = server["Music_channel_id"]
+            music_embed = server["Embed_message_id"]
+            music_message = server["Music_message_id"]
             if music_channel != "None":
                 if music_embed != "None" and music_message != "None":
                     if ctx.channel.id == music_channel:
@@ -594,26 +593,47 @@ class Music(commands.Cog):
                         if isinstance(results, pomice.Playlist):
                             if Queue is None and not player.is_playing:
                                 if len(results.tracks) > 20:
-                                    results.tracks = results.tracks[:21]
-
+                                    tracks = results.tracks[:21]
+                                else:
+                                    tracks = results.tracks
                                 num = 1
                                 list_song = []
-                                await player.play(results.tracks[0])
-                                for track in results.tracks:
-                                    list_song.append(f"> [{num}] " + track.title + "\n")
-                                    Queue["Queue"].append({
+                                data = {
+                                        "guild_id":ctx.guild.id,
+                                        "Mode":"Default",
+                                        "Request_channel":ctx.channel.id,
+                                        "Queue":[]
+                                    }
+                                for track in tracks:
+                                    list_song.append(f"> [{num}] " + track.title + "\n> ╰━" + ctx.guild.get_member(ctx.author.id).mention+"\n")
+                                    data["Queue"].append({
+                                            "source": "Spotify" if "open.spotify.com" in track.uri else track.info["sourceName"],
                                             "song_title":track.title,
                                             "song_id":track.track_id,
                                             "requester":ctx.author.id})
-
                                     num = num+1
-                                nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
+
+                                list_song = "".join(list_song)
+                                await player.play(tracks[0])
+                                nu = tracks[1] if len(tracks) > 1 else None
+                                time = await time_format(tracks[0].length)
                                 embed=nextcord.Embed(
                                     description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                    colour = 0xffff00)  
-                                embed.set_author(name=f"กําลังเล่น {results.tracks[0].title}", icon_url=self.bot.user.avatar.url , url=results.tracks[0].uri)
-                                embed.set_image(url =results.tracks[0].thumbnail)
-                                embed.set_footer(text=f"next up : {nu}")
+                                    colour = 0xffff00)
+                                
+                                embed.set_author(name=f"กําลังเล่น {time} {tracks[0]}", icon_url=self.bot.user.avatar.url , url=tracks[0].uri)
+                                embed.add_field(name="``📞`` ช่องเสียง" ,value=ctx.guild.me.voice.channel.mention)
+                                embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
+                                embed.add_field(name="``🔁`` โหมด" ,value="Default")
+                                embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=ctx.author.mention)
+                                if not tracks[0].thumbnail is None:
+                                    embed.set_image(url =tracks[0].thumbnail)
+                                else:
+                                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                if nu is None:
+                                    embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : 1")
+                                else:
+                                    embed.set_footer(text=f"server : {ctx.guild.name} | เพลงในคิว : {len(tracks)}")
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                 await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                                 await settings.collectionmusic.insert_one(data)
@@ -621,6 +641,8 @@ class Music(commands.Cog):
                             else:
                                 if not len(Queue["Queue"]) > 20:
                                     availble = 21 - len(Queue["Queue"])
+                                    print(results.tracks)
+                                    print(results.tracks[0])
                                     if len(results.tracks) > availble:
                                         results.tracks = results.tracks[:availble]
                                     num = len(Queue["Queue"]) 
@@ -648,10 +670,12 @@ class Music(commands.Cog):
                                     embed.set_footer(text=f"next up : {nu}")
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
+
                         else: 
                             track : pomice.Track= results[0]
                             s_title = track.title
                             s_id = track.track_id
+                            s_source = "Spotify" if "open.spotify.com" in track.uri else track.info["sourceName"]
                             s_len = track.length/1000
                             if Queue is None and not player.is_playing:
                                 try:
@@ -665,7 +689,10 @@ class Music(commands.Cog):
                                     embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
                                     embed.add_field(name="``🔁`` โหมด" ,value="Default")
                                     embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=ctx.author.mention)
-                                    embed.set_image(url =track.thumbnail)
+                                    if not track.thumbnail is None:
+                                        embed.set_image(url =track.thumbnail)
+                                    else:
+                                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                                     embed.set_footer(text=f"server : {ctx.guild.name} | เพลงในคิว : 1")
                                     data = {
                                         "guild_id":ctx.guild.id,
@@ -674,6 +701,7 @@ class Music(commands.Cog):
                                         "Queue":[]
                                     }
                                     data["Queue"].append({
+                                            "source":s_source,
                                             "song_title":s_title,
                                             "song_id":s_id,
                                             "requester":ctx.author.id})
@@ -690,7 +718,6 @@ class Music(commands.Cog):
                                 if not len(Queue["Queue"]) > 20:
                                     nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                     time = await time_format(player.current.length/1000)
-                                    # +1 because Queue + current song that will add to db below
                                     left = len(Queue["Queue"]) + 1
                                     list_song = []
                                     num = 1
@@ -702,12 +729,16 @@ class Music(commands.Cog):
                                     embed.add_field(name="``🔊`` ระดับเสียงเพลง" ,value=player.volume)
                                     embed.add_field(name="``🔁`` โหมด" ,value=Queue["Mode"])
                                     embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=member.mention)
-                                    embed.set_image(url =player.current.thumbnail)
+                                    if not track.thumbnail is None:
+                                        embed.set_image(url =track.thumbnail)
+                                    else:
+                                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
                                     await settings.collectionmusic.update_one({
                                         "guild_id":ctx.guild.id}, {
                                             '$push': {
                                                 'Queue': {
+                                                    "source":s_source,
                                                     "song_title":s_title,
                                                     "song_id":s_id,
                                                     "requester":ctx.author.id}}})
@@ -721,7 +752,8 @@ class Music(commands.Cog):
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     else:
-                        return                                         
+                        return        
+
     @commands.command()
     async def musicsetup(self,ctx):
         data = await settings.collection.find_one({"guild_id":ctx.guild.id})
