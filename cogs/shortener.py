@@ -358,12 +358,12 @@ https://hastebin.com/{r['key']}```"""
             await message.add_reaction('👍')
         
         else:
-            if "//" in message:
-                message = message.replace('//', '\n')
+            if "/*/" in message:
+                message = message.replace('/*/', '\n')
 
             embed = nextcord.Embed(
                 colour = 0x00FFFF,
-                title= f"{message}"
+                description= f"{message}"
             )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")

@@ -56,6 +56,7 @@ class Gamble(commands.Cog):
                             )
                             embed.set_footer(text=ctx.author)
                             race = await ctx.send(embed=embed)
+                            await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current - money}})
                             while run:
                                 await asyncio.sleep(0.6)
                                 render = "".join([(f"**🏁"+"- "*board[j] + f"🏇{j+1}.**\n") for j in range(5)])
@@ -80,7 +81,7 @@ class Gamble(commands.Cog):
                                             )
                                             embed.set_footer(text=ctx.author)
                                             await race.edit(embed=embed)
-                                            current = current + money*5
+                                            current = current + money*6
                                             await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current}})
                                         
                                         else:
@@ -92,8 +93,6 @@ class Gamble(commands.Cog):
                                             )
                                             embed.set_footer(text=ctx.author)
                                             await race.edit(embed=embed)
-                                            current = current - money
-                                            await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current}})
                                         run = False
                                         break
                         else:

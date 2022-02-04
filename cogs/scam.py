@@ -75,6 +75,7 @@ class Scam(commands.Cog):
                 )
                 embed.add_field(name="Add",value="ส่งคำขอเพิ่มลิ้งที่ไม่ปลอดภัยไปให้ผู้พัฒนา | `scam add [link]`")
                 embed.add_field(name="Remove",value="ส่งคำขอลบลิ้งที่ไม่ปลอดภัยไปให้ผู้พัฒนา | `scam remove [link]`")
+                embed.add_field(name="Mode",value="ตั้งค่า ลบหรือเตือนเฉยๆหากมีคนส่งลิงค์ Virus | `scam mode [warn/delete]`")
                 embed.add_field(name="📢หมายเหตุ",value="""```
 [] คือ ค่าที่จำเป็นต้องใส่
 / คือ หรือ
@@ -88,8 +89,9 @@ class Scam(commands.Cog):
                     title = "Scam command information",
                     colour = 0xFED000,
                 )
-                embed.add_field(name="Add",value="Request to add scam link to developer | `scam add [link]`",inline=False)
-                embed.add_field(name="Remove",value="Request to remove scam link to developer | `scam remove [link]`",inline=False)
+                embed.add_field(name="Add",value="Request to add scam link to developer | `scam add [link]`")
+                embed.add_field(name="Remove",value="Request to remove scam link to developer | `scam remove [link]`")
+                embed.add_field(name="Mode",value="Set wheter to warn or delete virus link | `scam mode [warn/delete]`")
                 embed.add_field(name="📢Note",value="""```
 [] = required
 / = or
