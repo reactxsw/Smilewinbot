@@ -15,11 +15,11 @@ async def time_format(seconds: int):
         m = seconds % 3600 // 60
         s = seconds % 3600 % 60
         if h > 0:
-            return '[{:02d}:{:02d}:{:02d}]'.format(h, m, s)
+            return f"[{h:02d}:{m:02d}:{s:02d}]"
         elif m > 0:
-            return '[{:02d}:{:02d}]'.format(m, s)
+            return f"[{m:02d}:{s:02d}]"
         elif s > 0:
-            return '[00:{:02d}]'.format(s)
+            return "[00:{s:02d}]"
         
         else:
             return("[0:00]")
@@ -38,7 +38,6 @@ class MusicButton(nextcord.ui.View):
     async def pause_stop_button(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
     
-    
     @nextcord.ui.button(
         label =" ⏭ ",
         style=nextcord.ButtonStyle.secondary,
@@ -54,6 +53,7 @@ class MusicButton(nextcord.ui.View):
         row=0)
     async def stop_button(self , button : nextcord.ui.Button, interaction: nextcord.Interaction):
         await Music.handle_click(self,button, interaction)
+
     @nextcord.ui.button(
         label=" 🔂 ",
         style=nextcord.ButtonStyle.secondary ,
@@ -791,11 +791,27 @@ class Music(commands.Cog):
         
         else:
             server_language = languageserver["Language"]
-            if server_language == "Thai":
-                data = await settings.collection.find_one({"guild_id":ctx.guild.id})
-                if data is None:
-                    newserver = await Music.setnewserver(self,ctx)
-                    await settings.collection.insert_one(newserver)
+            data = await settings.collection.find_one({"guild_id":ctx.guild.id})
+            if data is None:
+                newserver = await Music.setnewserver(self,ctx)
+                await settings.collection.insert_one(newserver)
+                channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
+
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                    colour = 0xffff00)
+                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
+                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                embed.set_footer(text=f"server : {ctx.guild.name}")
+                try:
+                    embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton(self))
+                except Exception as e:
+                    print(e)
+                music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
+
+                await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
+            else:
+                if data["Music_channel_id"] == "None":
                     channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
@@ -803,16 +819,13 @@ class Music(commands.Cog):
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                     embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    try:
-                        embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton(self))
-                    except Exception as e:
-                        print(e)
+                    embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                     await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
-
                     await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
                 else:
-                    if data["Music_channel_id"] == "None":
+                    channel = self.bot.get_channel(data["Music_channel_id"])
+                    if channel is None:
                         channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
                         embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
@@ -820,122 +833,36 @@ class Music(commands.Cog):
                         embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
                         embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
                         embed.set_footer(text=f"server : {ctx.guild.name}")
-                        embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
+                        embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton(self.bot))
                         music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
                         await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
                         await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
                     else:
                         channel = self.bot.get_channel(data["Music_channel_id"])
-                        if channel is None:
-                            channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
-
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                                colour = 0xffff00)
-                            embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                            embed.set_footer(text=f"server : {ctx.guild.name}")
-                            embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton(self.bot))
-                            music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                            await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
-                            await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
-                        else:
-                            channel = self.bot.get_channel(data["Music_channel_id"])
+                        try:
+                            embed_message = await channel.fetch_message(data["Embed_message_id"])
+                            music_message = await channel.fetch_message(data["Music_message_id"])
+                            embed = nextcord.Embed(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
+                            await ctx.send(embed=embed)
+                        except nextcord.NotFound:
                             try:
                                 embed_message = await channel.fetch_message(data["Embed_message_id"])
-                                music_message = await channel.fetch_message(data["Music_message_id"])
-                                embed = nextcord.Embed(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
-                                await ctx.send(embed=embed)
+
                             except nextcord.NotFound:
-                                try:
-                                    embed_message = await channel.fetch_message(data["Embed_message_id"])
-
-                                except nextcord.NotFound:
-                                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                        colour = 0xffff00)
-                                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                                    embed.set_footer(text=f"server : {ctx.guild.name}")
-                                    embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
-                                    await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})
-                                    
-                                try:
-                                    music_message = await channel.fetch_message(data["Music_message_id"])
-                                except nextcord.NotFound:
-                                    music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                                    await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_message_id":music_message.id}})
-
-            if server_language == "English":
-                data = await settings.collection.find_one({"guild_id":ctx.guild.id})
-                if data is None:
-                    newserver = await Music.setnewserver(self,ctx)
-                    await settings.collection.insert_one(newserver)
-                    channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
-
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                        colour = 0xffff00)
-                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                    embed.set_footer(text=f"server : {ctx.guild.name}")
-                    try:
-                        embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton(self))
-                    except Exception as e:
-                        print(e)
-                    music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                    await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
-
-                    await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
-                else:
-                    if data["Music_channel_id"] == "None":
-                        channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
-
-                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                            colour = 0xffff00)
-                        embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                        embed.set_footer(text=f"server : {ctx.guild.name}")
-                        embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
-                        music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                        await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
-                        await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
-                    else:
-                        channel = self.bot.get_channel(data["Music_channel_id"])
-                        if channel is None:
-                            channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
-
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                                colour = 0xffff00)
-                            embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                            embed.set_footer(text=f"server : {ctx.guild.name}")
-                            embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton(self.bot))
-                            music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                            await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_channel_id":channel.id,"Embed_message_id":embed_message.id,"Music_message_id":music_message.id}})
-                            await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
-                        else:
-                            channel = self.bot.get_channel(data["Music_channel_id"])
+                                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                    colour = 0xffff00)
+                                embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
+                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_footer(text=f"server : {ctx.guild.name}")
+                                embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
+                                await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})
+                                
                             try:
-                                embed_message = await channel.fetch_message(data["Embed_message_id"])
                                 music_message = await channel.fetch_message(data["Music_message_id"])
-                                embed = nextcord.Embed(title= "มีห้องเล่นเพลงเเล้ว",colour =0xffff00 , description= channel.mention)
-                                await ctx.send(embed=embed)
                             except nextcord.NotFound:
-                                try:
-                                    embed_message = await channel.fetch_message(data["Embed_message_id"])
+                                music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                                await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_message_id":music_message.id}})
 
-                                except nextcord.NotFound:
-                                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
-                                        colour = 0xffff00)
-                                    embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
-                                    embed.set_footer(text=f"server : {ctx.guild.name}")
-                                    embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
-                                    await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})
-                                    
-                                try:
-                                    music_message = await channel.fetch_message(data["Music_message_id"])
-                                except nextcord.NotFound:
-                                    music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                                    await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Music_message_id":music_message.id}})
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
     bot.add_view(MusicButton(bot))

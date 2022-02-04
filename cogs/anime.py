@@ -17,37 +17,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else:
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/feed") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "feed"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/feed") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "feed"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)   
-                        await message.add_reaction('❤️')
-
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/feed") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "feed"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)   
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)     
+                    await message.add_reaction('❤️')
 
     @commands.command()
     async def tickle(self, ctx, member: nextcord.Member = None):
@@ -57,36 +40,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else:
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/tickle") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "tickle"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/tickle") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "tickle"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)   
-                        await message.add_reaction('❤️')
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/tickle") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "tickle"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)   
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
     @commands.command()
     async def slap(self,ctx, member: nextcord.Member = None):
@@ -96,36 +63,21 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else:  
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/slap") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "slap"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/slap") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "slap"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)   
-                        await message.add_reaction('❤️')
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/slap") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "slap"
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)   
-                        await message.add_reaction('❤️')
 
     @commands.command()
     async def hug(self,ctx, member: nextcord.Member = None):
@@ -135,37 +87,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else: 
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/hug") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "hug"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/hug") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "hug"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('❤️')
-            
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/hug") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "hug"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)   
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
     @commands.command()
     async def smug(self, ctx, member: nextcord.Member = None):
@@ -175,37 +110,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else: 
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/smug") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "smug"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/smug") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "smug"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('❤️')
-            
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/smug") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "smug"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)   
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
     @commands.command()
     async def pat(self,ctx, member: nextcord.Member = None):
@@ -215,37 +133,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else: 
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/pat") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "pat"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/pat") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "pat"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction('❤️')
-            
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/pat") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "pat"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)  
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
     @commands.command()
     async def kiss(self,ctx, member: nextcord.Member = None):
@@ -255,37 +156,20 @@ class Anime(commands.Cog):
             await message.add_reaction('👍')
 
         else: 
-            if member is None:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/kiss") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "kiss"
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://nekos.life/api/v2/img/kiss") as r:
+                    r = await r.json()
+                    embed = nextcord.Embed(
+                        colour = 0xFC7EF5,
+                        title = "kiss"
 
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    )   
+                    url = r['url']
+                    embed.set_image(url=url)
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                        message = await ctx.send(embed=embed)  
-                        await message.add_reaction('❤️')
-            
-            else:
-                async with aiohttp.ClientSession() as session:
-                    async with session.get("https://nekos.life/api/v2/img/kiss") as r:
-                        r = await r.json()
-                        embed = nextcord.Embed(
-                            colour = 0xFC7EF5,
-                            title = "kiss"
-
-                        )   
-                        url = r['url']
-                        embed.set_image(url=url)
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(f"{member.mention}",embed=embed)  
-                        await message.add_reaction('❤️')
+                    message = await ctx.send(embed=embed) if member is None else await ctx.send(f"{member.mention}",embed=embed)
+                    await message.add_reaction('❤️')
 
 def setup(bot: commands.Bot):
     bot.add_cog(Anime(bot))
