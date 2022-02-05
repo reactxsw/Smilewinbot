@@ -1,0 +1,304 @@
+{
+    "Anime": {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Botsetup" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Discordactivity" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Discordinfo" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Donate" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Economy" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Error" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Event" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Faceit" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Fun" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Gamble" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Game" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Gameinfo" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "General" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Help" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Image" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Info" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Level" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Makeimage" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Mod" : {
+        "Response" : {},
+        "Error" : {}
+    },
+    "Music" : {
+        "Response" : {},
+        "Error" : {}
+    },
+    "Nsfw" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {
+                "is_nsfw":"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
+            }
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {
+                "is_nsfw":"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
+            }
+        }
+    },
+    "OnMessage" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Proxy" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Reactrole" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Scam" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Serverstat" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Setlanguage" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Shortener" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Tictactoe" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    },
+    "Verify" : {
+        "Thai" : {
+            "Response" : {},
+            "Error" : {}
+        },
+        "English" : {
+            "Response" : {},
+            "Error" : {}
+        }
+    }
+}

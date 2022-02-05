@@ -14,7 +14,28 @@ class Gamble(commands.Cog):
         pass
 
     @commands.command()
-    async def roulette(self,ctx):
+    async def roulette(self,ctx , colour , amount:int):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            data = await settings.collection.find_one({"guild_id":ctx.guild.id})
+            if not data is None:
+                if data["economy_system"] == "YES":
+                    user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    if user is None:
+                        embed = nextcord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
         pass
 
     @commands.command()

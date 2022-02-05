@@ -348,7 +348,7 @@ class Economy(commands.Cog):
                         await message.add_reaction('💸')
         
     @commands.command()
-    async def deposit(self,ctx, amount : int):
+    async def deposit(self,ctx, amount):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -358,14 +358,15 @@ class Economy(commands.Cog):
             server_language = languageserver["Language"]
             
             if server_language == "Thai":
-                if amount < 0:
-                    embed = nextcord.Embed(
-                        title = "จํานวนเงินไม่สามารถติดลบได้",
-                        colour = 0x983925
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message  = await ctx.send(embed=embed)
-                    await message.add_reaction('💸')  
+                if amount != "all":
+                    if amount < 0:
+                        embed = nextcord.Embed(
+                            title = "จํานวนเงินไม่สามารถติดลบได้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')  
                     
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -386,8 +387,14 @@ class Economy(commands.Cog):
 
                             else:
                                 current_wallet = user["wallet"]
-                                new_bank = amount + user["bank"]
-                                new_wallet = user["wallet"] - amount
+                                if amount == "all":
+                                    amount = current_wallet
+                                    new_bank = amount + user["bank"]
+                                    new_wallet = user["wallet"] - amount
+                                else:
+                                    amount = int(amount)
+                                    new_bank = amount + user["bank"]
+                                    new_wallet = user["wallet"] - amount
                                 if current_wallet >= amount:
                                     embed = nextcord.Embed(
                                         title = f"ฝากเงินเข้าบัญชีธนาคารสําเร็จ",
@@ -431,14 +438,15 @@ class Economy(commands.Cog):
                         await message.add_reaction('💸')
             
             if server_language == "English":
-                if amount < 0:
-                    embed = nextcord.Embed(
-                        title = "Amount cannot be negative",
-                        colour = 0x983925
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message  = await ctx.send(embed=embed)
-                    await message.add_reaction('💸')  
+                if amount != "all":
+                    if amount < 0:
+                        embed = nextcord.Embed(
+                            title = "Amount cannot be negative",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')  
                     
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -459,8 +467,14 @@ class Economy(commands.Cog):
 
                             else:
                                 current_wallet = user["wallet"]
-                                new_bank = amount + user["bank"]
-                                new_wallet = user["wallet"] - amount
+                                if amount == "all":
+                                    amount = current_wallet
+                                    new_bank = amount + user["bank"]
+                                    new_wallet = user["wallet"] - amount
+                                else:
+                                    amount = int(amount)
+                                    new_bank = amount + user["bank"]
+                                    new_wallet = user["wallet"] - amount
                                 if current_wallet >= amount:
                                     embed = nextcord.Embed(
                                         title = f"Deposit",
@@ -525,7 +539,7 @@ class Economy(commands.Cog):
                     message = await ctx.send(embed=embed ) 
                     await message.add_reaction('⚠️')
             
-            if server_language == "Thai":
+            if server_language == "English":
                 if isinstance(error, commands.MissingRequiredArgument):
                     embed = nextcord.Embed(
                         colour = 0x983925,
@@ -538,7 +552,7 @@ class Economy(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @commands.command()
-    async def withdraw(self,ctx, amount : int):
+    async def withdraw(self,ctx, amount):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
             message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
@@ -548,15 +562,16 @@ class Economy(commands.Cog):
             server_language = languageserver["Language"]
         
             if server_language == "Thai":
-                if amount <= 0:
-                    embed = nextcord.Embed(
-                        title = "จํานวนเงินไม่สามารถติดลบได้",
-                        colour = 0x983925
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message  = await ctx.send(embed=embed)
-                    await message.add_reaction('💸')  
-                    
+                if amount != "all":
+                    if int(amount) <= 0:
+                        embed = nextcord.Embed(
+                            title = "จํานวนเงินไม่สามารถติดลบได้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')  
+
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
                     if not guild is None:
@@ -576,8 +591,14 @@ class Economy(commands.Cog):
                             
                             else:
                                 user_bank = user["bank"]
-                                new_bank = user["bank"] - amount
-                                new_wallet = user["wallet"] + amount
+                                if amount == "all":
+                                    amount = user_bank
+                                    new_bank = user["bank"] - amount
+                                    new_wallet = user["wallet"] + amount
+                                else:
+                                    amount = int(amount)
+                                    new_bank = user["bank"] - amount
+                                    new_wallet = user["wallet"] + amount
                                 if user_bank >= amount:
                                     embed = nextcord.Embed(
                                         title = f"ถอนเงินเสําเร็จ",
@@ -621,14 +642,15 @@ class Economy(commands.Cog):
                         await message.add_reaction('💸')
 
             if server_language == "English":
-                if amount < 0:
-                    embed = nextcord.Embed(
-                        title = "Amount cannot be negative",
-                        colour = 0x983925
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message  = await ctx.send(embed=embed)
-                    await message.add_reaction('💸')    
+                if amount != "all":
+                    if int(amount) <= 0:
+                        embed = nextcord.Embed(
+                            title = "Amount cannot be negative",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')    
                     
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
@@ -648,6 +670,15 @@ class Economy(commands.Cog):
                                 await message.add_reaction('💸')
                             
                             else:
+                                user_bank = user["bank"]
+                                if amount == "all":
+                                    amount = user_bank
+                                    new_bank = user["bank"] - amount
+                                    new_wallet = user["wallet"] + amount
+                                else:
+                                    amount = int(amount)
+                                    new_bank = user["bank"] - amount
+                                    new_wallet = user["wallet"] + amount
                                 user_bank = user["bank"]
                                 new_bank = user["bank"] - amount
                                 new_wallet = user["wallet"] + amount
@@ -751,6 +782,8 @@ class Economy(commands.Cog):
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
                     if not guild is None:
+                        if member is None:
+                            member = ctx.author
                         status = guild["economy_system"]
                         currency = guild["currency"]
                         if status == "YES":
@@ -811,6 +844,8 @@ class Economy(commands.Cog):
                 else:
                     guild = await settings.collection.find_one({"guild_id":ctx.guild.id})
                     if not guild is None:
+                        if member is None:
+                            member = ctx.author
                         status = guild["economy_system"]
                         currency = guild["currency"]
                         if status == "YES":
@@ -1542,6 +1577,7 @@ class Economy(commands.Cog):
                     await message.add_reaction('⚠️')
 
     @commands.command()
+    @commands.cooldown(1, 7200, commands.BucketType.user)
     async def rob(self,ctx , member: nextcord.Member):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -1749,7 +1785,31 @@ class Economy(commands.Cog):
                     message  = await ctx.send(embed=embed)
                     await message.add_reaction('💸')
 
+    @rob.error
+    async def rob_error(self,ctx, error):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            
+            if server_language == "Thai":
+                if isinstance(error, commands.CommandOnCooldown):
+                    embed = nextcord.Embed(
+                        colour = 0x983925,
+                        title = "ติด Cooldown",
+                        description = f"⚠️ ``{ctx.author}``, คุุณจะสามารถใช้คําสั่งนี้ได้ในอีก {error.retry_after}"
+                    )
+                    
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️') 
+
     @commands.command()
+    @commands.cooldown(1, 600, commands.BucketType.user)
     async def work(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -1866,8 +1926,31 @@ class Economy(commands.Cog):
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message  = await ctx.send(embed=embed)
                     await message.add_reaction('💸')
+    @work.error
+    async def work_error(self,ctx, error):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            
+            if server_language == "Thai":
+                if isinstance(error, commands.CommandOnCooldown):
+                    embed = nextcord.Embed(
+                        colour = 0x983925,
+                        title = "ติด Cooldown",
+                        description = f"⚠️ ``{ctx.author}``, คุุณจะสามารถใช้คําสั่งนี้ได้ในอีก {error.retry_after}"
+                    )
+                    
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️') 
 
     @commands.command()
+    @commands.cooldown(1, 180, commands.BucketType.user)
     async def beg(self,ctx):
         languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
         if languageserver is None:
@@ -1980,6 +2063,29 @@ class Economy(commands.Cog):
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message  = await ctx.send(embed=embed)
                     await message.add_reaction('💸')
+
+    @beg.error
+    async def beg_error(self,ctx, error):
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            server_language = languageserver["Language"]
+            
+            if server_language == "Thai":
+                if isinstance(error, commands.CommandOnCooldown):
+                    embed = nextcord.Embed(
+                        colour = 0x983925,
+                        title = "ติด Cooldown",
+                        description = f"⚠️ ``{ctx.author}``, คุุณจะสามารถใช้คําสั่งนี้ได้ในอีก {error.retry_after}"
+                    )
+                    
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+
+                    message = await ctx.send(embed=embed ) 
+                    await message.add_reaction('⚠️') 
 
     @commands.command()
     @commands.has_permissions(administrator=True)
