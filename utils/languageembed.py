@@ -1,5 +1,6 @@
 import nextcord
 import settings
+import asyncio
 
 class languageEmbed():
     def languageembed(self , ctx):

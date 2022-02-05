@@ -1,96 +1,250 @@
 {
     "Anime": {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Botsetup" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Discordactivity" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Discordinfo" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Donate" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Economy" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Error" : {
-        
+        "Response" : {
+
+        },
+        "Error" : {
+
+        }
     },
     "Event" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Faceit" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Fun" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Gamble" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Game" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Gameinfo" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "General" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Help" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Image" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Info" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Level" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Makeimage" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Mod" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Music" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Nsfw" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "OnMessage" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Proxy" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Reactrole" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Scam" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Serverstat" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Setlanguage" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Shortener" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Tictactoe" : {
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
     },
     "Verify" : {
-        
-    }
+        "Response" : {
 
+        },
+        "Error" : {
+
+        }
+    }
 }
