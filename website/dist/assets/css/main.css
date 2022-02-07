@@ -1,0 +1,26 @@
+.banner-image {
+    background-image: url('../image/background.jpg');
+    background-size: cover;
+    }
+.navbar-custom {
+    background-color: #1a1a1a;
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: #6c757d;
+}
+.yellow_text {
+    color: #fed000;
+}
+.thai-lang {
+    font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+}
+.bg {
+    background-color: #1a1a1a;
+  }
+
+.icon-stat {
+    padding:30px;
+    background:#fed000;
+    border-radius:60px;
+}

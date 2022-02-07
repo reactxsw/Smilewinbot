@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>_</title>
+      <link rel="icon" href="assets/image/smwcircle.png">
+      <link rel="stylesheet" href="assets/css/main.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <script type="text/javascript" src="assets/javascript/title.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+      <script type="text/javascript" src="assets/javascript/typing.js"></script>
+   </head>
+   <body class="bg">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
+         <div class="container">
+            <img class="rounded" src="assets/image/smw.png" width="50" height="50">
+            <a class="navbar-brand text-white" href="#"><span>🥀</span>Smilewin#0644</a>
+            <button
+               class="navbar-toggler"
+               type="button"
+               data-bs-toggle="collapse"
+               data-bs-target="#navbarNav"
+               aria-controls="navbarNav"
+               aria-expanded="false"
+               aria-label="Toggle navigation"
+               >
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+               <div class="mx-auto"></div>
+               <ul class="navbar-nav">
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#About">About</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#Team">Team</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#">Invite</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class=></i>Support</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
+         <div class="content text-center">
+            <h1 class="text-white" style="font-family: 'Anton', sans-serif;font-size: 170px;">SMILEWIN<span class="yellow_text">#0644</span></h1>
+            <div class="thai-lang typed" style="font-size: 30px;">
+               <span class="animation"></span>
+            </div>
+            <span id = "typed"></span>
+            <a class="btn btn-warning thai-lang" href="page/invite.html" role="button">เชิญบอทเข้าเซิฟ !</a>
+         </div>
+      </div>
+      <div class="container my-5 d-grid gap-5">
+         </div id ="About">
+            <p class="content text-center text-white">
+               <i class="fa fa-server icon-stat" style="font-size:50px;"></i>
+                200+ servers
+                  <i class="fa fa-user-circle icon-stat" style="font-size:50px;"></i>
+                60k+ members
+                  <i class="fa fa-code icon-stat" style="font-size:50px;"></i>
+                180+ commands
+            </p>
+         </div>
+         <div id ="Team">
+      
+            <p class="text-white">
+               อันนี้ก็ค่อยเขียน</p>
+         </div>
+      </div>
+      <script>
+            var typed = new Typed('.animation', {
+           strings : [
+              "บอทเพลง",
+              "บอทเกม",
+              "บอทเพลง บอทเกม บอทป้องกันไวรัส เเละอื่นๆมากถึง 180 คําสั่ง !"],
+           backSpeed:50,
+           typeSpeed:50,
+           loop:true
+
+           });
+       </script>
+      <script type="text/javascript">
+         var nav = document.querySelector('nav');
+         
+         window.addEventListener('scroll', function () {
+           if (window.pageYOffset > 100) {
+             nav.classList.add('navbar-custom');
+           } else {
+             nav.classList.remove('navbar-custom');
+           }
+         });
+      </script>
+      <footer class="text-center text-lg-start">
+         <div class="text-center text-white p-3" style="background-color: #1a1a1a;">
+           © 2022 Copyright:
+           <a class="text-white" href="https://smilewinbot.web.app/">smilewinbot.web.app</a>
+         </div>
+       </footer>
+      
+   </body>
+</html>
