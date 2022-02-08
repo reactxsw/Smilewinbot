@@ -1,48 +1,19 @@
+import requests
 import motor.motor_asyncio
 import json
 import asyncpraw
 import os
 from pathlib import Path
 
-if not Path("download").exists():
-    directory = os.path.dirname(__file__) 
-    folder = f"{directory}/download" 
-
+directory = os.path.dirname(__file__) 
+folders = ["download","data","image","logs"]
+for folder in folders:
     try:
-        os.makedirs(folder)
-
+        if not Path(folder).exists():
+            os.makedirs(f"{directory}/{folder}")
+    
     except OSError:
-        pass
-
-if not Path("data").exists():
-    directory = os.path.dirname(__file__) 
-    folder = f"{directory}/data" 
-
-    try:
-        os.makedirs(folder)
-        
-    except OSError:
-        pass
-
-if not Path("image").exists():
-    directory = os.path.dirname(__file__) 
-    folder = f"{directory}/image" 
-
-    try:
-        os.makedirs(folder)
-        
-    except OSError:
-        pass
-
-if not Path("logs").exists():
-    directory = os.path.dirname(__file__) 
-    folder = f"{directory}/logs" 
-
-    try:
-        os.makedirs(folder)
-        
-    except OSError:
-        pass
+        print(f"unable to create {folder}")
 
 if Path("config.json").exists():
     with open('config.json') as setting:
@@ -106,111 +77,8 @@ if Path("config.json").exists():
 
 else: 
     with open("config.json", "w") as setting:
-        setting.writelines(
-            [
-                "{",
-                    "\n",
-                    "    "+'"developer_user_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"bot_token": "_____________________________________",',
-                    "\n",
-                    "    "+'"bot_prefix": "_____________________________________",',
-                    "\n",
-                    "    "+'"connect_mongodb": "_____________________________________",',
-                    "\n",
-                    "    "+'"support_channel": "_____________________________________",',
-                    "\n",
-                    "    "+'"log_channel": "_____________________________________",',
-                    "\n",
-                    "\n",
-                    "    "+'"Lavalink_IPv4": "_____________________________________",',
-                    "\n",
-                    "    "+'"Lavalink_Port": "_____________________________________",',
-                    "\n",
-                    "    "+'"Lavalink_pass": "_____________________________________",',
-                    "\n",
-                    "    "+'"Lavalink_identifier": "_____________________________________",',
-                    "\n",
-                    "    "+'"Lavalink_region": "_____________________________________",',
-                    "\n",
-                    "\n",
-                    "    "+'"openweathermap_api": "_____________________________________",',
-                    "\n",
-                    "    "+'"tracker.gg_api": "_____________________________________",',
-                    "\n",
-                    "\n",
-                    "    "+'"reddit_client_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"reddit_client_secret": "_____________________________________",',
-                    "\n",
-                    "    "+'"reddit_username": "_____________________________________",',
-                    "\n",
-                    "    "+'"reddit_password":"_____________________________________",',
-                    "\n",
-                    "    "+'"reddit_user_agent": "_____________________________________",',
-                    "\n",
-                    "\n",
-                    "    "+'"pastebin_api_dev_key": "_____________________________________",',
-                    "\n",
-                    "    "+'"youtube_api": "_____________________________________",',
-                    "\n",
-                    "\n",
-                    "    "+'"emoji_:partner:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:verify:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:boost:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:member:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:channel:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:role:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:emoji:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:online:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:offline:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:idle:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:busy:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlogo:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl1:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl2:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl3:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl4:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl5:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl6:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl7:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl8:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl9:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitlvl10:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitsea:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitus:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceitas:_id": "_____________________________________",',
-                    "\n",
-                    "    "+'"emoji_:faceiteu:_id": "_____________________________________"',
-                    "\n",
-                "}"
-            ]
-        )
-
+        setting.write(requests.get("https://raw.githubusercontent.com/reactxsw/Smilewinbot/main/config.example.json").text)
+        
 client = motor.motor_asyncio.AsyncIOMotorClient(mongodb)
 db = client.Smilewin
 collection = db.Data

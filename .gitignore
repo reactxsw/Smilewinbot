@@ -1,3 +1,4 @@
 config.json
 lavalink/application.yml
 *.pyc
+config.example.json
