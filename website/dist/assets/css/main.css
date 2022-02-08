@@ -4,10 +4,12 @@
     }
 .navbar-custom {
     background-color: #1a1a1a;
+    transition: 200ms;
 }
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
     color: #6c757d;
+    
 }
 .yellow_text {
     color: #fed000;
