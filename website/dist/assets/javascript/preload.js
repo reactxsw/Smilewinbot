@@ -16,5 +16,4 @@ preload(
     "https://cdn.discordapp.com/avatars/816276922492780565/939ac897d2133d0073a49da3483b02aa.png?size=1024",
     "https://cdn.discordapp.com/avatars/841386464179912756/346d2178fc33d8793399392da2cd36fd.png?size=1024",
     "https://cdn.discordapp.com/avatars/868101093090017300/fab77d8f08f04bbc1843a1c11c80b3a9.png?size=1024",
-
 )
