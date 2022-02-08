@@ -166,10 +166,10 @@ class Music(commands.Cog):
                 await player.destroy()
             await settings.collectionmusic.delete_one({"guild_id":member.guild.id})
             message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
-            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
             embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+            embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
             embed.set_footer(text=f"server : {member.guild.name}")
             await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
 
@@ -181,10 +181,10 @@ class Music(commands.Cog):
                 await settings.collectionmusic.delete_one({"guild_id":member.guild.id})
                 data = await settings.collection.find_one({"guild_id":member.guild.id})
                 message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(data["Embed_message_id"])
-                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                 embed.set_footer(text=f"server : {member.guild.name}")
                 await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
         
@@ -198,10 +198,10 @@ class Music(commands.Cog):
                 server = await settings.collectionmusic.find_one({"guild_id":player.guild.id})
                 if server["Queue"] == []:
                     await settings.collectionmusic.delete_one({"guild_id": player.guild.id})
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
                     await player.destroy()
@@ -219,7 +219,7 @@ class Music(commands.Cog):
                     tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                     time = await time_format(tracks.length/1000)
                     nu = None if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                         colour = 0xffff00)
                     embed.set_author(name=f"กําลังเล่น {time}" + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
                     embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -229,7 +229,7 @@ class Music(commands.Cog):
                     if not tracks.thumbnail is None:
                         embed.set_image(url =tracks.thumbnail)
                     else:
-                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     if nu is None:
                         embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : 1")
                     else:
@@ -243,10 +243,10 @@ class Music(commands.Cog):
                     await player.play(tracks)
                 
                 else:
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
 
@@ -271,7 +271,7 @@ class Music(commands.Cog):
                     tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                     time = await time_format(tracks.length/1000)
                     nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                         colour = 0xffff00)
                     embed.set_author(name=f"กําลังเล่น {time}" + tracks.title, icon_url=self.bot.user.avatar.url, url=tracks.uri)
                     embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -281,24 +281,24 @@ class Music(commands.Cog):
                     if not tracks.thumbnail is None:
                         embed.set_image(url =tracks.thumbnail)
                     else:
-                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     await player.play(tracks)
                 
                 else:
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
 
         else:
-            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
             embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+            embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
             embed.set_footer(text=f"server : {player.guild.name}")
             await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
 
@@ -361,7 +361,7 @@ class Music(commands.Cog):
                             num = num +1
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
-                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                             colour = 0xffff00)
                         embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                         embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -371,7 +371,7 @@ class Music(commands.Cog):
                         if not player.current.thumbnail is None:
                             embed.set_image(url =player.current.thumbnail)
                         else:
-                            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                            embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                         if nu == None:
                             embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                         else:
@@ -407,7 +407,7 @@ class Music(commands.Cog):
                             num = num +1
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
-                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                             colour = 0xffff00)
                         embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                         embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -417,7 +417,7 @@ class Music(commands.Cog):
                         if not player.current.thumbnail is None:
                             embed.set_image(url =player.current.thumbnail)
                         else:
-                            embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                            embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                         if nu == None:
                             embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                         else:
@@ -472,7 +472,7 @@ class Music(commands.Cog):
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
                             embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                             embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -482,7 +482,7 @@ class Music(commands.Cog):
                             if not player.current.thumbnail is None:
                                 embed.set_image(url =player.current.thumbnail)
                             else:
-                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
                                 embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                             else:
@@ -502,7 +502,7 @@ class Music(commands.Cog):
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
                             embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                             embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -512,7 +512,7 @@ class Music(commands.Cog):
                             if not player.current.thumbnail is None:
                                 embed.set_image(url =player.current.thumbnail)
                             else:
-                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
                                 embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                             else:
@@ -534,7 +534,7 @@ class Music(commands.Cog):
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
                             embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                             embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -544,7 +544,7 @@ class Music(commands.Cog):
                             if not player.current.thumbnail is None:
                                 embed.set_image(url =player.current.thumbnail)
                             else:
-                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
                                 embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                             else:
@@ -564,7 +564,7 @@ class Music(commands.Cog):
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
-                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                            embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                 colour = 0xffff00)
                             embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
                             embed.add_field(name="``📞`` ช่องเสียง" ,value=player.guild.me.voice.channel.mention)
@@ -574,7 +574,7 @@ class Music(commands.Cog):
                             if not player.current.thumbnail is None:
                                 embed.set_image(url =player.current.thumbnail)
                             else:
-                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
                                 embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
                             else:
@@ -642,7 +642,7 @@ class Music(commands.Cog):
                                 nu = tracks[1] if len(tracks) > 1 else None
                                 time = await time_format(tracks[0].length)
                                 embed=nextcord.Embed(
-                                    description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                    description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                                 
                                 embed.set_author(name=f"กําลังเล่น {time} {tracks[0]}", icon_url=self.bot.user.avatar.url , url=tracks[0].uri)
@@ -653,7 +653,7 @@ class Music(commands.Cog):
                                 if not tracks[0].thumbnail is None:
                                     embed.set_image(url =tracks[0].thumbnail)
                                 else:
-                                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                 if nu is None:
                                     embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : 1")
                                 else:
@@ -686,14 +686,14 @@ class Music(commands.Cog):
                                         num = num+1
                                     nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                     embed=nextcord.Embed(
-                                        description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                                     embed.set_author(name=f"กําลังเล่น {player.current.title}", icon_url=self.bot.user.avatar.url , url=player.current.uri)
                                     
                                     if not player.current.thumbnail is None:
                                         embed.set_image(url =player.current.thumbnail)
                                     else:
-                                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                     embed.set_footer(text=f"next up : {nu}")
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
@@ -708,7 +708,7 @@ class Music(commands.Cog):
                                 try:
                                     time = await time_format(s_len)
                                     embed=nextcord.Embed(
-                                        description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                                     
                                     embed.set_author(name=f"กําลังเล่น {time} {track}", icon_url=self.bot.user.avatar.url , url=track.uri)
@@ -719,7 +719,7 @@ class Music(commands.Cog):
                                     if not track.thumbnail is None:
                                         embed.set_image(url =track.thumbnail)
                                     else:
-                                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                     embed.set_footer(text=f"server : {ctx.guild.name} | เพลงในคิว : 1")
                                     data = {
                                         "guild_id":ctx.guild.id,
@@ -748,7 +748,7 @@ class Music(commands.Cog):
                                     left = len(Queue["Queue"]) + 1
                                     list_song = []
                                     num = 1
-                                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                                     member : nextcord.Member = await ctx.guild.fetch_member(Queue["Queue"][0]["requester"])
                                     embed.set_author(name=f"กําลังเล่น {time}" + player.current.title, icon_url=self.bot.user.avatar.url, url=player.current.uri)
@@ -759,7 +759,7 @@ class Music(commands.Cog):
                                     if not track.thumbnail is None:
                                         embed.set_image(url =track.thumbnail)
                                     else:
-                                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
                                     await settings.collectionmusic.update_one({
                                         "guild_id":ctx.guild.id}, {
@@ -797,10 +797,10 @@ class Music(commands.Cog):
                 await settings.collection.insert_one(newserver)
                 channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                 embed.set_footer(text=f"server : {ctx.guild.name}")
                 try:
                     embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view = MusicButton(self))
@@ -814,10 +814,10 @@ class Music(commands.Cog):
                 if data["Music_channel_id"] == "None":
                     channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                    embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                     embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                    embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                     embed.set_footer(text=f"server : {ctx.guild.name}")
                     embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
                     music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
@@ -828,10 +828,10 @@ class Music(commands.Cog):
                     if channel is None:
                         channel = await ctx.guild.create_text_channel(name = '😁│Smilewin Music',topic= ":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง")
 
-                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                        embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                             colour = 0xffff00)
                         embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                        embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                        embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                         embed.set_footer(text=f"server : {ctx.guild.name}")
                         embed_message = await channel.send(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ " ,embed=embed, view =  MusicButton(self.bot))
                         music_message = await channel.send("กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
@@ -849,10 +849,10 @@ class Music(commands.Cog):
                                 embed_message = await channel.fetch_message(data["Embed_message_id"])
 
                             except nextcord.NotFound:
-                                embed=nextcord.Embed(description="[❯ Invite](https://smilewinnextcord-th.web.app/invitebot.html) | [❯ Website](https://smilewinnextcord-th.web.app) | [❯ Support](https://nextcord.com/invite/R8RYXyB4Cg)",
+                                embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour = 0xffff00)
                                 embed.set_author(name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้", icon_url=self.bot.user.avatar.url)
-                                embed.set_image(url ="https://i.imgur.com/XwFF4l6.png")
+                                embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                 embed.set_footer(text=f"server : {ctx.guild.name}")
                                 embed_message = await channel.send(embed=embed, view =  MusicButton(self.bot))
                                 await settings.collection.update_one({"guild_id":ctx.guild.id},{"$set":{"Embed_message_id":embed_message.id}})

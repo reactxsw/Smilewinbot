@@ -28,7 +28,7 @@ class Game(commands.Cog):
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
-                embed.set_image(url = 'https://i.imgur.com/09sTceV.gif')
+                embed.set_image(url = 'https://smilewinbot.web.app/assets/image/host/rps.gif')
                 embed.set_footer(text=f"⏳ กดที่ emoji ภายใน10วินาที")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('✊')
@@ -92,7 +92,7 @@ class Game(commands.Cog):
                     title = "เกมเป่ายิ้งฉุบ"
                 )
 
-                embed.set_image(url = 'https://i.imgur.com/09sTceV.gif')
+                embed.set_image(url = 'https://smilewinbot.web.app/assets/image/host/rps.gif')
                 embed.set_footer(text=f"⏳ click on emoji in 10 seconds")
                 message = await ctx.send(embed=embed)
                 await message.add_reaction('✊')
