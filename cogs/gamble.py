@@ -41,13 +41,13 @@ async def checkwin(colour):
         1 : "black",
         0 : "red"
     }
-    if colour == "green" and outcome == 0:
+    if colour == "green" and outcome == 3:
         return "win","green",3
     
     elif colour == "black" and outcome == 1:
         return "win","black",1
     
-    elif colour == "red" and outcome == 2:
+    elif colour == "red" and outcome == 0:
         return "win","red",0
     
     else:
