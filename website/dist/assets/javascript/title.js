@@ -8,8 +8,3 @@ function s(){
     i++;
 }
 setInterval(s,444);
-await user.updateOne(
-    { $set: {
-        "Lv": 100,"exp": 10000,"mexp": 10000
-    }
-})
