@@ -58,7 +58,6 @@ async def change_status():
     await bot.wait_until_ready()
     await bot.change_presence(status = nextcord.Status.idle, activity=nextcord.Streaming(name = next(status) , url="https://www.twitch.tv/smilewinbot"))
 
-
 @tasks.loop(seconds=120)
 async def serverstat():
     await bot.wait_until_ready()
