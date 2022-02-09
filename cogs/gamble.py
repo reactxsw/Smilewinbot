@@ -1,6 +1,4 @@
 import asyncio
-from curses import noecho
-from multiprocessing.connection import wait
 import nextcord
 import random
 import numpy
@@ -27,29 +25,33 @@ async def getlastestoutcome(guild):
     else:
         return data["previous"]
 
-async def checkwin(colour , guild):
-    data = await settings.collectiongamble.find_one({"guild_id":guild})
-    for data in random.randint(0, 37):
-        if data == 0:
-            outcome = 3
-        
-        elif 0 < data < 19:
-            outcome = 1
-        
-        elif data > 18:
-            outcome = 0
+async def checkwin(colour):
+    num = random.randint(0, 37)
+    if num == 0:
+        outcome = 3
     
+    elif 0 < num < 19:
+        outcome = 1
+    
+    elif num > 18:
+        outcome = 0
+    
+    dic ={
+        3 : "green",
+        1 : "black",
+        0 : "red"
+    }
     if colour == "green" and outcome == 0:
-        return "win",0
+        return "win","green",3
     
     elif colour == "black" and outcome == 1:
-        return "win",1
+        return "win","black",1
     
     elif colour == "red" and outcome == 2:
-        return "win",2
+        return "win","red",0
     
     else:
-        return "lose",outcome
+        return "lose", dic[outcome], outcome
 
 
 class Gamble(commands.Cog):
@@ -114,6 +116,9 @@ class Gamble(commands.Cog):
             data = await settings.collection.find_one({"guild_id":ctx.guild.id})
             if not data is None:
                 if data["economy_system"] == "YES":
+                    roulette = await settings.collectiongamble.find_one({"guild_id":ctx.guild.id})
+                    if roulette is None:
+                        await getlastestoutcome(ctx.guild.id)
                     user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
                     if user is None:
                         embed = nextcord.Embed(
@@ -129,16 +134,183 @@ class Gamble(commands.Cog):
                         current = user["wallet"]
                         currency = data["currency"]
                         if current >= amount:
-                            await checkwin("green")
+                            result, colour,outcome =await checkwin("green")
+                            await settings.collectiongamble.update_one({"guild_id": ctx.guild.id}, {'$pop': {'previous': -1}}) 
+                            await settings.collectiongamble.update_one({"guild_id":ctx.guild.id}, {'$push': {'previous': outcome}})
+                            if result == "win":
+                                newwallet = amount*5 + current
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":newwallet}})
+                                embed= nextcord.Embed(
+                                    title="คุณชนะ",
+                                    description=f"พนัน green จํานวน{amount}{currency} \nได้รับเงินรางวัล{amount*5}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                            else:
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current-amount}})
+                                embed= nextcord.Embed(
+                                    title="คุณเเพ้ !",
+                                    description=f"สีที่ออก {colour}\nพนัน green จํานวน{amount}{currency} \nเสียเงิน{amount}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                        else:
+                            embed = nextcord.Embed(
+                                title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                                colour = 0x983925
+                                )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')  
+
+                else:
+                    embed = nextcord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')  
 
     @roulette.command()
     async def red(self,ctx,amount:int):
-        pass
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            data = await settings.collection.find_one({"guild_id":ctx.guild.id})
+            if not data is None:
+                if data["economy_system"] == "YES":
+                    roulette = await settings.collectiongamble.find_one({"guild_id":ctx.guild.id})
+                    if roulette is None:
+                        await getlastestoutcome(ctx.guild.id)
+                    user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    if user is None:
+                        embed = nextcord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        current = user["wallet"]
+                        currency = data["currency"]
+                        if current >= amount:
+                            result, colour,outcome =await checkwin("red")
+                            await settings.collectiongamble.update_one({"guild_id": ctx.guild.id}, {'$pop': {'previous': -1}}) 
+                            await settings.collectiongamble.update_one({"guild_id":ctx.guild.id}, {'$push': {'previous': outcome}})
+                            if result == "win":
+                                newwallet = amount*2 + current
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":newwallet}})
+                                embed= nextcord.Embed(
+                                    title="คุณชนะ",
+                                    description=f"พนัน red จํานวน{amount}{currency} \nได้รับเงินรางวัล{amount*2}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                            else:
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current-amount}})
+                                embed= nextcord.Embed(
+                                    title="คุณเเพ้ !",
+                                    description=f"สีที่ออก {colour}\nพนัน red จํานวน{amount}{currency} \nเสียเงิน{amount}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                        else:
+                            embed = nextcord.Embed(
+                                title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                                colour = 0x983925
+                                )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')  
+
+                else:
+                    embed = nextcord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸') 
 
     @roulette.command()
     async def black(self,ctx,amount:int):
-        pass
+        languageserver = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+        if languageserver is None:
+            message = await ctx.send(embed=languageEmbed.languageembed(self,ctx))
+            await message.add_reaction('👍')
+        
+        else:
+            data = await settings.collection.find_one({"guild_id":ctx.guild.id})
+            if not data is None:
+                if data["economy_system"] == "YES":
+                    roulette = await settings.collectiongamble.find_one({"guild_id":ctx.guild.id})
+                    if roulette is None:
+                        await getlastestoutcome(ctx.guild.id)
+                    user = await settings.collectionmoney.find_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id})
+                    if user is None:
+                        embed = nextcord.Embed(
+                            title = f"{ctx.author.name} ยังไม่มีบัญชี",
+                            description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                            colour = 0x983925
+                            )
+                        embed.set_footer(text=f"┗Requested by {ctx.author}")
+                        message  = await ctx.send(embed=embed)
+                        await message.add_reaction('💸')
+                    
+                    else:
+                        current = user["wallet"]
+                        currency = data["currency"]
+                        if current >= amount:
+                            result, colour,outcome =await checkwin("black")
+                            await settings.collectiongamble.update_one({"guild_id": ctx.guild.id}, {'$pop': {'previous': -1}}) 
+                            await settings.collectiongamble.update_one({"guild_id":ctx.guild.id}, {'$push': {'previous': outcome}})
+                            if result == "win":
+                                newwallet = amount*2 + current
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":newwallet}})
+                                embed= nextcord.Embed(
+                                    title="คุณชนะ",
+                                    description=f"พนัน black จํานวน{amount}{currency} \nได้รับเงินรางวัล{amount*2}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                            else:
+                                await settings.collectionmoney.update_one({"guild_id":ctx.guild.id , "user_id":ctx.author.id},{"$set":{"wallet":current-amount}})
+                                embed= nextcord.Embed(
+                                    title="คุณเเพ้ !",
+                                    description=f"สีที่ออก {colour}\nพนัน black จํานวน{amount}{currency} \nเสียเงิน{amount}{currency}",
+                                    color=0xfed000
+                                )
+                                await ctx.send(embed=embed)
+                        else:
+                            embed = nextcord.Embed(
+                                title = "จํานวนเงินในกระเป๋าตังไม่พอ",
+                                description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
+                                colour = 0x983925
+                                )
+                            embed.set_footer(text=f"┗Requested by {ctx.author}")
+                            message  = await ctx.send(embed=embed)
+                            await message.add_reaction('💸')  
 
+                else:
+                    embed = nextcord.Embed(
+                        title = "คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
+                        description = f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
+                        colour = 0x983925
+                        )
+                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                    message  = await ctx.send(embed=embed)
+                    await message.add_reaction('💸')  
 
     @commands.command()
     async def horse(self,ctx , horse : int , money : int):
