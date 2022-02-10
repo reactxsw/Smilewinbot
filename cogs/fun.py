@@ -178,7 +178,7 @@ class Fun(commands.Cog):
                     description = f"```{slimrandom}```"
                 )
                 
-                embed.set_thumbnail(url="https://i.imgur.com/prrLCPC.png")
+                embed.set_thumbnail(url="https://smilewinbot.web.app/assets/image/host/slim.png")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)
@@ -206,7 +206,7 @@ class Fun(commands.Cog):
                     description = f"```fix\n{quoterandom}```"
                 )
                 
-                embed.set_thumbnail(url="https://i.imgur.com/HxNtxtt.png")
+                embed.set_thumbnail(url="https://smilewinbot.web.app/assets/image/host/quote.png")
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
                 message = await ctx.send(embed=embed)

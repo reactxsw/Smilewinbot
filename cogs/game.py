@@ -46,20 +46,20 @@ class Game(commands.Cog):
                     if str(reaction.emoji) == "✌️":
                         answer = "scissor"
 
-                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
+                    rps = ['https://smilewinbot.web.app/assets/image/host/rock.png', 'https://smilewinbot.web.app/assets/image/host/paper.png' ,'https://smilewinbot.web.app/assets/image/host/scissor.png']
                     responses = {
-                        "https://i.imgur.com/zkxuAGQ.png":{
+                        "https://smilewinbot.web.app/assets/image/host/rock.png'":{
                             "rock":"😮 เสมอ",
                             "paper":"😄 คุณชนะ",
                             "scissor":"😭 คุณเเพ้"
                         },
-                        "https://i.imgur.com/paMpgkb.png":{
+                        "https://smilewinbot.web.app/assets/image/host/paper.png":{
                             "rock":"😭 คุณเเพ้",
                             "paper":"😮 คุณเสมอ",
                             "scissor":"😄 คุณชนะ"
                         }
                         ,
-                        "https://i.imgur.com/aNkWXXy.png":{
+                        "https://smilewinbot.web.app/assets/image/host/scissor.png":{
                             "rock":"😄 คุณชนะ",
                             "paper":"😭 คุณเเพ้",
                             "scissor":"😮 คุณเสมอ"
@@ -80,7 +80,7 @@ class Game(commands.Cog):
                         title = "🕑 หมดเวลา" ,
                     )
 
-                    embed.set_image(url ="https://i.imgur.com/9mQV5cF.jpg")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/gameover.jpg")
 
                     await message.edit(embed=embed)
 
@@ -109,20 +109,20 @@ class Game(commands.Cog):
                     if str(reaction.emoji) == "✌️":
                         answer = "scissor"
 
-                    rps = ['https://i.imgur.com/zkxuAGQ.png', 'https://i.imgur.com/paMpgkb.png' ,'https://i.imgur.com/aNkWXXy.png']
+                    rps = ['https://smilewinbot.web.app/assets/image/host/rock.png', 'https://smilewinbot.web.app/assets/image/host/paper.png' ,'https://smilewinbot.web.app/assets/image/host/scissor.png']
                     responses = {
-                        "https://i.imgur.com/zkxuAGQ.png":{
+                        "https://smilewinbot.web.app/assets/image/host/rock.png":{
                             "rock":"😮 Draw",
                             "paper":"😄 You won",
                             "scissor":"😭 You lose"
                         },
-                        "https://i.imgur.com/paMpgkb.png":{
+                        "https://smilewinbot.web.app/assets/image/host/paper.png":{
                             "rock":"😭 You lose",
                             "paper":"😮 Draw",
                             "scissor":"😄 You won"
                         }
                         ,
-                        "https://i.imgur.com/aNkWXXy.png":{
+                        "https://smilewinbot.web.app/assets/image/host/scissor.png":{
                             "rock":"😄 You won",
                             "paper":"😭 You lose",
                             "scissor":"😮 Draw"
@@ -144,7 +144,7 @@ class Game(commands.Cog):
                         title = "🕑 Out of time" ,
                     )
 
-                    embed.set_image(url ="https://i.imgur.com/9mQV5cF.jpg")
+                    embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/gameover.jpg")
 
                     await message.edit(embed=embed)
 
@@ -157,11 +157,15 @@ class Game(commands.Cog):
         
         else:
             server_language = languageserver["Language"]
-            coin = ['https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png','https://i.imgur.com/Jeeym59.png','https://i.imgur.com/Pq8ntth.png']
-            flip = random.choice(coin)
+            num = random.randint(0,100)
+            if num > 50:
+                flip = "https://smilewinbot.web.app/assets/image/host/tail.png"
+            
+            else:
+                flip = "https://smilewinbot.web.app/assets/image/host/head.png"
             responses = {
-                "https://i.imgur.com/Jeeym59.png":["ก้อย","tail"],
-                "https://i.imgur.com/Pq8ntth.png":["หัว","head"]
+                "https://smilewinbot.web.app/assets/image/host/tail.png":["ก้อย","tail"],
+                "https://smilewinbot.web.app/assets/image/host/head.png":["หัว","head"]
             }
             
             if server_language == "Thai":

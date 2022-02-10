@@ -116,7 +116,7 @@ def unloadcogs():
 @bot.event
 async def on_ready():
     loadcogs()
-    await settings.collectionmusic.delete_many({})
+    #await settings.collectionmusic.delete_many({})
     try:
         change_status.start()
         serverstat.start()

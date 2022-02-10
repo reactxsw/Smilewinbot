@@ -26,7 +26,7 @@ class ReactRole(commands.Cog):
                     colour =  0x983925,
                 )
                 embed.set_footer(text="ข้อความนี้จะถูกลบอัตโนมัติภายใน 15วินาที")
-                embed.set_image(url="https://i.imgur.com/4Nmh9Ml.png")
+                embed.set_image(url="https://smilewinbot.web.app/assets/image/host/role.png")
                 await ctx.send(embed = embed , delete_after=15)
             else:
                 if "//" in text:
