@@ -1,3 +1,4 @@
+from traceback import print_tb
 import pomice
 import datetime
 import asyncio
@@ -100,6 +101,11 @@ class Music(commands.Cog):
         self.pomice = pomice.NodePool()
         bot.loop.create_task(self.start_nodes())
     
+    async def build_spotify_track(self,identifier,guild):
+        player : pomice.Player = self.pomice._nodes[settings.lavalinkindentifier].get_player(guild)
+        results = await player.get_tracks(f"https://open.spotify.com/track/{identifier}")   
+        return results[0]
+
     async def setnewserver(self,ctx):
         newserver = {"guild_id":ctx.guild.id,
                     "welcome_id":"None",
@@ -216,7 +222,10 @@ class Music(commands.Cog):
 
                     left = len(server["Queue"])
                     list_song = "".join(list_song)
-                    tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    if server["Queue"][0]["source"] == "Spotify":
+                        tracks : pomice.Track = await Music.build_spotify_track(self,server["Queue"][0]["song_id"],player.guild.id)
+                    else:
+                        tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                     time = await time_format(tracks.length/1000)
                     nu = None if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -239,7 +248,10 @@ class Music(commands.Cog):
 
             elif server["Mode"] == "Repeat":
                 if server["Queue"] != []:
-                    tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    if server["Queue"][0]["source"] == "Spotify":
+                        tracks : pomice.Track = await Music.build_spotify_track(self,server["Queue"][0]["song_id"],player.guild.id)
+                    else:
+                        tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                     await player.play(tracks)
                 
                 else:
@@ -268,7 +280,10 @@ class Music(commands.Cog):
                         num = num +1
                     list_song = "".join(list_song)
                     left = len(server["Queue"])
-                    tracks = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
+                    if server["Queue"][0]["source"] == "Spotify":
+                        tracks : pomice.Track = await Music.build_spotify_track(self,server["Queue"][0]["song_id"],player.guild.id)
+                    else:
+                        tracks : pomice.Track = await self.pomice._nodes[settings.lavalinkindentifier].build_track(server["Queue"][0]["song_id"])
                     time = await time_format(tracks.length/1000)
                     nu = "None" if len(server["Queue"]) == 1 else server["Queue"][1]["song_title"]
                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -665,8 +680,6 @@ class Music(commands.Cog):
                             else:
                                 if not len(Queue["Queue"]) > 20:
                                     availble = 21 - len(Queue["Queue"])
-                                    print(results.tracks)
-                                    print(results.tracks[0])
                                     if len(results.tracks) > availble:
                                         results.tracks = results.tracks[:availble]
                                     num = len(Queue["Queue"]) 
@@ -734,7 +747,6 @@ class Music(commands.Cog):
                                             "requester":ctx.author.id})
                                 
                                     await player.play(track)
-
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n > [1]. {track}\n> ╰━{ctx.author.mention}",embed=embed)
                                     await settings.collectionmusic.insert_one(data)

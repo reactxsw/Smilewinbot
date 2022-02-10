@@ -508,7 +508,6 @@ f"""**General Information**
 ⌛ Discord Latency : {round(latency * 1000)}ms```
     
     """
-
                 )
 
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
