@@ -35,6 +35,7 @@ background: #fed000;
 ::-webkit-scrollbar-thumb:hover {
 background: #fed000; 
 }
+
 body {
     cursor: url(../image/cursor.cur), 
     auto;}
