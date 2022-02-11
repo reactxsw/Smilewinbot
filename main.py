@@ -1,15 +1,6 @@
 # coding=utf-8
 #import
-import settings
-import subprocess
-import datetime  
-import os
-import platform
-import logging
-import asyncio
-import sys
-import traceback
-import nextcord
+import settings, os, datetime, sys, asyncio, traceback, nextcord, logging, platform, subprocess
 from nextcord.ext import commands ,tasks
 from datetime import date, timedelta
 from itertools import cycle
@@ -26,16 +17,10 @@ intent.members = True
 developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
-
-status = cycle([f' S       | {settings.COMMAND_PREFIX}help ' 
-              , f' Sm      | {settings.COMMAND_PREFIX}help ' 
-              , f' Smi     | {settings.COMMAND_PREFIX}help '
-              , f' Smil    | {settings.COMMAND_PREFIX}help '
-              , f' Smile   | {settings.COMMAND_PREFIX}help '
-              , f' Smilew  | {settings.COMMAND_PREFIX}help ' 
-              , f' Smilewi | {settings.COMMAND_PREFIX}help '
-              , f' Smilewin| {settings.COMMAND_PREFIX}help '
-              , f' Smilewin| {settings.COMMAND_PREFIX}help '])
+status = f' Smilewin | {settings.COMMAND_PREFIX}help'
+for letter in status:
+    sys.stdout.write(letter)
+    time.sleep(.1)
 
 ASCII_ART = """
                                    ____            _ _               _       
@@ -46,17 +31,12 @@ ASCII_ART = """
                                                                    REACT#1120 
 """ 
 
-bot = commands.AutoShardedBot(command_prefix =settings.COMMAND_PREFIX,case_insensitive=True ,help_command=None,intents=intent , strip_after_prefix=True)
+bot = commands.AutoShardedBot(command_prefix =settings.COMMAND_PREFIX,case_insensitive=True ,help_command=None,intents=intent , strip_after_prefix=True, status = nextcord.Status.idle, activity=nextcord.Streaming(name = next(status) , url="https://www.twitch.tv/smilewinbot")
 
 start_time = datetime.datetime.utcnow()
 
 async def clearcmd():
     subprocess.call('cls' if os.name == 'nt' else 'clear', shell=True)
-
-@tasks.loop(seconds=5)
-async def change_status():
-    await bot.wait_until_ready()
-    await bot.change_presence(status = nextcord.Status.idle, activity=nextcord.Streaming(name = next(status) , url="https://www.twitch.tv/smilewinbot"))
 
 @tasks.loop(seconds=120)
 async def serverstat():
@@ -118,7 +98,6 @@ async def on_ready():
     loadcogs()
     #await settings.collectionmusic.delete_many({})
     try:
-        change_status.start()
         serverstat.start()
     except RuntimeError:
         pass
