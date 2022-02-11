@@ -3,6 +3,7 @@ from nextcord.ext import commands
 import random
 import settings
 
+card_list = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 class Blackjack(commands.Cog):
 
     def __init__(self,bot):
@@ -11,29 +12,69 @@ class Blackjack(commands.Cog):
     @commands.command(aliases=["bj"])
     async def blackjack(self,ctx):
         #Initialize variables
-        card_list = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
         player_hand = random.sample(card_list,2)
         dealer_hand = random.sample(card_list,2)
 
         #Create embed
-        embed = nextcord.Embed(title="Blackjack")
-        embed.add_field(name="Your hand",value=f"{player_hand[0]} {player_hand[1]}\n\n Value: {await get_score(player_hand)}")
-        embed.add_field(name="Dealer's hand",value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}")
+        embed = await self.embed_generator(player_hand,dealer_hand,first_turn=True)
 
         #Send embed
         await ctx.send(embed=embed)
 
-        # #Create data for the game
-        # data = {
-        #     "player_hand": player_hand,
-        #     "dealer_hand": dealer_hand,
-        #     "player_score": await get_score(player_hand),
-        #     "dealer_score": await get_score(dealer_hand),
-        # }
+        #Create data for the game
+        data = {
+            "player_id": ctx.author.id,
+            "player_hand": player_hand,
+            "dealer_hand": dealer_hand,
+            "msg_id": ctx.message.id
+        }
 
-        # #Insert data into database
-        # await settings.collectionblackjack.insert_one(data)
+        #Insert data into database
+        await settings.collectionblackjack.insert_one(data)
+    
+    async def embed_generator(self,player_hand,dealer_hand,first_turn=False):
+        embed = nextcord.Embed(title="Blackjack")
+        embed.add_field(name="Your hand",value=f"{player_hand[0]} {player_hand[1]}\n\n Value: {await get_score(player_hand)}")
+        if first_turn:
+            embed.add_field(name="Dealer's hand",value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}")
+        else:
+            embed.add_field(name="Dealer's hand",value=f"{dealer_hand[0]} {dealer_hand[1]}\n\n Value: {await get_score(dealer_hand)}")
+        return embed
 
+    async def handle_click(self,button,interaction):
+        if button.custom_id == "hit":
+            game = await settings.collectionblackjack.find_one({"player_id": interaction.author.id})
+            if game is not None:
+                newcard = random.sample(card_list,1)
+                game["player_hand"].append(newcard[0])
+                await settings.collectionblackjack.update_one({'player_id': game['player_id']},{'$set': game})
+
+                #call computer dealer playing function
+                await self.computer_dealer_playing(game)
+
+
+
+        elif button.custom_id == "pass":
+            game = await settings.collectionblackjack.find_one({"player_id": interaction.author.id})
+            if game is not None:
+                #call computer dealer playing function
+                await self.computer_dealer_playing(game)
+
+    async def computer_dealer_playing(self,game):
+        action = random.randint(0,1)
+
+        #If the dealer has a score of 17 or less, he will hit
+        if action == 0:
+            if await get_score(game['dealer_hand']) <= 17:
+                newcard = random.sample(card_list,1)
+                game["dealer_hand"].append(newcard[0])
+                await settings.collectionblackjack.update_one({'player_id': game['player_id']},{'$set': game})
+
+    async def update_message(self,msg_id,embed,remove_view=False):
+        if remove_view:
+            await self.bot.get_channel(settings.blackjack_channel).fetch_message(msg_id).edit(embed=embed,view=None)
+        else:
+            await self.bot.get_channel(settings.blackjack_channel).fetch_message(msg_id).edit(embed=embed)
 
 async def get_score(cards: list):
     sum = 0
@@ -60,13 +101,24 @@ class Blackjack_Button(nextcord.ui.View):
         super().__init__(timeout=None)
 
     @nextcord.ui.button(
-        label = " Double down ",
+        label = " Hit ",
         style=nextcord.ButtonStyle.secondary,
         custom_id= "double_down",
         row = 0
     )
-    async def double_down(self,ctx):
-        pass
+    async def double_down(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await Blackjack.handle_click(self,button,interaction)
+
+    @nextcord.ui.button(
+        label = " Pass ",
+        style=nextcord.ButtonStyle.secondary,
+        custom_id= "stand",
+        row = 0
+    )
+    async def stand(self, button: nextcord.ui.Button, interaction : nextcord.Interaction):
+        await Blackjack.handle_click(self,button,interaction)
+
+
 
 
 
