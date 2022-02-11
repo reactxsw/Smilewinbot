@@ -217,7 +217,7 @@ class Music(commands.Cog):
                     list_song = [] 
                     num = 1
                     for song in server["Queue"]:
-                        list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                        list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
 
                     left = len(server["Queue"])
@@ -276,7 +276,7 @@ class Music(commands.Cog):
                     list_song = [] 
                     num = 1
                     for song in server["Queue"]:
-                        list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                        list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
                     list_song = "".join(list_song)
                     left = len(server["Queue"])
@@ -372,7 +372,7 @@ class Music(commands.Cog):
                         )
                         await interaction.channel.send(embed =embed , delete_after=2)
                         for song in data["Queue"]:
-                            list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                            list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                             num = num +1
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
@@ -418,7 +418,7 @@ class Music(commands.Cog):
                         )
                         await interaction.channel.send(embed =embed , delete_after=2)
                         for song in data["Queue"]:
-                            list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                            list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                             num = num +1
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
@@ -483,7 +483,7 @@ class Music(commands.Cog):
                             )
                             await interaction.channel.send(embed =embed , delete_after=2)
                             for song in data["Queue"]:
-                                list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                                list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
@@ -513,7 +513,7 @@ class Music(commands.Cog):
                             )
                             await interaction.channel.send(embed =embed , delete_after=2)
                             for song in data["Queue"]:
-                                list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                                list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
@@ -545,7 +545,7 @@ class Music(commands.Cog):
                             )
                             await interaction.channel.send(embed =embed , delete_after=2)
                             for song in data["Queue"]:
-                                list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                                list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
@@ -575,7 +575,7 @@ class Music(commands.Cog):
                             )
                             await interaction.channel.send(embed =embed , delete_after=2)
                             for song in data["Queue"]:
-                                list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + player.guild.get_member(song["requester"]).mention + "\n")
+                                list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
@@ -644,7 +644,7 @@ class Music(commands.Cog):
                                         "Queue":[]
                                     }
                                 for track in tracks:
-                                    list_song.append(f"> [{num}] " + track.title + "\n> ╰━" + ctx.guild.get_member(ctx.author.id).mention+"\n")
+                                    list_song.append(f"**{num}.** " + track.title + " -" + ctx.guild.get_member(ctx.author.id).mention+"\n")
                                     data["Queue"].append({
                                             "source": "Spotify" if "open.spotify.com" in track.uri else track.info["sourceName"],
                                             "song_title":track.title,
@@ -748,7 +748,7 @@ class Music(commands.Cog):
                                 
                                     await player.play(track)
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                    await message.edit(content=f"__รายการเพลง:__🎵\n > [1]. {track}\n> ╰━{ctx.author.mention}",embed=embed)
+                                    await message.edit(content=f"__รายการเพลง:__🎵\n **1.** {track}\n -{ctx.author.mention}",embed=embed)
                                     await settings.collectionmusic.insert_one(data)
                                 except Exception as e:
                                     print(e)
@@ -783,9 +783,9 @@ class Music(commands.Cog):
                                                     "requester":ctx.author.id}}})
 
                                     for song in Queue["Queue"]:
-                                        list_song.append(f"> [{num}] " + song["song_title"] + "\n> ╰━" + ctx.guild.get_member(song["requester"]).mention+"\n")
+                                        list_song.append(f"**{num}.** " + song["song_title"] + " -" + ctx.guild.get_member(song["requester"]).mention+"\n")
                                         num = num +1
-                                    list_song.append(f"> [{num}] {s_title}\n> ╰━{ctx.author.mention}\n")
+                                    list_song.append(f"**{num}.** {s_title} -{ctx.author.mention}\n")
                                     list_song = "".join(list_song)
 
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
