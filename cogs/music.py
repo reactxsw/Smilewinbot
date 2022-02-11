@@ -674,7 +674,7 @@ class Music(commands.Cog):
                                 else:
                                     embed.set_footer(text=f"server : {ctx.guild.name} | เพลงในคิว : {len(tracks)}")
                                 message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
+                                await message.edit(content=f"__รายการเพลง:__🎵\n{list_song} ",embed=embed)
                                 await settings.collectionmusic.insert_one(data)
                             
                             else:
