@@ -1,4 +1,5 @@
 from traceback import print_tb
+from unittest import result
 import pomice
 import datetime
 import asyncio
@@ -214,13 +215,15 @@ class Music(commands.Cog):
                     
 
                 else:
+                    queue = len(server["Queue"])
                     list_song = [] 
                     num = 1
                     for song in server["Queue"]:
                         list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
-
-                    left = len(server["Queue"])
+                        if num > 20:
+                            list_song.append(f"เเละอีก {queue-20} เพลง")
+                            break
                     list_song = "".join(list_song)
                     if server["Queue"][0]["source"] == "Spotify":
                         tracks : pomice.Track = await Music.build_spotify_track(self,server["Queue"][0]["song_id"],player.guild.id)
@@ -242,7 +245,7 @@ class Music(commands.Cog):
                     if nu is None:
                         embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : 1")
                     else:
-                        embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                        embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     await player.play(tracks)
 
@@ -263,6 +266,7 @@ class Music(commands.Cog):
                     await message.edit(content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",embed=embed)
 
             else:
+                queue = len(server["Queue"])
                 if server["Queue"] != []:
                     await settings.collectionmusic.update_one({"guild_id": player.guild.id}, {'$pop': {'Queue': -1}})
                     await settings.collectionmusic.update_one({
@@ -278,8 +282,10 @@ class Music(commands.Cog):
                     for song in server["Queue"]:
                         list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                         num = num +1
+                        if num > 20:
+                            list_song.append(f"เเละอีก {queue-20} เพลง")
+                            break
                     list_song = "".join(list_song)
-                    left = len(server["Queue"])
                     if server["Queue"][0]["source"] == "Spotify":
                         tracks : pomice.Track = await Music.build_spotify_track(self,server["Queue"][0]["song_id"],player.guild.id)
                     else:
@@ -297,7 +303,7 @@ class Music(commands.Cog):
                         embed.set_image(url =tracks.thumbnail)
                     else:
                         embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
-                    embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                    embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     await player.play(tracks)
                 
@@ -343,7 +349,7 @@ class Music(commands.Cog):
         player: pomice.Player = interaction.guild.voice_client
         if not player is None and not data is None:
             nu = None if len(data["Queue"]) < 2 else data["Queue"][1]["song_title"]
-            left = len(data["Queue"]) 
+            queue = len(data["Queue"]) 
             if interaction.user.id == data["Queue"][0]["requester"] or interaction.user.guild_permissions.administrator:
                 if button.custom_id == "pause_stop":
                     if player.is_paused and player.is_connected:
@@ -374,6 +380,9 @@ class Music(commands.Cog):
                         for song in data["Queue"]:
                             list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                             num = num +1
+                            if num > 20:
+                                list_song.append(f"เเละอีก {queue-20} เพลง")
+                                break
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
                         embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -388,9 +397,9 @@ class Music(commands.Cog):
                         else:
                             embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                         if nu == None:
-                            embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                            embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                         else:
-                            embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                            embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                         message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                         await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     
@@ -420,6 +429,9 @@ class Music(commands.Cog):
                         for song in data["Queue"]:
                             list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                             num = num +1
+                            if num > 20:
+                                list_song.append(f"เเละอีก {queue-20} เพลง")
+                                break
                         list_song = "".join(list_song)
                         time = await time_format(player.current.length/1000)
                         embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -434,9 +446,9 @@ class Music(commands.Cog):
                         else:
                             embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                         if nu == None:
-                            embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                            embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                         else:
-                            embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                            embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                         message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                         await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                     
@@ -485,6 +497,9 @@ class Music(commands.Cog):
                             for song in data["Queue"]:
                                 list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
+                                if num > 20:
+                                    list_song.append(f"เเละอีก {queue-20} เพลง")
+                                    break
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
                             embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -499,9 +514,9 @@ class Music(commands.Cog):
                             else:
                                 embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
-                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                             else:
-                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                             message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                             await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                         
@@ -515,6 +530,9 @@ class Music(commands.Cog):
                             for song in data["Queue"]:
                                 list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
+                                if num > 20:
+                                    list_song.append(f"เเละอีก {queue-20} เพลง")
+                                    break
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
                             embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -529,9 +547,9 @@ class Music(commands.Cog):
                             else:
                                 embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
-                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                             else:
-                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                             message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                             await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
 
@@ -547,6 +565,9 @@ class Music(commands.Cog):
                             for song in data["Queue"]:
                                 list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
+                                if num > 20:
+                                    list_song.append(f"เเละอีก {queue-20} เพลง")
+                                    break
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
                             embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -561,9 +582,9 @@ class Music(commands.Cog):
                             else:
                                 embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
-                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                             else:
-                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                             message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                             await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                         
@@ -577,6 +598,9 @@ class Music(commands.Cog):
                             for song in data["Queue"]:
                                 list_song.append(f"**{num}.** " + song["song_title"] + " -" + player.guild.get_member(song["requester"]).mention + "\n")
                                 num = num +1
+                                if num > 20:
+                                    list_song.append(f"เเละอีก {queue-20} เพลง")
+                                    break
                             list_song = "".join(list_song)
                             time = await time_format(player.current.length/1000)
                             embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -591,9 +615,9 @@ class Music(commands.Cog):
                             else:
                                 embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                             if nu == None:
-                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"server : {player.guild.name} | เพลงในคิว : {queue}")
                             else:
-                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                                embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                             message = await self.bot.get_channel(server["Music_channel_id"]).fetch_message(server["Embed_message_id"])
                             await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
                 
@@ -631,8 +655,8 @@ class Music(commands.Cog):
                         Queue = await settings.collectionmusic.find_one({"guild_id":ctx.guild.id}) 
                         if isinstance(results, pomice.Playlist):
                             if Queue is None and not player.is_playing:
-                                if len(results.tracks) > 20:
-                                    tracks = results.tracks[:21]
+                                if len(results.tracks) > 50:
+                                    tracks = results.tracks[:50]
                                 else:
                                     tracks = results.tracks
                                 num = 1
@@ -651,7 +675,9 @@ class Music(commands.Cog):
                                             "song_id":track.track_id,
                                             "requester":ctx.author.id})
                                     num = num+1
-
+                                if num > 20:
+                                    list_song = list_song[:20]
+                                    list_song.append(f"เเละอีก {num-20} เพลง")
                                 list_song = "".join(list_song)
                                 await player.play(tracks[0])
                                 nu = tracks[1] if len(tracks) > 1 else None
@@ -678,38 +704,59 @@ class Music(commands.Cog):
                                 await settings.collectionmusic.insert_one(data)
                             
                             else:
-                                if not len(Queue["Queue"]) > 20:
-                                    availble = 21 - len(Queue["Queue"])
+                                queue = len(Queue["Queue"])
+                                if not queue > 50:
+                                    availble = 50 - len(Queue["Queue"])
                                     if len(results.tracks) > availble:
-                                        results.tracks = results.tracks[:availble]
-                                    num = len(Queue["Queue"]) 
+                                        results = results.tracks[:availble]
+                                    
+                                    else:
+                                        results = results.tracks
+
+                                    left = queue+ len(results)
+                                    nu = track if queue < 2 else Queue["Queue"][1]["song_title"]
+                                    num = 1
                                     list_song = []
-                                    for track in results.tracks:
-                                        list_song.append(f"> [{num}] " + track.title + "\n")
+                                    for track in results:
+                                        Queue["Queue"].append({
+                                            "source": "Spotify" if "open.spotify.com" in track.uri else track.info["sourceName"],
+                                            "song_title":track.title,
+                                            "song_id":track.track_id,
+                                            "requester":ctx.author.id
+                                            })
                                         await settings.collectionmusic.update_one({
                                             'guild_id': ctx.guild.id}, {
                                                 '$push': {
                                                     'Queue': {
+                                                        "source": "Spotify" if "open.spotify.com" in track.uri else track.info["sourceName"],
                                                         "song_title":track.title,
                                                         "song_id":track.track_id,
                                                         "requester":ctx.author.id
                                                         }
                                                     }
                                                 })
-                                        num = num+1
+                                    
+                                    for data in Queue["Queue"]:
+                                        list_song.append(f"**{num}.** " + data["song_title"] + " -" + ctx.guild.get_member(data["requester"]).mention + "\n")
+                                        num = num +1
+                                        if num > 20:
+                                            list_song = list_song[:20]
+                                            list_song.append(f"เเละอีก {left-20} เพลง")
+
+                                    list_song = "".join(list_song)
                                     nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
                                     embed=nextcord.Embed(
                                         description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour = 0xffff00)
                                     embed.set_author(name=f"กําลังเล่น {player.current.title}", icon_url=self.bot.user.avatar.url , url=player.current.uri)
+                                    embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
                                     
                                     if not player.current.thumbnail is None:
                                         embed.set_image(url =player.current.thumbnail)
                                     else:
                                         embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
-                                    embed.set_footer(text=f"next up : {nu}")
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                    await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
+                                    await message.edit(content=f"__รายการเพลง:__🎵\n{list_song} ",embed=embed)
 
                         else: 
                             track : pomice.Track= results[0]
@@ -748,16 +795,17 @@ class Music(commands.Cog):
                                 
                                     await player.play(track)
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
-                                    await message.edit(content=f"__รายการเพลง:__🎵\n **1.** {track}\n -{ctx.author.mention}",embed=embed)
+                                    await message.edit(content=f"__รายการเพลง:__🎵\n **1.** {track} -{ctx.author.mention}",embed=embed)
                                     await settings.collectionmusic.insert_one(data)
                                 except Exception as e:
                                     print(e)
 
                             else:
-                                if not len(Queue["Queue"]) > 20:
-                                    nu = track if len(Queue["Queue"]) < 2 else Queue["Queue"][1]["song_title"]
+                                queue = len(Queue["Queue"])
+                                if not queue > 50:
+                                    nu = track if queue < 2 else Queue["Queue"][1]["song_title"]
                                     time = await time_format(player.current.length/1000)
-                                    left = len(Queue["Queue"]) + 1
+                                    left = queue + 1
                                     list_song = []
                                     num = 1
                                     embed=nextcord.Embed(description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
@@ -769,27 +817,36 @@ class Music(commands.Cog):
                                     embed.add_field(name="``🔁`` โหมด" ,value=Queue["Mode"])
                                     embed.add_field(name="``🍬`` ผู้ขอเพลง" ,value=member.mention)
                                     if not track.thumbnail is None:
-                                        embed.set_image(url =track.thumbnail)
+                                        embed.set_image(url =player.current.thumbnail)
                                     else:
                                         embed.set_image(url ="https://smilewinbot.web.app/assets/image/host/music.png")
                                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {left}")
+                                    data = {
+                                            "source":s_source,
+                                            "song_title":s_title,
+                                            "song_id":s_id,
+                                            "requester":ctx.author.id
+                                                }
                                     await settings.collectionmusic.update_one({
                                         "guild_id":ctx.guild.id}, {
                                             '$push': {
-                                                'Queue': {
-                                                    "source":s_source,
-                                                    "song_title":s_title,
-                                                    "song_id":s_id,
-                                                    "requester":ctx.author.id}}})
+                                                'Queue': data}})
 
+                                    Queue["Queue"].append(data)
                                     for song in Queue["Queue"]:
                                         list_song.append(f"**{num}.** " + song["song_title"] + " -" + ctx.guild.get_member(song["requester"]).mention+"\n")
                                         num = num +1
-                                    list_song.append(f"**{num}.** {s_title} -{ctx.author.mention}\n")
+                                        if num > 20:
+                                            list_song.append(f"เเละอีก {queue-20}เพลง")
+                                            break
+
                                     list_song = "".join(list_song)
 
                                     message = await self.bot.get_channel(music_channel).fetch_message(music_embed)
                                     await message.edit(content=f"__รายการเพลง:__🎵\n {list_song} ",embed=embed)
+                                
+                                else:
+                                    return
                     else:
                         return        
 
