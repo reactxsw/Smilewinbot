@@ -1,16 +1,19 @@
 from os import name
+from click import command
 import nextcord
 import settings
 from nextcord.ext import commands
 from utils.languageembed import languageEmbed
+from utils.language.translate import translate_help
 
 
 class Help(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
+        self.language = translate_help.call()
 
     @commands.command()
-    async def help(self, ctx):
+    async def help(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -20,174 +23,90 @@ class Help(commands.Cog):
 
         else:
             server_language = languageserver["Language"]
+            embed = nextcord.Embed(
+                title=self.language[server_language]["Response"]["help"]["description"],
+                description=f"{ctx.author.mention} "
+                + self.language[server_language]["Response"]["help"]["description"]
+                + f" ``{settings.COMMAND_PREFIX}``",
+                color=0xFED000,
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}help``",
+                value=self.language[server_language]["Response"]["help"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpbot``",
+                value=self.language[server_language]["Response"]["help_bot"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpmusic``",
+                value=self.language[server_language]["Response"]["help_music"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpfun``",
+                value=self.language[server_language]["Response"]["help_fun"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpgeneral``",
+                value=self.language[server_language]["Response"]["help_general"][
+                    "value"
+                ],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpgame``",
+                value=self.language[server_language]["Response"]["help_game"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpadmin``",
+                value=self.language[server_language]["Response"]["help_admin"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpsetup``",
+                value=self.language[server_language]["Response"]["help_setup"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpinfo``",
+                value=self.language[server_language]["Response"]["help_info"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpimage``",
+                value=self.language[server_language]["Response"]["help_image"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpeconomy``",
+                value=self.language[server_language]["Response"]["help_economy"][
+                    "value"
+                ],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpuser``",
+                value=self.language[server_language]["Response"]["help_user"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpnsfw``",
+                value=self.language[server_language]["Response"]["help_nsfw"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helpscam``",
+                value=self.language[server_language]["Response"]["help_scam"]["value"],
+            )
+            embed.add_field(
+                name=f"``{settings.COMMAND_PREFIX}helptictactoe``",
+                value=self.language[server_language]["Response"]["help_tictactoe"][
+                    "value"
+                ],
+            )
+            embed.add_field(
+                name=self.language[server_language]["Response"]["note"]["name"],
+                value=self.language[server_language]["Response"]["note"]["value"],
+                inline=False,
+            )
 
-            if server_language == "Thai":
-                embed = nextcord.Embed(
-                    title="คำสั่งสำหรับใช้งานบอท",
-                    description=f"{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``",
-                    color=0xFED000,
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}help``",
-                    value="ช่วยเหลือคําสั่งช่วยเหลือ",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpbot``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับตัวบอท",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpmusic``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับการเปิดเพลง",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpfun``",
-                    value="ช่วยเหลือคําสั่งบรรเทิง",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpgeneral``",
-                    value="ช่วยเหลือคําสั่งทั่วไป",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpgame``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับเกม",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpadmin``",
-                    value="ช่วยเหลือคําสั่งของเเอดมิน",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpsetup``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับตั้งค่า",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpinfo``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับข้อมูล",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpimage``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับรูป",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpeconomy``",
-                    value="ช่วยเหลือคําสั่งเกี่ยวกับระบบเศรษฐกิจ",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpuser``",
-                    value="ช่วยเหลือคําสั่งข้อมูลของสมาชิกเช่น เลเวล",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpnsfw``",
-                    value="ช่วยเหลือคําสั่ง 18 +",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpscam``",
-                    value="ช่วยเหลือคําสั่งกันลิ้งค์ที่ไม่ปลอดภัย",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helptictactoe``",
-                    value="ช่วยเหลือคําสั่งเกม tictactoe(xo)",
-                )
-                embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
-                    inline=False,
-                )
+            embed.set_thumbnail(url=self.bot.user.avatar.url)
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-                embed.set_thumbnail(url=self.bot.user.avatar.url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction("👍")
-
-            if server_language == "English":
-                embed = nextcord.Embed(
-                    title="Help command",
-                    description=f"{ctx.author.mention} The command prefix is ``{settings.COMMAND_PREFIX}``",
-                    color=0xFED000,
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}help``", value="help commands"
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpbot``",
-                    value="help commands related to bot",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpmusic``",
-                    value="help commands related to Music",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpfun``",
-                    value="help commands related to fun",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpgeneral``",
-                    value="help general commands",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpgame``",
-                    value="help commands related to game",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpadmin``",
-                    value="help commands related to moderator",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpsetup``",
-                    value="help commands related to setup",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpinfo``",
-                    value="help commands related to information",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpimage``",
-                    value="help commands related to image",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpeconomy``",
-                    value="help commands related to economy",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpuser``",
-                    value="help commands related to user",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpnsfw``",
-                    value="help commands related to NSFW",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helpscam``",
-                    value="help commands related to scam",
-                )
-                embed.add_field(
-                    name=f"``{settings.COMMAND_PREFIX}helptictactoe``",
-                    value="help commands related to tictactoe",
-                )
-                embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
-                    inline=False,
-                )
-                embed.set_thumbnail(url=self.bot.user.avatar.url)
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction("👍")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("👍")
 
     @commands.command()
     async def helpmusic(self, ctx):
@@ -203,7 +122,7 @@ class Help(commands.Cog):
 
             if server_language == "Thai":
                 embed = nextcord.Embed(
-                    title="คำสั่งสำหรับใช้งานบอท",
+                    title="คำสั่งสำหรับใช้งานบอทเพลง",
                     description=f"{ctx.author.mention} เครื่องหมายหน้าคำสั่งคือ ``{settings.COMMAND_PREFIX}``",
                     color=0xFED000,
                 )

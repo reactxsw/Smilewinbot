@@ -393,6 +393,7 @@ class Music(commands.Cog):
                         {
                             "$push": {
                                 "Queue": {
+                                    "source": server["Queue"][0]["source"],
                                     "song_title": server["Queue"][0]["song_title"],
                                     "song_id": server["Queue"][0]["song_id"],
                                     "requester": server["Queue"][0]["requester"],
