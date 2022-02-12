@@ -1,3 +1,8 @@
+/* Instead of the cursor only showing on the body, the cursor will now show on the rest of the webpage.  */
+* {
+  cursor: url(../image/cursor.cur), auto;
+}
+
 .banner-image {
     background-image: url('../image/background.jpg');
     background-size: cover;
@@ -35,6 +40,34 @@ background: #fed000;
 ::-webkit-scrollbar-thumb:hover {
 background: #fed000; 
 }
-body {
-    cursor: url(../image/cursor.cur), 
-    auto;}
+
+
+/* Grid Creation. */
+
+.grid {
+  all: revert;
+  display: grid;
+  justify-content:center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
+  grid-auto-rows: 250px;
+  grid-gap: 6px;
+}
+
+.grid::before {
+  content: '';
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+/* Just to make the grid visible. */
+.grid > * {
+  justify-content:center;
+  text-align:center;
+  color: white;
+}

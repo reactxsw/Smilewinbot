@@ -1,10 +1,6 @@
-import settings
+import settings, os, logging, nextcord, traceback
 from utils.languageembed import languageEmbed
-import os
-import logging
 from datetime import datetime, timedelta, timezone
-import nextcord
-import traceback
 from nextcord.ext import commands
 
 class Error(commands.Cog):
@@ -35,7 +31,7 @@ class Error(commands.Cog):
                 if isinstance(error, commands.CommandNotFound):
                     embed = nextcord.Embed(
                         colour = 0x983925,
-                        title = f"⚠️ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
+                        title = f"⚠️ | ไม่มีคําสั่งนี้กรุณาเช็คการสะกดคําว่าถูกหรือผิด"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed ) 
@@ -47,9 +43,8 @@ class Error(commands.Cog):
                         title = f"⚠️บอทไม่มีสิทธิ คุณต้องให้สิทธิเเอดมินกับบอทก่อนใช้คําสั่งนี้"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")    
-                    message = await ctx.send(embed=embed ) 
+                    message = await ctx.send(embed=embed) 
                     await message.add_reaction('⚠️')
-                
                 else:
                     await channel.send(errorlog)
                     await channel.send(error)
@@ -59,7 +54,7 @@ class Error(commands.Cog):
                 if isinstance(error, commands.CommandNotFound):
                     embed = nextcord.Embed(
                         colour = 0x983925,
-                        title = f"⚠️ Command not found"
+                        title = f"⚠️ | Command not found"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed ) 
@@ -68,7 +63,7 @@ class Error(commands.Cog):
                 elif isinstance(error, commands.BotMissingPermissions):
                     embed = nextcord.Embed(
                         colour = 0x983925,
-                        title = f"⚠️Bot don't have enough permission to do that please give administrator permission to the bot"
+                        title = f"⚠️ | Bot don't have enough permission to do that please give administrator permission to the bot"
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed ) 

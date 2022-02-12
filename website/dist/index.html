@@ -14,12 +14,14 @@
       <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,500&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap" rel="stylesheet">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-      <script type="text/javascript" src="assets/javascript/title.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script type="text/javascript" src="assets/javascript/title.js"></script>
       <script type="text/javascript" src="assets/javascript/typing.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
       <script type="text/javascript" src="assets/javascript/block.js"></script>
+      <script type="text/javascript" src="assets/javascript/count.js"></script>
+      <script type="text/javascript" src="assets/javascript/preload.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
       <meta property="og:title" content="Smilewin discord Bot">
       <meta property="og:description" content="บอทดิสคอร์ด Smilewin">
       <meta property="og:image" content="https://smilewinbot.web.app/assets/image/smw.png">
@@ -68,7 +70,6 @@
             </div>
          </div>
       </div>
-      <div class="container my-5 d-grid gap-5">
       <div class="content text-center text-white">
          <h1 style="font-family: 'Anton', sans-serif;font-size: 200px;">Stats</h1>
          <p class="thai-lang" style="font-size: 35px;">สถานะเเละข้อมูลต่างๆของบอท</p>
@@ -93,45 +94,43 @@
             </div>
          </div>
       </div>
-      <div id="Team" class="container my-5 d-grid gap-5">
+      <div id="Team">
          <div class="content text-center text-white">
             <h1 style="font-family: 'Anton', sans-serif;font-size: 150px;">Team members</h1>
             <p class="thai-lang" style="font-size: 35px;">ทีมงานเเละผู้มีส่วนร่วมในการพัฒนาเเละโปรโมทบอทดิสคอร์ด Smilewin ในตอนนี้</p>
          </div>
-         <div class="content text-center text-white">
-            <div style="display:flex; align-items:center; justify-content:center;">
-               <div style="display:flex; align-items:center; justify-content:center;margin-inline: 8px;">
-                  <figure>
-                     <img class="rounded" src="https://cdn.discordapp.com/avatars/394447088970104833/10499ed48de3c7cf6417afeca6b81596.png?size=1024" width="250" height="250"> 
-                     <figcaption style="font-family: 'Kanit', sans-serif;">REACT#1120<br> CEO </figcaption>
-                  </figure>
-               </div>
-               <div style="display:flex; align-items:center; justify-content:center;margin-inline: 8px;">
-                  <figure>
-                     <img class="rounded" src="https://cdn.discordapp.com/avatars/485027400120532993/2c7be367d5b539e69ab7d2557627bbff.png?size=1024" width="250" height="250"> 
-                     <figcaption style="font-family: 'Kanit', sans-serif;">DeepKungChannel#6590<br> Developer </figcaption>
-                  </figure>
-               </div>
-               <div style="display:flex; align-items:center; justify-content:center;margin-inline: 8px;">
-                  <figure>
-                     <img class="rounded" src="https://cdn.discordapp.com/avatars/668433997189087232/a_c3990216dc1a64df4837ccdf61a6bf6b.gif?size=1024" width="250" height="250"> 
-                     <figcaption style="font-family: 'Kanit', sans-serif;">This dood#0001<br>Developer </figcaption>
-                  </figure>
-               </div>
-               <div style="display:flex; align-items:center; justify-content:center;margin-inline: 8px;">
-                  <figure>
-                     <img class="rounded" src="https://cdn.discordapp.com/avatars/816276922492780565/939ac897d2133d0073a49da3483b02aa.png?size=1024" width="250" height="250"> 
-                     <figcaption style="font-family: 'Kanit', sans-serif;">ชาเขียวอร่อยน้าาา🍵#8040<br>Marketing </figcaption>
-                  </figure>
-               </div>
-               <div style="display:flex; align-items:center; justify-content:center;margin-inline: 8px;">
-                  <figure>
-                     <img class="rounded" src="https://cdn.discordapp.com/avatars/841386464179912756/346d2178fc33d8793399392da2cd36fd.png?size=1024" width="250" height="250"> 
-                     <figcaption style="font-family: 'Kanit', sans-serif;">chamu#3306<br>Marketing </figcaption>
-                  </figure>
-               </div>
+         <div class="grid">
+            <div>
+              <figure>
+                <img class="rounded" src="https://cdn.discordapp.com/avatars/394447088970104833/10499ed48de3c7cf6417afeca6b81596.png?size=1024" width="200" height="200"> 
+                <figcaption style="font-family: 'Kanit', sans-serif;">REACT#1120<br> CEO </figcaption>
+              </figure>
             </div>
-         </div>
+            <div>
+              <figure>
+                  <img class="rounded" src="https://cdn.discordapp.com/avatars/485027400120532993/2c7be367d5b539e69ab7d2557627bbff.png?size=1024" width="200" height="200"> 
+                  <figcaption style="font-family: 'Kanit', sans-serif;">DeepKungChannel#6590<br> Developer </figcaption>
+              </figure>
+            </div>
+            <div>
+              <figure>
+                  <img class="rounded" src="https://cdn.discordapp.com/avatars/668433997189087232/a_c3990216dc1a64df4837ccdf61a6bf6b.gif?size=1024" width="200" height="200"> 
+                  <figcaption style="font-family: 'Kanit', sans-serif;">This dood#0001<br>Developer </figcaption>
+              </figure>
+            </div>
+            <div>
+              <figure>
+                  <img class="rounded" src="https://cdn.discordapp.com/avatars/816276922492780565/939ac897d2133d0073a49da3483b02aa.png?size=1024" width="200" height="200"> 
+                  <figcaption style="font-family: 'Kanit', sans-serif;">ชาเขียวอร่อยน้าาา🍵#8040<br>Marketing </figcaption>
+              </figure>
+            </div>
+            <div>
+              <figure>
+                  <img class="rounded" src="https://cdn.discordapp.com/avatars/841386464179912756/346d2178fc33d8793399392da2cd36fd.png?size=1024" width="200" height="200"> 
+                  <figcaption style="font-family: 'Kanit', sans-serif;">chamu#3306<br>Marketing </figcaption>
+              </figure>
+            </div>
+          </div>
       </div>   
       <script>
          var typed = new Typed('.animation', {
