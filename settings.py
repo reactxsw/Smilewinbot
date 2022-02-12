@@ -5,20 +5,20 @@ import asyncpraw
 import os
 from pathlib import Path
 
-directory = os.path.dirname(__file__) 
-folders = ["download","data","image","logs"]
+directory = os.path.dirname(__file__)
+folders = ["download", "data", "image", "logs"]
 for folder in folders:
     try:
         if not Path(folder).exists():
             os.makedirs(f"{directory}/{folder}")
-    
+
     except OSError:
         print(f"unable to create {folder}")
 
 if Path("config.json").exists():
-    with open('config.json') as setting:
+    with open("config.json") as setting:
         config = json.load(setting)
-    
+
     developers = config.get("developers")
     developerid = config.get("developer_user_id")
     TOKEN = config.get("bot_token")
@@ -31,7 +31,7 @@ if Path("config.json").exists():
         client_secret=config.get("reddit_client_secret"),
         username=config.get("reddit_username"),
         password=config.get("reddit_password"),
-        user_agent=config.get("reddit_user_agent")
+        user_agent=config.get("reddit_user_agent"),
     )
     mongodb = config.get("connect_mongodb")
     trackerapi = config.get("tracker.gg_api")
@@ -72,13 +72,17 @@ if Path("config.json").exists():
     lavalinkregion = config.get("Lavalink_region")
     lavalinkspotifyid = config.get("Lavalink_spotify_clientid")
     lavalinkspotifysecret = config.get("Lavalink_spotify_secret")
-    with open("data/phishing.txt","r",encoding="utf-8") as f:
+    with open("data/phishing.txt", "r", encoding="utf-8") as f:
         phishing = f.read().split("\n")
 
-else: 
+else:
     with open("config.json", "w") as setting:
-        setting.write(requests.get("https://raw.githubusercontent.com/reactxsw/Smilewinbot/main/config.example.json").text)
-        
+        setting.write(
+            requests.get(
+                "https://raw.githubusercontent.com/reactxsw/Smilewinbot/main/config.example.json"
+            ).text
+        )
+
 client = motor.motor_asyncio.AsyncIOMotorClient(mongodb)
 db = client.Smilewin
 collection = db.Data
