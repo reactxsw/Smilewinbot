@@ -8,132 +8,131 @@ class SetLanguage(commands.Cog):
         self.bot = bot
 
     @commands.group(invoke_without_command=True)
-    async def setlanguage(self,ctx):
+    async def setlanguage(self, ctx):
         embed = nextcord.Embed(
-            colour = 0xFED000,
-            description = "specify language / ต้องระบุภาษา : thai / english"
-
+            colour=0xFED000,
+            description="specify language / ต้องระบุภาษา : thai / english",
         )
         embed.set_footer(text=f"┗Requested by {ctx.author}")
         message = await ctx.send(embed=embed)
-        await message.add_reaction('👍')
+        await message.add_reaction("👍")
 
     @setlanguage.error
-    async def setlanguage_error(self,ctx, error):
+    async def setlanguage_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
-                colour = 0x983925,
-                title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"""
+                colour=0x983925,
+                title="You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+                description=f"""
 ⚠️ ``{ctx.author.mention}``
 
 English : You must have ``Administrator`` to be able to use this command
-ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
-        )
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้""",
+            )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
 
     @setlanguage.command()
     @commands.has_permissions(administrator=True)
-    async def thai(self,ctx):
-        server = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    async def thai(self, ctx):
+        server = await settings.collectionlanguage.find_one({"guild_id": ctx.guild.id})
         if server is None:
-            newserver = {"guild_id":ctx.guild.id,
-            "Language":"Thai"
-            }
+            newserver = {"guild_id": ctx.guild.id, "Language": "Thai"}
             await settings.collectionlanguage.insert_one(newserver)
             embed = nextcord.Embed(
-                colour= 0xFED000,
-                title = "ตั้งค่าภาษา",
-                description= f"ภาษาได้ถูกตั้งเป็น Thai"
+                colour=0xFED000,
+                title="ตั้งค่าภาษา",
+                description=f"ภาษาได้ถูกตั้งเป็น Thai",
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
-            await message.add_reaction('✅')
-        
+            await message.add_reaction("✅")
+
         else:
-            await settings.collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"Thai"}})
+            await settings.collectionlanguage.update_one(
+                {"guild_id": ctx.guild.id}, {"$set": {"Language": "Thai"}}
+            )
             embed = nextcord.Embed(
-                colour= 0xFED000,
-                title = "ตั้งค่าภาษา",
-                description= f"ภาษาได้ถูกอัพเดตเป็น Thai"
+                colour=0xFED000,
+                title="ตั้งค่าภาษา",
+                description=f"ภาษาได้ถูกอัพเดตเป็น Thai",
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
-            await message.add_reaction('✅')
+            await message.add_reaction("✅")
 
     @thai.error
-    async def thai_error(self,ctx, error):
+    async def thai_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
-                colour = 0x983925,
-                title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"""
+                colour=0x983925,
+                title="You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+                description=f"""
 ⚠️ ``{ctx.author.mention}``
 
 English : You must have ``Administrator`` to be able to use this command
-ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
-        )
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้""",
+            )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
 
     @setlanguage.command()
     @commands.has_permissions(administrator=True)
-    async def english(self,ctx):
-        server = await settings.collectionlanguage.find_one({"guild_id":ctx.guild.id})
+    async def english(self, ctx):
+        server = await settings.collectionlanguage.find_one({"guild_id": ctx.guild.id})
         if server is None:
-            newserver = {"guild_id":ctx.guild.id,
-            "Language":"English"
-            }
+            newserver = {"guild_id": ctx.guild.id, "Language": "English"}
 
             await settings.collectionlanguage.insert_one(newserver)
             embed = nextcord.Embed(
-                colour= 0xFED000,
-                title = "Language setting",
-                description= f"Language have been set to English"
+                colour=0xFED000,
+                title="Language setting",
+                description=f"Language have been set to English",
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
-            await message.add_reaction('✅')
-        
+            await message.add_reaction("✅")
+
         else:
-            await settings.collectionlanguage.update_one({"guild_id":ctx.guild.id},{"$set":{"Language":"English"}})
+            await settings.collectionlanguage.update_one(
+                {"guild_id": ctx.guild.id}, {"$set": {"Language": "English"}}
+            )
             embed = nextcord.Embed(
-                colour= 0xFED000,
-                title = "Language setting",
-                description= f"Language have been set to English"
+                colour=0xFED000,
+                title="Language setting",
+                description=f"Language have been set to English",
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
             message = await ctx.send(embed=embed)
-            await message.add_reaction('✅')
+            await message.add_reaction("✅")
 
     @english.error
-    async def english_error(self,ctx, error):
+    async def english_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
-                colour = 0x983925,
-                title = "You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
-                description = f"""
+                colour=0x983925,
+                title="You don't have permission \ คุณไม่มีสิทธิ์ตั้งค่า",
+                description=f"""
 ⚠️ ``{ctx.author.mention}``
 
 English : You must have ``Administrator`` to be able to use this command
-ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้"""
-        )
+ไทย : ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้""",
+            )
 
             embed.set_footer(text=f"┗Requested by {ctx.author}")
 
-            message = await ctx.send(embed=embed ) 
-            await message.add_reaction('⚠️')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
 
 
 def setup(bot: commands.Bot):
