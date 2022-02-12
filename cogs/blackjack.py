@@ -54,7 +54,7 @@ class Blackjack(commands.Cog):
 
 
 
-        elif button.custom_id == "pass":
+        elif button.custom_id == "stand":
             game = await settings.collectionblackjack.find_one({"player_id": interaction.author.id})
             if game is not None:
                 #call computer dealer playing function
@@ -110,7 +110,7 @@ class Blackjack_Button(nextcord.ui.View):
         await Blackjack.handle_click(self,button,interaction)
 
     @nextcord.ui.button(
-        label = " Pass ",
+        label = " Stand ",
         style=nextcord.ButtonStyle.secondary,
         custom_id= "stand",
         row = 0
