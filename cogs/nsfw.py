@@ -1,5 +1,6 @@
 from nextcord.ext import commands
 from utils.languageembed import languageEmbed
+from utils.language.translate import translate_nsfw
 import aiohttp
 import nextcord
 import settings
@@ -10,6 +11,7 @@ import random
 class Nsfw(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
+        self.language = translate_nsfw.call()
         
     @commands.command()
     async def anal(self,ctx):
@@ -20,48 +22,34 @@ class Nsfw(commands.Cog):
 
         else:
             server_language = language["Language"]
-            if server_language == "Thai":
-                if ctx.channel.is_nsfw():
-                    async with aiohttp.ClientSession() as session:
-                        async with session.get("https://nekos.life/api/v2/img/anal") as r:
-                            r = await r.json()
-                            embed = nextcord.Embed(
-                                colour = 0xFC7EF5,
-                                title = "Anal"
-
-                            )   
-                            url = r['url']
-                            embed.set_image(url=url)
-                            embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                            message = await ctx.send(embed=embed)   
-                            await message.add_reaction('❤️')
-                
-                else:
-                    if server_language == "Thai":
+            if ctx.channel.is_nsfw():
+                async with aiohttp.ClientSession() as session:
+                    async with session.get("https://nekos.life/api/v2/img/anal") as r:
+                        r = await r.json()
                         embed = nextcord.Embed(
-                            colour = 0x983925,
-                            title =f"NSFW",
-                            description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                            )
+                            colour = 0xFC7EF5,
+                            title = "Anal"
 
+                        )   
+                        url = r['url']
+                        embed.set_image(url=url)
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        embed.timestamp = datetime.datetime.utcnow()
 
-                        message= await ctx.send(embed=embed)
-                        await message.add_reaction('✨')
+                        message = await ctx.send(embed=embed)   
+                        await message.add_reaction('❤️')
+            
+            else:
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    if server_language == "English":
-                        embed = nextcord.Embed(
-                            colour = 0x983925,
-                            title =f"NSFW",
-                            description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                            )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-                        embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                        message= await ctx.send(embed=embed)
-                        await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def porn(self,ctx):
@@ -90,30 +78,17 @@ class Nsfw(commands.Cog):
                 await message.add_reaction('❤️')
                 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def gsolo(self,ctx):
@@ -141,30 +116,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 
     @commands.command()
@@ -193,30 +155,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
     
     @commands.command()
     async def feet(self,ctx):
@@ -244,30 +193,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def pussy(self,ctx):
@@ -295,30 +231,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def hentai(self,ctx):
@@ -346,30 +269,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
                 
     @commands.command()
     async def eroyuri(self,ctx):
@@ -397,30 +307,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def yuri(self,ctx):
@@ -448,30 +345,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def solo(self,ctx):
@@ -499,30 +383,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def classic(self,ctx):
@@ -550,30 +421,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
             
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def boobs(self,ctx):
@@ -601,30 +459,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
         
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def tits(self,ctx):
@@ -652,30 +497,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
                     
     @commands.command()
     async def blowjob(self,ctx):
@@ -703,30 +535,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
     @commands.command()
     async def lewd(self,ctx):
@@ -754,30 +573,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
 
 
     @commands.command()
@@ -806,30 +612,17 @@ class Nsfw(commands.Cog):
                         await message.add_reaction('❤️')
 
             else:
-                if server_language == "Thai":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"คุณไม่สามารถใช้คําสั่ง 18+ ในช่องเเชทนี้ได้ โปรดใช้ในห้อง NSFW เท่านั้น"
-                        )
+                embed = nextcord.Embed(
+                    colour = 0x983925,
+                    title ="NSFW",
+                    description = self.language[server_language]["Error"]["is_nsfw"]
+                    )
 
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
+                embed.set_footer(text=f"┗Requested by {ctx.author}")
+                embed.timestamp = datetime.datetime.utcnow()
 
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
-
-                if server_language == "English":
-                    embed = nextcord.Embed(
-                        colour = 0x983925,
-                        title =f"NSFW",
-                        description = f"you are not allow to use command which is 18+ in this text channel please use this in NSFW channel"
-                        )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    embed.timestamp = datetime.datetime.utcnow()
-
-                    message= await ctx.send(embed=embed)
-                    await message.add_reaction('✨')
+                message= await ctx.send(embed=embed)
+                await message.add_reaction('✨')
             
 def setup(bot: commands.Bot):
     bot.add_cog(Nsfw(bot))

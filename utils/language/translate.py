@@ -83,7 +83,7 @@ class translate_music():
     def call():
         return language["Music"]
 
-class translate_music():
+class translate_nsfw():
     def call():
         return language["Nsfw"]
 

@@ -4,12 +4,13 @@ import random
 import asyncio
 from utils.languageembed import languageEmbed
 from nextcord.ext import commands
-
+from utils.language.translate import translate_economy
 
 class Economy(commands.Cog):
 
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
+        self.language = translate_economy.call()
 
     @commands.command(aliases=['openbal'])
     async def openbalance(self , ctx):
