@@ -1,3 +1,4 @@
+from contextvars import Context
 from traceback import print_tb
 from unittest import result
 import pomice
@@ -1428,7 +1429,7 @@ class Music(commands.Cog):
                 await ctx.reply(f"สร้างห้องสําเร็จ {channel.mention}")
             else:
                 if data["Music_channel_id"] == "None":
-                    channel = await ctx.guild.create_text_channel(
+                    channel: nextcord.TextChannel = await ctx.guild.create_text_channel(
                         name="😁│Smilewin Music",
                         topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                     )
@@ -1445,10 +1446,10 @@ class Music(commands.Cog):
                         url="https://smilewinbot.web.app/assets/image/host/music.png"
                     )
                     embed.set_footer(text=f"server : {ctx.guild.name}")
-                    embed_message = await channel.send(
+                    embed_message: nextcord.Message = await channel.send(
                         embed=embed, view=MusicButton(self.bot)
                     )
-                    music_message = await channel.send(
+                    music_message: nextcord.Message = await channel.send(
                         "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
                     )
                     await settings.collection.update_one(
