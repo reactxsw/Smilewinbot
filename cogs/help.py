@@ -1,5 +1,3 @@
-from os import name
-from click import command
 import nextcord
 import settings
 from nextcord.ext import commands
@@ -237,15 +235,8 @@ class Help(commands.Cog):
                 embed.add_field(name=f"``{settings.COMMAND_PREFIX}beg``", value="ขอทาน")
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -303,16 +294,9 @@ class Help(commands.Cog):
                     name=f"``{settings.COMMAND_PREFIX}beg``", value="beg for money"
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
-                    Inline=False,
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
+                    inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -368,15 +352,8 @@ class Help(commands.Cog):
                     value="ส่งข้อความหา support หากพบปัญหา",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -421,15 +398,8 @@ class Help(commands.Cog):
                     value="send support if error occur",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -471,15 +441,8 @@ class Help(commands.Cog):
                     value="ยืนยันตัวตนโดย captcha",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -510,15 +473,8 @@ class Help(commands.Cog):
                     value="captcha verification",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -622,15 +578,8 @@ class Help(commands.Cog):
                     value="เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -710,15 +659,8 @@ class Help(commands.Cog):
                     value="เปิดใช้งานระบบโชว์สถิตืเซิฟเวอร์",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -785,15 +727,8 @@ class Help(commands.Cog):
                     value="ดูข้อมูลเกม apex ของคนๆนั้น",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -847,15 +782,8 @@ class Help(commands.Cog):
                     value="see a user apex in-game stat",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -958,15 +886,8 @@ class Help(commands.Cog):
                     value="ค้นหา proxy Sock5",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1056,15 +977,8 @@ class Help(commands.Cog):
                     value="search for proxy Sock5",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1132,15 +1046,8 @@ class Help(commands.Cog):
                     value="ย้ายสมาชิกมาห้องของเรา",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1196,15 +1103,8 @@ class Help(commands.Cog):
                     value="move a member to your voice chat",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1287,15 +1187,8 @@ class Help(commands.Cog):
                     value="ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1366,15 +1259,8 @@ class Help(commands.Cog):
                     value="ดู % ความรักของตัวเองกับเพื่อนในเซิร์ฟเวอร์หากไม่ @เพื่อนระบบจะสุ่มให้",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1462,15 +1348,8 @@ class Help(commands.Cog):
                     value="กลับหลังประโยค",
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1545,15 +1424,8 @@ class Help(commands.Cog):
                     value="กลับหลังประโยค",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1598,15 +1470,8 @@ class Help(commands.Cog):
                     name=f"``{settings.COMMAND_PREFIX}koala``", value="ส่งภาพหมีโคอาล่า"
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1645,15 +1510,8 @@ class Help(commands.Cog):
                     value="Send a picture of a koala",
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1717,15 +1575,8 @@ class Help(commands.Cog):
 """,
                 )
                 embed.add_field(
-                    name="📢หมายเหตุ",
-                    value="""```
-[] คือ ค่าที่จำเป็นต้องใส่
-/ คือ หรือ
-<> คือ ค่าที่จะใส่หรือไม่ใส่ก็ได้``````
-• เพื่อให้บอทสามารถใช้งานได้ทุกฟังชั่นควรให้บอทมีบทบาท Administrator (ผู้ดูเเล)
-• ฟังชั่นไม่สามารถทํางานในเเชทส่วนตัวได้
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)
@@ -1777,15 +1628,8 @@ class Help(commands.Cog):
 """,
                 )
                 embed.add_field(
-                    name="📢Note",
-                    value="""```
-[] = required
-/ = or
-<> = optional``````
-• In order for bots to use all functions, bots should have Administrator permission.
-• The function cannot work in private chat.
-```
-""",
+                    name=self.language[server_language]["Response"]["note"]["name"],
+                    value=self.language[server_language]["Response"]["note"]["value"],
                     inline=False,
                 )
                 embed.set_thumbnail(url=self.bot.user.avatar.url)

@@ -514,6 +514,8 @@ class Music(commands.Cog):
                 )
 
         await ctx.author.voice.channel.connect(cls=pomice.Player)
+        player: pomice.Player = ctx.voice_client
+        player.set_context(ctx=ctx)
         await ctx.send(f"Joined the voice channel `{channel.name}`", delete_after=3)
 
     @commands.command(aliases=["disconnect", "dc", "disc", "lv"])
@@ -1015,12 +1017,8 @@ class Music(commands.Cog):
             if music_channel != "None":
                 if music_embed != "None" and music_message != "None":
                     if ctx.channel.id == music_channel:
-                        player: pomice.Player = self.pomice._nodes[
-                            settings.lavalinkindentifier
-                        ].get_player(ctx.guild.id)
-                        if player is None:
+                        if not (player := ctx.voice_client):
                             await ctx.invoke(self.join)
-                            player = ctx.voice_client
                         results = await player.get_tracks(search, ctx=ctx)
                         if not results:
                             return await ctx.send(

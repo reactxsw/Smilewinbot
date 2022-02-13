@@ -183,7 +183,7 @@ async def print_ascii_art():
 
 @bot.command(aliases=["reload"])
 @commands.is_owner()
-async def reloadcogs(ctx):
+async def reloadcogs(ctx: commands.Context):
     await clearcmd()
     unloadcogs()
     await asyncio.sleep(2)
@@ -196,7 +196,7 @@ async def reloadcogs(ctx):
 
 
 @bot.command()
-async def cleancmd(ctx):
+async def cleancmd(ctx: commands.Context):
     await clearcmd()
     await checkMongo()
     await print_ascii_art()

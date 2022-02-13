@@ -8,7 +8,7 @@ class BotSetup(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
 
-    async def setnewserver(self, ctx):
+    async def setnewserver(self, ctx: commands.Context):
         newserver = {
             "guild_id": ctx.guild.id,
             "welcome_id": "None",
@@ -42,7 +42,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def setrole(self, ctx):
+    async def setrole(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -72,7 +72,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction("✅")
 
     @setrole.error
-    async def setrole_error(self, ctx, error):
+    async def setrole_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -111,7 +111,7 @@ class BotSetup(commands.Cog):
 
     @setrole.command()
     @commands.has_permissions(administrator=True)
-    async def give(self, ctx, role: nextcord.Role):
+    async def give(self, ctx: commands.Context, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -225,7 +225,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @give.error
-    async def give_error(self, ctx, error):
+    async def give_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -286,7 +286,7 @@ class BotSetup(commands.Cog):
 
     @setrole.command()
     @commands.has_permissions(administrator=True)
-    async def remove(self, ctx, role: nextcord.Role):
+    async def remove(self, ctx: commands.Context, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -400,7 +400,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @remove.error
-    async def remove_error(self, ctx, error):
+    async def remove_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -461,7 +461,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setintroduce(self, ctx, channel: nextcord.TextChannel):
+    async def setintroduce(self, ctx: commands.Context, channel: nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -606,7 +606,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @setintroduce.error
-    async def setintroduce_error(self, ctx, error):
+    async def setintroduce_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -667,7 +667,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setframe(self, ctx, *, frame):
+    async def setframe(self, ctx: commands.Context, *, frame):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -779,7 +779,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @setframe.error
-    async def setframe_error(self, ctx, error):
+    async def setframe_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -840,7 +840,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def introduce(self, ctx):
+    async def introduce(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -871,7 +871,7 @@ class BotSetup(commands.Cog):
 
     @introduce.command()
     @commands.has_permissions(administrator=True)
-    async def on(self, ctx):
+    async def on(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -982,7 +982,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @on.error
-    async def on_error(self, ctx, error):
+    async def on_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1021,7 +1021,7 @@ class BotSetup(commands.Cog):
 
     @introduce.command()
     @commands.has_permissions(administrator=True)
-    async def off(self, ctx):
+    async def off(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1134,7 +1134,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @off.error
-    async def off_error(self, ctx, error):
+    async def off_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1173,7 +1173,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def level(self, ctx):
+    async def level(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1200,7 +1200,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction("✅")
 
     @level.error
-    async def level_error(self, ctx, error):
+    async def level_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1238,7 +1238,7 @@ class BotSetup(commands.Cog):
 
     @level.command(aliases=["on"])
     @commands.has_permissions(administrator=True)
-    async def levelon(self, ctx):
+    async def levelon(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1351,7 +1351,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @levelon.error
-    async def levelon_error(self, ctx, error):
+    async def levelon_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1390,7 +1390,7 @@ class BotSetup(commands.Cog):
 
     @level.command(aliases=["off"])
     @commands.has_permissions(administrator=True)
-    async def leveloff(self, ctx):
+    async def leveloff(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1505,7 +1505,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @leveloff.error
-    async def leveloff_error(self, ctx, error):
+    async def leveloff_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1543,7 +1543,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.group(invoke_without_command=True)
-    async def logvoice(self, ctx):
+    async def logvoice(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1574,7 +1574,7 @@ class BotSetup(commands.Cog):
 
     @logvoice.command(aliases=["on"])
     @commands.has_permissions(administrator=True)
-    async def logvoiceon(self, ctx):
+    async def logvoiceon(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1687,7 +1687,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @logvoiceon.error
-    async def logvoiceon_error(self, ctx, error):
+    async def logvoiceon_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1726,7 +1726,7 @@ class BotSetup(commands.Cog):
 
     @logvoice.command(aliases=["off"])
     @commands.has_permissions(administrator=True)
-    async def logvoiceoff(self, ctx):
+    async def logvoiceoff(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1839,7 +1839,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @logvoiceoff.error
-    async def logvoiceoff_error(self, ctx, error):
+    async def logvoiceoff_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1878,7 +1878,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setlog(self, ctx, channel: nextcord.TextChannel):
+    async def setlog(self, ctx: commands.Context, channel: nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2033,7 +2033,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @setlog.error
-    async def setlog_error(self, ctx, error):
+    async def setlog_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2094,7 +2094,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setup(self, ctx):
+    async def setup(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2154,7 +2154,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction("✅")
 
     @setup.error
-    async def setup_error(self, ctx, error):
+    async def setup_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2193,7 +2193,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def economy(self, ctx):
+    async def economy(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2222,7 +2222,7 @@ class BotSetup(commands.Cog):
 
     @economy.command(aliases=["on"])
     @commands.has_permissions(administrator=True)
-    async def ____on(self, ctx):
+    async def ____on(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2337,7 +2337,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @____on.error
-    async def economyon_error(self, ctx, error):
+    async def economyon_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2376,7 +2376,7 @@ class BotSetup(commands.Cog):
 
     @economy.command(aliases=["off"])
     @commands.has_permissions(administrator=True)
-    async def ____off(self, ctx):
+    async def ____off(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2492,7 +2492,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @____off.error
-    async def economyoff_error(self, ctx, error):
+    async def economyoff_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2531,7 +2531,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setwelcome(self, ctx, channel: nextcord.TextChannel):
+    async def setwelcome(self, ctx: commands.Context, channel: nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2641,7 +2641,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @setwelcome.error
-    async def setwelcome_error(self, ctx, error):
+    async def setwelcome_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2702,7 +2702,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setleave(self, ctx, channel: nextcord.TextChannel):
+    async def setleave(self, ctx: commands.Context, channel: nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2814,7 +2814,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @setleave.error
-    async def setleave_error(self, ctx, error):
+    async def setleave_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2875,607 +2875,7 @@ class BotSetup(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setwebhook(self, ctx, channel: nextcord.TextChannel):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    webhook = await channel.create_webhook(name="Smilewinbot")
-                    webhookurl = webhook.url
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id},
-                        {
-                            "$set": {
-                                "webhook_url": webhookurl,
-                                "webhook_channel_id": channel.id,
-                                "webhook_status": "YES",
-                            }
-                        },
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                        description=f"ห้องได้ถูกตั้งเป็น {channel.mention}",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    webhook = server["webhook_url"]
-                    if webhook == "None":
-                        webhook = await channel.create_webhook(name="Smilewinbot")
-                        webhookurl = webhook.url
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {
-                                "$set": {
-                                    "webhook_url": webhookurl,
-                                    "webhook_channel_id": channel.id,
-                                    "webhook_status": "YES",
-                                }
-                            },
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ห้องได้ถูกตั้งเป็น {channel.mention}",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        webhook = await channel.create_webhook(name="Smilewinbot")
-                        webhookurl = webhook.url
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {
-                                "$set": {
-                                    "webhook_url": webhookurl,
-                                    "webhook_channel_id": channel.id,
-                                    "webhook_status": "YES",
-                                }
-                            },
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ห้องได้ถูกอัพเดตเป็น {channel.mention}",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-            if server_language == "English":
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    webhook = await channel.create_webhook(name="Smilewinbot")
-                    webhookurl = webhook.url
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id},
-                        {
-                            "$set": {
-                                "webhook_url": webhookurl,
-                                "webhook_channel_id": channel.id,
-                                "webhook_status": "YES",
-                            }
-                        },
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="room to talk to a stranger",
-                        description=f"channel have been set to {channel.mention}",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    webhook = server["webhook_url"]
-                    if webhook == "None":
-                        webhook = await channel.create_webhook(name="Smilewinbot")
-                        webhookurl = webhook.url
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {
-                                "$set": {
-                                    "webhook_url": webhook,
-                                    "webhook_channel_id": channel.id,
-                                    "webhook_status": "YES",
-                                }
-                            },
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="room to talk to a stranger",
-                            description=f"channel have been set to {channel.mention}",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        webhook = await channel.create_webhook(name="Smilewinbot")
-                        webhookurl = webhook.url
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {
-                                "$set": {
-                                    "webhook_url": webhook,
-                                    "webhook_channel_id": channel.id,
-                                    "webhook_status": "YES",
-                                }
-                            },
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="room to talk to a stranger",
-                            description=f"channel have been updated to {channel.mention}",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-    @setwebhook.error
-    async def setwebhook_error(self, ctx, error):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingRequiredArgument):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="ระบุห้องที่จะตั้ง",
-                        description=f" ⚠️``{ctx.author}`` จะต้องใส่ระบุห้องที่จะตั้งเป็นห้องคุย ``{settings.COMMAND_PREFIX}setwebhook #text-channel``",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="คุณไม่มีสิทธิ์ตั้งค่า",
-                        description=f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="You don't have permission",
-                        description=f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-                if isinstance(error, commands.MissingRequiredArgument):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="Specify a channel",
-                        description=f" ⚠️``{ctx.author}`` need to specify a channel ``{settings.COMMAND_PREFIX}setwebhook #channel``",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-    @commands.group(invoke_without_command=True)
-    @commands.has_permissions(administrator=True)
-    async def chat(self, ctx):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                embed = nextcord.Embed(colour=0x00FFFF, description="ต้องระบุ on / off")
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction("✅")
-
-            if server_language == "English":
-                embed = nextcord.Embed(
-                    colour=0x00FFFF, description="you need to specify on / off"
-                )
-                embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                message = await ctx.send(embed=embed)
-                await message.add_reaction("✅")
-
-    @chat.error
-    async def chat_error(self, ctx, error):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="คุณไม่มีสิทธิ์ตั้งค่า",
-                        description=f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="You don't have permission",
-                        description=f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-    @chat.command(aliases=["on"])
-    @commands.has_permissions(administrator=True)
-    async def _on(self, ctx):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                status = "YES"
-
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id}, {"$set": {"webhook_status": status}}
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                        description=f"ได้ทําการเปิดใช้งานคําสั่งนี้",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    status = server["webhook_status"]
-                    if status == "None":
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ได้ทําการเปิดใช้งานคําสั่งนี้",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ได้ทําการเปิดใช้งานคําสั่งนี้",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-            if server_language == "English":
-                status = "YES"
-
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id}, {"$set": {"webhook_status": status}}
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="Anonymous chat",
-                        description=f"The command have been activated",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    status = server["webhook_status"]
-                    if status == "None":
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="Anonymous chat",
-                            description=f"The command have been activated",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="Anonymous chat",
-                            description=f"The command have been activated",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-    @_on.error
-    async def chaton_error(self, ctx, error):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="คุณไม่มีสิทธิ์ตั้งค่า",
-                        description=f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="You don't have permission",
-                        description=f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-    @chat.command(aliases=["off"])
-    @commands.has_permissions(administrator=True)
-    async def _off(self, ctx):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                status = "NO"
-
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id}, {"$set": {"webhook_status": status}}
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                        description=f"ได้ทําการปิดใช้งานคําสั่งนี้",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    status = server["webhook_status"]
-                    if status == "None":
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ได้ทําการปิดใช้งานคําสั่งนี้",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="ตั้งค่าห้องคุยกับคนเเปลกหน้า",
-                            description=f"ได้ทําการปิดใช้งานคําสั่งนี้",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-            if server_language == "English":
-                status = "NO"
-
-                server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-                if server is None:
-                    newserver = await BotSetup.setnewserver(self, ctx)
-                    await settings.collection.insert_one(newserver)
-                    await settings.collection.update_one(
-                        {"guild_id": ctx.guild.id}, {"$set": {"webhook_status": status}}
-                    )
-                    embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title="Anonymous chat",
-                        description=f"The command have been deactivated",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("✅")
-
-                else:
-                    status = server["webhook_status"]
-                    if status == "None":
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="Anonymous chat",
-                            description=f"The command have been deactivated",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-                    else:
-                        await settings.collection.update_one(
-                            {"guild_id": ctx.guild.id},
-                            {"$set": {"webhook_status": status}},
-                        )
-                        embed = nextcord.Embed(
-                            colour=0x00FFFF,
-                            title="Anonymous chat",
-                            description=f"The command have been deactivated",
-                        )
-                        embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                        message = await ctx.send(embed=embed)
-                        await message.add_reaction("✅")
-
-    @_off.error
-    async def chatoff_error(self, ctx, error):
-        languageserver = await settings.collectionlanguage.find_one(
-            {"guild_id": ctx.guild.id}
-        )
-        if languageserver is None:
-            message = await ctx.send(embed=languageEmbed.languageembed(self, ctx))
-            await message.add_reaction("👍")
-
-        else:
-            server_language = languageserver["Language"]
-
-            if server_language == "Thai":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="คุณไม่มีสิทธิ์ตั้งค่า",
-                        description=f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-            if server_language == "English":
-                if isinstance(error, commands.MissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title="You don't have permission",
-                        description=f"⚠️ ``{ctx.author}`` You must have ``Administrator`` to be able to use this command",
-                    )
-
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def setverify(self, ctx, channel: nextcord.TextChannel):
+    async def setverify(self, ctx: commands.Context, channel: nextcord.TextChannel):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -3679,7 +3079,7 @@ class BotSetup(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     @commands.has_permissions(administrator=True)
-    async def verification(self, ctx):
+    async def verification(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -3707,7 +3107,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction("✅")
 
     @verification.error
-    async def verification_error(self, ctx, error):
+    async def verification_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -3746,7 +3146,7 @@ class BotSetup(commands.Cog):
 
     @verification.command(aliases=["on"])
     @commands.has_permissions(administrator=True)
-    async def ___on___(self, ctx):
+    async def ___on___(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -3864,7 +3264,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @___on___.error
-    async def verificationon_error(self, ctx, error):
+    async def verificationon_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -3903,7 +3303,7 @@ class BotSetup(commands.Cog):
 
     @verification.command(aliases=["off"])
     @commands.has_permissions(administrator=True)
-    async def __off(self, ctx):
+    async def __off(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4021,7 +3421,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @__off.error
-    async def verificationoff_error(self, ctx, error):
+    async def verificationoff_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4059,7 +3459,7 @@ class BotSetup(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def verifytime(self, ctx, time: int):
+    async def verifytime(self, ctx: commands.Context, time: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4193,7 +3593,7 @@ class BotSetup(commands.Cog):
                             await message.add_reaction("✅")
 
     @commands.group(invoke_without_command=True)
-    async def verifyrole(self, ctx):
+    async def verifyrole(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4223,7 +3623,7 @@ class BotSetup(commands.Cog):
                 await message.add_reaction("✅")
 
     @verifyrole.error
-    async def verifyrole_error(self, ctx, error):
+    async def verifyrole_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4262,7 +3662,7 @@ class BotSetup(commands.Cog):
 
     @verifyrole.command(aliases=["give"])
     @commands.has_permissions(administrator=True)
-    async def _give(self, ctx, role: nextcord.Role):
+    async def _give(self, ctx: commands.Context, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4386,7 +3786,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @_give.error
-    async def verifygive_error(self, ctx, error):
+    async def verifygive_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4447,7 +3847,7 @@ class BotSetup(commands.Cog):
 
     @verifyrole.command(aliases=["remove"])
     @commands.has_permissions(administrator=True)
-    async def _remove(self, ctx, role: nextcord.Role):
+    async def _remove(self, ctx: commands.Context, role: nextcord.Role):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4571,7 +3971,7 @@ class BotSetup(commands.Cog):
                         await message.add_reaction("✅")
 
     @_remove.error
-    async def verifyremove_error(self, ctx, error):
+    async def verifyremove_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -4629,19 +4029,6 @@ class BotSetup(commands.Cog):
 
                     message = await ctx.send(embed=embed)
                     await message.add_reaction("⚠️")
-
-    @commands.command()
-    async def insertall(self, ctx):
-        result = await settings.collection.update_many(
-            {},
-            {
-                "$set": {
-                    "Music_channel_id": "None",
-                    "Embed_message_id": "None",
-                    "Music_message_id": "None",
-                }
-            },
-        )
 
 
 def setup(bot: commands.Bot):

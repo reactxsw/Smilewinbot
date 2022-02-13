@@ -11,7 +11,7 @@ class Blackjack(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["bj"])
-    async def blackjack(self, ctx):
+    async def blackjack(self, ctx: commands.Context):
         # Initialize variables
         player_hand = random.sample(card_list, 2)
         dealer_hand = random.sample(card_list, 2)

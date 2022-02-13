@@ -10,7 +10,7 @@ class Anime(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def feed(self, ctx, member: nextcord.Member = None):
+    async def feed(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -35,7 +35,7 @@ class Anime(commands.Cog):
                     await message.add_reaction("❤️")
 
     @commands.command()
-    async def tickle(self, ctx, member: nextcord.Member = None):
+    async def tickle(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -60,7 +60,7 @@ class Anime(commands.Cog):
                     await message.add_reaction("❤️")
 
     @commands.command()
-    async def slap(self, ctx, member: nextcord.Member = None):
+    async def slap(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -85,7 +85,7 @@ class Anime(commands.Cog):
                     await message.add_reaction("❤️")
 
     @commands.command()
-    async def hug(self, ctx, member: nextcord.Member = None):
+    async def hug(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
