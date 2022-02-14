@@ -27,7 +27,8 @@ class Blackjack(commands.Cog):
             "player_id": ctx.author.id,
             "player_hand": player_hand,
             "dealer_hand": dealer_hand,
-            "msg_id": ctx.message.id,
+            "channel_id": ctx.channel.id,
+            "msg_id": ctx.message.id
         }
 
         # Insert data into database
@@ -86,14 +87,14 @@ class Blackjack(commands.Cog):
                     {"player_id": game["player_id"]}, {"$set": game}
                 )
 
-    async def update_message(self, msg_id, embed, remove_view=False):
+    async def update_message(self, data, embed, remove_view=False):
         if remove_view:
-            await self.bot.get_channel(settings.blackjack_channel).fetch_message(
-                msg_id
+            await self.bot.get_channel(data['channel_id']).fetch_message(
+                data['msg_id']
             ).edit(embed=embed, view=None)
         else:
-            await self.bot.get_channel(settings.blackjack_channel).fetch_message(
-                msg_id
+            await self.bot.get_channel(data['channel_id']).fetch_message(
+                data['msg_id']
             ).edit(embed=embed)
 
 
