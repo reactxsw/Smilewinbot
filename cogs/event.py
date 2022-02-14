@@ -73,7 +73,7 @@ class Events(commands.Cog):
             pass
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member, before, after):
+    async def on_voice_state_update(self, member: nextcord.Member, before, after):
         await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": member.guild.id}
@@ -204,7 +204,7 @@ class Events(commands.Cog):
                     pass
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
+    async def on_member_join(self, member: nextcord.Member):
         await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": member.guild.id}
@@ -274,7 +274,7 @@ class Events(commands.Cog):
             pass
 
     @commands.Cog.listener()
-    async def on_member_remove(self, member):
+    async def on_member_remove(self, member: nextcord.Member):
         await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": member.guild.id}
@@ -343,7 +343,7 @@ class Events(commands.Cog):
             pass
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    async def on_guild_join(self, guild: nextcord.Guild):
         await self.bot.wait_until_ready()
         try:
             async for entry in guild.audit_logs(
@@ -394,7 +394,7 @@ class Events(commands.Cog):
             break
 
     @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
+    async def on_guild_remove(self, guild: nextcord.Guild):
         await self.bot.wait_until_ready()
         channel = self.bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(title=f"Bot have left {guild.name}", colour=0x983925)

@@ -27,8 +27,6 @@ class BotSetup(commands.Cog):
             "verification_role_give_id": "None",
             "verification_role_remove_id": "None",
             "log_voice_system": "NO",
-            "log_delete_system": "NO",
-            "log_name_system": "NO",
             "log_channel_id": "None",
             "scam": "warn",
             "Music_channel_id": "None",

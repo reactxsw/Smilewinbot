@@ -13,7 +13,7 @@ class Economy(commands.Cog):
         self.language = translate_economy.call()
 
     @commands.command(aliases=["openbal"])
-    async def openbalance(self, ctx):
+    async def openbalance(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -135,7 +135,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @commands.command(aliases=["bal"])
-    async def balance(self, ctx, member: nextcord.Member = None):
+    async def balance(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -427,7 +427,7 @@ class Economy(commands.Cog):
                         await message.add_reaction("💸")
 
     @commands.command()
-    async def deposit(self, ctx, amount):
+    async def deposit(self, ctx: commands.Context, amount):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -612,7 +612,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @deposit.error
-    async def deposit_error(self, ctx, error):
+    async def deposit_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -648,7 +648,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def withdraw(self, ctx, amount):
+    async def withdraw(self, ctx: commands.Context, amount):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -837,7 +837,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @withdraw.error
-    async def withdraw_error(self, ctx, error):
+    async def withdraw_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -874,7 +874,9 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def addcredit(self, ctx, member: nextcord.Member, amount: int):
+    async def addcredit(
+        self, ctx: commands.Context, member: nextcord.Member, amount: int
+    ):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1022,7 +1024,7 @@ class Economy(commands.Cog):
                         await message.add_reaction("💸")
 
     @addcredit.error
-    async def addcredit_error(self, ctx, error):
+    async def addcredit_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1081,7 +1083,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def pay(self, ctx, member: nextcord.Member, amount: int):
+    async def pay(self, ctx: commands.Context, member: nextcord.Member, amount: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1309,7 +1311,7 @@ class Economy(commands.Cog):
                         await message.add_reaction("💸")
 
     @pay.error
-    async def pay_error(self, ctx, error):
+    async def pay_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1346,7 +1348,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def slot(self, ctx, amount: int):
+    async def slot(self, ctx: commands.Context, amount: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1707,7 +1709,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setcurrency(self, ctx, *, currency):
+    async def setcurrency(self, ctx: commands.Context, *, currency):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1818,7 +1820,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @setcurrency.error
-    async def setcurrency_error(self, ctx, error):
+    async def setcurrency_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1879,7 +1881,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 7200, commands.BucketType.user)
-    async def rob(self, ctx, member: nextcord.Member):
+    async def rob(self, ctx: commands.Context, member: nextcord.Member):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2136,7 +2138,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @rob.error
-    async def rob_error(self, ctx, error):
+    async def rob_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2162,7 +2164,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 600, commands.BucketType.user)
-    async def work(self, ctx):
+    async def work(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2304,7 +2306,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @work.error
-    async def work_error(self, ctx, error):
+    async def work_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2330,7 +2332,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 180, commands.BucketType.user)
-    async def beg(self, ctx):
+    async def beg(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2456,7 +2458,7 @@ class Economy(commands.Cog):
                     await message.add_reaction("💸")
 
     @beg.error
-    async def beg_error(self, ctx, error):
+    async def beg_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2482,7 +2484,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def resetmoney(self, ctx, member: nextcord.Member = None):
+    async def resetmoney(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2675,7 +2677,7 @@ class Economy(commands.Cog):
                         await message.add_reaction("💸")
 
     @resetmoney.error
-    async def resetmoney_error(self, ctx, error):
+    async def resetmoney_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

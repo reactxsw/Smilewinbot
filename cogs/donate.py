@@ -15,7 +15,7 @@ class Invite(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def donate(self, ctx, GIFT_URL):
+    async def donate(self, ctx: commands.Context, GIFT_URL):
         if "https://gift.truemoney.com/campaign/?v=" in GIFT_URL:
             async with aiohttp.ClientSession() as session:
                 async with session.get(GIFT_URL) as response:

@@ -51,7 +51,7 @@ class Blackjack(commands.Cog):
             )
         return embed
 
-    async def handle_click(self, button, interaction):
+    async def handle_click(self, button: nextcord.ui.Button, interaction):
         if button.custom_id == "hit":
             game = await settings.collectionblackjack.find_one(
                 {"player_id": interaction.author.id}

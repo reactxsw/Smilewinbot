@@ -110,7 +110,7 @@ class Anime(commands.Cog):
                     await message.add_reaction("❤️")
 
     @commands.command()
-    async def smug(self, ctx, member: nextcord.Member = None):
+    async def smug(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -135,7 +135,7 @@ class Anime(commands.Cog):
                     await message.add_reaction("❤️")
 
     @commands.command()
-    async def pat(self, ctx, member: nextcord.Member = None):
+    async def pat(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
