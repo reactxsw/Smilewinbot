@@ -121,10 +121,8 @@ class Music(commands.Cog):
         self.pomice = pomice.NodePool()
         bot.loop.create_task(self.start_nodes())
 
-    async def build_spotify_track(self, identifier, guild):
-        player: pomice.Player = self.pomice._nodes[
-            settings.lavalinkindentifier
-        ].get_player(guild)
+    async def build_spotify_track(self, identifier, guild: nextcord.Guild):
+        player: pomice.Player = self.bot.get_guild(guild).voice_client
         results = await player.get_tracks(
             f"https://open.spotify.com/track/{identifier}"
         )
@@ -181,7 +179,9 @@ class Music(commands.Cog):
         await Music.do_next(self, player)
 
     @commands.Cog.listener()
-    async def on_pomice_track_stuck(self, player: pomice.player, track, _):
+    async def on_pomice_track_stuck(
+        self, player: pomice.player, track: pomice.Track, _
+    ):
         await Music.do_next(self, player)
 
     @commands.Cog.listener()
@@ -189,7 +189,7 @@ class Music(commands.Cog):
         await Music.do_next(self, player)
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member, before, after):
+    async def on_voice_state_update(self, member: nextcord.Member, before, after):
         if (
             member.guild.voice_client != None
             and len(member.guild.voice_client.channel.members) == 1
@@ -220,9 +220,7 @@ class Music(commands.Cog):
 
         else:
             if after.channel is None and member == self.bot.user:
-                player: pomice.player = self.pomice._nodes[
-                    settings.lavalinkindentifier
-                ].get_player(member.guild.id)
+                player: pomice.player = member.guild.voice_client
                 if player != None:
                     await player.destroy()
                 await settings.collectionmusic.delete_one({"guild_id": member.guild.id})
@@ -305,9 +303,9 @@ class Music(commands.Cog):
                             self, server["Queue"][0]["song_id"], player.guild.id
                         )
                     else:
-                        tracks: pomice.Track = await self.pomice._nodes[
-                            settings.lavalinkindentifier
-                        ].build_track(server["Queue"][0]["song_id"])
+                        tracks: pomice.Track = await player.node.build_track(
+                            server["Queue"][0]["song_id"]
+                        )
                     time = await time_format(tracks.length / 1000)
                     nu = (
                         None
@@ -359,9 +357,9 @@ class Music(commands.Cog):
                             self, server["Queue"][0]["song_id"], player.guild.id
                         )
                     else:
-                        tracks: pomice.Track = await self.pomice._nodes[
-                            settings.lavalinkindentifier
-                        ].build_track(server["Queue"][0]["song_id"])
+                        tracks: pomice.Track = await player.node.build_track(
+                            server["Queue"][0]["song_id"]
+                        )
                     await player.play(tracks)
 
                 else:
@@ -424,9 +422,9 @@ class Music(commands.Cog):
                             self, server["Queue"][0]["song_id"], player.guild.id
                         )
                     else:
-                        tracks: pomice.Track = await self.pomice._nodes[
-                            settings.lavalinkindentifier
-                        ].build_track(server["Queue"][0]["song_id"])
+                        tracks: pomice.Track = await player.node.build_track(
+                            server["Queue"][0]["song_id"]
+                        )
                     time = await time_format(tracks.length / 1000)
                     nu = (
                         "None"
@@ -514,8 +512,6 @@ class Music(commands.Cog):
                 )
 
         await ctx.author.voice.channel.connect(cls=pomice.Player)
-        player: pomice.Player = ctx.voice_client
-        player.set_context(ctx=ctx)
         await ctx.send(f"Joined the voice channel `{channel.name}`", delete_after=3)
 
     @commands.command(aliases=["disconnect", "dc", "disc", "lv"])
@@ -1017,8 +1013,10 @@ class Music(commands.Cog):
             if music_channel != "None":
                 if music_embed != "None" and music_message != "None":
                     if ctx.channel.id == music_channel:
-                        if not (player := ctx.voice_client):
+                        player: pomice.Player = ctx.voice_client
+                        if player is None:
                             await ctx.invoke(self.join)
+                            player = ctx.voice_client
                         results = await player.get_tracks(search, ctx=ctx)
                         if not results:
                             return await ctx.send(
