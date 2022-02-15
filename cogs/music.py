@@ -166,6 +166,7 @@ class Music(commands.Cog):
             region=settings.lavalinkregion,
             spotify_client_id=settings.lavalinkspotifyid,
             spotify_client_secret=settings.lavalinkspotifysecret,
+            heartbeat=60
         )
         print(f"Node is ready!")
 
