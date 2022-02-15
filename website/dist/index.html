@@ -1,148 +1,307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>_</title>
-      <link rel="icon" href="assets/image/smwcircle.png">
-      <link rel="stylesheet" href="assets/css/main.css">
-      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,500&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script type="text/javascript" src="assets/javascript/title.js"></script>
-      <script type="text/javascript" src="assets/javascript/typing.js"></script>
-      <script type="text/javascript" src="assets/javascript/block.js"></script>
-      <script type="text/javascript" src="assets/javascript/count.js"></script>
-      <script type="text/javascript" src="assets/javascript/preload.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-      <meta property="og:title" content="Smilewin discord Bot">
-      <meta property="og:description" content="บอทดิสคอร์ด Smilewin">
-      <meta property="og:image" content="https://smilewinbot.web.app/assets/image/smw.png">
-      <meta property="og:url" content="https://smilewinbot.web.app/">
-      <meta name="keywords" content="smilewin, smilewinbot, smilewindiscord, discordbot, discord, botthailand, discordbotthailand, python, nextcord">
-      <meta name="description" content="บอทดิสคอร์ด Smilewin">
-   <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
-   <body class="bg">
-      <div id ="Home"></div>
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
-         <div class="container">
-            <img class="rounded" src="assets/image/smw.png" width="50" height="50"> <a class="navbar-brand text-white" href="#Home"><span>🥀</span>Smilewin<span class="yellow_text">#0644</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-               <div class="mx-auto"></div>
-               <ul class="navbar-nav">
-                  <li class="nav-item"> <a class="nav-link" href="#Home"><i class="fa fa-fw fa-home"></i> Home</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#About"><i class="fas fa-address-card"></i> About</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="#Team"><i class="fas fa-user-friends"></i> Team</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="page/invite.html"><i class="fas fa-plus"></i> Invite</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="page/server.html"><i class="fas fa-globe-americas"></i> Support</a> </li>
-                  <li class="nav-item"> <a class="nav-link" href="page/partner.html"><i class="fas fa-handshake"></i> Partner</a> </li>
-               </ul>
-            </div>
-         </div>
-      </nav>
-      <div class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center">
-         <div class="content text-center">
-            <h1 class="text-white" style="font-family: 'Anton', sans-serif;font-size: 170px;">SMILEWIN<span class="yellow_text">#0644</span></h1>
-            <div class="thai-lang typed" style="font-size: 30px;"> <span class="animation"></span> </div>
-            <div style="backdrop-filter: blur(10px);background: rgba(255,255,255,0.1);"> 
-              <span id="typed"></span> 
-            </div>
-            <a class="btn btn-warning thai-lang" target="_blank" href="page/invite.html" style="font-size: 20px" role="button">เชิญบอทเข้าเซิฟ !</a> 
-         </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>_</title>
+  <link rel="icon" href="assets/image/smwcircle.png" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link
+    rel="stylesheet"
+    href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,500&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="assets/javascript/title.js"></script>
+  <script type="text/javascript" src="assets/javascript/typing.js"></script>
+  <script type="text/javascript" src="assets/javascript/block.js"></script>
+  <script type="text/javascript" src="assets/javascript/count.js"></script>
+  <script type="text/javascript" src="assets/javascript/preload.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <meta property="og:title" content="Smilewin discord Bot" />
+  <meta property="og:description" content="บอทดิสคอร์ด Smilewin" />
+  <meta
+    property="og:image"
+    content="https://smilewinbot.web.app/assets/image/smw.png"
+  />
+  <meta property="og:url" content="https://smilewinbot.web.app/" />
+  <meta
+    name="keywords"
+    content="smilewin, smilewinbot, smilewindiscord, discordbot, discord, botthailand, discordbotthailand, python, nextcord"
+  />
+  <meta name="description" content="บอทดิสคอร์ด Smilewin" />
+  <script async src="/cdn-cgi/bm/cv/669835187/api.js"></script>
+</head>
+<body class="bg">
+  <div id="Home"></div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
+    <div class="container">
+      <img class="rounded" src="assets/image/smw.png" width="50" height="50" />
+      <a class="navbar-brand text-white" href="#Home">
+        <span>🥀</span>Smilewin
+        <span class="yellow_text">#0644</span>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="mx-auto"></div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#Home">
+              <i class="fa fa-fw fa-home"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#About">
+              <i class="fas fa-address-card"></i> About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Team">
+              <i class="fas fa-user-friends"></i> Team
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="page/invite.html">
+              <i class="fas fa-plus"></i> Invite
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="page/server.html">
+              <i class="fas fa-globe-americas"></i> Support
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="page/partner.html">
+              <i class="fas fa-handshake"></i> Partner
+            </a>
+          </li>
+        </ul>
       </div>
-      <div id="About"></div>
-      <div class="container my-5 d-grid gap-5">
-         <div class="content text-centere text-white" style="display:flex;">
-            <div style="margin-inline: 200px;display:flex;">
-               <img src="assets/image/smwcircle.png" width="250" height="250">
-               <div style="margin-inline:25px;line-height:1.3">
-                  <p class="text-white" style="font-family: 'Anton', sans-serif;font-size: 60px;line-height:1.1">SMILEWIN<span class="yellow_text">#0644</span></p>
-                  <p class="thai-lang" style="font-size:22px;">บอท Smilewin เมนูภาษาไทยสำหรับเซิฟเวอร์ดิสคอร์ดของคุณมีคำสั่งมากกว่า 180 คําสั่ง มีคําสั่งมากมายเช่นห้องเล่นเพลง ,คําสั่งเเอดมิน , คําสั่งเกม , คําสั่งบรรเทิงเเละคําสั่งอื่นๆอีกมากมาย ปัจจุบันบอทได้รับการยืนยันจาก Discord เป็นที่เรียบร้อยมีผู้ใช้งานมากถึง 6หมื่นคน !!</p>
-               </div>
-            </div>
-         </div>
+    </div>
+  </nav>
+  <div
+    class="banner-image w-100 vh-100 d-flex justify-content-center align-items-center"
+  >
+    <div class="content text-center">
+      <h1
+        class="text-white"
+        style="font-family: 'Anton', sans-serif;font-size: 170px;"
+      >
+        SMILEWIN
+        <span class="yellow_text">#0644</span>
+      </h1>
+      <div class="thai-lang typed" style="font-size: 30px;">
+        <span class="animation"></span>
       </div>
-      <div class="content text-center text-white">
-         <h1 style="font-family: 'Anton', sans-serif;font-size: 200px;">Stats</h1>
-         <p class="thai-lang" style="font-size: 35px;">สถานะเเละข้อมูลต่างๆของบอท</p>
+      <div
+        style="backdrop-filter: blur(10px);background: rgba(255,255,255,0.1);"
+      >
+        <span id="typed"></span>
       </div>
-      <div class="content text-center text-white">
-         <div style="display:flex; align-items:center; justify-content:center;">
-            <div class="icon" style="margin-inline: 10px;">
-               <i class="fa fa-server" style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"></i>
-               <p style="font-family: 'Anton', sans-serif;font-size: 20px;">240+ servers</p>
-            </div>
-            <div class="icon" style="margin-inline: 10px;">
-               <i class="fas fa-users" style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"></i>
-               <p style="font-family: 'Anton', sans-serif;font-size: 20px;">60k+ members</p>
-            </div>
-            <div class="icon" style="margin-inline: 10px;">
-               <i class="fa fa-code" style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"></i>
-               <p style="font-family: 'Anton', sans-serif;font-size: 20px;">180+ commands</p>
-            </div>
-            <div class="icon" style="margin-inline: 10px;">
-               <i class="fas fa-chart-bar" style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"></i>
-               <p style="font-family: 'Anton', sans-serif;font-size: 20px;">97% uptime</p>
-            </div>
-         </div>
+      <a
+        class="btn btn-warning thai-lang"
+        target="_blank"
+        href="page/invite.html"
+        style="font-size: 20px"
+        role="button"
+      >เชิญบอทเข้าเซิฟ !</a>
+    </div>
+  </div>
+  <div id="About"></div>
+  <div class="container my-5 d-grid gap-5">
+    <div class="content text-centere text-white" style="display:flex;">
+      <div style="margin-inline: 200px;display:flex;">
+        <img src="assets/image/smwcircle.png" width="250" height="250" />
+        <div style="margin-inline:25px;line-height:1.3">
+          <p
+            class="text-white"
+            style="font-family: 'Anton', sans-serif;font-size: 60px;line-height:1.1"
+          >
+            SMILEWIN
+            <span class="yellow_text">#0644</span>
+          </p>
+          <p
+            class="thai-lang"
+            style="font-size:22px;"
+          >บอท Smilewin เมนูภาษาไทยสำหรับเซิฟเวอร์ดิสคอร์ดของคุณมีคำสั่งมากกว่า 180 คําสั่ง มีคําสั่งมากมายเช่นห้องเล่นเพลง ,คําสั่งเเอดมิน , คําสั่งเกม , คําสั่งบรรเทิงเเละคําสั่งอื่นๆอีกมากมาย ปัจจุบันบอทได้รับการยืนยันจาก Discord เป็นที่เรียบร้อยมีผู้ใช้งานมากถึง 6หมื่นคน !!</p>
+        </div>
       </div>
-      <div id="Partner" class="container my-5 d-grid gap-5">
-         <div class="content text-center text-white">
-            <h1 style="font-family: 'Anton', sans-serif;font-size: 150px;">Team members</h1>
-            <p class="thai-lang" style="font-size: 35px;">ทีมงานเเละผู้มีส่วนร่วมในการพัฒนาเเละโปรโมทบอทดิสคอร์ด Smilewin ในตอนนี้</p>
-         </div>
-         <div class="row" style="display: flex;justify-content: center;align-items: center;">
-            <div style="width: 250px; border-radius: 15px;">
-               <div style="position: relative;">
-                  <img src="https://cdn.discordapp.com/avatars/394447088970104833/10499ed48de3c7cf6417afeca6b81596.png?size=1024" class="rounded" style="width: 100%;">
-               </div>
-               <h5 class="mt-2 text-white" style="font-family: 'Kanit', sans-serif;text-align: center;"><b>REACT#1120</b><br>
-               Founder
-               </h5>
-            </div>
-            <div style="width: 250px; border-radius: 15px;">
-               <div style="position: relative;">
-                  <img src="https://cdn.discordapp.com/avatars/485027400120532993/2c7be367d5b539e69ab7d2557627bbff.png?size=1024" class="rounded" style="width: 100%;">
-               </div>
-               <h5 class="mt-2 text-white" style="font-family: 'Kanit', sans-serif;text-align: center;"><b>DeepKungChannel#6590</b><br>
-               Developer
-               </h5>
-            </div>
-            <div style="width: 250px; border-radius: 15px;">
-               <div style="position: relative;">
-                  <img src="https://cdn.discordapp.com/avatars/668433997189087232/a_c3990216dc1a64df4837ccdf61a6bf6b.gif?size=1024" class="rounded" style="width: 100%;">
-               </div>
-               <h5 class="mt-2 text-white" style="font-family: 'Kanit', sans-serif;text-align: center;"><b>This dood#0001</b><br>
-               Developer
-               </h5>
-            </div>
-            <div style="width: 250px; border-radius: 15px;">
-               <div style="position: relative;">
-                  <img src="https://cdn.discordapp.com/avatars/816276922492780565/b2f3f3be9261f7e6a98eb8306d719ed6.png?size=1024" class="rounded" style="width: 100%;">
-               </div>
-               <h5 class="mt-2 text-white" style="font-family: 'Kanit', sans-serif;text-align: center;"><b>ชาเขียวอร่อยน้าาา🍵</b><br>
-               Marketing
-               </h5>
-            </div>
-            <div style="width: 250px; border-radius: 15px;">
-               <div style="position: relative;">
-                  <img src="https://cdn.discordapp.com/avatars/841386464179912756/346d2178fc33d8793399392da2cd36fd.png?size=1024" class="rounded" style="width: 100%;">
-               </div>
-               <h5 class="mt-2 text-white" style="font-family: 'Kanit', sans-serif;text-align: center;"><b>chamu#3306</b><br>
-               Marketing
-               </h5>
-            </div>
-         </div>
+    </div>
+  </div>
+  <div class="content text-center text-white">
+    <h1 style="font-family: 'Anton', sans-serif;font-size: 200px;">Stats</h1>
+    <p class="thai-lang" style="font-size: 35px;">สถานะเเละข้อมูลต่างๆของบอท</p>
+  </div>
+  <div class="content text-center text-white">
+    <div style="display:flex; align-items:center; justify-content:center;">
+      <div class="icon" style="margin-inline: 10px;">
+        <i
+          class="fa fa-server"
+          style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"
+        ></i>
+        <p
+          style="font-family: 'Anton', sans-serif;font-size: 20px;"
+        >240+ servers</p>
       </div>
-      <script>
+      <div class="icon" style="margin-inline: 10px;">
+        <i
+          class="fas fa-users"
+          style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"
+        ></i>
+        <p
+          style="font-family: 'Anton', sans-serif;font-size: 20px;"
+        >60k+ members</p>
+      </div>
+      <div class="icon" style="margin-inline: 10px;">
+        <i
+          class="fa fa-code"
+          style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"
+        ></i>
+        <p
+          style="font-family: 'Anton', sans-serif;font-size: 20px;"
+        >180+ commands</p>
+      </div>
+      <div class="icon" style="margin-inline: 10px;">
+        <i
+          class="fas fa-chart-bar"
+          style="color:#1a1a1a;font-size:45px; width: 125px; height: 125px; background:#fed000; border-radius: 50%; display: grid; place-items: center;"
+        ></i>
+        <p style="font-family: 'Anton', sans-serif;font-size: 20px;">97% uptime</p>
+      </div>
+    </div>
+  </div>
+  <div id="Partner" class="container my-5 d-grid gap-5">
+    <div class="content text-center text-white">
+      <h1
+        style="font-family: 'Anton', sans-serif;font-size: 150px;"
+      >Team members</h1>
+      <p
+        class="thai-lang"
+        style="font-size: 35px;"
+      >ทีมงานเเละผู้มีส่วนร่วมในการพัฒนาเเละโปรโมทบอทดิสคอร์ด Smilewin ในตอนนี้</p>
+    </div>
+    <div
+      class="row"
+      style="display: flex;justify-content: center;align-items: center;"
+    >
+      <div style="width: 250px; border-radius: 15px;">
+        <div style="position: relative;">
+          <img
+            src="https://cdn.discordapp.com/avatars/394447088970104833/10499ed48de3c7cf6417afeca6b81596.png?size=1024"
+            class="rounded"
+            style="width: 100%;"
+          />
+        </div>
+        <h5
+          class="mt-2 text-white"
+          style="font-family: 'Kanit', sans-serif;text-align: center;"
+        >
+          <b>REACT#1120</b>
+          <br />Founder
+        </h5>
+      </div>
+      <div style="width: 250px; border-radius: 15px;">
+        <div style="position: relative;">
+          <img
+            src="https://cdn.discordapp.com/avatars/485027400120532993/2c7be367d5b539e69ab7d2557627bbff.png?size=1024"
+            class="rounded"
+            style="width: 100%;"
+          />
+        </div>
+        <h5
+          class="mt-2 text-white"
+          style="font-family: 'Kanit', sans-serif;text-align: center;"
+        >
+          <b>DeepKungChannel#6590</b>
+          <br />Developer
+        </h5>
+      </div>
+      <div style="width: 250px; border-radius: 15px;">
+        <div style="position: relative;">
+          <img
+            src="https://cdn.discordapp.com/avatars/668433997189087232/a_c3990216dc1a64df4837ccdf61a6bf6b.gif?size=1024"
+            class="rounded"
+            style="width: 100%;"
+          />
+        </div>
+        <h5
+          class="mt-2 text-white"
+          style="font-family: 'Kanit', sans-serif;text-align: center;"
+        >
+          <b>This dood#0001</b>
+          <br />Developer
+        </h5>
+      </div>
+      <div style="width: 250px; border-radius: 15px;">
+        <div style="position: relative;">
+          <img
+            src="https://cdn.discordapp.com/avatars/816276922492780565/b2f3f3be9261f7e6a98eb8306d719ed6.png?size=1024"
+            class="rounded"
+            style="width: 100%;"
+          />
+        </div>
+        <h5
+          class="mt-2 text-white"
+          style="font-family: 'Kanit', sans-serif;text-align: center;"
+        >
+          <b>ชาเขียวอร่อยน้าาา🍵</b>
+          <br />Marketing
+        </h5>
+      </div>
+      <div style="width: 250px; border-radius: 15px;">
+        <div style="position: relative;">
+          <img
+            src="https://cdn.discordapp.com/avatars/841386464179912756/346d2178fc33d8793399392da2cd36fd.png?size=1024"
+            class="rounded"
+            style="width: 100%;"
+          />
+        </div>
+        <h5
+          class="mt-2 text-white"
+          style="font-family: 'Kanit', sans-serif;text-align: center;"
+        >
+          <b>chamu#3306</b>
+          <br />Marketing
+        </h5>
+      </div>
+    </div>
+  </div>
+  <script>
          var typed = new Typed('.animation', {
          	strings: ["บอทเพลง", "บอทเกม", "บอทเพลง บอทเกม บอทป้องกันไวรัส เเละอื่นๆมากถึง 180 คําสั่ง !"],
          	backSpeed: 50,
@@ -150,7 +309,7 @@
          	loop: true
          });
       </script>
-      <script type="text/javascript">
+  <script type="text/javascript">
          var nav = document.querySelector('nav');
          window.addEventListener('scroll', function() {
          	if(window.pageYOffset > 100) {
@@ -160,10 +319,15 @@
          	}
          });
       </script>
-      <footer class="text-center text-lg-start">
-         <div class="text-center text-white p-3" style="background-color: #1a1a1a;">
-             © 2022 Copyright: <a class="text-white" href="https://smilewinbot.web.app/">smilewinbot.web.app</a> 
-         </div>
-      </footer>
-   <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6dcc816e0d146c1d',m:'schOqh88Ab8KTaoX1S5CKBtXPLqJ9djgD5ufbE5i3dE-1644739043-0-AWfvMr2KZ3OhJnNH2/VwRTuzbwTKNYB5IlchGgAI2c9oFaKpqWfE2zmjsiIvFSLPcxIY042d8P6MhnhoRgypapnKgtEYkjqlNO3VQTEgv/fvnhO3WD5pskG2HkzgaJXD/FdgMQWLqyLPXoIS3qXI9eVt2RYKJtgtlhRDiKrFS2M3caPHWh6YCYBbkTV8sly0sg==',s:[0x7b0285f6e5,0xe13148d5c7],}})();</script></body>
+  <footer class="text-center text-lg-start">
+    <div class="text-center text-white p-3" style="background-color: #1a1a1a;">
+      © 2022 Copyright:
+      <a
+        class="text-white"
+        href="https://smilewinbot.web.app/"
+      >smilewinbot.web.app</a>
+    </div>
+  </footer>
+  <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6dcc816e0d146c1d',m:'schOqh88Ab8KTaoX1S5CKBtXPLqJ9djgD5ufbE5i3dE-1644739043-0-AWfvMr2KZ3OhJnNH2/VwRTuzbwTKNYB5IlchGgAI2c9oFaKpqWfE2zmjsiIvFSLPcxIY042d8P6MhnhoRgypapnKgtEYkjqlNO3VQTEgv/fvnhO3WD5pskG2HkzgaJXD/FdgMQWLqyLPXoIS3qXI9eVt2RYKJtgtlhRDiKrFS2M3caPHWh6YCYBbkTV8sly0sg==',s:[0x7b0285f6e5,0xe13148d5c7],}})();</script>
+</body>
 </html>
