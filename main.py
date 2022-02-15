@@ -73,7 +73,7 @@ async def change_status():
         status=nextcord.Status.idle,
         activity=nextcord.Streaming(
             name=next(status), url="https://www.twitch.tv/smilewinbot"
-        ),
+        )
     )
 
 
