@@ -40,36 +40,3 @@ background: #fed000;
 * {
 cursor: url(../image/cursor.cur), auto;
 }
-
-
-/* GRID THINGS */
-
-.grid {
-all: revert;
-display: grid;
-justify-content:center;
-grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
-grid-auto-rows: 250px;
-grid-gap: 6px;
-}
-
-.grid::before {
-content: '';
-padding-bottom: 100%;
-grid-row: 1 / 1;
-grid-column: 1 / 1;
-}
-
-.grid > *:first-child {
-grid-row: 1 / 1;
-grid-column: 1 / 1;
-}
-
-/* Just to make the grid visible */
-.grid > * {
-margin:0px auto;
-left:0;
-right:0;
-text-align:center;
-color: white;
-}
