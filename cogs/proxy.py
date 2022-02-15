@@ -28,20 +28,18 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/http.txt", "w") as file:
                     file.write(r)
-                file.close()
                 f = nextcord.File("data/http.txt", filename="http.txt")
                 await ctx.send(file=f)
 
-            if server_language == "English":
-                url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as r:
-                        r = await r.text()
-                with open("data/http.txt", "w") as file:
-                    file.write(r)
-                file.close()
-                file = nextcord.File("data/http.txt", filename="http.txt")
-                await ctx.send(file=file)
+                if server_language == "English":
+                    url = "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/http.txt"
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(url) as r:
+                            r = await r.text()
+                    with open("data/http.txt", "w") as file:
+                        file.write(r)
+                    file = nextcord.File("data/http.txt", filename="http.txt")
+                    await ctx.send(file=file)
 
     @commands.command()
     async def gethttps(self, ctx):
@@ -62,7 +60,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/https.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/https.txt", filename="https.txt")
                 await ctx.send(file=file)
 
@@ -73,7 +70,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/https.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/https.txt", filename="https.txt")
                 await ctx.send(file=file)
 
@@ -96,7 +92,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/proxy.txt", "w") as file:
                     file.write(r)
-                file.close()
                 f = nextcord.File("data/proxy.txt", filename="proxy.txt")
                 await ctx.send(file=f)
 
@@ -107,7 +102,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/proxy.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/proxy.txt", filename="proxy.txt")
                 await ctx.send(file=file)
 
@@ -130,7 +124,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/sock4.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/sock4.txt", filename="sock4.txt")
                 await ctx.send(file=file)
 
@@ -141,7 +134,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/sock4.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/sock4.txt", filename="sock4.txt")
                 await ctx.send(file=file)
 
@@ -164,7 +156,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/sock5.txt", "w") as file:
                     file.write(r)
-                file.close()
                 f = nextcord.File("data/sock5.txt", filename="data/sock5.txt")
                 await ctx.send(file=f)
 
@@ -175,7 +166,6 @@ class Proxy(commands.Cog):
                         r = await r.text()
                 with open("data/sock5.txt", "w") as file:
                     file.write(r)
-                file.close()
                 file = nextcord.File("data/sock5.txt", filename="data/sock5.txt")
                 await ctx.send(file=file)
 
