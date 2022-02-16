@@ -9,7 +9,7 @@ class TicTacToe(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(aliases=["ttt", "xo", "ox"], invoke_without_command=True)
+    @commands.group(aliases=["ttt", "xo", "ox", "helptictactoe"], invoke_without_command=True)
     async def tictactoe(self, ctx):
         serverlanguage = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
