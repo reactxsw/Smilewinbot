@@ -162,22 +162,21 @@ async def print_ascii_art():
     user = str(len(bot.users))
     user_space = (29 - int(len(user))) * (" ")
     print(f"{ASCII_ART}")
-    print(
-        f"                                   ╔══════════════════════════════════════╗"
-    )
-    print(f"                                   ║  BOT NAME : {bot.user}{name_space}║")
-    print(f"                                   ║  BOT ID : {bot.user.id}         ║")
-    print(
-        f"                                   ║  BOT STATUS : ONLINE                 ║"
-    )
-    print(f"                                   ║  SERVER : {server}{server_space}║")
-    print(f"                                   ║  USER : {user}{user_space}║")
-    print(
-        f"                                   ║                                      ║"
-    )
-    print(
-        f"                                   ╚══════════════════════════════════════╝\n"
-    )
+    print(f"""
+╔══════════════════════════════════════╗
+║  BOT NAME : {bot.user}{name_space}   ║
+║                                      ║
+║  BOT ID : {bot.user.id}              ║
+║                                      ║
+║  BOT STATUS : ONLINE                 ║
+║                                      ║
+║  SERVER : {server}{server_space}     ║
+║                                      ║
+║  USER : {user}{user_space}           ║
+║                                      ║
+║ Created by REACT#1120                ║
+╚══════════════════════════════════════╝
+    """)
 
 
 @bot.command(aliases=["reload"])
