@@ -1084,7 +1084,7 @@ class Music(commands.Cog):
                                     num = num + 1
                                 if num > 20:
                                     list_song = list_song[:20]
-                                    list_song.append(f"เเละอีก {num-20} เพลง")
+                                    list_song.append(f"เเละอีก {num-21} เพลง")
                                 list_song = "".join(list_song)
                                 await player.play(tracks[0])
                                 nu = tracks[1] if len(tracks) > 1 else None

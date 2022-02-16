@@ -1,6 +1,6 @@
 import json
 
-with open("language.json", encoding="utf8") as file:
+with open("utils/language/language.json", encoding="utf8") as file:
     language = json.load(file)
 
 

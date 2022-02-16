@@ -41,7 +41,7 @@ class Game(commands.Cog):
                     reaction, user = await self.bot.wait_for(
                         "reaction_add",
                         timeout=10,
-                        check=lambda reaction, user: user.id == ctx.author.id,
+                        check=lambda reaction , user: user.id == ctx.author.id,
                     )
 
                     if str(reaction.emoji) == "✊":
@@ -57,7 +57,7 @@ class Game(commands.Cog):
                         "https://smilewinbot.web.app/assets/image/host/scissor.png",
                     ]
                     responses = {
-                        "https://smilewinbot.web.app/assets/image/host/rock.png'": {
+                        "https://smilewinbot.web.app/assets/image/host/rock.png": {
                             "rock": "😮 เสมอ",
                             "paper": "😄 คุณชนะ",
                             "scissor": "😭 คุณเเพ้",

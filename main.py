@@ -24,7 +24,6 @@ logger.addHandler(handler)
 intent = nextcord.Intents.default()
 intent.members = True
 
-developer = "REACT#1120"
 PYTHON_VERSION = platform.python_version()
 OS = platform.system()
 
@@ -194,6 +193,16 @@ async def reloadcogs(ctx: commands.Context):
     print("Reloaded all cogs!")
     await ctx.send("Reloaded all cogs successfully!")
 
+@bot.command()
+@commands.is_owner()
+async def loadcogs(ctx: commands.Context):
+    await clearcmd()
+    loadcogs()
+    await clearcmd()
+    await asyncio.sleep(0.2)
+    await print_ascii_art()
+    print("loaded all cogs!")
+    await ctx.send("loaded all cogs successfully!")
 
 @bot.command()
 async def cleancmd(ctx: commands.Context):
@@ -209,7 +218,6 @@ async def on_connect():
 
 
 def main():
-    # loadcogs()
     try:
         bot.run(settings.TOKEN, reconnect=True)
     except Exception as e:
