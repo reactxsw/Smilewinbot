@@ -32,8 +32,6 @@ class on_message_event(commands.Cog):
                         await asyncio.sleep(1)
                         await message.delete()
 
-                        # if a bot is connected to a voice channel
-                        # then if the bot found the message in the music channel then it will play the song but author will in that channel
                         if bot_voice_client is not None:
                             if (
                                 ctx.author.voice.channel.id

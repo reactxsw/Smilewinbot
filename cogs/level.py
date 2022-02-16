@@ -162,7 +162,7 @@ class Level(commands.Cog):
             server_language = languageserver["Language"]
 
             server = await settings.collection.find_one({"guild_id": ctx.guild.id})
-
+    
             first = ["1", " - ", " - "]
             second = ["2", " - ", " - "]
             third = ["3", " - ", " - "]
