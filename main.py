@@ -72,7 +72,7 @@ async def change_status():
         status=nextcord.Status.idle,
         activity=nextcord.Streaming(
             name=next(status), url="https://www.twitch.tv/smilewinbot"
-        )
+        ),
     )
 
 
@@ -138,7 +138,7 @@ def unloadcogs():
 @bot.event
 async def on_ready():
     loadcogs()
-    #await settings.collectionmusic.delete_many({})
+    # await settings.collectionmusic.delete_many({})
     try:
         change_status.start()
         serverstat.start()
@@ -192,6 +192,7 @@ async def reloadcogs(ctx: commands.Context):
     await print_ascii_art()
     print("Reloaded all cogs!")
     await ctx.send("Reloaded all cogs successfully!")
+
 
 @bot.command()
 async def cleancmd(ctx: commands.Context):

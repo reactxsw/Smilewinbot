@@ -8,7 +8,7 @@ class SetLanguage(commands.Cog):
         self.bot = bot
 
     @commands.group(invoke_without_command=True)
-    async def setlanguage(self, ctx):
+    async def setlanguage(self, ctx: commands.Context):
         embed = nextcord.Embed(
             colour=0xFED000,
             description="specify language / ต้องระบุภาษา : thai / english",
@@ -18,7 +18,7 @@ class SetLanguage(commands.Cog):
         await message.add_reaction("👍")
 
     @setlanguage.error
-    async def setlanguage_error(self, ctx, error):
+    async def setlanguage_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
                 colour=0x983925,
@@ -37,7 +37,7 @@ English : You must have ``Administrator`` to be able to use this command
 
     @setlanguage.command()
     @commands.has_permissions(administrator=True)
-    async def thai(self, ctx):
+    async def thai(self, ctx: commands.Context):
         server = await settings.collectionlanguage.find_one({"guild_id": ctx.guild.id})
         if server is None:
             newserver = {"guild_id": ctx.guild.id, "Language": "Thai"}
@@ -67,7 +67,7 @@ English : You must have ``Administrator`` to be able to use this command
             await message.add_reaction("✅")
 
     @thai.error
-    async def thai_error(self, ctx, error):
+    async def thai_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
                 colour=0x983925,
@@ -86,7 +86,7 @@ English : You must have ``Administrator`` to be able to use this command
 
     @setlanguage.command()
     @commands.has_permissions(administrator=True)
-    async def english(self, ctx):
+    async def english(self, ctx: commands.Context):
         server = await settings.collectionlanguage.find_one({"guild_id": ctx.guild.id})
         if server is None:
             newserver = {"guild_id": ctx.guild.id, "Language": "English"}
@@ -117,7 +117,7 @@ English : You must have ``Administrator`` to be able to use this command
             await message.add_reaction("✅")
 
     @english.error
-    async def english_error(self, ctx, error):
+    async def english_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
                 colour=0x983925,

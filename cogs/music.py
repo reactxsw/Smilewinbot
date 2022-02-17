@@ -1,15 +1,7 @@
-from contextvars import Context
-from traceback import print_tb
-from unittest import result
 import pomice
-import datetime
-import asyncio
-from contextlib import suppress
 import settings
 from nextcord.ext import commands
 import nextcord
-import math
-import random
 from utils.languageembed import languageEmbed
 
 
@@ -31,7 +23,7 @@ async def time_format(seconds: int):
 
 
 class MusicButton(nextcord.ui.View):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
         super().__init__(timeout=None)
 
@@ -128,7 +120,7 @@ class Music(commands.Cog):
         )
         return results[0]
 
-    async def setnewserver(self, ctx):
+    async def setnewserver(self, ctx: commands.Context):
         newserver = {
             "guild_id": ctx.guild.id,
             "welcome_id": "None",
@@ -166,7 +158,7 @@ class Music(commands.Cog):
             region=settings.lavalinkregion,
             spotify_client_id=settings.lavalinkspotifyid,
             spotify_client_secret=settings.lavalinkspotifysecret,
-            heartbeat=60
+            heartbeat=60,
         )
         print(f"Node is ready!")
 
@@ -1038,7 +1030,7 @@ class Music(commands.Cog):
                         player: pomice.Player = ctx.voice_client
                         if player is None:
                             await ctx.invoke(self.join)
-                            player = ctx.voice_client
+                            player : pomice.Player = ctx.voice_client
                         results = await player.get_tracks(search, ctx=ctx)
                         if not results:
                             return await ctx.send(

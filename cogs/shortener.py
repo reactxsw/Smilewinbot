@@ -15,7 +15,7 @@ class Shortener(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def ascii(self, ctx, *, text):
+    async def ascii(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -111,7 +111,7 @@ class Shortener(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def hastebin(self, ctx, *, message):
+    async def hastebin(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -166,7 +166,7 @@ https://hastebin.com/{r['key']}```""",
                 )
 
     @hastebin.error
-    async def hastebin_error(self, ctx, error):
+    async def hastebin_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -202,7 +202,7 @@ https://hastebin.com/{r['key']}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def pastebin(self, ctx, *, message):
+    async def pastebin(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -262,7 +262,7 @@ https://hastebin.com/{r['key']}```""",
                 print(f"{ctx.author} have made a Pastebinlink : {r}")
 
     @pastebin.error
-    async def pastebin_error(self, ctx, error):
+    async def pastebin_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -298,7 +298,7 @@ https://hastebin.com/{r['key']}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def qr(self, ctx, *, text):
+    async def qr(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -330,7 +330,7 @@ https://hastebin.com/{r['key']}```""",
                 await ctx.send(embed=embed)
 
     @qr.error
-    async def qr_error(self, ctx, error):
+    async def qr_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -364,7 +364,7 @@ https://hastebin.com/{r['key']}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def say(self, ctx, message):
+    async def say(self, ctx: commands.Context, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -379,7 +379,7 @@ https://hastebin.com/{r['key']}```""",
             await ctx.send(message)
 
     @commands.command()
-    async def embed(self, ctx, *, message):
+    async def embed(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -397,7 +397,7 @@ https://hastebin.com/{r['key']}```""",
             await ctx.send(embed=embed)
 
     @embed.error
-    async def embed_error(self, ctx, error):
+    async def embed_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -431,7 +431,7 @@ https://hastebin.com/{r['key']}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def webhook(self, ctx, webhook_url, *, message):
+    async def webhook(self, ctx: commands.Context, webhook_url, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

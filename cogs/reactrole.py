@@ -10,7 +10,9 @@ class ReactRole(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setreactrole(self, ctx, emoji, role: nextcord.Role, *, text):
+    async def setreactrole(
+        self, ctx: commands.Context, emoji, role: nextcord.Role, *, text
+    ):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -49,7 +51,7 @@ class ReactRole(commands.Cog):
                 await settings.collectionrole.insert_one(newrole)
 
     @setreactrole.error
-    async def setreactrole_error(self, ctx, error):
+    async def setreactrole_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

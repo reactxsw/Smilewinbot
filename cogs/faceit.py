@@ -31,7 +31,7 @@ class Faceit(commands.Cog):
         return math.copysign((abs(a) + abs(b)), b)
 
     @commands.command()
-    async def faceitcsgo(self, ctx, nickname=None):
+    async def faceitcsgo(self, ctx: commands.Context, nickname=None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

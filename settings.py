@@ -50,6 +50,7 @@ if Path("config.json").exists():
     offline_id = config.get("emoji_:offline:_id")
     idle_id = config.get("emoji_:idle:_id")
     busy_id = config.get("emoji_:busy:_id")
+    gear = config.get("emoji_:gear:_id")
     faceitlogo = config.get("emoji_:faceitlogo:_id")
     faceitlvl1 = config.get("emoji_:faceitlvl1:_id")
     faceitlvl2 = config.get("emoji_:faceitlvl2:_id")

@@ -1,3 +1,4 @@
+from email.message import Message
 from re import search
 from async_timeout import asyncio
 import nextcord
@@ -12,7 +13,7 @@ class on_message_event(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_message(self, message):
+    async def on_message(self, message: nextcord.Message):
         await self.bot.wait_until_ready()
         if message.guild:
             data = await settings.collection.find_one({"guild_id": message.guild.id})
@@ -25,7 +26,7 @@ class on_message_event(commands.Cog):
                         else:
                             song = message.content
 
-                        ctx = await self.bot.get_context(message)
+                        ctx: commands.Context = await self.bot.get_context(message)
                         bot_voice_client = nextcord.utils.get(
                             self.bot.voice_clients, guild=ctx.guild
                         )

@@ -38,10 +38,10 @@ class Game(commands.Cog):
 
                 answer = "none"
                 try:
-                    reaction,user = await self.bot.wait_for(
+                    reaction, user = await self.bot.wait_for(
                         "reaction_add",
                         timeout=10,
-                        check=lambda reaction , user: user.id == ctx.author.id,
+                        check=lambda reaction, user: user.id == ctx.author.id,
                     )
 
                     if str(reaction.emoji) == "✊":

@@ -16,7 +16,7 @@ class MakeImage(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def love(self, ctx, member: nextcord.Member = None):
+    async def love(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -220,7 +220,10 @@ class MakeImage(commands.Cog):
 
     @commands.command()
     async def lover(
-        self, ctx, member1: nextcord.Member = None, member2: nextcord.Member = None
+        self,
+        ctx: commands.Context,
+        member1: nextcord.Member = None,
+        member2: nextcord.Member = None,
     ):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
@@ -511,7 +514,7 @@ class MakeImage(commands.Cog):
                     await ctx.send(embed=embed, file=file)
 
     @commands.command()
-    async def captcha(self, ctx, *, text):
+    async def captcha(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -545,7 +548,7 @@ class MakeImage(commands.Cog):
                 await ctx.send(embed=embed, file=file)
 
     @captcha.error
-    async def captcha_error(self, ctx, error):
+    async def captcha_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

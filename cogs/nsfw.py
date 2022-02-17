@@ -15,7 +15,7 @@ class Nsfw(commands.Cog):
         self.language = translate_nsfw.call()
 
     @commands.command()
-    async def anal(self, ctx):
+    async def anal(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -50,7 +50,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def porn(self, ctx):
+    async def porn(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -90,7 +90,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def gsolo(self, ctx):
+    async def gsolo(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -125,7 +125,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def erofeet(self, ctx):
+    async def erofeet(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -162,7 +162,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def feet(self, ctx):
+    async def feet(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -197,7 +197,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def pussy(self, ctx):
+    async def pussy(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -234,7 +234,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def hentai(self, ctx):
+    async def hentai(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -271,7 +271,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def eroyuri(self, ctx):
+    async def eroyuri(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -308,7 +308,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def yuri(self, ctx):
+    async def yuri(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -343,7 +343,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def solo(self, ctx):
+    async def solo(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -378,7 +378,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def classic(self, ctx):
+    async def classic(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -415,7 +415,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def boobs(self, ctx):
+    async def boobs(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -450,7 +450,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def tits(self, ctx):
+    async def tits(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -485,7 +485,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def blowjob(self, ctx):
+    async def blowjob(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -522,7 +522,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def lewd(self, ctx):
+    async def lewd(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -559,7 +559,7 @@ class Nsfw(commands.Cog):
                 await message.add_reaction("✨")
 
     @commands.command()
-    async def lesbian(self, ctx):
+    async def lesbian(self, ctx: commands.Context):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

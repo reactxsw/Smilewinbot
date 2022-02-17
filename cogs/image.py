@@ -10,7 +10,7 @@ class Image(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def bird(self, ctx):
+    async def bird(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -39,7 +39,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🐦")
 
     @commands.command()
-    async def panda(self, ctx):
+    async def panda(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -68,7 +68,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🐼")
 
     @commands.command()
-    async def cat(self, ctx):
+    async def cat(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -97,7 +97,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🐱")
 
     @commands.command()
-    async def dog(self, ctx):
+    async def dog(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -126,7 +126,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🐶")
 
     @commands.command()
-    async def fox(self, ctx):
+    async def fox(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -155,7 +155,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🦊")
 
     @commands.command()
-    async def koala(self, ctx):
+    async def koala(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -183,7 +183,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🐨")
 
     @commands.command()
-    async def wasted(self, ctx, member: nextcord.Member = None):
+    async def wasted(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -233,7 +233,7 @@ class Image(commands.Cog):
                 await message.add_reaction("💀")
 
     @commands.command()
-    async def gay(self, ctx, member: nextcord.Member = None):
+    async def gay(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -283,7 +283,7 @@ class Image(commands.Cog):
                 await message.add_reaction("🏳️‍🌈")
 
     @commands.command()
-    async def iphonex(self, ctx, image=None):
+    async def iphonex(self, ctx: commands.Context, image=None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -312,7 +312,7 @@ class Image(commands.Cog):
             await message.add_reaction("📱")
 
     @commands.command()
-    async def phcomment(self, ctx, *, text):
+    async def phcomment(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -341,7 +341,7 @@ class Image(commands.Cog):
             await message.add_reaction("📱")
 
     @phcomment.error
-    async def phcomment_error(self, ctx, error):
+    async def phcomment_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -375,7 +375,7 @@ class Image(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def trigger(self, ctx, member: nextcord.Member = None):
+    async def trigger(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -425,7 +425,7 @@ class Image(commands.Cog):
                 await message.add_reaction("😠")
 
     @commands.command()
-    async def tweet(self, ctx, username: str, *, message: str):
+    async def tweet(self, ctx: commands.Context, username: str, *, message: str):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -448,7 +448,7 @@ class Image(commands.Cog):
                     await message.add_reaction("👍")
 
     @tweet.error
-    async def tweet_error(self, ctx, error):
+    async def tweet_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

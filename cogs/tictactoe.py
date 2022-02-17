@@ -6,11 +6,11 @@ import random
 
 
 class TicTacToe(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.group(aliases=["ttt", "xo", "ox"], invoke_without_command=True)
-    async def tictactoe(self, ctx):
+    async def tictactoe(self, ctx: commands.Context):
         serverlanguage = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -84,7 +84,7 @@ class TicTacToe(commands.Cog):
 
     # Start the game
     @tictactoe.command(aliases=["s", "play"])
-    async def start(self, ctx, player2: nextcord.Member):
+    async def start(self, ctx: commands.Context, player2: nextcord.Member):
         serverlanguage = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -173,7 +173,7 @@ class TicTacToe(commands.Cog):
             "quitgame",
         ]
     )
-    async def stop(self, ctx):
+    async def stop(self, ctx: commands.Context):
         # Fetches server language
         serverlanguage = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
@@ -237,7 +237,7 @@ class TicTacToe(commands.Cog):
             "win_rate",
         ]
     )
-    async def profile(self, ctx):
+    async def profile(self, ctx: commands.Context):
         embed = nextcord.Embed(title=f"{ctx.author}", color=0xFED000)
         user_data = await settings.collectiontictactoe_user.find_one(
             {"user_id": ctx.author.id}
@@ -407,7 +407,7 @@ class MusicButton(nextcord.ui.View):
         await recieve_input(self.bot, button, interaction)
 
 
-async def recieve_input(bot, button, interaction):
+async def recieve_input(bot, button: nextcord.ui.Button, interaction: nextcord.Interaction):
     # if It is a bot return
     if bot.user.id == interaction.user.id:
         return

@@ -56,12 +56,8 @@ class Gamble(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
 
-    @commands.command()
-    async def cockfight(self, ctx):
-        pass
-
     @commands.group()
-    async def roulette(self, ctx):
+    async def roulette(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -123,7 +119,7 @@ class Gamble(commands.Cog):
                         await ctx.send(embed=embed)
 
     @roulette.command()
-    async def green(self, ctx, amount: int):
+    async def green(self, ctx: commands.Context, amount: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -215,7 +211,7 @@ class Gamble(commands.Cog):
                     await message.add_reaction("💸")
 
     @roulette.command()
-    async def red(self, ctx, amount: int):
+    async def red(self, ctx: commands.Context, amount: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -307,7 +303,7 @@ class Gamble(commands.Cog):
                     await message.add_reaction("💸")
 
     @roulette.command()
-    async def black(self, ctx, amount: int):
+    async def black(self, ctx: commands.Context, amount: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -399,7 +395,7 @@ class Gamble(commands.Cog):
                     await message.add_reaction("💸")
 
     @commands.command()
-    async def horse(self, ctx, horse: int, money: int):
+    async def horse(self, ctx: commands.Context, horse: int, money: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

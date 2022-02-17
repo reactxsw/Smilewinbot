@@ -181,7 +181,7 @@ class Scam(commands.Cog):
                 )
 
     @scam.command()
-    async def add(self, ctx, link=None):
+    async def add(self, ctx: commands.Context, link=None):
         server_lang = await get_server_lang(ctx)
         link = await get_domain_name_from_url(link)
         if server_lang == "Thai":
@@ -259,7 +259,7 @@ class Scam(commands.Cog):
                 )
 
     @scam.command()
-    async def remove(self, ctx, link=None):
+    async def remove(self, ctx: commands.Context, link=None):
         server_lang = await get_server_lang(ctx)
         link = await get_domain_name_from_url(link)
         if server_lang == "Thai":
@@ -337,7 +337,7 @@ class Scam(commands.Cog):
                 )
 
     @scam.command(aliases=["request_list"])
-    async def list(self, ctx):
+    async def list(self, ctx: commands.Context):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
             if ctx.author.id in settings.developers:
@@ -366,7 +366,7 @@ class Scam(commands.Cog):
                 await ctx.send("You don't have permission to use this command")
 
     @scam.command()
-    async def approve(self, ctx, id):
+    async def approve(self, ctx: commands.Context, id):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
             if ctx.author.id in settings.developers:
@@ -462,7 +462,7 @@ class Scam(commands.Cog):
                 await ctx.send("You don't have permission to use this command")
 
     @scam.command()
-    async def disapprove(self, ctx, id):
+    async def disapprove(self, ctx: commands.Context, id):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
             if ctx.author.id in settings.developers:
@@ -507,7 +507,7 @@ class Scam(commands.Cog):
                 await ctx.send("You don't have permission to use this command")
 
     @scam.command()
-    async def cancel(self, ctx, id):
+    async def cancel(self, ctx: commands.Context, id):
         server_lang = await get_server_lang(ctx)
         if server_lang == "Thai":
             with open("data/request_approve.json", "r") as f:
@@ -548,7 +548,7 @@ class Scam(commands.Cog):
                 await user.send(text)
 
 
-async def get_server_lang(ctx):
+async def get_server_lang(ctx: commands.Context):
     server_lang = await settings.collectionlanguage.find_one({"guild_id": ctx.guild.id})
     if server_lang is None:
         message = await ctx.send(embed=languageEmbed.languageembed(ctx))

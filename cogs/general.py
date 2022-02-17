@@ -15,7 +15,7 @@ class General(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def lmgtfy(self, ctx, *, message):
+    async def lmgtfy(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -50,7 +50,7 @@ class General(commands.Cog):
                 await message.add_reaction("👍")
 
     @lmgtfy.error
-    async def lmgtfy_error(self, ctx, error):
+    async def lmgtfy_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -84,7 +84,7 @@ class General(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def timer(self, ctx, second: int):
+    async def timer(self, ctx: commands.Context, second: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -158,7 +158,7 @@ class General(commands.Cog):
                 await message.edit(embed=embed)
 
     @timer.error
-    async def timer_error(self, ctx, error):
+    async def timer_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -192,7 +192,7 @@ class General(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def count(self, ctx, second: int):
+    async def count(self, ctx: commands.Context, second: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -266,7 +266,7 @@ class General(commands.Cog):
                 await message.edit(embed=embed)
 
     @count.error
-    async def count_error(self, ctx, error):
+    async def count_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -300,7 +300,7 @@ class General(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def upper(self, ctx, *, message):
+    async def upper(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -338,7 +338,7 @@ Uppercase text : {big}```""",
                 await ctx.send(embed=embed)
 
     @upper.error
-    async def upper_error(self, ctx, error):
+    async def upper_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -372,7 +372,7 @@ Uppercase text : {big}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def lower(self, ctx, *, message):
+    async def lower(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -444,7 +444,7 @@ Lowercase text : {lower}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def reverse(self, ctx, *, message):
+    async def reverse(self, ctx: commands.Context, *, message):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -484,7 +484,7 @@ Reverse text : {reverse}```""",
                 await ctx.send(embed=embed)
 
     @reverse.error
-    async def reverse_error(self, ctx, error):
+    async def reverse_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -518,7 +518,7 @@ Reverse text : {reverse}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def enbinary(self, ctx, *, text):
+    async def enbinary(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -572,7 +572,7 @@ Binary : {binary}```""",
                 await message.add_reaction("💻")
 
     @commands.command()
-    async def debinary(self, ctx, *, text):
+    async def debinary(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -626,7 +626,7 @@ Normal text : {binary}```""",
                 await message.add_reaction("💻")
 
     @commands.command()
-    async def length(self, ctx, *, text):
+    async def length(self, ctx: commands.Context, *, text):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -663,7 +663,7 @@ length : {num}```""",
                 await ctx.send(embed=embed)
 
     @length.error
-    async def length_error(self, ctx, error):
+    async def length_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -697,7 +697,7 @@ length : {num}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def calculator(self, ctx, *, equation):
+    async def calculator(self, ctx: commands.Context, *, equation):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -747,7 +747,7 @@ length : {num}```""",
                 await ctx.send(embed=embed)
 
     @calculator.error
-    async def calculator_error(self, ctx, error):
+    async def calculator_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

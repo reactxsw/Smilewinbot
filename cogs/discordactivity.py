@@ -15,7 +15,7 @@ class DiscordActivity(commands.Cog):
         self.togetherControl = await DiscordTogether(settings.TOKEN)
 
     @commands.command()
-    async def watchyt(self, ctx):
+    async def watchyt(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -71,7 +71,7 @@ class DiscordActivity(commands.Cog):
                         await ctx.send(embed=embed)
 
     @commands.command()
-    async def poker(self, ctx):
+    async def poker(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -127,7 +127,7 @@ class DiscordActivity(commands.Cog):
                         await ctx.send(embed=embed)
 
     @commands.command()
-    async def chess(self, ctx):
+    async def chess(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -183,7 +183,7 @@ class DiscordActivity(commands.Cog):
                         await ctx.send(embed=embed)
 
     @commands.command()
-    async def betrayal(self, ctx):
+    async def betrayal(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -239,7 +239,7 @@ class DiscordActivity(commands.Cog):
                         await ctx.send(embed=embed)
 
     @commands.command()
-    async def fishing(self, ctx):
+    async def fishing(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

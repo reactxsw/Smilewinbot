@@ -48,7 +48,7 @@ class Info(commands.Cog):
                     await ctx.send(embed=embed)
 
     @commands.command(aliases=["ethereum"])
-    async def eth(self, ctx):
+    async def eth(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -79,7 +79,7 @@ class Info(commands.Cog):
                     await ctx.send(embed=embed)
 
     @commands.command()
-    async def github(self, ctx, *, user=None):
+    async def github(self, ctx: commands.Context, *, user=None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -203,7 +203,7 @@ Repository : {repo}```""",
                         await message.add_reaction("⚠️")
 
     @github.error
-    async def github_error(self, ctx, error):
+    async def github_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -237,7 +237,7 @@ Repository : {repo}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command(aliases=["cv19th", "covidthai", "covid19thai"])
-    async def covid19th(self, ctx):
+    async def covid19th(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -335,7 +335,7 @@ Repository : {repo}```""",
                         await message.add_reaction("💊")
 
     @commands.command(aliases=["covid", "corona", "cv19"])
-    async def covid19(self, ctx):
+    async def covid19(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -413,7 +413,7 @@ Repository : {repo}```""",
                 await message.add_reaction("💊")
 
     @commands.command()
-    async def geoip(self, ctx, *, ip):
+    async def geoip(self, ctx: commands.Context, *, ip):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -521,7 +521,7 @@ Repository : {repo}```""",
                     )
 
     @geoip.error
-    async def geoip_error(self, ctx, error):
+    async def geoip_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -555,7 +555,7 @@ Repository : {repo}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def youtube(self, ctx, *, keywords):
+    async def youtube(self, ctx: commands.Context, *, keywords):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -714,7 +714,7 @@ Repository : {repo}```""",
                     await message.add_reaction("✅")
 
     @youtube.error
-    async def youtube_error(self, ctx, error):
+    async def youtube_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -748,7 +748,7 @@ Repository : {repo}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def ytsearch(self, ctx, *, keywords):
+    async def ytsearch(self, ctx: commands.Context, *, keywords):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -807,7 +807,7 @@ Repository : {repo}```""",
                 await message.add_reaction("✅")
 
     @ytsearch.error
-    async def ytsearch_error(self, ctx, error):
+    async def ytsearch_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -841,7 +841,7 @@ Repository : {repo}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def country(self, ctx, *, country):
+    async def country(self, ctx: commands.Context, *, country):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -927,7 +927,7 @@ language : {language}```""",
                 await message.add_reaction("😊")
 
     @country.error
-    async def country_error(self, ctx, error):
+    async def country_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -961,7 +961,7 @@ language : {language}```""",
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def pingweb(self, ctx, website=None):
+    async def pingweb(self, ctx: commands.Context, website=None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1081,7 +1081,7 @@ language : {language}```""",
                         await message.add_reaction("⚠️")
 
     @commands.command()
-    async def weather(self, ctx, *, city):
+    async def weather(self, ctx: commands.Context, *, city):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1177,7 +1177,7 @@ Weather : {day}```
                             await message.add_reaction("⚠️")
 
     @weather.error
-    async def weather_error(self, ctx, error):
+    async def weather_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1211,7 +1211,7 @@ Weather : {day}```
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def checklink(self, ctx, website):
+    async def checklink(self, ctx: commands.Context, website):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1257,7 +1257,7 @@ Weather : {day}```
                         await message.add_reaction("✔️")
 
     @commands.command()
-    async def gold(self, ctx):
+    async def gold(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

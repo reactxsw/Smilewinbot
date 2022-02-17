@@ -11,7 +11,9 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, member: nextcord.Member, *, reason=None):
+    async def kick(
+        self, ctx: commands.Context, member: nextcord.Member, *, reason=None
+    ):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -61,7 +63,7 @@ class Mod(commands.Cog):
                 await message.add_reaction("😤")
 
     @kick.error
-    async def kick_error(self, ctx, error):
+    async def kick_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -122,7 +124,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, member: nextcord.Member, *, reason=None):
+    async def ban(self, ctx: commands.Context, member: nextcord.Member, *, reason=None):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -172,7 +174,7 @@ class Mod(commands.Cog):
                 await message.add_reaction("😤")
 
     @ban.error
-    async def ban_error(self, ctx, error):
+    async def ban_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -233,7 +235,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def unban(self, ctx, *, member):
+    async def unban(self, ctx: commands.Context, *, member):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -299,7 +301,7 @@ class Mod(commands.Cog):
                         await ctx.send(embed=embed)
 
     @unban.error
-    async def unban_error(self, ctx, error):
+    async def unban_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -359,7 +361,9 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def giverole(self, ctx, user: nextcord.Member, role: nextcord.Role):
+    async def giverole(
+        self, ctx: commands.Context, user: nextcord.Member, role: nextcord.Role
+    ):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -408,7 +412,7 @@ class Mod(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @giverole.error
-    async def giverole_error(self, ctx, error):
+    async def giverole_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -467,7 +471,9 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def removerole(self, ctx, user: nextcord.Member, role: nextcord.Role):
+    async def removerole(
+        self, ctx: commands.Context, user: nextcord.Member, role: nextcord.Role
+    ):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -517,7 +523,7 @@ class Mod(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @removerole.error
-    async def removerole_error(self, ctx, error):
+    async def removerole_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -576,7 +582,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def changenick(self, ctx, user: nextcord.Member, Change):
+    async def changenick(self, ctx: commands.Context, user: nextcord.Member, Change):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -608,7 +614,7 @@ class Mod(commands.Cog):
                 await user.edit(nick=Change)
 
     @changenick.error
-    async def changenick_error(self, ctx, error):
+    async def changenick_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -667,7 +673,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(manage_messages=True)
-    async def clear(self, ctx, amount: int):
+    async def clear(self, ctx: commands.Context, amount: int):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -711,7 +717,7 @@ class Mod(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @clear.error
-    async def clear_error(self, ctx, error):
+    async def clear_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -772,7 +778,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def roleall(self, ctx, role: nextcord.Role):
+    async def roleall(self, ctx: commands.Context, role: nextcord.Role):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -835,7 +841,7 @@ class Mod(commands.Cog):
                 await message.edit(embed=embed)
 
     @roleall.error
-    async def roleall_error(self, ctx, error):
+    async def roleall_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -894,7 +900,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def removeroleall(self, ctx, role: nextcord.Role):
+    async def removeroleall(self, ctx: commands.Context, role: nextcord.Role):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -957,7 +963,7 @@ class Mod(commands.Cog):
                 await message.edit(embed=embed)
 
     @roleall.error
-    async def removeroleall_error(self, ctx, error):
+    async def removeroleall_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1016,7 +1022,7 @@ class Mod(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def movetome(self, ctx, member: nextcord.Member):
+    async def movetome(self, ctx: commands.Context, member: nextcord.Member):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1070,7 +1076,7 @@ class Mod(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @movetome.error
-    async def movetome_error(self, ctx, error):
+    async def movetome_error(self, ctx: commands.Context, error):
         language = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

@@ -14,7 +14,7 @@ class Fun(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["subreddit", "reddit"])
-    async def sreddit(self, ctx, subreddit):
+    async def sreddit(self, ctx: commands.Context, subreddit):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -130,7 +130,7 @@ class Fun(commands.Cog):
                     await message.add_reaction("✨")
 
     @sreddit.error
-    async def sreddit_error(self, ctx, error):
+    async def sreddit_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -164,7 +164,7 @@ class Fun(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def slim(self, ctx):
+    async def slim(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -197,7 +197,7 @@ class Fun(commands.Cog):
                 pass
 
     @commands.command()
-    async def quote(self, ctx):
+    async def quote(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -229,7 +229,7 @@ class Fun(commands.Cog):
                 pass
 
     @commands.command()
-    async def roll(self, ctx):
+    async def roll(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -279,7 +279,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("🎲")
 
     @commands.command(aliases=["8ball"])
-    async def _8ball(self, ctx, *, question):
+    async def _8ball(self, ctx: commands.Context, *, question):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -327,7 +327,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("🎱")
 
     @_8ball.error
-    async def _8ball_error(self, ctx, error):
+    async def _8ball_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -361,7 +361,7 @@ class Fun(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def meme(self, ctx):
+    async def meme(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

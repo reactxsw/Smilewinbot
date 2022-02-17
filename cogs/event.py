@@ -1,3 +1,4 @@
+from multiprocessing import Event
 import nextcord
 import datetime
 from nextcord import user
@@ -73,7 +74,7 @@ class Events(commands.Cog):
             pass
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member: nextcord.Member, before, after):
+    async def on_voice_state_update(self, member: nextcord.Member, before , after):
         await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": member.guild.id}

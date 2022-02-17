@@ -14,7 +14,7 @@ class GameInfo(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def dota2now(self, ctx):
+    async def dota2now(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -92,7 +92,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def csgonow(self, ctx):
+    async def csgonow(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -170,7 +170,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def pubgnow(self, ctx):
+    async def pubgnow(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -248,7 +248,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def rb6now(self, ctx):
+    async def rb6now(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -326,7 +326,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def apexnow(self, ctx):
+    async def apexnow(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -404,7 +404,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def gtanow(self, ctx):
+    async def gtanow(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -482,7 +482,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("🎮")
 
     @commands.command()
-    async def apexstat(self, ctx, username):
+    async def apexstat(self, ctx: commands.Context, username):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -576,7 +576,7 @@ Higest player online {playerall}``` """,
                         await message.add_reaction("⚠️")
 
     @apexstat.error
-    async def apexstat_error(self, ctx, error):
+    async def apexstat_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
