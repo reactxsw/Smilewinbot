@@ -144,7 +144,7 @@ class TicTacToe(commands.Cog):
         turn = random.randint(1, 2)
 
         embed = await draw_board(board, turn, p1, p2)
-        message = await ctx.send(embed=embed, view=MusicButton(self.bot))
+        message = await ctx.send(embed=embed, view=TictactoeButton(self.bot))
         # Insert data into database
         data = {
             "guild_id": ctx.guild.id,
@@ -329,7 +329,7 @@ async def draw_board(board, turn, p1, p2, is_win=False, is_draw=False, cancel=Fa
     return embed
 
 
-class MusicButton(nextcord.ui.View):
+class TictactoeButton(nextcord.ui.View):
     def __init__(self, bot):
         self.bot = bot
         super().__init__(timeout=None)
@@ -618,4 +618,4 @@ async def check_win(board, turn):
 
 def setup(bot):
     bot.add_cog(TicTacToe(bot))
-    bot.add_view(MusicButton(bot))
+    bot.add_view(TictactoeButton(bot))

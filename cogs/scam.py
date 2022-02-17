@@ -1,3 +1,4 @@
+from ast import alias
 from aiohttp.helpers import ProxyInfo
 import nextcord
 from nextcord.ext import commands
@@ -72,7 +73,7 @@ class Scam(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True,aliases=["helpscam"])
     async def scam(self, ctx):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}

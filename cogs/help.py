@@ -1637,14 +1637,6 @@ class Help(commands.Cog):
                 message = await ctx.send(embed=embed)
                 await message.add_reaction("👍")
 
-    @commands.command()
-    async def helpscam(self, ctx):
-        await ctx.invoke(self.bot.get_command("scam"))
-
-    @commands.command()
-    async def helptictactoe(self, ctx):
-        await ctx.invoke(self.bot.get_command("tictactoe"))
-
 
 def setup(bot: commands.Bot):
     bot.add_cog(Help(bot))
