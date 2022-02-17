@@ -3,6 +3,7 @@ import settings
 import nextcord
 from nextcord.ext import commands
 
+
 class Introduce(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -34,7 +35,7 @@ class Introduce(commands.Cog):
         }
         return newserver
 
-    @commands.group(invoke_without_command=True,aliases=["setintroduce-role"])
+    @commands.group(invoke_without_command=True, aliases=["setintroduce-role"])
     @commands.has_permissions(administrator=True)
     async def setintroducerole(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
@@ -49,7 +50,7 @@ class Introduce(commands.Cog):
 
             if server_language == "Thai":
                 embed = nextcord.Embed(
-                    colour=0xfed000, description="คุณต้องระบุ give / remove"
+                    colour=0xFED000, description="คุณต้องระบุ give / remove"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -58,7 +59,7 @@ class Introduce(commands.Cog):
 
             else:
                 embed = nextcord.Embed(
-                    colour=0xfed000, description="you need to specify give / remove"
+                    colour=0xFED000, description="you need to specify give / remove"
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
 
@@ -1164,6 +1165,7 @@ class Introduce(commands.Cog):
 
                     message = await ctx.send(embed=embed)
                     await message.add_reaction("⚠️")
-                    
+
+
 def setup(bot: commands.Bot):
     bot.add_cog(Introduce(bot))

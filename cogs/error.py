@@ -9,7 +9,7 @@ class Error(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx: commands.Context, error):
         current_time = datetime.now()
         # gmt_7 = timezone(timedelta(hours=7))
         thai_time = (str(current_time.astimezone(timezone(timedelta(hours=7))))).split(

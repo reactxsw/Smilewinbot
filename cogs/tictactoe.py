@@ -407,7 +407,9 @@ class TictactoeButton(nextcord.ui.View):
         await recieve_input(self.bot, button, interaction)
 
 
-async def recieve_input(bot, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+async def recieve_input(
+    bot, button: nextcord.ui.Button, interaction: nextcord.Interaction
+):
     # if It is a bot return
     if bot.user.id == interaction.user.id:
         return

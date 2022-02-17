@@ -16,7 +16,7 @@ class Verify(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["ind"])
-    async def introduction(self, ctx):
+    async def introduction(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -276,7 +276,7 @@ Sex : {sex}
                                         pass
 
     @commands.command(aliases=["vfy"])
-    async def verify(self, ctx):
+    async def verify(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

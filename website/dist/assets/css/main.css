@@ -1,6 +1,10 @@
 .banner-image {
   background-image: url('../image/background.jpg');
   background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  width:100%;
+  min-width:100%;
   }
 .navbar-custom {
   background-color: #1a1a1a;

@@ -1030,7 +1030,7 @@ class Music(commands.Cog):
                         player: pomice.Player = ctx.voice_client
                         if player is None:
                             await ctx.invoke(self.join)
-                            player : pomice.Player = ctx.voice_client
+                            player: pomice.Player = ctx.voice_client
                         results = await player.get_tracks(search, ctx=ctx)
                         if not results:
                             return await ctx.send(

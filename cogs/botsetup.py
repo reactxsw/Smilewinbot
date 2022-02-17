@@ -1737,5 +1737,6 @@ class BotSetup(commands.Cog):
                     message = await ctx.send(embed=embed)
                     await message.add_reaction("⚠️")
 
+
 def setup(bot: commands.Bot):
     bot.add_cog(BotSetup(bot))

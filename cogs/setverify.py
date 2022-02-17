@@ -3,6 +3,7 @@ import settings
 import nextcord
 from nextcord.ext import commands
 
+
 class SetVerify(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -33,7 +34,7 @@ class SetVerify(commands.Cog):
             "Music_message_id": "None",
         }
         return newserver
-  
+
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def setverify(self, ctx: commands.Context, channel: nextcord.TextChannel):
