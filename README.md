@@ -5,7 +5,7 @@ A general purpose discord bot made with [Nextcord](https://github.com/nextcord/n
 <br />
 
 <p align="center">
-  <img src="https://github.com/StrixzIV/Smilewinbot/blob/main/logo/smwcircle.png" alt="smilewin_logo" />
+  <img src="https://github.com/StrixzIV/Smilewinbot/blob/main/logo/smwcircle.png" alt="smilewin_logo" width="250" height="250"/>
 </p>
 
 <br />
