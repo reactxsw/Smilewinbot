@@ -22,7 +22,7 @@ You can start running the bot by following these steps:
 
 1. clone this repo by running 
 
-```git clone https://github.com/StrixzIV/Smilewinbot.git```
+```git clone https://github.com/reactxsw/Smilewinbot.git```
 
 2. change your working driectory to the cloned folder
 
