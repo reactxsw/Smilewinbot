@@ -1,34 +1,29 @@
-2022-02-01 12:46:25.634  INFO 6964 --- [main] lavalink.server.Launcher                 : 
-
-[32m       .  [31m _                  _ _       _    [32m__ _ _
-[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
-[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
-[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
-[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
-[0m    =========================================[32m/_/_/_/[0m
-
-	Version:        3.4
-	Build:          1257
-	Build time:     26.10.2021 14:18:37 UTC
-	Branch          master
-	Commit:         a364833
-	Commit time:    26.10.2021 14:15:20 UTC
-	JVM:            16.0.2
-	Lavaplayer      1.3.96-original
-
-2022-02-01 12:46:25.756  INFO 6964 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-5IKLKC8 with PID 6964 (C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink\Lavalink.jar started by ardil in C:\Users\ardil\Documents\GitHub\Smilewinbot\lavalink)
-2022-02-01 12:46:25.757  INFO 6964 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
-2022-02-01 12:46:26.962  WARN 6964 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
-2022-02-01 12:46:27.327  WARN 6964 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2022-02-01 12:46:27.365  INFO 6964 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
-2022-02-01 12:46:27.366  INFO 6964 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1563 ms
-2022-02-01 12:46:27.758  WARN 6964 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
-2022-02-01 12:46:28.072  INFO 6964 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
-2022-02-01 12:46:28.287  INFO 6964 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
-2022-02-01 12:46:28.288  WARN 6964 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
-2022-02-01 12:46:28.484  INFO 6964 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2022-02-01 12:46:28.770  INFO 6964 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
-2022-02-01 12:46:28.781  INFO 6964 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
-2022-02-01 12:46:28.840  INFO 6964 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 8888 (http) with context path ''
-2022-02-01 12:46:28.846  INFO 6964 --- [main] lavalink.server.Launcher                 : Started Launcher in 3.706 seconds (JVM running for 4.189)
-2022-02-01 12:46:28.848  INFO 6964 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2022-02-20 00:02:43.371  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "924999182039801876"}
+2022-02-20 00:05:56.112  INFO 30204 --- [XNIO-1 task-41] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:Walk It Talk It ft. Drake"
+2022-02-20 00:05:56.883  INFO 30204 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Walk It Talk It ft. Drake
+2022-02-20 00:05:56.927  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "924999182039801876", "sessionId": "740ca198bf294bd28ab0911588c9fe20", "event": {"token": "aa3218c27eb26465", "guild_id": "924999182039801876", "endpoint": "singapore6676.discord.media:443"}}
+2022-02-20 00:05:56.951  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "924999182039801876", "track": "QAAAjAIAKU1pZ29zIC0gV2FsayBJdCBUYWxrIEl0IGZ0LiBEcmFrZSAoQXVkaW8pAAlNaWdvcyBBVEwAAAAAAAQ98AALQV94V0RBYm5CU1UAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1BX3hXREFibkJTVQAHeW91dHViZQAAAAAAAAAA", "startTime": "0", "noReplace": false}
+2022-02-20 00:06:06.738  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "timescale": {"speed": 1.2999999523162842, "pitch": 1.2999999523162842, "rate": 1}}
+2022-02-20 00:06:06.739  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 9486.258056640625}
+2022-02-20 00:06:15.777  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "equalizer": [{"band": 0, "gain": 0.6}, {"band": 1, "gain": 0.67}, {"band": 2, "gain": 0.67}, {"band": 3, "gain": 0}, {"band": 4, "gain": -0.5}, {"band": 5, "gain": 0.15}, {"band": 6, "gain": -0.45}, {"band": 7, "gain": 0.23}, {"band": 8, "gain": 0.35}, {"band": 9, "gain": 0.45}, {"band": 10, "gain": 0.55}, {"band": 11, "gain": 0.6}, {"band": 12, "gain": 0.55}, {"band": 13, "gain": 0}, {"band": 14, "gain": 0}]}
+2022-02-20 00:06:15.778  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 18497.390625}
+2022-02-20 00:06:19.150  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "rotation": {"rotationHz": 0.2}}
+2022-02-20 00:06:19.151  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 21794.40283203125}
+2022-02-20 00:06:21.222  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "karaoke": {"level": 1.0, "monoLevel": 1.0, "filterBand": 220.0, "filterWidth": 100.0}}
+2022-02-20 00:06:21.223  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 23855.9111328125}
+2022-02-20 00:06:24.403  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "equalizer": [{"band": 0, "gain": 0.3}, {"band": 1, "gain": 0.3}, {"band": 2, "gain": 0}, {"band": 3, "gain": 0}, {"band": 4, "gain": 0}, {"band": 5, "gain": 0}, {"band": 6, "gain": 0}, {"band": 7, "gain": 0}, {"band": 8, "gain": 0}, {"band": 9, "gain": 0}, {"band": 10, "gain": 0}, {"band": 11, "gain": 0}, {"band": 12, "gain": 0}, {"band": 13, "gain": 0}, {"band": 14, "gain": 0}]}
+2022-02-20 00:06:24.405  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 26991.505859375}
+2022-02-20 00:06:32.321  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "equalizer": [{"band": 0, "gain": 0.65}, {"band": 1, "gain": 0.45}, {"band": 2, "gain": -0.45}, {"band": 3, "gain": -0.65}, {"band": 4, "gain": -0.35}, {"band": 5, "gain": 0.45}, {"band": 6, "gain": 0.55}, {"band": 7, "gain": 0.6}, {"band": 8, "gain": 0.6}, {"band": 9, "gain": 0.6}, {"band": 10, "gain": 0}, {"band": 11, "gain": 0}, {"band": 12, "gain": 0}, {"band": 13, "gain": 0}, {"band": 14, "gain": 0}]}
+2022-02-20 00:06:32.323  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 34859.4541015625}
+2022-02-20 00:06:41.260  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "lowPass": {"smoothing": 20.0}}
+2022-02-20 00:06:41.261  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 43735.61767578125}
+2022-02-20 00:07:20.488  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "vibrato": {"frequency": 10, "depth": 0.9}}
+2022-02-20 00:07:20.489  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 82924.21826171875}
+2022-02-20 00:09:15.934  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "equalizer": [{"band": 0, "gain": 0.6}, {"band": 1, "gain": 0.67}, {"band": 2, "gain": 0.67}, {"band": 3, "gain": 0}, {"band": 4, "gain": -0.5}, {"band": 5, "gain": 0.15}, {"band": 6, "gain": -0.45}, {"band": 7, "gain": 0.23}, {"band": 8, "gain": 0.35}, {"band": 9, "gain": 0.45}, {"band": 10, "gain": 0.55}, {"band": 11, "gain": 0.6}, {"band": 12, "gain": 0.55}, {"band": 13, "gain": 0}, {"band": 14, "gain": 0}]}
+2022-02-20 00:09:15.936  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 198321.5205078125}
+2022-02-20 00:10:00.143  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "filters", "guildId": "924999182039801876", "timescale": {"speed": 1.2999999523162842, "pitch": 1.2999999523162842, "rate": 1}}
+2022-02-20 00:10:00.144  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "seek", "guildId": "924999182039801876", "position": 242486.6279296875}
+2022-02-20 00:10:27.824  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "destroy", "guildId": "924999182039801876"}
+2022-02-20 01:15:17.519  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63223 -- CloseStatus[code=1006, reason=]
+2022-02-20 01:15:52.616  INFO 30204 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2022-02-20 01:15:59.048  WARN 30204 --- [lava-daemon-pool-manager-3-thread-1] c.s.d.l.tools.GarbageCollectionMonitor   : Suspicious GC results for the last 2 minutes: [Bucket 0 = 0] [Bucket 20 = 0] [Bucket 50 = 0] [Bucket 200 = 0] [Bucket 500 = 0] [Bucket 2000 = 2] 

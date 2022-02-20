@@ -1,3 +1,5 @@
+from re import I
+from aiohttp import payload_type
 import pomice
 import settings
 from nextcord.ext import commands
@@ -22,10 +24,84 @@ async def time_format(seconds: int):
             return "[0:00]"
 
 
+class MusicFilters(nextcord.ui.Select):
+    def __init__(self, bot: commands.AutoShardedBot):
+        self.bot = bot
+        options = [
+            nextcord.SelectOption(
+                label="🥀 Nightcore",
+                value="nightcore",
+            ),
+            nextcord.SelectOption(
+                label="🎤 Karaoke",
+                value="karaoke",
+            ),
+            nextcord.SelectOption(
+                label="💫 8D",
+                value="8D",
+            ),
+            nextcord.SelectOption(
+                label="🎸 Bass",
+                value="bass",
+            ),
+            nextcord.SelectOption(
+                label="💥 Treblebass",
+                value="treblebass",
+            ),
+            nextcord.SelectOption(
+                label="🔊 Super bass",
+                value="superbass",
+            ),
+            nextcord.SelectOption(
+                label="✨ Vaporwave",
+                value="vaporwave",
+            ),
+            nextcord.SelectOption(
+                label="🎧 Pop",
+                value="pop",
+            ),
+            nextcord.SelectOption(
+                label="🧸 Soft",
+                value="soft",
+            ),
+            nextcord.SelectOption(
+                label="🐹 Chipmunk",
+                value="chipmunk",
+            ),
+            nextcord.SelectOption(
+                label="😵 Vibrato",
+                value="vibrato",
+            ),
+            nextcord.SelectOption(
+                label="😈 Darth vader",
+                value="darthvader",
+            ),
+            nextcord.SelectOption(
+                label="🥳 Dance",
+                value="dance",
+            ),
+            nextcord.SelectOption(
+                label="🗑️ รีเซ็ทฟิลเตอร์",
+                value="reset",
+            ),
+        ]
+        super().__init__(
+            placeholder="เลือกฟิลเตอร์ของเพลง",
+            min_values=1,
+            max_values=1,
+            options=options,
+            custom_id="filters",
+        )
+
+    async def callback(self, interaction: nextcord.Interaction):
+        await Music.handle_dropdown(self, interaction, self.values[0])
+
+
 class MusicButton(nextcord.ui.View):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
         super().__init__(timeout=None)
+        self.add_item(MusicFilters(self.bot))
 
     @nextcord.ui.button(
         label=" ⏯ ", style=nextcord.ButtonStyle.green, custom_id="pause_stop", row=0
@@ -199,11 +275,13 @@ class Music(commands.Cog):
                 icon_url=self.bot.user.avatar.url,
             )
             embed.set_image(
-                url="https://smilewinbot.web.app/assets/image/host/music.png"
+                url="https://smilewinbot.web.app/assets/image/host/standard.gif"
             )
             embed.set_footer(text=f"server : {member.guild.name}")
             await message.edit(
-                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ", embed=embed
+                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
+                embed=embed,
+                view=MusicButton(self.bot),
             )
 
         else:
@@ -225,12 +303,13 @@ class Music(commands.Cog):
                     icon_url=self.bot.user.avatar.url,
                 )
                 embed.set_image(
-                    url="https://smilewinbot.web.app/assets/image/host/music.png"
+                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                 )
                 embed.set_footer(text=f"server : {member.guild.name}")
                 await message.edit(
                     content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
                     embed=embed,
+                    view=MusicButton(self.bot),
                 )
 
     async def do_next(self, player: pomice.Player):
@@ -260,12 +339,13 @@ class Music(commands.Cog):
                         icon_url=self.bot.user.avatar.url,
                     )
                     embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                     )
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(
                         content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
                         embed=embed,
+                        view=MusicButton(self.bot),
                     )
                     await player.destroy()
 
@@ -325,7 +405,7 @@ class Music(commands.Cog):
                         embed.set_image(url=tracks.thumbnail)
                     else:
                         embed.set_image(
-                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                         )
                     if nu is None:
                         embed.set_footer(
@@ -334,7 +414,9 @@ class Music(commands.Cog):
                     else:
                         embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     await message.edit(
-                        content=f"__รายการเพลง:__🎵\n {list_song} ", embed=embed
+                        content=f"__รายการเพลง:__🎵\n {list_song} ",
+                        embed=embed,
+                        view=MusicButton(self.bot),
                     )
                     await player.play(tracks)
 
@@ -360,12 +442,13 @@ class Music(commands.Cog):
                         icon_url=self.bot.user.avatar.url,
                     )
                     embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                     )
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(
                         content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
                         embed=embed,
+                        view=MusicButton(self.bot),
                     )
 
             else:
@@ -444,11 +527,13 @@ class Music(commands.Cog):
                         embed.set_image(url=tracks.thumbnail)
                     else:
                         embed.set_image(
-                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                         )
                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     await message.edit(
-                        content=f"__รายการเพลง:__🎵\n {list_song} ", embed=embed
+                        content=f"__รายการเพลง:__🎵\n {list_song} ",
+                        embed=embed,
+                        view=MusicButton(self.bot),
                     )
                     await player.play(tracks)
 
@@ -462,12 +547,13 @@ class Music(commands.Cog):
                         icon_url=self.bot.user.avatar.url,
                     )
                     embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                     )
                     embed.set_footer(text=f"server : {player.guild.name}")
                     await message.edit(
                         content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
                         embed=embed,
+                        view=MusicButton(self.bot),
                     )
 
         else:
@@ -480,11 +566,13 @@ class Music(commands.Cog):
                 icon_url=self.bot.user.avatar.url,
             )
             embed.set_image(
-                url="https://smilewinbot.web.app/assets/image/host/music.png"
+                url="https://smilewinbot.web.app/assets/image/host/standard.gif"
             )
             embed.set_footer(text=f"server : {player.guild.name}")
             await message.edit(
-                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ", embed=embed
+                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
+                embed=embed,
+                view=MusicButton(self.bot),
             )
 
     @commands.command(aliases=["joi", "j", "summon", "su", "con"])
@@ -512,6 +600,168 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
+
+    async def handle_dropdown(self, interaction: nextcord.Interaction, value: str):
+        data = await settings.collectionmusic.find_one(
+            {"guild_id": interaction.guild.id}
+        )
+        server = await settings.collection.find_one({"guild_id": interaction.guild.id})
+        player: pomice.Player = interaction.guild.voice_client
+        if not player is None and not data is None:
+            if (
+                not interaction.user.voice is None
+                and interaction.user.voice.channel is interaction.guild.me.voice.channel
+            ):
+                if value == "treblebass":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.6),
+                                (1, 0.67),
+                                (2, 0.67),
+                                (3, 0),
+                                (4, -0.5),
+                                (5, 0.15),
+                                (6, -0.45),
+                                (7, 0.23),
+                                (8, 0.35),
+                                (9, 0.45),
+                                (10, 0.55),
+                                (11, 0.6),
+                                (12, 0.55),
+                                (13, 0),
+                            ]
+                        )
+                    )
+                elif value == "bass":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.10),
+                                (1, 0.10),
+                                (2, 0.05),
+                                (3, 0.05),
+                                (4, -0.05),
+                                (5, -0.05),
+                                (6, 0),
+                                (7, -0.05),
+                                (8, -0.05),
+                                (9, 0),
+                                (10, 0.05),
+                                (11, 0.05),
+                                (12, 0.10),
+                                (13, 0.10),
+                            ]
+                        )
+                    )
+                elif value == "superbass":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.2),
+                                (1, 0.3),
+                                (2, 0),
+                                (3, 0.8),
+                                (4, 0),
+                                (5, 0.5),
+                                (6, 0),
+                                (7, -0.5),
+                                (8, 0),
+                                (9, 0),
+                                (10, 0),
+                                (11, 0),
+                                (12, 0),
+                                (13, 0),
+                            ]
+                        )
+                    )
+                elif value == "nightcore":
+                    await player.set_filter(
+                        pomice.filters.Timescale(
+                            speed=1.2999999523162842,
+                            pitch=1.2999999523162842,
+                            rate=1,
+                        )
+                    )
+
+                elif value == "chipmunk":
+                    await player.set_filter(
+                        pomice.filters.Timescale(
+                            speed=1.05,
+                            pitch=1.35,
+                            rate=1.25,
+                        )
+                    )
+                elif value == "dance":
+                    await player.set_filter(
+                        pomice.filters.Timescale(
+                            speed=1.25,
+                            pitch=1.25,
+                            rate=1.25,
+                        )
+                    )
+                elif value == "karaoke":
+                    await player.set_filter(
+                        pomice.filters.Karaoke(
+                            level=1.0,
+                            mono_level=1.0,
+                            filter_band=220.0,
+                            filter_width=100.0,
+                        )
+                    )
+                elif value == "8D":
+                    await player.set_filter(pomice.filters.Rotation(rotation_hertz=0.2))
+
+                elif value == "vaporwave":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (1, 0.3),
+                                (0, 0.3),
+                            ]
+                        )
+                    )
+                    # await player.set_filter(pomice.filters.Timescale(pitch=0.5))
+                    # await player.set_filter(pomice.filters.Tremolo(depth=0.3, frequency=14))
+
+                elif value == "pop":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.65),
+                                (1, 0.45),
+                                (2, -0.45),
+                                (3, -0.65),
+                                (4, -0.35),
+                                (5, 0.45),
+                                (6, 0.55),
+                                (7, 0.6),
+                                (8, 0.6),
+                                (9, 0.6),
+                                (10, 0),
+                                (11, 0),
+                                (12, 0),
+                                (13, 0),
+                            ]
+                        )
+                    )
+
+                elif value == "soft":
+                    await player.set_filter(pomice.filters.LowPass(smoothing=20.0))
+
+                elif value == "vibrato":
+                    await player.set_filter(
+                        pomice.filters.Vibrato(frequency=10, depth=0.9)
+                    )
+
+                elif value == "darthvader":
+
+                    await player.set_filter(
+                        pomice.filters.Timescale(speed=0.975, pitch=0.5, rate=0.8)
+                    )
+
+                else:
+                    await player.reset_filter()
 
     async def handle_click(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -595,7 +845,7 @@ class Music(commands.Cog):
                                 embed.set_image(url=player.current.thumbnail)
                             else:
                                 embed.set_image(
-                                    url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                 )
                             if nu == None:
                                 embed.set_footer(
@@ -609,7 +859,9 @@ class Music(commands.Cog):
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
                             await message.edit(
-                                content=f"__รายการเพลง:__🎵\n {list_song} ", embed=embed
+                                content=f"__รายการเพลง:__🎵\n {list_song} ",
+                                embed=embed,
+                                view=MusicButton(self.bot),
                             )
 
                         else:
@@ -672,7 +924,7 @@ class Music(commands.Cog):
                                 embed.set_image(url=player.current.thumbnail)
                             else:
                                 embed.set_image(
-                                    url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                 )
                             if nu == None:
                                 embed.set_footer(
@@ -686,7 +938,9 @@ class Music(commands.Cog):
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
                             await message.edit(
-                                content=f"__รายการเพลง:__🎵\n {list_song} ", embed=embed
+                                content=f"__รายการเพลง:__🎵\n {list_song} ",
+                                embed=embed,
+                                view=MusicButton(self.bot),
                             )
 
                         else:
@@ -768,7 +1022,7 @@ class Music(commands.Cog):
                                     embed.set_image(url=player.current.thumbnail)
                                 else:
                                     embed.set_image(
-                                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                     )
                                 if nu == None:
                                     embed.set_footer(
@@ -784,6 +1038,7 @@ class Music(commands.Cog):
                                 await message.edit(
                                     content=f"__รายการเพลง:__🎵\n {list_song} ",
                                     embed=embed,
+                                    view=MusicButton(self.bot),
                                 )
 
                             elif data["Mode"] == "Repeat":
@@ -840,7 +1095,7 @@ class Music(commands.Cog):
                                     embed.set_image(url=player.current.thumbnail)
                                 else:
                                     embed.set_image(
-                                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                     )
                                 if nu == None:
                                     embed.set_footer(
@@ -856,6 +1111,7 @@ class Music(commands.Cog):
                                 await message.edit(
                                     content=f"__รายการเพลง:__🎵\n {list_song} ",
                                     embed=embed,
+                                    view=MusicButton(self.bot),
                                 )
 
                     elif button.custom_id == "loop_playlist":
@@ -914,7 +1170,7 @@ class Music(commands.Cog):
                                     embed.set_image(url=player.current.thumbnail)
                                 else:
                                     embed.set_image(
-                                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                     )
                                 if nu == None:
                                     embed.set_footer(
@@ -930,6 +1186,7 @@ class Music(commands.Cog):
                                 await message.edit(
                                     content=f"__รายการเพลง:__🎵\n {list_song} ",
                                     embed=embed,
+                                    view=MusicButton(self.bot),
                                 )
 
                             elif data["Mode"] == "Loop":
@@ -986,7 +1243,7 @@ class Music(commands.Cog):
                                     embed.set_image(url=player.current.thumbnail)
                                 else:
                                     embed.set_image(
-                                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                     )
                                 if nu == None:
                                     embed.set_footer(
@@ -1002,6 +1259,7 @@ class Music(commands.Cog):
                                 await message.edit(
                                     content=f"__รายการเพลง:__🎵\n {list_song} ",
                                     embed=embed,
+                                    view=MusicButton(self.bot),
                                 )
 
             else:
@@ -1106,7 +1364,7 @@ class Music(commands.Cog):
                                     embed.set_image(url=tracks[0].thumbnail)
                                 else:
                                     embed.set_image(
-                                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                     )
                                 if nu is None:
                                     embed.set_footer(
@@ -1122,6 +1380,7 @@ class Music(commands.Cog):
                                 await message.edit(
                                     content=f"__รายการเพลง:__🎵\n{list_song} ",
                                     embed=embed,
+                                    view=MusicButton(self.bot),
                                 )
                                 await settings.collectionmusic.insert_one(data)
 
@@ -1209,7 +1468,7 @@ class Music(commands.Cog):
                                         embed.set_image(url=player.current.thumbnail)
                                     else:
                                         embed.set_image(
-                                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                         )
                                     message = await self.bot.get_channel(
                                         music_channel
@@ -1217,6 +1476,7 @@ class Music(commands.Cog):
                                     await message.edit(
                                         content=f"__รายการเพลง:__🎵\n{list_song} ",
                                         embed=embed,
+                                        view=MusicButton(self.bot),
                                     )
 
                         else:
@@ -1257,7 +1517,7 @@ class Music(commands.Cog):
                                         embed.set_image(url=track.thumbnail)
                                     else:
                                         embed.set_image(
-                                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                         )
                                     embed.set_footer(
                                         text=f"server : {ctx.guild.name} | เพลงในคิว : 1"
@@ -1284,6 +1544,7 @@ class Music(commands.Cog):
                                     await message.edit(
                                         content=f"__รายการเพลง:__🎵\n **1.** {track} -{ctx.author.mention}",
                                         embed=embed,
+                                        view=MusicButton(self.bot),
                                     )
                                     await settings.collectionmusic.insert_one(data)
                                 except Exception as e:
@@ -1335,7 +1596,7 @@ class Music(commands.Cog):
                                         embed.set_image(url=player.current.thumbnail)
                                     else:
                                         embed.set_image(
-                                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                         )
                                     embed.set_footer(
                                         text=f"next up : {nu} | เพลงในคิว : {left}"
@@ -1375,6 +1636,7 @@ class Music(commands.Cog):
                                     await message.edit(
                                         content=f"__รายการเพลง:__🎵\n {list_song} ",
                                         embed=embed,
+                                        view=MusicButton(self.bot),
                                     )
 
                                 else:
@@ -1412,7 +1674,7 @@ class Music(commands.Cog):
                     icon_url=self.bot.user.avatar.url,
                 )
                 embed.set_image(
-                    url="https://smilewinbot.web.app/assets/image/host/music.png"
+                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                 )
                 embed.set_footer(text=f"server : {ctx.guild.name}")
                 try:
@@ -1454,7 +1716,7 @@ class Music(commands.Cog):
                         icon_url=self.bot.user.avatar.url,
                     )
                     embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/music.png"
+                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                     )
                     embed.set_footer(text=f"server : {ctx.guild.name}")
                     embed_message: nextcord.Message = await channel.send(
@@ -1491,7 +1753,7 @@ class Music(commands.Cog):
                             icon_url=self.bot.user.avatar.url,
                         )
                         embed.set_image(
-                            url="https://smilewinbot.web.app/assets/image/host/music.png"
+                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                         )
                         embed.set_footer(text=f"server : {ctx.guild.name}")
                         embed_message = await channel.send(
@@ -1544,7 +1806,7 @@ class Music(commands.Cog):
                                     icon_url=self.bot.user.avatar.url,
                                 )
                                 embed.set_image(
-                                    url="https://smilewinbot.web.app/assets/image/host/music.png"
+                                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                                 )
                                 embed.set_footer(text=f"server : {ctx.guild.name}")
                                 embed_message = await channel.send(
