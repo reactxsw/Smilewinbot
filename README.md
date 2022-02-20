@@ -12,36 +12,41 @@ A general purpose discord bot made with [Nextcord](https://github.com/nextcord/n
 
 You can start running the bot by following these steps:
 
-1.clone this repo by running 
+1. clone this repo by running 
 
 ```git clone https://github.com/StrixzIV/Smilewinbot.git```
 
-2.change your working driectory to the cloned folder
+2. change your working driectory to the cloned folder
 
 ```cd path/to/the/bot/folder```
 
-3.run the entry point script of the bot using 
+3. install the required dependencies using pip
+
+```pip install -r requirements.txt```
+
+4. run the entry point script of the bot using 
 
 ```python3 main.py```
 
-# How to contribute
+# Contributions
 
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+Please make sure to update tests as appropriate.
 
-<div id="need"></div>
-<h1>Things needed</h1>
-<p>Git : https://git-scm.com/download/win</p>
-<p>Lavalink 3.4 : https://github.com/freyacodes/Lavalink</p>
-<p>Java 16 : https://www.oracle.com/java/technologies/javase-downloads.html</p>
-<p>Python 3.9 : https://www.python.org/</p>
-<h1>API needed</h1>
-<p>Discord : https://discord.com/developers/applications</p>
-<p>MongoDB : https://www.mongodb.com/cloud/atlas/</p>
-<p>Reddit : https://www.reddit.com/prefs/apps</p>
-<p>Openweather API : https://openweathermap.org/api</p>
-<p>Pastebin : https://pastebin.com/doc_api</p>
-<p>Faceit : https://developers.faceit.com/</p>
-<p>Tracker.gg : https://tracker.gg/developers/docs/getting-started</p>
-<h2>How to install</h2>
-<p>1. Download everythings in <a href="#need">here</a></p>
-<p>2. Run install.bat</p>
+## Required tools for development
+- [Git](https://git-scm.com/download/)
+- [Lavalink 3.4](https://github.com/freyacodes/Lavalink)
+- [Python 3.9](https://www.python.org/downloads/)
+- [Java 16](https://www.oracle.com/java/technologies/javase-downloads.html)
+
+## Required API
+- [Discord API](https://discord.com/developers/applications)
+- [MongoDB API](https://www.mongodb.com/cloud/atlas/)
+- [Reddit API](https://www.reddit.com/prefs/apps)
+- [Openweather API](https://openweathermap.org/api)
+- [Pastebin API](https://pastebin.com/doc_api)
+- [Tracker.gg](https://tracker.gg/developers/docs/getting-started)
+
+# License
+* [GNU General Public License v3.0](https://github.com/StrixzIV/Smilewinbot/blob/main/LICENSE)
