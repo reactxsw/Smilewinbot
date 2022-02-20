@@ -2,6 +2,14 @@
 
 A general purpose discord bot made with [Nextcord](https://github.com/nextcord/nextcord).
 
+<br />
+
+<p align="center">
+  <img src="https://github.com/StrixzIV/Smilewinbot/blob/main/logo/smwcircle.png" alt="smilewin_logo" />
+</p>
+
+<br />
+  
 <p align="center">
   <a href=""><img alt="codefactor" src="https://www.codefactor.io/repository/github/reactxsw/smilewinbot/badge"></a>
   <a href="https://discord.gg/R8RYXyB4Cg"><img alt="Invite Link" src="https://discordapp.com/api/guilds/394451338140057610/widget.png?style=shield"></a>
