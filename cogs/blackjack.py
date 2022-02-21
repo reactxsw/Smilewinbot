@@ -1,3 +1,4 @@
+from code import interact
 import nextcord
 from nextcord.ext import commands
 import random
@@ -20,7 +21,7 @@ class Blackjack(commands.Cog):
         embed = await self.embed_generator(player_hand, dealer_hand, first_turn=True)
 
         # Send embed
-        await ctx.send(embed=embed)
+        msg = await ctx.send(embed=embed, view=Blackjack_Button(self.bot))
 
         # Create data for the game
         data = {
@@ -28,17 +29,25 @@ class Blackjack(commands.Cog):
             "player_hand": player_hand,
             "dealer_hand": dealer_hand,
             "channel_id": ctx.channel.id,
-            "msg_id": ctx.message.id,
+            "msg_id": msg.id
         }
 
         # Insert data into database
         await settings.collectionblackjack.insert_one(data)
 
     async def embed_generator(self, player_hand, dealer_hand, first_turn=False):
+        player_hand_text = ""
+        for i in player_hand:
+            player_hand_text += f"{i} "
+        
+        dealer_hand_text = ""
+        for i in dealer_hand:
+            dealer_hand_text += f"{i} "
+        
         embed = nextcord.Embed(title="Blackjack")
         embed.add_field(
             name="Your hand",
-            value=f"{player_hand[0]} {player_hand[1]}\n\n Value: {await get_score(player_hand)}",
+            value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
         )
         if first_turn:
             embed.add_field(
@@ -48,14 +57,16 @@ class Blackjack(commands.Cog):
         else:
             embed.add_field(
                 name="Dealer's hand",
-                value=f"{dealer_hand[0]} {dealer_hand[1]}\n\n Value: {await get_score(dealer_hand)}",
+                value=f"{dealer_hand_text}\n\n Value: {await get_score(dealer_hand)}",
             )
         return embed
 
+
+    # It will come from Blackjack_Button
     async def handle_click(self, button: nextcord.ui.Button, interaction):
         if button.custom_id == "hit":
             game = await settings.collectionblackjack.find_one(
-                {"player_id": interaction.author.id}
+                {"player_id": interaction.user.id}
             )
             if game is not None:
                 newcard = random.sample(card_list, 1)
@@ -65,37 +76,59 @@ class Blackjack(commands.Cog):
                 )
 
                 # call computer dealer playing function
-                await self.computer_dealer_playing(game)
+                await Blackjack.computer_dealer_playing(self,game)
+                
+                #update message
+                embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"])
+                await Blackjack.update_message(self, game, embed, interaction)
+
+                player_score = await get_score(game["player_hand"])
+                dealer_score = await get_score(game["dealer_hand"])
+
+                
 
         elif button.custom_id == "stand":
             game = await settings.collectionblackjack.find_one(
-                {"player_id": interaction.author.id}
+                {"player_id": interaction.user.id}
             )
             if game is not None:
                 # call computer dealer playing function
-                await self.computer_dealer_playing(game)
+                await Blackjack.computer_dealer_playing(self,game)
+                
+                embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"])
+                await Blackjack.update_message(self, game, embed, interaction)
+
+    async def check_win_lose_draw(self,player_score, dealer_score):
+        if player_score == dealer_score == 21:
+            return False,False,True #win,lose,draw
+        elif player_score >= 21:
+            return False,True,False
+        elif dealer_score >= 21:
+            return True,False,False
+        
+        return False,False,False
+
 
     async def computer_dealer_playing(self, game):
         action = random.randint(0, 1)
 
         # If the dealer has a score of 17 or less, he will hit
         if action == 0:
-            if await get_score(game["dealer_hand"]) <= 17:
-                newcard = random.sample(card_list, 1)
-                game["dealer_hand"].append(newcard[0])
-                await settings.collectionblackjack.update_one(
-                    {"player_id": game["player_id"]}, {"$set": game}
-                )
-
-    async def update_message(self, data, embed, remove_view=False):
-        if remove_view:
-            await self.bot.get_channel(data["channel_id"]).fetch_message(
-                data["msg_id"]
-            ).edit(embed=embed, view=None)
+            newcard = random.sample(card_list, 1)
+            game["dealer_hand"].append(newcard[0])
+            await settings.collectionblackjack.update_one(
+                {"player_id": game["player_id"]}, {"$set": game}
+            )
+        
+        # If action = 0 then do nothing
         else:
-            await self.bot.get_channel(data["channel_id"]).fetch_message(
-                data["msg_id"]
-            ).edit(embed=embed)
+            pass
+
+    async def update_message(self, data, embed, interaction, remove_view=False):
+        if remove_view:
+            await interaction.edit(embed=embed, view=None)
+        else:
+            await interaction.edit(embed=embed)
 
 
 async def get_score(cards: list):
@@ -125,7 +158,7 @@ class Blackjack_Button(nextcord.ui.View):
     @nextcord.ui.button(
         label=" Hit ",
         style=nextcord.ButtonStyle.secondary,
-        custom_id="double_down",
+        custom_id="hit",
         row=0,
     )
     async def double_down(
