@@ -13,7 +13,10 @@ class youtube_notify(commands.Cog):
 
     @commands.command()
     async def setyt(
-        self, ctx, channel_url: str, textchannel: nextcord.TextChannel = None
+        self,
+        ctx: commands.Context,
+        channel_url: str,
+        textchannel: nextcord.TextChannel = None,
     ):
         channel_Id = channel_url.split("/")[2]
         language = await settings.collectionlanguage.find_one(

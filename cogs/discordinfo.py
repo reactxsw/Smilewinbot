@@ -1,3 +1,4 @@
+from ast import alias
 import nextcord
 from nextcord import colour
 import humanize
@@ -860,7 +861,7 @@ class DiscordInfo(commands.Cog):
                 message = await ctx.send(embed=embed)
                 await message.add_reaction("✅")
 
-    @commands.command()
+    @commands.command(alias=["invite"])
     async def botinvite(self, ctx):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}

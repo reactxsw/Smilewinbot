@@ -41,6 +41,14 @@ class MusicFilters(nextcord.ui.Select):
                 value="8D",
             ),
             nextcord.SelectOption(
+                label="🔥 Rock",
+                value="rock",
+            ),
+            nextcord.SelectOption(
+                label="⚡ Electronic",
+                value="electronic",
+            ),
+            nextcord.SelectOption(
                 label="🎸 Bass",
                 value="bass",
             ),
@@ -51,6 +59,10 @@ class MusicFilters(nextcord.ui.Select):
             nextcord.SelectOption(
                 label="🔊 Super bass",
                 value="superbass",
+            ),
+            nextcord.SelectOption(
+                label="🎮 Gaming",
+                value="gaming",
             ),
             nextcord.SelectOption(
                 label="✨ Vaporwave",
@@ -675,6 +687,75 @@ class Music(commands.Cog):
                             ]
                         )
                     )
+                elif value == "rock":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.300),
+                                (1, 0.250),
+                                (2, 0.200),
+                                (3, 0.100),
+                                (4, 0.050),
+                                (5, -0.050),
+                                (6, -0.150),
+                                (7, -0.200),
+                                (8, -0.100),
+                                (9, -0.050),
+                                (10, 0.050),
+                                (11, 0.100),
+                                (12, 0.200),
+                                (13, 0.250),
+                                (14, 0.300),
+                            ]
+                        )
+                    )
+
+                elif value == "electronic":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.375),
+                                (1, 0.350),
+                                (2, 0.125),
+                                (3, 0),
+                                (4, 0),
+                                (5, -0.125),
+                                (6, -0.125),
+                                (7, 0),
+                                (8, 0.25),
+                                (9, 0.125),
+                                (10, 0.15),
+                                (11, 0.2),
+                                (12, 0.250),
+                                (13, 0.350),
+                                (14, 0.400),
+                            ]
+                        )
+                    )
+
+                elif value == "gaming":
+                    await player.set_filter(
+                        pomice.filters.Equalizer(
+                            levels=[
+                                (0, 0.350),
+                                (1, 0.300),
+                                (2, 0.250),
+                                (3, 0.200),
+                                (4, 0.150),
+                                (5, 0.100),
+                                (6, 0.050),
+                                (7, -0.0),
+                                (8, -0.050),
+                                (9, -0.100),
+                                (10, -0.150),
+                                (11, -0.200),
+                                (12, -0.250),
+                                (13, -0.300),
+                                (14, -0.350),
+                            ]
+                        )
+                    )
+
                 elif value == "nightcore":
                     await player.set_filter(
                         pomice.filters.Timescale(
@@ -1396,7 +1477,7 @@ class Music(commands.Cog):
 
                                     left = queue + len(results)
                                     nu = (
-                                        track
+                                        "None"
                                         if queue < 2
                                         else Queue["Queue"][1]["song_title"]
                                     )
@@ -1646,7 +1727,7 @@ class Music(commands.Cog):
 
     @commands.has_permissions(manage_channels=True)
     @commands.command()
-    async def musicsetup(self, ctx):
+    async def musicsetup(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1665,22 +1746,30 @@ class Music(commands.Cog):
                     topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                 )
 
-                embed = nextcord.Embed(
+                embedplay = nextcord.Embed(
                     description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                    colour=0xFFFF00,
+                    colour=0xfed000,
                 )
-                embed.set_author(
+                embedplay.set_author(
                     name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
                     icon_url=self.bot.user.avatar.url,
                 )
-                embed.set_image(
+                embedplay.set_image(
                     url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                 )
-                embed.set_footer(text=f"server : {ctx.guild.name}")
+                embedplay.set_footer(text=f"server : {ctx.guild.name}")
+                embedqueue = nextcord.Embed(
+                    title= "__รายการเพลง:__n🎵",
+                    description ="ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
+                    color=0xfed000
+                )
+                embedplay.set_author(
+                    icon_url=self.bot.user.avatar.url,
+                )
+                
                 try:
                     embed_message = await channel.send(
-                        content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                        embed=embed,
+                        embeds=[embedqueue,embedplay],
                         view=MusicButton(self),
                     )
                 except Exception as e:

@@ -77,7 +77,7 @@ class Shortener(commands.Cog):
                             await message.add_reaction("🎨")
 
     @ascii.error
-    async def ascii_error(self, ctx, error):
+    async def ascii_error(self, ctx: commands.Context, error):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
