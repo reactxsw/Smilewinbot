@@ -1,15 +1,14 @@
-from email.message import Message
-from re import search
 from async_timeout import asyncio
 import nextcord
 from nextcord.ext import commands
+from numpy import array
 import settings
 from cogs.scam import check_scam_link
 from cogs.music import Music
 
 
 class on_message_event(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
 
     @commands.Cog.listener()
@@ -20,37 +19,42 @@ class on_message_event(commands.Cog):
             if data != None:
                 if message.guild and not message.author.bot:
                     if message.channel.id == data["Music_channel_id"]:
-                        if settings.COMMAND_PREFIX in message.content:
-                            song = message.content.split(settings.COMMAND_PREFIX)[1]
-
-                        else:
-                            song = message.content
 
                         ctx: commands.Context = await self.bot.get_context(message)
-                        bot_voice_client = nextcord.utils.get(
+                        bot_voice_client : nextcord.VoiceClient = nextcord.utils.get(
                             self.bot.voice_clients, guild=ctx.guild
                         )
-                        await asyncio.sleep(1)
-                        await message.delete()
-
-                        if bot_voice_client is not None:
-                            if (
-                                ctx.author.voice.channel.id
-                                == bot_voice_client.channel.id
-                            ):
-                                await ctx.invoke(
-                                    self.bot.get_command("play"), search=song
-                                )
+                        if (bot_voice_client is None or (bot_voice_client is not None and ctx.author.voice.channel.id == bot_voice_client.channel.id)):
+                            if message.attachments != []:
+                                files = []
+                                for items in range (len(message.attachments)):
+                                    print(message.attachments[items].url)
+                                    files.append(message.attachments[items].url)
+                                
+                                print(files)
+                                for file in files:
+                                    await ctx.invoke(self.bot.get_command("play"), search=file)
+                            
                             else:
-                                embed = nextcord.Embed(
-                                    title="คุณจะต้องอยู่ในห้องเดียวกับบอทถึงจะสามรถสั่งเพลงได้",
-                                    description=f"{message.author.mention} บอทเล่นเพลงอยู่ที่ {bot_voice_client.channel.mention}",
-                                    color=0xFED000,
-                                )
-                                await message.channel.send(embed=embed, delete_after=5)
+                                if settings.COMMAND_PREFIX in message.content:
+                                    song = message.content.split(settings.COMMAND_PREFIX)[1]
+
+                                else:
+                                    song = message.content
+                                
+                                await ctx.invoke(self.bot.get_command("play"), search=song)
+
+                            await asyncio.sleep(1)
+                            await message.delete()
 
                         else:
-                            await ctx.invoke(self.bot.get_command("play"), search=song)
+                            embed = nextcord.Embed(
+                                title="คุณจะต้องอยู่ในห้องเดียวกับบอทถึงจะสามรถสั่งเพลงได้",
+                                description=f"{message.author.mention} บอทเล่นเพลงอยู่ที่ {bot_voice_client.channel.mention}",
+                                color=0xFED000,
+                            )
+                            await message.channel.send(embed=embed, delete_after=5)
+
                 if message.content.startswith("!r"):
                     return
 

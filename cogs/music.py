@@ -130,7 +130,6 @@ class MusicFilters(nextcord.ui.Select):
     async def callback(self, interaction: nextcord.Interaction):
         await Music.handle_dropdown(self, interaction, self.values[0])
 
-
 class MusicButton(nextcord.ui.View):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -184,10 +183,21 @@ class MusicButton(nextcord.ui.View):
         await Music.handle_click(self, button, interaction)
 
     @nextcord.ui.button(
+        label=" 🔁 ",
+        style=nextcord.ButtonStyle.primary,
+        custom_id="reset_song",
+        row=1,
+    )
+    async def repeat_btn(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
+        await Music.handle_click(self, button, interaction)
+
+    @nextcord.ui.button(
         label=" 🔊 เพิ่มเสียง ",
         style=nextcord.ButtonStyle.primary,
         custom_id="increase_volume",
-        row=1,
+        row=2,
     )
     async def vol_up_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -198,7 +208,7 @@ class MusicButton(nextcord.ui.View):
         label=" 🔈 ลดเสียง  ",
         style=nextcord.ButtonStyle.primary,
         custom_id="decrease_volume",
-        row=1,
+        row=2,
     )
     async def vol_down_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -209,7 +219,7 @@ class MusicButton(nextcord.ui.View):
         label=" 🔇    เปิด / ปิดเสียง     ",
         style=nextcord.ButtonStyle.primary,
         custom_id="mute_unmute_volume",
-        row=1,
+        row=2,
     )
     async def vol_mute_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -575,7 +585,7 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
-
+                    
     async def handle_dropdown(self, interaction: nextcord.Interaction, value: str):
         data = await settings.collectionmusic.find_one(
             {"guild_id": interaction.guild.id}
@@ -1319,7 +1329,7 @@ class Music(commands.Cog):
             )
             await interaction.channel.send(embed=embed, delete_after=2)
 
-    @commands.command(aliases=["pla", "p"])
+    @commands.command()
     async def play(self, ctx: commands.Context, *, search: str):
         server = await settings.collection.find_one({"guild_id": ctx.guild.id})
         if server is not None:
@@ -1333,7 +1343,17 @@ class Music(commands.Cog):
                         if player is None:
                             await ctx.invoke(self.join)
                             player: pomice.Player = ctx.voice_client
-                        results = await player.get_tracks(search, ctx=ctx)
+                        
+                        try:
+                            results = await player.get_tracks(search, ctx=ctx)
+                        except pomice.exceptions.TrackLoadError:
+                            if "&list" in search:
+                                search = search.split("&list")
+                                results = await player.get_tracks(search, ctx=ctx)
+                            
+                            else:
+                                results = None
+                                
                         if not results:
                             return await ctx.send(
                                 "No results were found for that search term",
@@ -1527,11 +1547,7 @@ class Music(commands.Cog):
                             track: pomice.Track = results[0]
                             s_title = track.title
                             s_id = track.track_id
-                            s_source = (
-                                "Spotify"
-                                if "open.spotify.com" in track.uri
-                                else track.info["sourceName"]
-                            )
+                            s_source = ("Spotify"if "open.spotify.com" in track.uri else track.info["sourceName"] if "SourceName" in track.info else "UNKNOWN")
                             s_len = track.length / 1000
                             if Queue is None and not player.is_playing:
                                 try:
@@ -1832,6 +1848,16 @@ class Music(commands.Cog):
                                     {"$set": {"Music_message_id": music_message.id}},
                                 )
 
+    @musicsetup.error
+    async def music_setup_error(self, ctx: commands.Context, error : commands.CommandInvokeError):
+        if isinstance(error.original,nextcord.Forbidden):
+            embed = nextcord.Embed(
+                colour=0x983925,
+                title=f"⚠️บอทไม่มีสิทธิสร้างห้องเพลง ควรให้สิทธิ์ สร้างห้องหรือ Admin กับบอท",
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
