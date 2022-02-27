@@ -1348,12 +1348,11 @@ class Music(commands.Cog):
                             results = await player.get_tracks(search, ctx=ctx)
                         except pomice.exceptions.TrackLoadError:
                             if "&list" in search:
-                                search = search.split("&list")
-                                results = await player.get_tracks(search, ctx=ctx)
+                                results = await player.get_tracks(search.split("&list")[0], ctx=ctx)
                             
                             else:
                                 results = None
-                                
+
                         if not results:
                             return await ctx.send(
                                 "No results were found for that search term",
