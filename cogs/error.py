@@ -44,33 +44,15 @@ class Error(commands.Cog):
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
+                    return await message.add_reaction("⚠️")
 
-                elif isinstance(error, commands.BotMissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title=f"⚠️บอทไม่มีสิทธิ คุณต้องให้สิทธิเเอดมินกับบอทก่อนใช้คําสั่งนี้",
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-                else:
-                    await channel.send(errorlog)
-                    await channel.send(error)
+                await channel.send(errorlog)
+                await channel.send(error)
 
-            if server_language == "English":
+            if isinstance(error.original, nextcord.Forbidden):
                 if isinstance(error, commands.CommandNotFound):
                     embed = nextcord.Embed(
                         colour=0x983925, title=f"⚠️ | Command not found"
-                    )
-                    embed.set_footer(text=f"┗Requested by {ctx.author}")
-                    message = await ctx.send(embed=embed)
-                    await message.add_reaction("⚠️")
-
-                elif isinstance(error, commands.BotMissingPermissions):
-                    embed = nextcord.Embed(
-                        colour=0x983925,
-                        title=f"⚠️ | Bot don't have enough permission to do that please give administrator permission to the bot",
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed)

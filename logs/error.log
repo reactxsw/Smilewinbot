@@ -374,3 +374,7 @@
 2022-02-19 22:31:06: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
 2022-02-20 00:34:27: [REACT#1120 | 394447088970104833] in [858439100661891072 | Smilewin Shop]{Error:NoneType: None,userinput: !r helpgame,command: None}
 2022-02-20 00:34:44: [REACT#1120 | 394447088970104833] in [858439100661891072 | Smilewin Shop]{Error:NoneType: None,userinput: !r apexstat reactxsw,command: apexstat}
+2022-02-25 19:08:27: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-02-25 19:08:37: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setup,command: musicsetup}
+2022-02-25 19:10:01: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-02-25 19:10:25: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}

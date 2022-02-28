@@ -1,11 +1,33 @@
-from re import I
-from aiohttp import payload_type
 import pomice
 import settings
 from nextcord.ext import commands
 import nextcord
 from utils.languageembed import languageEmbed
 
+async def set_default(avatar , guild):
+    embed = nextcord.Embed(
+        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
+        colour=0xFFFF00,
+    )
+    embed.set_author(
+        name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
+        icon_url=avatar,
+    )
+    embed.set_image(
+        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
+    )
+    embed.set_footer(text=f"server : {guild}")
+    return embed
+
+async def get_queue(queue = None):
+    embedqueue = nextcord.Embed(
+        description ="ไม่มีเพลงในคิว" if queue is None else queue,
+        color=0x1a1a1a
+    )
+    embedqueue.set_author(
+        name="รายการเพลง:🎵"
+    )
+    return embedqueue
 
 async def time_format(seconds: int):
     if seconds is not None:
@@ -108,7 +130,6 @@ class MusicFilters(nextcord.ui.Select):
     async def callback(self, interaction: nextcord.Interaction):
         await Music.handle_dropdown(self, interaction, self.values[0])
 
-
 class MusicButton(nextcord.ui.View):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -162,10 +183,21 @@ class MusicButton(nextcord.ui.View):
         await Music.handle_click(self, button, interaction)
 
     @nextcord.ui.button(
+        label=" 🔁 ",
+        style=nextcord.ButtonStyle.primary,
+        custom_id="reset_song",
+        row=1,
+    )
+    async def repeat_btn(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
+        await Music.handle_click(self, button, interaction)
+
+    @nextcord.ui.button(
         label=" 🔊 เพิ่มเสียง ",
         style=nextcord.ButtonStyle.primary,
         custom_id="increase_volume",
-        row=1,
+        row=2,
     )
     async def vol_up_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -176,7 +208,7 @@ class MusicButton(nextcord.ui.View):
         label=" 🔈 ลดเสียง  ",
         style=nextcord.ButtonStyle.primary,
         custom_id="decrease_volume",
-        row=1,
+        row=2,
     )
     async def vol_down_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -187,7 +219,7 @@ class MusicButton(nextcord.ui.View):
         label=" 🔇    เปิด / ปิดเสียง     ",
         style=nextcord.ButtonStyle.primary,
         custom_id="mute_unmute_volume",
-        row=1,
+        row=2,
     )
     async def vol_mute_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -271,28 +303,19 @@ class Music(commands.Cog):
             and len(member.guild.voice_client.channel.members) == 1
         ):
             data = await settings.collection.find_one({"guild_id": member.guild.id})
-            player = member.guild.voice_client
+            player: pomice.Player = member.guild.voice_client
             if player != None:
                 await player.destroy()
             await settings.collectionmusic.delete_one({"guild_id": member.guild.id})
             message = await self.bot.get_channel(
                 data["Music_channel_id"]
             ).fetch_message(data["Embed_message_id"])
-            embed = nextcord.Embed(
-                description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                colour=0xFFFF00,
-            )
-            embed.set_author(
-                name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                icon_url=self.bot.user.avatar.url,
-            )
-            embed.set_image(
-                url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-            )
-            embed.set_footer(text=f"server : {member.guild.name}")
+
+            embed = await set_default(self.bot.user.avatar.url, member.guild.name)
+            embedqueue = await get_queue()
             await message.edit(
-                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                embed=embed,
+                content=None,
+                embeds=[embedqueue ,embed],
                 view=MusicButton(self.bot),
             )
 
@@ -306,22 +329,12 @@ class Music(commands.Cog):
                 message = await self.bot.get_channel(
                     data["Music_channel_id"]
                 ).fetch_message(data["Embed_message_id"])
-                embed = nextcord.Embed(
-                    description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                    colour=0xFFFF00,
-                )
-                embed.set_author(
-                    name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                    icon_url=self.bot.user.avatar.url,
-                )
-                embed.set_image(
-                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                )
-                embed.set_footer(text=f"server : {member.guild.name}")
+                embed = await set_default(self.bot.user.avatar.url, member.guild.name)
+                embedqueue = await get_queue()
                 await message.edit(
-                    content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                    embed=embed,
-                    view=MusicButton(self.bot),
+                    content=None,
+                    embeds=[embedqueue,embed],
+                    view=MusicButton(self.bot)
                 )
 
     async def do_next(self, player: pomice.Player):
@@ -342,22 +355,12 @@ class Music(commands.Cog):
                     await settings.collectionmusic.delete_one(
                         {"guild_id": player.guild.id}
                     )
-                    embed = nextcord.Embed(
-                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                        colour=0xFFFF00,
-                    )
-                    embed.set_author(
-                        name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                        icon_url=self.bot.user.avatar.url,
-                    )
-                    embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                    )
-                    embed.set_footer(text=f"server : {player.guild.name}")
+                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embedqueue = await get_queue()
                     await message.edit(
-                        content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                        embed=embed,
-                        view=MusicButton(self.bot),
+                        content=None,
+                        embeds=[embedqueue,embed],
+                        view=MusicButton(self.bot)
                     )
                     await player.destroy()
 
@@ -425,10 +428,10 @@ class Music(commands.Cog):
                         )
                     else:
                         embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
+                    embedqueue = await get_queue(list_song)
                     await message.edit(
-                        content=f"__รายการเพลง:__🎵\n {list_song} ",
-                        embed=embed,
-                        view=MusicButton(self.bot),
+                        content=None,
+                        embeds=[embedqueue,embed]
                     )
                     await player.play(tracks)
 
@@ -445,22 +448,12 @@ class Music(commands.Cog):
                     await player.play(tracks)
 
                 else:
-                    embed = nextcord.Embed(
-                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                        colour=0xFFFF00,
-                    )
-                    embed.set_author(
-                        name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                        icon_url=self.bot.user.avatar.url,
-                    )
-                    embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                    )
-                    embed.set_footer(text=f"server : {player.guild.name}")
+                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embedqueue = await get_queue()
                     await message.edit(
-                        content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                        embed=embed,
-                        view=MusicButton(self.bot),
+                        content=None,
+                        embeds=[embedqueue,embed],
+                        view=MusicButton(self.bot)
                     )
 
             else:
@@ -542,49 +535,29 @@ class Music(commands.Cog):
                             url="https://smilewinbot.web.app/assets/image/host/standard.gif"
                         )
                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
+                    embedqueue = await get_queue(list_song)
                     await message.edit(
-                        content=f"__รายการเพลง:__🎵\n {list_song} ",
-                        embed=embed,
-                        view=MusicButton(self.bot),
+                        content=None,
+                        embeds=[embedqueue,embed]
                     )
                     await player.play(tracks)
 
                 else:
-                    embed = nextcord.Embed(
-                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                        colour=0xFFFF00,
-                    )
-                    embed.set_author(
-                        name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                        icon_url=self.bot.user.avatar.url,
-                    )
-                    embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                    )
-                    embed.set_footer(text=f"server : {player.guild.name}")
+                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embedqueue = await get_queue()
                     await message.edit(
-                        content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                        embed=embed,
-                        view=MusicButton(self.bot),
+                        content=None,
+                        embeds=[embedqueue,embed],
+                        view=MusicButton(self.bot)
                     )
 
         else:
-            embed = nextcord.Embed(
-                description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                colour=0xFFFF00,
-            )
-            embed.set_author(
-                name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                icon_url=self.bot.user.avatar.url,
-            )
-            embed.set_image(
-                url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-            )
-            embed.set_footer(text=f"server : {player.guild.name}")
+            embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+            embedqueue = await get_queue()
             await message.edit(
-                content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                embed=embed,
-                view=MusicButton(self.bot),
+                content=None,
+                embeds=[embedqueue,embed],
+                view=MusicButton(self.bot)
             )
 
     @commands.command(aliases=["joi", "j", "summon", "su", "con"])
@@ -612,7 +585,7 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
-
+                    
     async def handle_dropdown(self, interaction: nextcord.Interaction, value: str):
         data = await settings.collectionmusic.find_one(
             {"guild_id": interaction.guild.id}
@@ -939,10 +912,10 @@ class Music(commands.Cog):
                             message = await self.bot.get_channel(
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
+                            embedqueue = await get_queue(list_song)
                             await message.edit(
-                                content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                embed=embed,
-                                view=MusicButton(self.bot),
+                                content=None,
+                                embeds=[embedqueue,embed]
                             )
 
                         else:
@@ -1018,10 +991,10 @@ class Music(commands.Cog):
                             message = await self.bot.get_channel(
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
+                            embedqueue = await get_queue(list_song)
                             await message.edit(
-                                content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                embed=embed,
-                                view=MusicButton(self.bot),
+                                content=None,
+                                embeds=[embedqueue,embed]
                             )
 
                         else:
@@ -1116,10 +1089,10 @@ class Music(commands.Cog):
                                 message = await self.bot.get_channel(
                                     server["Music_channel_id"]
                                 ).fetch_message(server["Embed_message_id"])
+                                embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                    embed=embed,
-                                    view=MusicButton(self.bot),
+                                    content=None,
+                                    embeds=[embedqueue,embed]
                                 )
 
                             elif data["Mode"] == "Repeat":
@@ -1189,10 +1162,10 @@ class Music(commands.Cog):
                                 message = await self.bot.get_channel(
                                     server["Music_channel_id"]
                                 ).fetch_message(server["Embed_message_id"])
+                                embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                    embed=embed,
-                                    view=MusicButton(self.bot),
+                                    content=None,
+                                    embeds=[embedqueue,embed]
                                 )
 
                     elif button.custom_id == "loop_playlist":
@@ -1264,10 +1237,10 @@ class Music(commands.Cog):
                                 message = await self.bot.get_channel(
                                     server["Music_channel_id"]
                                 ).fetch_message(server["Embed_message_id"])
+                                embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                    embed=embed,
-                                    view=MusicButton(self.bot),
+                                    content=None,
+                                    embeds=[embedqueue,embed]
                                 )
 
                             elif data["Mode"] == "Loop":
@@ -1337,10 +1310,10 @@ class Music(commands.Cog):
                                 message = await self.bot.get_channel(
                                     server["Music_channel_id"]
                                 ).fetch_message(server["Embed_message_id"])
+                                embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                    embed=embed,
-                                    view=MusicButton(self.bot),
+                                    content=None,
+                                    embeds=[embedqueue,embed]
                                 )
 
             else:
@@ -1356,7 +1329,7 @@ class Music(commands.Cog):
             )
             await interaction.channel.send(embed=embed, delete_after=2)
 
-    @commands.command(aliases=["pla", "p"])
+    @commands.command()
     async def play(self, ctx: commands.Context, *, search: str):
         server = await settings.collection.find_one({"guild_id": ctx.guild.id})
         if server is not None:
@@ -1370,7 +1343,16 @@ class Music(commands.Cog):
                         if player is None:
                             await ctx.invoke(self.join)
                             player: pomice.Player = ctx.voice_client
-                        results = await player.get_tracks(search, ctx=ctx)
+                        
+                        try:
+                            results = await player.get_tracks(search, ctx=ctx)
+                        except pomice.exceptions.TrackLoadError:
+                            if "&list" in search:
+                                results = await player.get_tracks(search.split("&list")[0], ctx=ctx)
+                            
+                            else:
+                                results = None
+
                         if not results:
                             return await ctx.send(
                                 "No results were found for that search term",
@@ -1458,10 +1440,10 @@ class Music(commands.Cog):
                                 message = await self.bot.get_channel(
                                     music_channel
                                 ).fetch_message(music_embed)
+                                embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=f"__รายการเพลง:__🎵\n{list_song} ",
-                                    embed=embed,
-                                    view=MusicButton(self.bot),
+                                    content=None,
+                                    embeds=[embedqueue,embed]
                                 )
                                 await settings.collectionmusic.insert_one(data)
 
@@ -1554,21 +1536,17 @@ class Music(commands.Cog):
                                     message = await self.bot.get_channel(
                                         music_channel
                                     ).fetch_message(music_embed)
+                                    embedqueue = await get_queue(list_song)
                                     await message.edit(
-                                        content=f"__รายการเพลง:__🎵\n{list_song} ",
-                                        embed=embed,
-                                        view=MusicButton(self.bot),
+                                        content=None,
+                                        embeds=[embedqueue,embed]
                                     )
 
                         else:
                             track: pomice.Track = results[0]
                             s_title = track.title
                             s_id = track.track_id
-                            s_source = (
-                                "Spotify"
-                                if "open.spotify.com" in track.uri
-                                else track.info["sourceName"]
-                            )
+                            s_source = ("Spotify"if "open.spotify.com" in track.uri else track.info["sourceName"] if "SourceName" in track.info else "UNKNOWN")
                             s_len = track.length / 1000
                             if Queue is None and not player.is_playing:
                                 try:
@@ -1622,10 +1600,10 @@ class Music(commands.Cog):
                                     message = await self.bot.get_channel(
                                         music_channel
                                     ).fetch_message(music_embed)
+                                    embedqueue = await get_queue(f"**1.** {track} -{ctx.author.mention}")
                                     await message.edit(
-                                        content=f"__รายการเพลง:__🎵\n **1.** {track} -{ctx.author.mention}",
-                                        embed=embed,
-                                        view=MusicButton(self.bot),
+                                        content=None,
+                                        embeds=[embedqueue,embed]
                                     )
                                     await settings.collectionmusic.insert_one(data)
                                 except Exception as e:
@@ -1714,10 +1692,10 @@ class Music(commands.Cog):
                                     message = await self.bot.get_channel(
                                         music_channel
                                     ).fetch_message(music_embed)
+                                    embedqueue = await get_queue(list_song)
                                     await message.edit(
-                                        content=f"__รายการเพลง:__🎵\n {list_song} ",
-                                        embed=embed,
-                                        view=MusicButton(self.bot),
+                                        content=None,
+                                        embeds=[embedqueue,embed]
                                     )
 
                                 else:
@@ -1726,7 +1704,7 @@ class Music(commands.Cog):
                         return
 
     @commands.has_permissions(manage_channels=True)
-    @commands.command()
+    @commands.command(aliases=["setup"])
     async def musicsetup(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
@@ -1746,27 +1724,8 @@ class Music(commands.Cog):
                     topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                 )
 
-                embedplay = nextcord.Embed(
-                    description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                    colour=0xfed000,
-                )
-                embedplay.set_author(
-                    name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                    icon_url=self.bot.user.avatar.url,
-                )
-                embedplay.set_image(
-                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                )
-                embedplay.set_footer(text=f"server : {ctx.guild.name}")
-                embedqueue = nextcord.Embed(
-                    title= "__รายการเพลง:__n🎵",
-                    description ="ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                    color=0xfed000
-                )
-                embedplay.set_author(
-                    icon_url=self.bot.user.avatar.url,
-                )
-                
+                embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                embedqueue = await get_queue()
                 try:
                     embed_message = await channel.send(
                         embeds=[embedqueue,embedplay],
@@ -1796,21 +1755,12 @@ class Music(commands.Cog):
                         topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                     )
 
-                    embed = nextcord.Embed(
-                        description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                        colour=0xFFFF00,
-                    )
-                    embed.set_author(
-                        name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                        icon_url=self.bot.user.avatar.url,
-                    )
-                    embed.set_image(
-                        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                    )
-                    embed.set_footer(text=f"server : {ctx.guild.name}")
+                    embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                    embedqueue = await get_queue()
                     embed_message: nextcord.Message = await channel.send(
-                        embed=embed, view=MusicButton(self.bot)
+                        embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
                     )
+
                     music_message: nextcord.Message = await channel.send(
                         "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
                     )
@@ -1833,22 +1783,10 @@ class Music(commands.Cog):
                             topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                         )
 
-                        embed = nextcord.Embed(
-                            description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                            colour=0xFFFF00,
-                        )
-                        embed.set_author(
-                            name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                            icon_url=self.bot.user.avatar.url,
-                        )
-                        embed.set_image(
-                            url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                        )
-                        embed.set_footer(text=f"server : {ctx.guild.name}")
-                        embed_message = await channel.send(
-                            content="__รายการเพลง:__\n🎵 ไม่มีเพลงที่กำลังเล่นในขณะนี้ ",
-                            embed=embed,
-                            view=MusicButton(self.bot),
+                        embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                        embedqueue = await get_queue()
+                        embed_message: nextcord.Message = await channel.send(
+                            embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
                         )
                         music_message = await channel.send(
                             "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
@@ -1886,20 +1824,10 @@ class Music(commands.Cog):
                                 )
 
                             except nextcord.NotFound:
-                                embed = nextcord.Embed(
-                                    description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
-                                    colour=0xFFFF00,
-                                )
-                                embed.set_author(
-                                    name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
-                                    icon_url=self.bot.user.avatar.url,
-                                )
-                                embed.set_image(
-                                    url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-                                )
-                                embed.set_footer(text=f"server : {ctx.guild.name}")
-                                embed_message = await channel.send(
-                                    embed=embed, view=MusicButton(self.bot)
+                                embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                                embedqueue = await get_queue()
+                                embed_message: nextcord.Message = await channel.send(
+                                    embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
                                 )
                                 await settings.collection.update_one(
                                     {"guild_id": ctx.guild.id},
@@ -1919,6 +1847,16 @@ class Music(commands.Cog):
                                     {"$set": {"Music_message_id": music_message.id}},
                                 )
 
+    @musicsetup.error
+    async def music_setup_error(self, ctx: commands.Context, error : commands.CommandInvokeError):
+        if isinstance(error.original,nextcord.Forbidden):
+            embed = nextcord.Embed(
+                colour=0x983925,
+                title=f"⚠️บอทไม่มีสิทธิสร้างห้องเพลง ควรให้สิทธิ์ สร้างห้องหรือ Admin กับบอท",
+            )
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
