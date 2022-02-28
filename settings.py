@@ -97,3 +97,4 @@ collectiongamble = db.Gamble
 collectiontictactoe = db.TicTacToe
 collectiontictactoe_user = db.TicTacToe_user
 collectionyoutube = db.Youtube
+collectionblackjack = db.Blackjack
