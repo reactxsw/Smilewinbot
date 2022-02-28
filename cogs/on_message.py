@@ -107,16 +107,5 @@ class on_message_event(commands.Cog):
                                         await channel.send(
                                             f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {current_level}"
                                         )
-
-                                    else:
-                                        pass
-                            else:
-                                pass
-                        else:
-                            pass
-                    else:
-                        pass
-
-
 def setup(bot):
     bot.add_cog(on_message_event(bot))
