@@ -109,6 +109,7 @@ class TicTacToe(commands.Cog):
                 await ctx.send("คุณไม่สามารถเล่นกับบอทได้")
             elif serverlanguage == "English":
                 await ctx.send("You cannot play with bot")
+            return
 
         p1_game = await settings.collectiontictactoe.find_one(
             {
