@@ -16,7 +16,7 @@ class Blackjack(commands.Cog):
     async def blackjack(self, ctx: commands.Context, amount = None):
         
         if amount is None:
-            await ctx.send(f"Please specify an amount of money to bet | `{settings.COMMAND_PREFIX} blackjack <amount>`")
+            await ctx.send(f"Please specify an amount of money to bet | `{settings.COMMAND_PREFIX}blackjack <amount>`")
             return
 
         try:
@@ -35,7 +35,7 @@ class Blackjack(commands.Cog):
                 if user is None:
                     embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -54,7 +54,7 @@ class Blackjack(commands.Cog):
         game = await settings.collectionblackjack.find_one({"player_id": ctx.author.id, "game": "blackjack"})
         
         if game is not None:
-            await ctx.send(f"You already have a game running! | Use {settings.COMMAND_PREFIX} blackjack stop")
+            await ctx.send(f"You already have a game running! | Use {settings.COMMAND_PREFIX}blackjack stop")
             return
         
         
@@ -192,8 +192,8 @@ class Blackjack(commands.Cog):
     @blackjack.command()
     async def help(self, ctx):
         embed = nextcord.Embed(title="Blackjack",color=0xFED000)
-        embed.add_field(name="Blackjack", value=f"Play blackjack with the bot! | {settings.COMMAND_PREFIX} blackjack", inline=False)
-        embed.add_field(name="Stop", value=f"Stop the current game | {settings.COMMAND_PREFIX} blackjack stop", inline=False)
+        embed.add_field(name="Blackjack", value=f"Play blackjack with the bot! | {settings.COMMAND_PREFIX}blackjack", inline=False)
+        embed.add_field(name="Stop", value=f"Stop the current game | {settings.COMMAND_PREFIX}blackjack stop", inline=False)
         await ctx.send(embed=embed)
 
 

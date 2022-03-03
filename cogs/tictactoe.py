@@ -26,17 +26,17 @@ class TicTacToe(commands.Cog):
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(
                 name="Start",
-                value=f"เริ่มเกม | `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่นคนที่2]`",
+                value=f"เริ่มเกม | `{settings.COMMAND_PREFIX}tictactoe start [@ผู้เล่นคนที่2]`",
                 inline=False,
             )
             embed.add_field(
                 name="Stop",
-                value=f"หยุดเกม | `{settings.COMMAND_PREFIX} tictactoe stop`",
+                value=f"หยุดเกม | `{settings.COMMAND_PREFIX}tictactoe stop`",
                 inline=False,
             )
             embed.add_field(
                 name="Profile",
-                value=f"ดูข้อมูลผู้เล่น | `{settings.COMMAND_PREFIX} tictactoe profile`",
+                value=f"ดูข้อมูลผู้เล่น | `{settings.COMMAND_PREFIX}tictactoe profile`",
                 inline=False,
             )
             embed.add_field(
@@ -55,17 +55,17 @@ class TicTacToe(commands.Cog):
             embed = nextcord.Embed(title="Tic Tac Toe", color=0xFED000)
             embed.add_field(
                 name="Start",
-                value=f"Start the game | `{settings.COMMAND_PREFIX} tictactoe start [@player2]`",
+                value=f"Start the game | `{settings.COMMAND_PREFIX}tictactoe start [@player2]`",
                 inline=False,
             )
             embed.add_field(
                 name="Stop",
-                value=f"Stop the game | `{settings.COMMAND_PREFIX} tictactoe stop [@player2]`",
+                value=f"Stop the game | `{settings.COMMAND_PREFIX}tictactoe stop [@player2]`",
                 inline=False,
             )
             embed.add_field(
                 name="Profile",
-                value=f"View player's profile | `{settings.COMMAND_PREFIX} tictactoe profile`",
+                value=f"View player's profile | `{settings.COMMAND_PREFIX}tictactoe profile`",
                 inline=False,
             )
             embed.add_field(
@@ -120,11 +120,11 @@ class TicTacToe(commands.Cog):
         if p1_game is not None:
             if serverlanguage == "Thai":
                 await ctx.send(
-                    f"คุณได้เริ่มเกมไปแล้ว กรุณาพิมพ์ `{settings.COMMAND_PREFIX} tictactoe stop` เพื่อหยุดเกม"
+                    f"คุณได้เริ่มเกมไปแล้ว กรุณาพิมพ์ `{settings.COMMAND_PREFIX}tictactoe stop` เพื่อหยุดเกม"
                 )
             elif serverlanguage == "English":
                 await ctx.send(
-                    f"You have started the game already. Please type `{settings.COMMAND_PREFIX} tictactoe stop` to stop the game."
+                    f"You have started the game already. Please type `{settings.COMMAND_PREFIX}tictactoe stop` to stop the game."
                 )
             return
 
@@ -196,11 +196,11 @@ class TicTacToe(commands.Cog):
         if game is None:
             if serverlanguage == "Thai":
                 await ctx.send(
-                    f"ยังไม่มีเกมที่คุณเล่นอยู่ กรุณาพิมพ์ `{settings.COMMAND_PREFIX} tictactoe start [@ผู้เล่น2]` เพื่อเริ่มเกม"
+                    f"ยังไม่มีเกมที่คุณเล่นอยู่ กรุณาพิมพ์ `{settings.COMMAND_PREFIX}tictactoe start [@ผู้เล่น2]` เพื่อเริ่มเกม"
                 )
             elif serverlanguage == "English":
                 await ctx.send(
-                    f"You don't have any game. Please type `{settings.COMMAND_PREFIX} tictactoe start [@player2]` to start the game."
+                    f"You don't have any game. Please type `{settings.COMMAND_PREFIX}tictactoe start [@player2]` to start the game."
                 )
             return
         else:
@@ -246,7 +246,7 @@ class TicTacToe(commands.Cog):
         if user_data is None:
             embed.add_field(
                 name="Please play at least one game before use this command.",
-                value=f"{settings.COMMAND_PREFIX} tictactoe start [@player2]",
+                value=f"{settings.COMMAND_PREFIX}tictactoe start [@player2]",
                 inline=False,
             )
         else:
