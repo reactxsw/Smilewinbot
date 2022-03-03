@@ -75,7 +75,7 @@ class Gamble(commands.Cog):
                     if user is None:
                         embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -93,15 +93,15 @@ class Gamble(commands.Cog):
                             colour=0xFED000,
                         )
                         embed.add_field(
-                            name=f"{settings.COMMAND_PREFIX} roulette green [จํานวน]",
+                            name=f"{settings.COMMAND_PREFIX}roulette green [จํานวน]",
                             value="ลงพนัน รูเล็ตสีเขียว \n`(ได้เงิน 5x หากชนะ)`",
                         )
                         embed.add_field(
-                            name=f"{settings.COMMAND_PREFIX} roulette red [จํานวน]",
+                            name=f"{settings.COMMAND_PREFIX}roulette red [จํานวน]",
                             value="ลงพนัน รูเล็ตสีเเดง \n`(ได้เงิน 2x หากชนะ)`",
                         )
                         embed.add_field(
-                            name=f"{settings.COMMAND_PREFIX} roulette black [จํานวน]",
+                            name=f"{settings.COMMAND_PREFIX}roulette black [จํานวน]",
                             value="ลงพนัน รูเล็ตสีดํา \n`(ได้เงิน 2x หากชนะ)`",
                         )
                         embed.add_field(
@@ -142,7 +142,7 @@ class Gamble(commands.Cog):
                     if user is None:
                         embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -193,7 +193,7 @@ class Gamble(commands.Cog):
                         else:
                             embed = nextcord.Embed(
                                 title="จํานวนเงินในกระเป๋าตังไม่พอ",
-                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} bal เพื่อเช็คเงิน",
+                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                 colour=0x983925,
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -203,7 +203,7 @@ class Gamble(commands.Cog):
                 else:
                     embed = nextcord.Embed(
                         title="คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} economy on เพื่อเปิดใช้",
+                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                         colour=0x983925,
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -234,7 +234,7 @@ class Gamble(commands.Cog):
                     if user is None:
                         embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -285,7 +285,7 @@ class Gamble(commands.Cog):
                         else:
                             embed = nextcord.Embed(
                                 title="จํานวนเงินในกระเป๋าตังไม่พอ",
-                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} bal เพื่อเช็คเงิน",
+                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                 colour=0x983925,
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -295,7 +295,7 @@ class Gamble(commands.Cog):
                 else:
                     embed = nextcord.Embed(
                         title="คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} economy on เพื่อเปิดใช้",
+                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                         colour=0x983925,
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -326,7 +326,7 @@ class Gamble(commands.Cog):
                     if user is None:
                         embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -377,7 +377,7 @@ class Gamble(commands.Cog):
                         else:
                             embed = nextcord.Embed(
                                 title="จํานวนเงินในกระเป๋าตังไม่พอ",
-                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} bal เพื่อเช็คเงิน",
+                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                 colour=0x983925,
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -387,7 +387,7 @@ class Gamble(commands.Cog):
                 else:
                     embed = nextcord.Embed(
                         title="คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} economy on เพื่อเปิดใช้",
+                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                         colour=0x983925,
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -413,7 +413,7 @@ class Gamble(commands.Cog):
                     if user is None:
                         embed = nextcord.Embed(
                             title=f"{ctx.author.name} ยังไม่มีบัญชี",
-                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} openbal เพื่อเปิดใช้",
+                            description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
                             colour=0x983925,
                         )
                         embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -506,7 +506,7 @@ class Gamble(commands.Cog):
                         else:
                             embed = nextcord.Embed(
                                 title="จํานวนเงินในกระเป๋าตังไม่พอ",
-                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} bal เพื่อเช็คเงิน",
+                                description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}bal เพื่อเช็คเงิน",
                                 colour=0x983925,
                             )
                             embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -515,7 +515,7 @@ class Gamble(commands.Cog):
                 else:
                     embed = nextcord.Embed(
                         title="คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} economy on เพื่อเปิดใช้",
+                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                         colour=0x983925,
                     )
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
@@ -524,7 +524,7 @@ class Gamble(commands.Cog):
             else:
                 embed = nextcord.Embed(
                     title="คําสั่งนี้ถูกปิดใช้งานโดยเซิฟเวอร์",
-                    description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX} economy on เพื่อเปิดใช้",
+                    description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}economy on เพื่อเปิดใช้",
                     colour=0x983925,
                 )
                 embed.set_footer(text=f"┗Requested by {ctx.author}")
