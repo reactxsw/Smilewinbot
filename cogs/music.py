@@ -45,7 +45,6 @@ async def time_format(seconds: int):
         else:
             return "[0:00]"
 
-
 class MusicFilters(nextcord.ui.Select):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -183,12 +182,34 @@ class MusicButton(nextcord.ui.View):
         await Music.handle_click(self, button, interaction)
 
     @nextcord.ui.button(
-        label=" 🔁 ",
+        label=" 🔄 ",
         style=nextcord.ButtonStyle.primary,
         custom_id="reset_song",
         row=1,
     )
     async def repeat_btn(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
+        await Music.handle_click(self, button, interaction)
+
+    @nextcord.ui.button(
+        label=" ⏪ ",
+        style=nextcord.ButtonStyle.primary,
+        custom_id="backward_10",
+        row=1,
+    )
+    async def forward_btn(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
+        await Music.handle_click(self, button, interaction)
+    
+    @nextcord.ui.button(
+        label=" ⏩ ",
+        style=nextcord.ButtonStyle.primary,
+        custom_id="forward_10",
+        row=1,
+    )
+    async def backward_btn(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
         await Music.handle_click(self, button, interaction)
@@ -1316,6 +1337,15 @@ class Music(commands.Cog):
                                     embeds=[embedqueue,embed]
                                 )
 
+                    elif button.custom_id == "reset_song":
+                        await player.seek(1)
+
+                    elif button.custom_id == "forward_10":
+                        await player.seek(player.position + 10000)
+                        
+                    elif button.custom_id == "backward_10":
+                        await player.seek(player.position - 10000)
+
             else:
                 embed = nextcord.Embed(
                     description=f"{interaction.user.mention} ไม่มีสิทธิ์ตั้งค่า",
@@ -1597,15 +1627,18 @@ class Music(commands.Cog):
                                     )
 
                                     await player.play(track)
-                                    message = await self.bot.get_channel(
-                                        music_channel
-                                    ).fetch_message(music_embed)
+                                    channel = await self.bot.fetch_channel(music_channel)
+                                    embed_message = await channel.fetch_message(music_embed)
+                                    audit_message = await channel.fetch_message(music_message)
                                     embedqueue = await get_queue(f"**1.** {track} -{ctx.author.mention}")
-                                    await message.edit(
+                                    await embed_message.edit(
                                         content=None,
                                         embeds=[embedqueue,embed]
                                     )
                                     await settings.collectionmusic.insert_one(data)
+                                    await audit_message.edit(
+                                        content=f"[``🎵``] ``:`` เพิ่มเพลง **{s_title}** ``{time}`` เข้าสู่คิวเพลงของคุณ"
+                                    )
                                 except Exception as e:
                                     print(e)
 
@@ -1687,16 +1720,18 @@ class Music(commands.Cog):
                                             list_song.append(f"เเละอีก {queue-20}เพลง")
                                             break
 
-                                    list_song = "".join(list_song)
-
-                                    message = await self.bot.get_channel(
-                                        music_channel
-                                    ).fetch_message(music_embed)
-                                    embedqueue = await get_queue(list_song)
-                                    await message.edit(
+                                    channel = await self.bot.fetch_channel(music_channel)
+                                    embed_message = await channel.fetch_message(music_embed)
+                                    audit_message = await channel.fetch_message(music_message)
+                                    embedqueue = await get_queue("".join(list_song))
+                                    await embed_message.edit(
                                         content=None,
                                         embeds=[embedqueue,embed]
                                     )
+                                    await audit_message.edit(
+                                        content=f"[``🎵``] ``:`` เพิ่มเพลง **{s_title}** ``{time}`` เข้าสู่คิวเพลงของคุณ"
+                                    )
+
 
                                 else:
                                     return
@@ -1855,6 +1890,18 @@ class Music(commands.Cog):
                 title=f"⚠️บอทไม่มีสิทธิสร้างห้องเพลง ควรให้สิทธิ์ สร้างห้องหรือ Admin กับบอท",
             )
             embed.set_footer(text=f"┗Requested by {ctx.author}")
+            message = await ctx.send(embed=embed)
+            await message.add_reaction("⚠️")
+        
+        if isinstance(error, commands.MissingPermissions):
+            embed = nextcord.Embed(
+                colour=0x983925,
+                title="คุณไม่มีสิทธิ์ตั้งค่า",
+                description=f"⚠️ ``{ctx.author}`` ไม่สามารถใช้งานคำสั่งนี้ได้ คุณจำเป็นต้องมีสิทธิ์ ``เเอดมิน`` ก่อนใช้งานคำสั่งนี้",
+            )
+
+            embed.set_footer(text=f"┗Requested by {ctx.author}")
+
             message = await ctx.send(embed=embed)
             await message.add_reaction("⚠️")
 
