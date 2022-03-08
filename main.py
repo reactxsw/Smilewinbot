@@ -109,9 +109,11 @@ async def checkMongo():
         print("Unable to connect to mongodb")
 
 
+ignorefile = ['music.py']
+
 def loadcogs():
     for filename in os.listdir("cogs"):
-        if filename.endswith(".py") and not filename.startswith("_"):
+        if filename.endswith(".py") and not filename.startswith("_") and filename not in ignorefile:
             try:
                 bot.load_extension(f"cogs.{filename[:-3]}")
                 print(f"Successfully loaded {filename}")
@@ -124,7 +126,7 @@ def loadcogs():
 
 def unloadcogs():
     for filename in os.listdir("cogs"):
-        if filename.endswith(".py") and not filename.startswith("_"):
+        if filename.endswith(".py") and not filename.startswith("_") and filename not in ignorefile:
             try:
                 bot.unload_extension(f"cogs.{filename[:-3]}")
                 print(f"Successfully unloaded {filename}")

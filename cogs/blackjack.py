@@ -60,7 +60,7 @@ class Blackjack(commands.Cog):
         
         # Initialize variables
         while True:
-            player_hand = random.sample(card_list, 1)
+            player_hand = random.sample(card_list, 2)
             dealer_hand = random.sample(card_list, 2)
             
             player_score = await get_score(player_hand)
@@ -157,25 +157,6 @@ class Blackjack(commands.Cog):
                     value=f"{dealer_hand_text}\n\n Value: {await get_score(dealer_hand)}",
                 )
             return embed
-        elif state == 3 :
-            embed.add_field(name="Game end!", value="Draw!", inline=False)
-            embed.add_field(
-                name="Your hand",
-                value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
-            )
-
-        
-            if first_turn:
-                embed.add_field(
-                    name="Dealer's hand",
-                    value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
-                )
-            else:
-                embed.add_field(
-                    name="Dealer's hand",
-                    value=f"{dealer_hand_text}\n\n Value: {await get_score(dealer_hand)}",
-                )
-            return embed
     
     @blackjack.command()
     async def stop(self, ctx):
@@ -212,11 +193,11 @@ class Blackjack(commands.Cog):
                 )
 
                 
-                #Check player win lose or draw in this turn
+                #Check player win lose this turn
                 #update message
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
-                win,lose,draw = await Blackjack.check_win_lose_draw(self,player_score,dealer_score)
+                win, lose = await Blackjack.check_win_lose_draw(self,player_score, dealer_score)
                 if win:
                     data = await settings.collection.find_one({"guild_id": interaction.guild.id})
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
@@ -235,60 +216,17 @@ class Blackjack(commands.Cog):
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                     current = user["wallet"]
                     currency = data["currency"]
-                    infotext = f"You got {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
+                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
                     
                     # updata user wallet
                     await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - (game['amount']*2)}})
                     
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
-                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                elif draw:
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=3)
+                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
                     await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
                 else:
-                    
-                    #if player not lose then call computer turn and check win lose draw again
-
-                    # call computer dealer playing function
-                    await Blackjack.computer_dealer_playing(self,game)
-                    player_score = await get_score(game["player_hand"])
-                    dealer_score = await get_score(game["dealer_hand"])
-                    win,lose,draw = await Blackjack.check_win_lose_draw(self,player_score,dealer_score)
-                    if win:
-                        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
-                        user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
-                        current = user["wallet"]
-                        currency = data["currency"]
-                        infotext = f"You got {game['amount']*2}{currency} Current {current + game['amount']*2:,}{currency}"
-                        
-                        # updata user wallet
-                        await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current + game['amount']*2}})
-                        
-                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
-                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                    elif lose:
-                        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
-                        user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
-                        current = user["wallet"]
-                        currency = data["currency"]
-                        infotext = f"You got {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
-                        
-                        # updata user wallet
-                        await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']*2}})
-                        
-                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
-                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                    elif draw:
-                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=3)
-                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                    else:
-                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"])
-                        await Blackjack.update_message(self, embed, interaction)
+                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"])
+                    await Blackjack.update_message(self, embed, interaction)
                     
 
         elif button.custom_id == "stand":
@@ -303,7 +241,8 @@ class Blackjack(commands.Cog):
                 #update message
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
-                win,lose,draw = await Blackjack.check_win_lose_draw(self,player_score,dealer_score)
+                win,lose = await Blackjack.check_win_lose_draw(self, player_score, dealer_score)
+                
                 if win:
                     data = await settings.collection.find_one({"guild_id": interaction.guild.id})
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
@@ -317,21 +256,18 @@ class Blackjack(commands.Cog):
                     embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
                     await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
+                
                 elif lose:
                     data = await settings.collection.find_one({"guild_id": interaction.guild.id})
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                     current = user["wallet"]
                     currency = data["currency"]
-                    infotext = f"You got {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
+                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
                     
                     # updata user wallet
                     await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']*2}})
                     
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
-                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                elif draw:
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=3)
+                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
                     await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
                 else:
@@ -339,32 +275,28 @@ class Blackjack(commands.Cog):
                     await Blackjack.update_message(self, embed, interaction)
 
 
-    async def check_win_lose_draw(self,player_score, dealer_score):
-        #check draw
-        if player_score == 21 and dealer_score == 21:
-            return False,False,True #win,lose,draw
-        #check lose
-        elif player_score >= 21:
-            return False,True,False #win,lose,draw
+    #Check win lose in player turn
+    async def check_win_lose_draw(self, player_score, dealer_score):
         #check win
-        elif dealer_score >= 21 or player_score == 21:
-            return True,False,False #win,lose,draw
+        if (player_score == 21 or dealer_score < player_score or dealer_score > 21) and not(player_score > 21):
+            return True, False
         
-        return False,False,False
+        #check lose:
+        if (dealer_score > player_score or player_score > 21 or dealer_score == 21) and not (dealer_score > 21):
+            return False, True
+        
+        return False, False
+        
 
 
     async def computer_dealer_playing(self, game):
-        action = random.randint(0, 1)
-
-        # If the dealer has a score of 17 or less, he will hit
-        if action == 0:
+        dealer_score = await get_score(game["dealer_hand"])
+        if dealer_score < 17:
             newcard = random.sample(card_list, 1)
-            game["dealer_hand"].append(newcard[0])
+            game['dealer_hand'].append(newcard[0])
             await settings.collectionblackjack.update_one(
-                {"player_id": game["player_id"]}, {"$set": game}
+                {"player_id": game['player_id']}, {"$set": game}
             )
-        
-        # If action = 0 then do nothing
         else:
             pass
 
