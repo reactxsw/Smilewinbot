@@ -239,35 +239,47 @@ class Blackjack(commands.Cog):
                 #update message
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
-                win,lose = await Blackjack.check_win_lose_draw(self, player_score, dealer_score)
+                status,state = await Blackjack.check_win_lose_draw(self, player_score, dealer_score)
                 
-                if win:
-                    data = await settings.collection.find_one({"guild_id": interaction.guild.id})
-                    user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
-                    current = user["wallet"]
-                    currency = data["currency"]
-                    infotext = f"You got {game['amount']*2}{currency} Current {current + game['amount']*2:,}{currency}"
+                if status == "End":
+                    if state == "Win":
+                        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
+                        user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
+                        current = user["wallet"]
+                        currency = data["currency"]
+                        infotext = f"You got {game['amount']*2}{currency} Current {current + game['amount']*2:,}{currency}"
+                        
+                        # updata user wallet
+                        await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current + game['amount']*2}})
+                        
+                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
+                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
+                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
                     
-                    # updata user wallet
-                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current + game['amount']*2}})
-                    
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=1, infotext=infotext)
-                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
-                
-                elif lose:
-                    data = await settings.collection.find_one({"guild_id": interaction.guild.id})
-                    user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
-                    current = user["wallet"]
-                    currency = data["currency"]
-                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']:,}{currency}"
-                    
-                    # updata user wallet
-                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']}})
-                    
-                    embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
-                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
-                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
+                    elif state == "Lose":
+                        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
+                        user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
+                        current = user["wallet"]
+                        currency = data["currency"]
+                        infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']:,}{currency}"
+                        
+                        # updata user wallet
+                        await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']}})
+                        
+                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
+                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
+                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
+
+                    elif state == "Draw":
+                        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
+                        user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
+                        current = user["wallet"]
+                        currency = data["currency"]
+                        infotext = f"คงเหลือ {current - game['amount']:,}{currency} เท่าเดิม"
+                        
+                        embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=3, infotext=infotext)
+                        await Blackjack.update_message(self, embed, interaction, remove_view=True)
+                        await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "game": "blackjack"})
                 else:
                     embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"])
                     await Blackjack.update_message(self, embed, interaction)
@@ -277,13 +289,18 @@ class Blackjack(commands.Cog):
     async def check_win_lose_draw(self, player_score, dealer_score):
         #check win
         if (player_score == 21 or dealer_score < player_score or dealer_score > 21) and not(player_score > 21):
-            return True, False
+            return "End", "Win"
         
         #check lose:
         if (dealer_score > player_score or player_score > 21 or dealer_score == 21) and not (dealer_score > 21):
-            return False, True
+            return "End", "Lose"
         
-        return False, False
+        #check draw
+        if dealer_score == player_score and dealer_score < 21 and player_score < 21:
+            return "End", "Draw"
+        
+        
+        return "Continue", False
         
 
 
