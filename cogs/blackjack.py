@@ -216,10 +216,10 @@ class Blackjack(commands.Cog):
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                     current = user["wallet"]
                     currency = data["currency"]
-                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
+                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']:,}{currency}"
                     
                     # updata user wallet
-                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - (game['amount']*2)}})
+                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - (game['amount'])}})
                     
                     embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
@@ -262,10 +262,10 @@ class Blackjack(commands.Cog):
                     user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                     current = user["wallet"]
                     currency = data["currency"]
-                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']*2:,}{currency}"
+                    infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']:,}{currency}"
                     
                     # updata user wallet
-                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']*2}})
+                    await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']}})
                     
                     embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=2, infotext=infotext)
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
@@ -294,11 +294,6 @@ class Blackjack(commands.Cog):
         if dealer_score < 17:
             newcard = random.sample(card_list, 1)
             game['dealer_hand'].append(newcard[0])
-            await settings.collectionblackjack.update_one(
-                {"player_id": game['player_id']}, {"$set": game}
-            )
-        else:
-            pass
 
     async def update_message(self, embed, interaction, remove_view=False):
         if remove_view:
