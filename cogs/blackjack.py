@@ -292,8 +292,18 @@ class Blackjack(commands.Cog):
     async def computer_dealer_playing(self, game):
         dealer_score = await get_score(game["dealer_hand"])
         if dealer_score < 17:
-            newcard = random.sample(card_list, 1)
-            game['dealer_hand'].append(newcard[0])
+            while True:
+                newcard = random.sample(card_list, 1)
+                newscore = await get_score(game["dealer_hand"] + newcard)
+                if newscore > 21:
+                    chance = random.randint(0,10)
+                    if chance > 6:
+                        game['dealer_hand'].append(newcard[0])
+                        break
+                else:
+                    game['dealer_hand'].append(newcard[0])
+                    break
+                    
             await settings.collectionblackjack.update_one(
                 {"player_id": game['player_id']}, {"$set": game}
             )
