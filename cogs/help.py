@@ -117,6 +117,8 @@ class Help(commands.Cog):
 ``{settings.COMMAND_PREFIX}introduce on/off`` เปิดปิดระบบเเนะนําตัว
 ``{settings.COMMAND_PREFIX}setframe [frame]`` ตั้งค่ากรอบเเนะนําตัว
 ``{settings.COMMAND_PREFIX}setverify [#text-channel]`` ตั้งค่าห้องยืนยันตัวตน ``!r vfy``
+``{settings.COMMAND_PREFIX}verification on/off`` ตั้งค่าเปิด/ปิดระบบยืนยันตัวตน
+``{settings.COMMAND_PREFIX}verification on/off`` ตั้งค่าเปิด/ปิดระบบยืนยันตัวตน
 """,
                     color=0xFED000,
                 )

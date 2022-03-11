@@ -621,7 +621,7 @@ class SetVerify(commands.Cog):
                     await message.add_reaction("⚠️")
 
     @commands.command()
-    async def verifytime(self, ctx: commands.Context, time: int):
+    async def setverifytime(self, ctx: commands.Context, time: int):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

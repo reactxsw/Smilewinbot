@@ -1,5 +1,3 @@
-from ast import alias
-from aiohttp.helpers import ProxyInfo
 import nextcord
 from nextcord.ext import commands
 import aiohttp

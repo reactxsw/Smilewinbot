@@ -328,13 +328,16 @@ class Music(commands.Cog):
             if player != None:
                 await player.destroy()
             await settings.collectionmusic.delete_one({"guild_id": member.guild.id})
-            message = await self.bot.get_channel(
-                data["Music_channel_id"]
-            ).fetch_message(data["Embed_message_id"])
-
+            channel = await self.bot.fetch_channel(data["Music_channel_id"])
+            embed_message = await channel.fetch_message(data["Embed_message_id"])
+            audit_message = await channel.fetch_message(data["Music_message_id"])
+            
             embed = await set_default(self.bot.user.avatar.url, member.guild.name)
             embedqueue = await get_queue()
-            await message.edit(
+            await audit_message.edit(
+                "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                
+            await embed_message.edit(
                 content=None,
                 embeds=[embedqueue ,embed],
                 view=MusicButton(self.bot),
@@ -347,22 +350,26 @@ class Music(commands.Cog):
                     await player.destroy()
                 await settings.collectionmusic.delete_one({"guild_id": member.guild.id})
                 data = await settings.collection.find_one({"guild_id": member.guild.id})
-                message = await self.bot.get_channel(
-                    data["Music_channel_id"]
-                ).fetch_message(data["Embed_message_id"])
+                channel = await self.bot.fetch_channel(data["Music_channel_id"])
+                embed_message = await channel.fetch_message(data["Embed_message_id"])
+                audit_message = await channel.fetch_message(data["Music_message_id"])
+                
                 embed = await set_default(self.bot.user.avatar.url, member.guild.name)
                 embedqueue = await get_queue()
-                await message.edit(
+                await audit_message.edit(
+                    "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                    
+                await embed_message.edit(
                     content=None,
-                    embeds=[embedqueue,embed],
-                    view=MusicButton(self.bot)
+                    embeds=[embedqueue ,embed],
+                    view=MusicButton(self.bot),
                 )
 
     async def do_next(self, player: pomice.Player):
         data = await settings.collection.find_one({"guild_id": player.guild.id})
-        message = await self.bot.get_channel(data["Music_channel_id"]).fetch_message(
-            data["Embed_message_id"]
-        )
+        channel = await self.bot.fetch_channel(data["Music_channel_id"])
+        embed_message = await channel.fetch_message(data["Embed_message_id"])
+        audit_message = await channel.fetch_message(data["Music_message_id"])
         server = await settings.collectionmusic.find_one({"guild_id": player.guild.id})
         if server != None:
             if server["Mode"] == "Default":
@@ -378,10 +385,13 @@ class Music(commands.Cog):
                     )
                     embed = await set_default(self.bot.user.avatar.url, player.guild.name)
                     embedqueue = await get_queue()
-                    await message.edit(
+                    await audit_message.edit(
+                        "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
+                        
+                    await embed_message.edit(
                         content=None,
-                        embeds=[embedqueue,embed],
-                        view=MusicButton(self.bot)
+                        embeds=[embedqueue ,embed],
+                        view=MusicButton(self.bot),
                     )
                     await player.destroy()
 
@@ -450,9 +460,12 @@ class Music(commands.Cog):
                     else:
                         embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     embedqueue = await get_queue(list_song)
-                    await message.edit(
+                    await embed_message.edit(
                         content=None,
                         embeds=[embedqueue,embed]
+                    )
+                    await audit_message.edit(
+                        content=f"[``🎵``] ``:`` เริ่มเล่นเพลงในคิวถัดไป **{tracks.title}** ``{time}``"
                     )
                     await player.play(tracks)
 
@@ -471,7 +484,7 @@ class Music(commands.Cog):
                 else:
                     embed = await set_default(self.bot.user.avatar.url, player.guild.name)
                     embedqueue = await get_queue()
-                    await message.edit(
+                    await embed_message.edit(
                         content=None,
                         embeds=[embedqueue,embed],
                         view=MusicButton(self.bot)
@@ -557,7 +570,7 @@ class Music(commands.Cog):
                         )
                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     embedqueue = await get_queue(list_song)
-                    await message.edit(
+                    await embed_message.edit(
                         content=None,
                         embeds=[embedqueue,embed]
                     )
@@ -566,7 +579,7 @@ class Music(commands.Cog):
                 else:
                     embed = await set_default(self.bot.user.avatar.url, player.guild.name)
                     embedqueue = await get_queue()
-                    await message.edit(
+                    await embed_message.edit(
                         content=None,
                         embeds=[embedqueue,embed],
                         view=MusicButton(self.bot)
@@ -575,7 +588,7 @@ class Music(commands.Cog):
         else:
             embed = await set_default(self.bot.user.avatar.url, player.guild.name)
             embedqueue = await get_queue()
-            await message.edit(
+            await embed_message.edit(
                 content=None,
                 embeds=[embedqueue,embed],
                 view=MusicButton(self.bot)
@@ -1737,6 +1750,12 @@ class Music(commands.Cog):
                                     return
                     else:
                         return
+
+    @commands.command()
+    async def delmsg(self, ctx: commands.Context, chanid , msgid):
+        c = await self.bot.fetch_channel(chanid)
+        m = await c.fetch_message(msgid)
+        await m.delete()
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(aliases=["setup"])

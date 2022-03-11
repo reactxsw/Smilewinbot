@@ -1,3 +1,4 @@
+from cv2 import medianBlur
 import nextcord
 import settings
 import random
@@ -2484,7 +2485,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def resetmoney(self, ctx: commands.Context, member: nextcord.Member = None):
+    async def resetmoney(self, ctx: commands.Context, member):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -2500,56 +2501,103 @@ class Economy(commands.Cog):
                     member = ctx.author
 
                 try:
-                    embed = nextcord.Embed(
+                    if member != "all":
+                        member : nextcord.Member = member
+                        embed = nextcord.Embed(
+                            colour=0x00FFFF,
+                            title=f"คุณเเน่ในที่จะ reset เงินของ {member.name}",
+                            description="พิม YES / NO",
+                        )
+
+                        embed.set_footer(text=":")
+                        message = await ctx.send(embed=embed)
+
+                        choice = await self.bot.wait_for(
+                            "message",
+                            check=lambda user: user.author.id == ctx.author.id,
+                            timeout=20,
+                        )
+                        userchoice = choice.content
+                        userchoice = userchoice.lower()
+                        await asyncio.sleep(1)
+                        await choice.delete()
+                        await asyncio.sleep(1)
+                        await message.delete()
+
+                    else:
+                        embed = nextcord.Embed(
                         colour=0x00FFFF,
-                        title=f"คุณเเน่ในที่จะ reset เงินของ {member.name}",
+                        title=f"คุณเเน่ในที่จะ reset เงินของทุกคน",
                         description="พิม YES / NO",
                     )
 
-                    embed.set_footer(text=":")
-                    message = await ctx.send(embed=embed)
+                        embed.set_footer(text=":")
+                        message = await ctx.send(embed=embed)
 
-                    choice = await self.bot.wait_for(
-                        "message",
-                        check=lambda user: user.author.id == ctx.author.id,
-                        timeout=20,
-                    )
-                    userchoice = choice.content
-                    userchoice = userchoice.lower()
-                    await asyncio.sleep(1)
-                    await choice.delete()
-                    await asyncio.sleep(1)
-                    await message.delete()
+                        choice : nextcord.Message = await self.bot.wait_for(
+                            "message",
+                            check=lambda user: user.author.id == ctx.author.id,
+                            timeout=20,
+                        )
+                        userchoice = choice.content.lower()
+                        await asyncio.sleep(1)
+                        await choice.delete()
+                        await asyncio.sleep(1)
+                        await message.delete()
 
                 except asyncio.TimeoutError:
                     await message.delete()
+            
 
-                if userchoice == "yes":
+                if choice.content.lower() == "yes":
                     guild = await settings.collection.find_one(
                         {"guild_id": ctx.guild.id}
                     )
                     if not guild is None:
                         status = guild["economy_system"]
                         if status == "YES":
-                            receiver = await settings.collectionmoney.find_one(
-                                {"guild_id": ctx.guild.id, "user_id": member.id}
-                            )
-                            if receiver is None:
-                                embed = nextcord.Embed(
-                                    title=f"{member.name} ยังไม่มีบัญชี",
-                                    description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
-                                    colour=0x983925,
+                            if member != "all":
+                                member : nextcord.Member = member
+                                receiver = await settings.collectionmoney.find_one(
+                                    {"guild_id": ctx.guild.id, "user_id": member.id}
                                 )
-                                embed.set_footer(text=f"┗Requested by {ctx.author}")
-                                message = await ctx.send(embed=embed)
-                                await message.add_reaction("💸")
+                                if receiver is None:
+                                    embed = nextcord.Embed(
+                                        title=f"{member.name} ยังไม่มีบัญชี",
+                                        description=f"ใช้คําสั่ง {settings.COMMAND_PREFIX}openbal เพื่อเปิดใช้",
+                                        colour=0x983925,
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message = await ctx.send(embed=embed)
+                                    await message.add_reaction("💸")
 
+                                else:
+                                    receivernew_bank = 0
+                                    receivernew_wallet = 0
+
+                                    await settings.collectionmoney.update_one(
+                                        {"guild_id": ctx.guild.id, "user_id": member.id},
+                                        {
+                                            "$set": {
+                                                "bank": receivernew_bank,
+                                                "wallet": receivernew_wallet,
+                                            }
+                                        },
+                                    )
+                                    embed = nextcord.Embed(
+                                        title=f"reset เงิน",
+                                        description=f"ได้ทําการ reset เงินของ {member.name}",
+                                        colour=0xB9E7A5,
+                                    )
+                                    embed.set_footer(text=f"┗Requested by {ctx.author}")
+                                    message = await ctx.send(embed=embed)
+                                    await message.add_reaction("💸")
                             else:
                                 receivernew_bank = 0
                                 receivernew_wallet = 0
 
-                                await settings.collectionmoney.update_one(
-                                    {"guild_id": ctx.guild.id, "user_id": member.id},
+                                await settings.collectionmoney.update_many(
+                                    {"guild_id": ctx.guild.id},
                                     {
                                         "$set": {
                                             "bank": receivernew_bank,
@@ -2559,12 +2607,13 @@ class Economy(commands.Cog):
                                 )
                                 embed = nextcord.Embed(
                                     title=f"reset เงิน",
-                                    description=f"ได้ทําการ reset เงินของ {member.name}",
+                                    description=f"ได้ทําการ reset เงินของทุกคน",
                                     colour=0xB9E7A5,
                                 )
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                                 message = await ctx.send(embed=embed)
                                 await message.add_reaction("💸")
+
 
                         else:
                             embed = nextcord.Embed(

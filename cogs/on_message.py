@@ -48,6 +48,8 @@ class on_message_event(commands.Cog):
                             await message.delete()
 
                         else:
+                            await asyncio.sleep(1)
+                            await message.delete()
                             embed = nextcord.Embed(
                                 title="คุณจะต้องอยู่ในห้องเดียวกับบอทถึงจะสามรถสั่งเพลงได้",
                                 description=f"{message.author.mention} บอทเล่นเพลงอยู่ที่ {bot_voice_client.channel.mention}",

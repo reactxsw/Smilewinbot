@@ -340,14 +340,10 @@ class Blackjack(commands.Cog):
 
 
     async def check_win_lose_draw(self,player_score, dealer_score):
-        #check draw
-        if player_score == 21 and dealer_score == 21:
-            return False,False,True #win,lose,draw
-        #check lose
-        elif player_score >= 21:
+        if player_score > 21 and dealer_score <= 21:
             return False,True,False #win,lose,draw
         #check win
-        elif dealer_score >= 21 or player_score == 21:
+        elif player_score = 21 or player_score == 21:
             return True,False,False #win,lose,draw
         
         return False,False,False

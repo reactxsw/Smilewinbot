@@ -1,4 +1,5 @@
 from multiprocessing import Event
+from discord import Invite
 import nextcord
 import datetime
 from nextcord import user
@@ -361,7 +362,7 @@ class Events(commands.Cog):
                 await entry.user.send(embed=uembed)
 
         except nextcord.Forbidden:
-            pass
+            inviter = "UNKNOWN"
 
         channel = self.bot.get_channel(int(settings.logchannel))
         embed = nextcord.Embed(
