@@ -13,6 +13,7 @@ class on_message_event(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: nextcord.Message):
+        await check_scam_link(message)
         await self.bot.wait_until_ready()
         if message.guild:
             data = await settings.collection.find_one({"guild_id": message.guild.id})
@@ -57,11 +58,7 @@ class on_message_event(commands.Cog):
                             )
                             await message.channel.send(embed=embed, delete_after=5)
 
-                if message.content.startswith("!r"):
-                    return
-
-                else:
-                    await check_scam_link(message)
+                if not message.content.startswith("!r"):
                     if not message.author.bot:
                         guild_id = message.guild.id
                         user_id = message.author.id
