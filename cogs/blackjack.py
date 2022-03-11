@@ -215,6 +215,7 @@ class Blackjack(commands.Cog):
                 #update message
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
+                status, state = await Blackjack.check_win_lose_draw(player_score, dealer_score)
                 if status == "End":
                     if state == "Win":
                         data = await settings.collection.find_one({"guild_id": interaction.guild.id})
