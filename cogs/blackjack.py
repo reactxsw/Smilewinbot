@@ -14,14 +14,14 @@ class Blackjack(commands.Cog):
     async def blackjack(self, ctx: commands.Context, amount = None):
         
         if amount is None:
-            await ctx.send(f"Please specify an amount of money to bet | `{settings.COMMAND_PREFIX}blackjack <amount>`")
-            return
+            embed = nextcord.Embed(title="Error", description=f"โปรดใส่จำนวนเงินที่จะเดิมพัน | `{settings.COMMAND_PREFIX}blackjack <amount>`", color=0xFED000)
+            return await ctx.send(embed=embed, delete_after=5)
 
         try:
             amount = int(amount)
         except ValueError:
-            await ctx.send(f"Amount must be a integer.")
-            return
+            embed = nextcord.Embed(title="Error", description="จำนวนเงินต้องเป็นจำนวนเต็มเท่านั้น", color=0xFED000)
+            return await ctx.send(embed=embed, delete_after=5)
             
         
         # Check status of economy system
@@ -44,16 +44,16 @@ class Blackjack(commands.Cog):
                     currency = guild["currency"]
                     
                     if current <= amount:
-                        await ctx.send("You don't have enough money.")
-                        return
+                        embed = nextcord.Embed(title="Error", description="จำนวนเงินของคุณไม่พอ", color=0xFED000)
+                        return await ctx.send(embed=embed, delete_after=5)
                 
                 
         # Check if the user already has a game
         game = await settings.collectionblackjack.find_one({"player_id": ctx.author.id, "game": "blackjack"})
         
         if game is not None:
-            await ctx.send(f"You already have a game running! | Use {settings.COMMAND_PREFIX}blackjack stop")
-            return
+            embed = nextcord.Embed(title="Error", description=f"คุณได้เริ่มเกมไปแล้ว | หากต้องการหยุดเกมที่เล่นอยู่โปรดใช้ {settings.COMMAND_PREFIX}blackjack stop", color=0xFED000)
+            return await ctx.send(embed=embed, delete_after=5)
         
         
         # Initialize variables
@@ -118,7 +118,7 @@ class Blackjack(commands.Cog):
                 )
             return embed
         elif state == 1 :
-            embed.add_field(name="Game end!", value=f"You won! | {infotext}", inline=False)
+            embed.add_field(name="Game end!", value=f"คุณชนะ! | {infotext}", inline=False)
             embed.add_field(
                 name="Your hand",
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
@@ -137,7 +137,7 @@ class Blackjack(commands.Cog):
                 )
             return embed
         elif state == 2 :
-            embed.add_field(name="Game end!", value=f"You lose! | {infotext}", inline=False)
+            embed.add_field(name="Game end!", value=f"คุณแพ้! | {infotext}", inline=False)
             embed.add_field(
                 name="Your hand",
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
@@ -155,6 +155,26 @@ class Blackjack(commands.Cog):
                     value=f"{dealer_hand_text}\n\n Value: {await get_score(dealer_hand)}",
                 )
             return embed
+        elif state == 3 :
+            embed.add_field(name="Game end!", value=f"เสมอ! | {infotext}", inline=False)
+            embed.add_field(
+                name="Your hand",
+                value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
+            )
+
+        
+            if first_turn:
+                embed.add_field(
+                    name="Dealer's hand",
+                    value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
+                )
+            else:
+                embed.add_field(
+                    name="Dealer's hand",
+                    value=f"{dealer_hand_text}\n\n Value: {await get_score(dealer_hand)}",
+                )
+            return embed
+
     
     @blackjack.command()
     async def stop(self, ctx):
@@ -165,8 +185,8 @@ class Blackjack(commands.Cog):
             await settings.collectionblackjack.delete_one({"player_id": ctx.author.id, "game": "blackjack"})
             await ctx.send(f"Game has stopped!")
         else: 
-            await ctx.send(f"You don't have a game running!")
-            return
+            return await ctx.send(f"You don't have a game running!")
+    
     
     @blackjack.command()
     async def help(self, ctx):
@@ -247,7 +267,7 @@ class Blackjack(commands.Cog):
                         user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"You got {game['amount']*2}{currency} Current {current + game['amount']*2:,}{currency}"
+                        infotext = f"คุณได้รับ {game['amount']*2}{currency} คงเหลือ {current + game['amount']*2:,}{currency}"
                         
                         # updata user wallet
                         await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current + game['amount']*2}})
@@ -261,7 +281,7 @@ class Blackjack(commands.Cog):
                         user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"You lost {game['amount']*2}{currency} Current {current - game['amount']:,}{currency}"
+                        infotext = f"คุณเสีย {game['amount']*2}{currency} คงเหลือ {current - game['amount']:,}{currency}"
                         
                         # updata user wallet
                         await settings.collectionmoney.update_one({"guild_id": interaction.guild.id ,"user_id": interaction.user.id}, {"$set": {"wallet": current - game['amount']}})
@@ -275,7 +295,7 @@ class Blackjack(commands.Cog):
                         user = await settings.collectionmoney.find_one({"user_id": interaction.user.id})
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"คงเหลือ {current - game['amount']:,}{currency} เท่าเดิม"
+                        infotext = f"คงเหลือ {current:,}{currency} เท่าเดิม"
                         
                         embed = await Blackjack.embed_generator(self,game["player_hand"], game["dealer_hand"], state=3, infotext=infotext)
                         await Blackjack.update_message(self, embed, interaction, remove_view=True)
