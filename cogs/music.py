@@ -4,7 +4,8 @@ from nextcord.ext import commands
 import nextcord
 from utils.languageembed import languageEmbed
 
-async def set_default(avatar , guild):
+
+async def set_default(avatar, guild):
     embed = nextcord.Embed(
         description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
         colour=0xFFFF00,
@@ -13,21 +14,18 @@ async def set_default(avatar , guild):
         name="❌ ไม่มีเพลงที่เล่นอยู่ ณ ตอนนี้",
         icon_url=avatar,
     )
-    embed.set_image(
-        url="https://smilewinbot.web.app/assets/image/host/standard.gif"
-    )
+    embed.set_image(url="https://smilewinbot.web.app/assets/image/host/standard.gif")
     embed.set_footer(text=f"server : {guild}")
     return embed
 
-async def get_queue(queue = None):
+
+async def get_queue(queue=None):
     embedqueue = nextcord.Embed(
-        description ="ไม่มีเพลงในคิว" if queue is None else queue,
-        color=0x1a1a1a
+        description="ไม่มีเพลงในคิว" if queue is None else queue, color=0x1A1A1A
     )
-    embedqueue.set_author(
-        name="รายการเพลง:🎵"
-    )
+    embedqueue.set_author(name="รายการเพลง:🎵")
     return embedqueue
+
 
 async def time_format(seconds: int):
     if seconds is not None:
@@ -44,6 +42,7 @@ async def time_format(seconds: int):
 
         else:
             return "[0:00]"
+
 
 class MusicFilters(nextcord.ui.Select):
     def __init__(self, bot: commands.AutoShardedBot):
@@ -129,6 +128,7 @@ class MusicFilters(nextcord.ui.Select):
     async def callback(self, interaction: nextcord.Interaction):
         await Music.handle_dropdown(self, interaction, self.values[0])
 
+
 class MusicButton(nextcord.ui.View):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
@@ -202,7 +202,7 @@ class MusicButton(nextcord.ui.View):
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
         await Music.handle_click(self, button, interaction)
-    
+
     @nextcord.ui.button(
         label=" ⏩ ",
         style=nextcord.ButtonStyle.primary,
@@ -318,7 +318,12 @@ class Music(commands.Cog):
         await Music.do_next(self, player)
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member: nextcord.Member, before, after):
+    async def on_voice_state_update(
+        self,
+        member: nextcord.Member,
+        before: nextcord.VoiceState,
+        after: nextcord.VoiceState,
+    ):
         if (
             member.guild.voice_client != None
             and len(member.guild.voice_client.channel.members) == 1
@@ -331,15 +336,16 @@ class Music(commands.Cog):
             channel = await self.bot.fetch_channel(data["Music_channel_id"])
             embed_message = await channel.fetch_message(data["Embed_message_id"])
             audit_message = await channel.fetch_message(data["Music_message_id"])
-            
+
             embed = await set_default(self.bot.user.avatar.url, member.guild.name)
             embedqueue = await get_queue()
             await audit_message.edit(
-                "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                
+                "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
+            )
+
             await embed_message.edit(
                 content=None,
-                embeds=[embedqueue ,embed],
+                embeds=[embedqueue, embed],
                 view=MusicButton(self.bot),
             )
 
@@ -353,15 +359,16 @@ class Music(commands.Cog):
                 channel = await self.bot.fetch_channel(data["Music_channel_id"])
                 embed_message = await channel.fetch_message(data["Embed_message_id"])
                 audit_message = await channel.fetch_message(data["Music_message_id"])
-                
+
                 embed = await set_default(self.bot.user.avatar.url, member.guild.name)
                 embedqueue = await get_queue()
                 await audit_message.edit(
-                    "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                    
+                    "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
+                )
+
                 await embed_message.edit(
                     content=None,
-                    embeds=[embedqueue ,embed],
+                    embeds=[embedqueue, embed],
                     view=MusicButton(self.bot),
                 )
 
@@ -383,14 +390,17 @@ class Music(commands.Cog):
                     await settings.collectionmusic.delete_one(
                         {"guild_id": player.guild.id}
                     )
-                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embed = await set_default(
+                        self.bot.user.avatar.url, player.guild.name
+                    )
                     embedqueue = await get_queue()
                     await audit_message.edit(
-                        "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง")
-                        
+                        "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
+                    )
+
                     await embed_message.edit(
                         content=None,
-                        embeds=[embedqueue ,embed],
+                        embeds=[embedqueue, embed],
                         view=MusicButton(self.bot),
                     )
                     await player.destroy()
@@ -460,10 +470,7 @@ class Music(commands.Cog):
                     else:
                         embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     embedqueue = await get_queue(list_song)
-                    await embed_message.edit(
-                        content=None,
-                        embeds=[embedqueue,embed]
-                    )
+                    await embed_message.edit(content=None, embeds=[embedqueue, embed])
                     await audit_message.edit(
                         content=f"[``🎵``] ``:`` เริ่มเล่นเพลงในคิวถัดไป **{tracks.title}** ``{time}``"
                     )
@@ -482,12 +489,14 @@ class Music(commands.Cog):
                     await player.play(tracks)
 
                 else:
-                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embed = await set_default(
+                        self.bot.user.avatar.url, player.guild.name
+                    )
                     embedqueue = await get_queue()
                     await embed_message.edit(
                         content=None,
-                        embeds=[embedqueue,embed],
-                        view=MusicButton(self.bot)
+                        embeds=[embedqueue, embed],
+                        view=MusicButton(self.bot),
                     )
 
             else:
@@ -570,28 +579,25 @@ class Music(commands.Cog):
                         )
                     embed.set_footer(text=f"next up : {nu} | เพลงในคิว : {queue}")
                     embedqueue = await get_queue(list_song)
-                    await embed_message.edit(
-                        content=None,
-                        embeds=[embedqueue,embed]
-                    )
+                    await embed_message.edit(content=None, embeds=[embedqueue, embed])
                     await player.play(tracks)
 
                 else:
-                    embed = await set_default(self.bot.user.avatar.url, player.guild.name)
+                    embed = await set_default(
+                        self.bot.user.avatar.url, player.guild.name
+                    )
                     embedqueue = await get_queue()
                     await embed_message.edit(
                         content=None,
-                        embeds=[embedqueue,embed],
-                        view=MusicButton(self.bot)
+                        embeds=[embedqueue, embed],
+                        view=MusicButton(self.bot),
                     )
 
         else:
             embed = await set_default(self.bot.user.avatar.url, player.guild.name)
             embedqueue = await get_queue()
             await embed_message.edit(
-                content=None,
-                embeds=[embedqueue,embed],
-                view=MusicButton(self.bot)
+                content=None, embeds=[embedqueue, embed], view=MusicButton(self.bot)
             )
 
     @commands.command(aliases=["joi", "j", "summon", "su", "con"])
@@ -619,7 +625,7 @@ class Music(commands.Cog):
 
         await player.destroy()
         await ctx.send("Player has left the channel.")
-                    
+
     async def handle_dropdown(self, interaction: nextcord.Interaction, value: str):
         data = await settings.collectionmusic.find_one(
             {"guild_id": interaction.guild.id}
@@ -947,10 +953,7 @@ class Music(commands.Cog):
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
                             embedqueue = await get_queue(list_song)
-                            await message.edit(
-                                content=None,
-                                embeds=[embedqueue,embed]
-                            )
+                            await message.edit(content=None, embeds=[embedqueue, embed])
 
                         else:
                             embed = nextcord.Embed(
@@ -1026,10 +1029,7 @@ class Music(commands.Cog):
                                 server["Music_channel_id"]
                             ).fetch_message(server["Embed_message_id"])
                             embedqueue = await get_queue(list_song)
-                            await message.edit(
-                                content=None,
-                                embeds=[embedqueue,embed]
-                            )
+                            await message.edit(content=None, embeds=[embedqueue, embed])
 
                         else:
                             embed = nextcord.Embed(
@@ -1125,8 +1125,7 @@ class Music(commands.Cog):
                                 ).fetch_message(server["Embed_message_id"])
                                 embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=None,
-                                    embeds=[embedqueue,embed]
+                                    content=None, embeds=[embedqueue, embed]
                                 )
 
                             elif data["Mode"] == "Repeat":
@@ -1198,8 +1197,7 @@ class Music(commands.Cog):
                                 ).fetch_message(server["Embed_message_id"])
                                 embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=None,
-                                    embeds=[embedqueue,embed]
+                                    content=None, embeds=[embedqueue, embed]
                                 )
 
                     elif button.custom_id == "loop_playlist":
@@ -1273,8 +1271,7 @@ class Music(commands.Cog):
                                 ).fetch_message(server["Embed_message_id"])
                                 embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=None,
-                                    embeds=[embedqueue,embed]
+                                    content=None, embeds=[embedqueue, embed]
                                 )
 
                             elif data["Mode"] == "Loop":
@@ -1346,8 +1343,7 @@ class Music(commands.Cog):
                                 ).fetch_message(server["Embed_message_id"])
                                 embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=None,
-                                    embeds=[embedqueue,embed]
+                                    content=None, embeds=[embedqueue, embed]
                                 )
 
                     elif button.custom_id == "reset_song":
@@ -1355,7 +1351,7 @@ class Music(commands.Cog):
 
                     elif button.custom_id == "forward_10":
                         await player.seek(player.position + 10000)
-                        
+
                     elif button.custom_id == "backward_10":
                         await player.seek(player.position - 10000)
 
@@ -1386,13 +1382,15 @@ class Music(commands.Cog):
                         if player is None:
                             await ctx.invoke(self.join)
                             player: pomice.Player = ctx.voice_client
-                        
+
                         try:
                             results = await player.get_tracks(search, ctx=ctx)
                         except pomice.exceptions.TrackLoadError:
                             if "&list" in search:
-                                results = await player.get_tracks(search.split("&list")[0], ctx=ctx)
-                            
+                                results = await player.get_tracks(
+                                    search.split("&list")[0], ctx=ctx
+                                )
+
                             else:
                                 results = None
 
@@ -1485,8 +1483,7 @@ class Music(commands.Cog):
                                 ).fetch_message(music_embed)
                                 embedqueue = await get_queue(list_song)
                                 await message.edit(
-                                    content=None,
-                                    embeds=[embedqueue,embed]
+                                    content=None, embeds=[embedqueue, embed]
                                 )
                                 await settings.collectionmusic.insert_one(data)
 
@@ -1581,15 +1578,20 @@ class Music(commands.Cog):
                                     ).fetch_message(music_embed)
                                     embedqueue = await get_queue(list_song)
                                     await message.edit(
-                                        content=None,
-                                        embeds=[embedqueue,embed]
+                                        content=None, embeds=[embedqueue, embed]
                                     )
 
                         else:
                             track: pomice.Track = results[0]
                             s_title = track.title
                             s_id = track.track_id
-                            s_source = ("Spotify"if "open.spotify.com" in track.uri else track.info["sourceName"] if "SourceName" in track.info else "UNKNOWN")
+                            s_source = (
+                                "Spotify"
+                                if "open.spotify.com" in track.uri
+                                else track.info["sourceName"]
+                                if "SourceName" in track.info
+                                else "UNKNOWN"
+                            )
                             s_len = track.length / 1000
                             if Queue is None and not player.is_playing:
                                 try:
@@ -1640,13 +1642,20 @@ class Music(commands.Cog):
                                     )
 
                                     await player.play(track)
-                                    channel = await self.bot.fetch_channel(music_channel)
-                                    embed_message = await channel.fetch_message(music_embed)
-                                    audit_message = await channel.fetch_message(music_message)
-                                    embedqueue = await get_queue(f"**1.** {track} -{ctx.author.mention}")
+                                    channel = await self.bot.fetch_channel(
+                                        music_channel
+                                    )
+                                    embed_message = await channel.fetch_message(
+                                        music_embed
+                                    )
+                                    audit_message = await channel.fetch_message(
+                                        music_message
+                                    )
+                                    embedqueue = await get_queue(
+                                        f"**1.** {track} -{ctx.author.mention}"
+                                    )
                                     await embed_message.edit(
-                                        content=None,
-                                        embeds=[embedqueue,embed]
+                                        content=None, embeds=[embedqueue, embed]
                                     )
                                     await settings.collectionmusic.insert_one(data)
                                     await audit_message.edit(
@@ -1733,18 +1742,22 @@ class Music(commands.Cog):
                                             list_song.append(f"เเละอีก {queue-20}เพลง")
                                             break
 
-                                    channel = await self.bot.fetch_channel(music_channel)
-                                    embed_message = await channel.fetch_message(music_embed)
-                                    audit_message = await channel.fetch_message(music_message)
+                                    channel = await self.bot.fetch_channel(
+                                        music_channel
+                                    )
+                                    embed_message = await channel.fetch_message(
+                                        music_embed
+                                    )
+                                    audit_message = await channel.fetch_message(
+                                        music_message
+                                    )
                                     embedqueue = await get_queue("".join(list_song))
                                     await embed_message.edit(
-                                        content=None,
-                                        embeds=[embedqueue,embed]
+                                        content=None, embeds=[embedqueue, embed]
                                     )
                                     await audit_message.edit(
                                         content=f"[``🎵``] ``:`` เพิ่มเพลง **{s_title}** ``{time}`` เข้าสู่คิวเพลงของคุณ"
                                     )
-
 
                                 else:
                                     return
@@ -1752,7 +1765,7 @@ class Music(commands.Cog):
                         return
 
     @commands.command()
-    async def delmsg(self, ctx: commands.Context, chanid , msgid):
+    async def delmsg(self, ctx: commands.Context, chanid, msgid):
         c = await self.bot.fetch_channel(chanid)
         m = await c.fetch_message(msgid)
         await m.delete()
@@ -1782,7 +1795,7 @@ class Music(commands.Cog):
                 embedqueue = await get_queue()
                 try:
                     embed_message = await channel.send(
-                        embeds=[embedqueue,embedplay],
+                        embeds=[embedqueue, embedplay],
                         view=MusicButton(self),
                     )
                 except Exception as e:
@@ -1809,10 +1822,12 @@ class Music(commands.Cog):
                         topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                     )
 
-                    embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                    embedplay = await set_default(
+                        self.bot.user.avatar.url, ctx.guild.name
+                    )
                     embedqueue = await get_queue()
                     embed_message: nextcord.Message = await channel.send(
-                        embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
+                        embeds=[embedqueue, embedplay], view=MusicButton(self.bot)
                     )
 
                     music_message: nextcord.Message = await channel.send(
@@ -1837,10 +1852,12 @@ class Music(commands.Cog):
                             topic=":play_pause: หยุด/เล่นเพลง:track_next: ข้ามเพลง:stop_button: หยุดและลบคิวในเพลง :sound: ลดเสียงขึ้นทีล่ะ 10%:loud_sound: เพิ่มเสียงทีล่ะ 10%:mute: ปิดเสียงเพลง",
                         )
 
-                        embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                        embedplay = await set_default(
+                            self.bot.user.avatar.url, ctx.guild.name
+                        )
                         embedqueue = await get_queue()
                         embed_message: nextcord.Message = await channel.send(
-                            embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
+                            embeds=[embedqueue, embedplay], view=MusicButton(self.bot)
                         )
                         music_message = await channel.send(
                             "กรุณาเข้า Voice Channel เเละเพิ่มเพลงโดยพิมพ์ชื่อเพลงหรือลิ้งเพลง"
@@ -1878,10 +1895,13 @@ class Music(commands.Cog):
                                 )
 
                             except nextcord.NotFound:
-                                embedplay = await set_default(self.bot.user.avatar.url, ctx.guild.name)
+                                embedplay = await set_default(
+                                    self.bot.user.avatar.url, ctx.guild.name
+                                )
                                 embedqueue = await get_queue()
                                 embed_message: nextcord.Message = await channel.send(
-                                    embeds=[embedqueue,embedplay], view=MusicButton(self.bot)
+                                    embeds=[embedqueue, embedplay],
+                                    view=MusicButton(self.bot),
                                 )
                                 await settings.collection.update_one(
                                     {"guild_id": ctx.guild.id},
@@ -1902,8 +1922,10 @@ class Music(commands.Cog):
                                 )
 
     @musicsetup.error
-    async def music_setup_error(self, ctx: commands.Context, error : commands.CommandInvokeError):
-        if isinstance(error.original,nextcord.Forbidden):
+    async def music_setup_error(
+        self, ctx: commands.Context, error: commands.CommandInvokeError
+    ):
+        if isinstance(error.original, nextcord.Forbidden):
             embed = nextcord.Embed(
                 colour=0x983925,
                 title=f"⚠️บอทไม่มีสิทธิสร้างห้องเพลง ควรให้สิทธิ์ สร้างห้องหรือ Admin กับบอท",
@@ -1911,7 +1933,7 @@ class Music(commands.Cog):
             embed.set_footer(text=f"┗Requested by {ctx.author}")
             message = await ctx.send(embed=embed)
             await message.add_reaction("⚠️")
-        
+
         if isinstance(error, commands.MissingPermissions):
             embed = nextcord.Embed(
                 colour=0x983925,
@@ -1923,6 +1945,7 @@ class Music(commands.Cog):
 
             message = await ctx.send(embed=embed)
             await message.add_reaction("⚠️")
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))

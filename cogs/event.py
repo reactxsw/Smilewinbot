@@ -13,7 +13,7 @@ class Events(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
+    async def on_raw_reaction_add(self, payload: nextcord.RawReactionActionEvent):
         await self.bot.wait_until_ready()
         message = await self.bot.get_channel(payload.channel_id).fetch_message(
             payload.message_id
@@ -39,7 +39,7 @@ class Events(commands.Cog):
                     await message.remove_reaction(payload.emoji, payload.member)
 
     @commands.Cog.listener()
-    async def on_raw_reaction_remove(self, payload):
+    async def on_raw_reaction_remove(self, payload: nextcord.RawReactionActionEvent):
         await self.bot.wait_until_ready()
         message = await self.bot.get_channel(payload.channel_id).fetch_message(
             payload.message_id
@@ -75,7 +75,12 @@ class Events(commands.Cog):
             pass
 
     @commands.Cog.listener()
-    async def on_voice_state_update(self, member: nextcord.Member, before, after):
+    async def on_voice_state_update(
+        self,
+        member: nextcord.Member,
+        before: nextcord.VoiceState,
+        after: nextcord.VoiceState,
+    ):
         await self.bot.wait_until_ready()
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": member.guild.id}

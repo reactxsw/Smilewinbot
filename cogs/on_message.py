@@ -22,28 +22,38 @@ class on_message_event(commands.Cog):
                     if message.channel.id == data["Music_channel_id"]:
 
                         ctx: commands.Context = await self.bot.get_context(message)
-                        bot_voice_client : nextcord.VoiceClient = nextcord.utils.get(
+                        bot_voice_client: nextcord.VoiceClient = nextcord.utils.get(
                             self.bot.voice_clients, guild=ctx.guild
                         )
-                        if (bot_voice_client is None or (bot_voice_client is not None and ctx.author.voice.channel.id == bot_voice_client.channel.id)):
+                        if bot_voice_client is None or (
+                            bot_voice_client is not None
+                            and ctx.author.voice.channel.id
+                            == bot_voice_client.channel.id
+                        ):
                             if message.attachments != []:
                                 files = []
-                                for items in range (len(message.attachments)):
+                                for items in range(len(message.attachments)):
                                     print(message.attachments[items].url)
                                     files.append(message.attachments[items].url)
-                                
+
                                 print(files)
                                 for file in files:
-                                    await ctx.invoke(self.bot.get_command("play"), search=file)
-                            
+                                    await ctx.invoke(
+                                        self.bot.get_command("play"), search=file
+                                    )
+
                             else:
                                 if settings.COMMAND_PREFIX in message.content:
-                                    song = message.content.split(settings.COMMAND_PREFIX)[1]
+                                    song = message.content.split(
+                                        settings.COMMAND_PREFIX
+                                    )[1]
 
                                 else:
                                     song = message.content
-                                
-                                await ctx.invoke(self.bot.get_command("play"), search=song)
+
+                                await ctx.invoke(
+                                    self.bot.get_command("play"), search=song
+                                )
 
                             await asyncio.sleep(1)
                             await message.delete()
@@ -106,5 +116,7 @@ class on_message_event(commands.Cog):
                                         await channel.send(
                                             f"{message.author.mention} ได้เลเวลอัพเป็น เลเวล {current_level}"
                                         )
+
+
 def setup(bot):
     bot.add_cog(on_message_event(bot))

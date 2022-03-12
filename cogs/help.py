@@ -176,34 +176,36 @@ class Help(commands.Cog):
 
                 embed.set_footer(text=f"┗Requested by {interaction.user}")
                 await interaction.message.edit(embed=embed)
-                
+
             elif button.custom_id == "help_game":
-                messages = [f"`{settings.COMMAND_PREFIX}tictactoe start [@ผู้เล่นคนที่สอง]` เล่นเกม tictactoe หรือ xo",
-                           f"`{settings.COMMAND_PREFIX}roulette` เริ่มเล่นเกมรูเล็ต",
-                           f"`{settings.COMMAND_PREFIX}horse [จำนวนตัว] [จำนวนเงิน]` เริ่มเล่นเกม horse",
-                           f"`{settings.COMMAND_PREFIX}blackjack [จำนวนเงิน]` เริ่มเกม Blackjack"]
+                messages = [
+                    f"`{settings.COMMAND_PREFIX}tictactoe start [@ผู้เล่นคนที่สอง]` เล่นเกม tictactoe หรือ xo",
+                    f"`{settings.COMMAND_PREFIX}roulette` เริ่มเล่นเกมรูเล็ต",
+                    f"`{settings.COMMAND_PREFIX}horse [จำนวนตัว] [จำนวนเงิน]` เริ่มเล่นเกม horse",
+                    f"`{settings.COMMAND_PREFIX}blackjack [จำนวนเงิน]` เริ่มเกม Blackjack",
+                ]
                 text = await convert_list_of_string_to_text(messages)
-                    
+
                 embed = nextcord.Embed(
-                    title="🎮 คําสั่งเกี่ยวกับเกม",
-                    description=text,
-                    color= 0xFED000
+                    title="🎮 คําสั่งเกี่ยวกับเกม", description=text, color=0xFED000
                 )
                 embed.set_footer(text=f"┗Requested by {interaction.user}")
                 await interaction.message.edit(embed=embed)
-            
+
             elif button.custom_id == "help_protect":
-                messages = [f"`{settings.COMMAND_PREFIX}scam` เพื่อดูรายระเอียดการระบบป้องกันลิ้งค์ที่ไม่ปลอดภัย"]
+                messages = [
+                    f"`{settings.COMMAND_PREFIX}scam` เพื่อดูรายระเอียดการระบบป้องกันลิ้งค์ที่ไม่ปลอดภัย"
+                ]
                 text = await convert_list_of_string_to_text(messages)
 
                 embed = nextcord.Embed(
                     title="🛡️ คําสั่งเกี่ยวระบบป้องกัน",
                     description=text,
-                    color= 0xFED000
+                    color=0xFED000,
                 )
                 embed.set_footer(text=f"┗Requested by {interaction.user}")
                 await interaction.message.edit(embed=embed)
-            
+
             elif button.custom_id == "close_menu":
                 await interaction.message.delete()
         else:
@@ -233,11 +235,12 @@ class Help(commands.Cog):
 
 async def convert_list_of_string_to_text(strings: list):
     text = ""
-    for index,string in enumerate(strings):
+    for index, string in enumerate(strings):
         text += string
-        if index != len(strings)-1:
+        if index != len(strings) - 1:
             text += "\n"
-    return text 
+    return text
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Help(bot))

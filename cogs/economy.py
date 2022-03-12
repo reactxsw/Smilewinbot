@@ -2502,7 +2502,7 @@ class Economy(commands.Cog):
 
                 try:
                     if member != "all":
-                        member : nextcord.Member = member
+                        member: nextcord.Member = member
                         embed = nextcord.Embed(
                             colour=0x00FFFF,
                             title=f"คุณเเน่ในที่จะ reset เงินของ {member.name}",
@@ -2526,15 +2526,15 @@ class Economy(commands.Cog):
 
                     else:
                         embed = nextcord.Embed(
-                        colour=0x00FFFF,
-                        title=f"คุณเเน่ในที่จะ reset เงินของทุกคน",
-                        description="พิม YES / NO",
-                    )
+                            colour=0x00FFFF,
+                            title=f"คุณเเน่ในที่จะ reset เงินของทุกคน",
+                            description="พิม YES / NO",
+                        )
 
                         embed.set_footer(text=":")
                         message = await ctx.send(embed=embed)
 
-                        choice : nextcord.Message = await self.bot.wait_for(
+                        choice: nextcord.Message = await self.bot.wait_for(
                             "message",
                             check=lambda user: user.author.id == ctx.author.id,
                             timeout=20,
@@ -2547,7 +2547,6 @@ class Economy(commands.Cog):
 
                 except asyncio.TimeoutError:
                     await message.delete()
-            
 
                 if choice.content.lower() == "yes":
                     guild = await settings.collection.find_one(
@@ -2557,7 +2556,7 @@ class Economy(commands.Cog):
                         status = guild["economy_system"]
                         if status == "YES":
                             if member != "all":
-                                member : nextcord.Member = member
+                                member: nextcord.Member = member
                                 receiver = await settings.collectionmoney.find_one(
                                     {"guild_id": ctx.guild.id, "user_id": member.id}
                                 )
@@ -2576,7 +2575,10 @@ class Economy(commands.Cog):
                                     receivernew_wallet = 0
 
                                     await settings.collectionmoney.update_one(
-                                        {"guild_id": ctx.guild.id, "user_id": member.id},
+                                        {
+                                            "guild_id": ctx.guild.id,
+                                            "user_id": member.id,
+                                        },
                                         {
                                             "$set": {
                                                 "bank": receivernew_bank,
@@ -2613,7 +2615,6 @@ class Economy(commands.Cog):
                                 embed.set_footer(text=f"┗Requested by {ctx.author}")
                                 message = await ctx.send(embed=embed)
                                 await message.add_reaction("💸")
-
 
                         else:
                             embed = nextcord.Embed(
