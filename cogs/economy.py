@@ -1,4 +1,3 @@
-from cv2 import medianBlur
 import nextcord
 import settings
 import random

@@ -378,3 +378,18 @@
 2022-02-25 19:08:37: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r setup,command: musicsetup}
 2022-02-25 19:10:01: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
 2022-02-25 19:10:25: [REACT#1120 | 394447088970104833] in [924999182039801876 | Smilewin development]{Error:NoneType: None,userinput: !r musicsetup,command: musicsetup}
+2022-03-13 21:45:43: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r helr,command: None}
+2022-03-13 21:45:46: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r hele,command: None}
+2022-03-13 21:53:23: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setwelcome,command: setwelcome}
+2022-03-13 21:59:14: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setverify,command: setverify}
+2022-03-13 22:00:34: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setverify [#text-channel],command: setverify}
+2022-03-13 22:00:45: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setverify [<#952580715277611108>-channel],command: setverify}
+2022-03-13 22:03:01: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setintroduce-role remove,command: setintroducerole introductionremove}
+2022-03-13 22:03:33: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setrole remove <@&909719420534927390> +,command: None}
+2022-03-13 22:03:42: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setrole remove <@&909719420534927390>,command: None}
+2022-03-13 22:04:14: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setrole role <@&909719420534927390>,command: None}
+2022-03-13 22:04:28: [! ♡#5696 | 693344942059159573] in [886431270454820874 | ●︿●]{Error:NoneType: None,userinput: !r setrole remove <@&909719420534927390>,command: None}
+2022-03-13 22:21:21: [..Dome..#0297 | 551641461389787153] in [950734091312058428 | 𝑺𝒍𝒙𝒙𝒑 𝑪𝒍𝒖𝒃]{Error:NoneType: None,userinput: !r ind,command: introduction}
+2022-03-13 22:46:53: [! C.#2103 | 673190601356738564] in [950734091312058428 | 𝑺𝒍𝒙𝒙𝒑 𝑪𝒍𝒖𝒃]{Error:NoneType: None,userinput: !r ind,command: introduction}
+2022-03-14 00:17:59: [Double_HEE#8674 | 819191424716374046] in [862929849676595260 | เซิร์ฟเวอร์ของ"muki" TH:3]{Error:NoneType: None,userinput: !r set,command: None}
+2022-03-14 02:01:38: [! PEACH#8299 | 942250588375240825] in [928567067492356166 | SUNTERRY GANG ⛓]{Error:NoneType: None,userinput: !r anal!r anal,command: None}

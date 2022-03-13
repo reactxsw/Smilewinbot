@@ -1,7 +1,5 @@
 import nextcord
 from nextcord.ext import commands
-import aiohttp
-import asyncio
 import re
 import requests
 import settings
@@ -72,7 +70,7 @@ class Scam(commands.Cog):
         self.bot = bot
 
     @commands.group(invoke_without_command=True, aliases=["helpscam"])
-    async def scam(self, ctx):
+    async def scam(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -143,7 +141,7 @@ class Scam(commands.Cog):
             await ctx.send(embed=embed)
 
     @scam.command()
-    async def mode(self, ctx, mode1):
+    async def mode(self, ctx: commands.Context, mode1):
         languageserver = await get_server_lang(ctx)
         if languageserver == "Thai":
             if mode1 == "warn":
