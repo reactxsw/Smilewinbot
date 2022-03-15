@@ -289,7 +289,7 @@ class Blackjack(commands.Cog):
                         )
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"คุณเสีย {game['amount']*2}{currency} คงเหลือ {current - game['amount']:,}{currency}"
+                        infotext = f"คุณเสีย {game['amount']}{currency} คงเหลือ {current - game['amount']:,}{currency}"
 
                         # updata user wallet
                         await settings.collectionmoney.update_one(
@@ -404,7 +404,7 @@ class Blackjack(commands.Cog):
                         )
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"คุณเสีย {game['amount']*2}{currency} คงเหลือ {current - game['amount']:,}{currency}"
+                        infotext = f"คุณเสีย {game['amount']}{currency} คงเหลือ {current - game['amount']:,}{currency}"
 
                         # updata user wallet
                         await settings.collectionmoney.update_one(
@@ -460,16 +460,14 @@ class Blackjack(commands.Cog):
                     await Blackjack.update_message(self, embed, interaction)
 
     # Check win lose in player turn
-    async def check_win_lose_draw(self, player_score, dealer_score):
-        # check win
+    async def check_win_lose_draw(self,player_score, dealer_score):        # check win
         if (
-            player_score == 21 or dealer_score < player_score or dealer_score > 21
+            (player_score == 21 and dealer_score < player_score) or dealer_score > 21
         ) and not (player_score > 21):
             return "End", "Win"
 
-        # check lose:
         if (
-            dealer_score > player_score or player_score > 21 or dealer_score == 21
+            (dealer_score > player_score and dealer_score == 21) or player_score > 21
         ) and not (dealer_score > 21):
             return "End", "Lose"
 
