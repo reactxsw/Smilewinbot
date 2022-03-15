@@ -1,3 +1,4 @@
+from numpy import source
 import pomice
 import settings
 from nextcord.ext import commands
@@ -1442,7 +1443,7 @@ class Music(commands.Cog):
                                 list_song = "".join(list_song)
                                 await player.play(tracks[0])
                                 nu = tracks[1] if len(tracks) > 1 else None
-                                time = await time_format(tracks[0].length)
+                                time = await time_format(tracks[0].length / 1000)
                                 embed = nextcord.Embed(
                                     description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                     colour=0xFFFF00,
@@ -1589,13 +1590,12 @@ class Music(commands.Cog):
                                 "Spotify"
                                 if "open.spotify.com" in track.uri
                                 else track.info["sourceName"]
-                                if "SourceName" in track.info
+                                if "sourceName" in track.info
                                 else "UNKNOWN"
                             )
-                            s_len = track.length / 1000
                             if Queue is None and not player.is_playing:
                                 try:
-                                    time = await time_format(s_len)
+                                    time = await time_format(track.length / 1000)
                                     embed = nextcord.Embed(
                                         description="[❯ Invite](https://smilewinbot.web.app/page/invite) | [❯ Website](https://smilewinbot.web.app) | [❯ Support](https://discord.com/invite/R8RYXyB4Cg)",
                                         colour=0xFFFF00,

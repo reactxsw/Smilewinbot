@@ -243,7 +243,7 @@ class Blackjack(commands.Cog):
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
                 status, state = await Blackjack.check_win_lose_draw(
-                    self,player_score, dealer_score
+                    self, player_score, dealer_score
                 )
                 if status == "End":
                     if state == "Win":
@@ -460,7 +460,7 @@ class Blackjack(commands.Cog):
                     await Blackjack.update_message(self, embed, interaction)
 
     # Check win lose in player turn
-    async def check_win_lose_draw(self,player_score, dealer_score):        # check win
+    async def check_win_lose_draw(self, player_score, dealer_score):  # check win
         if (
             (player_score == 21 and dealer_score < player_score) or dealer_score > 21
         ) and not (player_score > 21):
