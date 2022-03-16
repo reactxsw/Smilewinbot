@@ -9,7 +9,7 @@ class ServerStat(commands.Cog):
     def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot
 
-    async def setnewserver(self, ctx):
+    async def setnewserver(self, ctx: commands.Context):
         newserver = {
             "guild_id": ctx.guild.id,
             "status_system": "NO",
@@ -22,7 +22,7 @@ class ServerStat(commands.Cog):
 
     @commands.command()
     @commands.has_permissions(administrator=True)
-    async def setserverstat(self, ctx):
+    async def setserverstat(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )

@@ -331,7 +331,7 @@ async def draw_board(board, turn, p1, p2, is_win=False, is_draw=False, cancel=Fa
 
 
 class TictactoeButton(nextcord.ui.View):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         super().__init__(timeout=None)
 
@@ -409,7 +409,7 @@ class TictactoeButton(nextcord.ui.View):
 
 
 async def recieve_input(
-    bot, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    bot: commands.Bot, button: nextcord.ui.Button, interaction: nextcord.Interaction
 ):
     # if It is a bot return
     if bot.user.id == interaction.user.id:

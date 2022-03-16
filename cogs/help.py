@@ -67,6 +67,14 @@ class HelpButton(nextcord.ui.View):
         await Help.handle_click(self, button, interaction)
 
     @nextcord.ui.button(
+        label="😄", style=nextcord.ButtonStyle.gray, custom_id="help_fun", row=1
+    )
+    async def help_fun(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
+        await Help.handle_click(self, button, interaction)
+
+    @nextcord.ui.button(
         label="🏠 หน้าหลัก",
         style=nextcord.ButtonStyle.primary,
         custom_id="home_menu",
@@ -119,6 +127,25 @@ class Help(commands.Cog):
 ``{settings.COMMAND_PREFIX}setverify [#text-channel]`` ตั้งค่าห้องยืนยันตัวตน ``!r vfy``
 ``{settings.COMMAND_PREFIX}verification on/off`` ตั้งค่าเปิด/ปิดระบบยืนยันตัวตน
 ``{settings.COMMAND_PREFIX}verification on/off`` ตั้งค่าเปิด/ปิดระบบยืนยันตัวตน
+""",
+                    color=0xFED000,
+                )
+                embed.set_footer(text=f"┗Requested by {interaction.user}")
+                await interaction.message.edit(embed=embed)
+
+            elif button.custom_id == "help_fun":
+                embed = nextcord.Embed(
+                    title="😄 คําสั่งบรรเทิง",
+                    description=f"""
+``{settings.COMMAND_PREFIX}sreddit [subreddit]`` ส่งรูปจาก subreddit
+``{settings.COMMAND_PREFIX}meme`` ส่งมีม
+``{settings.COMMAND_PREFIX}tweet [username] [message]`` สร้างรูปจาก twitter โดยใช้ชื่อ twitterคนอื่น
+``{settings.COMMAND_PREFIX}phcomment [text]`` สร้างรูป commentใน pornhub โดยใช้ชื่อเเละภาพของเรา
+``{settings.COMMAND_PREFIX}wasted <@member>`` ใส่filter "wasted" ให้กับรูปโปรไฟล์ของสมาชิกหรือตัวเอง
+``{settings.COMMAND_PREFIX}gay <@member>`` ใส่filterสีรุ้งให้กับรูปโปรไฟล์ของสมาชิกหรือตัวเอง
+``{settings.COMMAND_PREFIX}trigger <@member>`` ใส่filter "triggered" ให้กับรูปโปรไฟล์ของสมาชิกหรือตัวเอง
+``{settings.COMMAND_PREFIX}love <@member>`` เช็คความรักของคุณกับคนที่คุณเเท็กหรือสุ่ม
+``{settings.COMMAND_PREFIX}love <@member1> <@member2>`` เช็คความรักขอคู่ที่คุณเเท็กหรือสุ่มคู่จากเซิฟเวอร์
 """,
                     color=0xFED000,
                 )

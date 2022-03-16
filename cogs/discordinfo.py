@@ -21,7 +21,9 @@ class DiscordInfo(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def channelinfo(self, ctx, channel: nextcord.TextChannel = None):
+    async def channelinfo(
+        self, ctx: commands.Context, channel: nextcord.TextChannel = None
+    ):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -83,7 +85,7 @@ class DiscordInfo(commands.Cog):
                 await ctx.send(embed=embed)
 
     @commands.command()
-    async def myid(self, ctx):
+    async def myid(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -104,7 +106,7 @@ class DiscordInfo(commands.Cog):
                 )
 
     @commands.command()
-    async def membercount(self, ctx):
+    async def membercount(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -193,7 +195,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("❤️")
 
     @commands.command()
-    async def uptime(self, ctx):
+    async def uptime(self, ctx: commands.Context):
         uptime = datetime.datetime.utcnow() - start_time
         uptime = str(uptime).split(".")[0]
         languageserver = await settings.collectionlanguage.find_one(
@@ -237,7 +239,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("🕒")
 
     @commands.command()
-    async def serverinfo(self, ctx):
+    async def serverinfo(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -309,7 +311,7 @@ class DiscordInfo(commands.Cog):
                     verify = "ไม่ได้รับการยืนยัน"
 
                 if "VANITY_URL" in ctx.guild.features:
-                    invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
+                    invite = f"https://discord.gg/{ctx.guild.vanity_invite}"
 
                 else:
                     invite = "ไม่มี"
@@ -393,7 +395,7 @@ class DiscordInfo(commands.Cog):
                     verify = "not verified"
 
                 if "VANITY_URL" in ctx.guild.features:
-                    invite = f"https://discord.gg/{ctx.guild.vanity_url_code}"
+                    invite = f"https://discord.gg/{ctx.guild.vanity_invite}"
 
                 else:
                     invite = "None"
@@ -462,7 +464,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("🤖")
 
     @commands.command(aliases=["botstat"])
-    async def botinfo(self, ctx):
+    async def botinfo(self, ctx: commands.Context):
         uptime = datetime.datetime.utcnow() - start_time
         uptime = str(uptime).split(".")[0]
 
@@ -581,7 +583,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("🤖")
 
     @commands.command()
-    async def userinfo(self, ctx, member: nextcord.Member = None):
+    async def userinfo(self, ctx: commands.Context, member: nextcord.Member = None):
 
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
@@ -658,7 +660,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("🤖")
 
     @commands.command()
-    async def ping(self, ctx):
+    async def ping(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -714,7 +716,7 @@ class DiscordInfo(commands.Cog):
                 )
 
     @commands.command()
-    async def avatar(self, ctx, member: nextcord.Member = None):
+    async def avatar(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -754,7 +756,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("✅")
 
     @commands.command()
-    async def searchavatar(self, ctx, member: nextcord.Member = None):
+    async def searchavatar(self, ctx: commands.Context, member: nextcord.Member = None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -790,7 +792,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("✅")
 
     @commands.command()
-    async def credit(self, ctx):
+    async def credit(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -830,7 +832,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("👍")
 
     @commands.command()
-    async def guildicon(self, ctx):
+    async def guildicon(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -862,7 +864,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("✅")
 
     @commands.command(alias=["invite"])
-    async def botinvite(self, ctx):
+    async def botinvite(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -902,7 +904,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("💖")
 
     @commands.command()
-    async def setting(self, ctx):
+    async def setting(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1172,7 +1174,7 @@ class DiscordInfo(commands.Cog):
                     await message.add_reaction("👍")
 
     @commands.command()
-    async def servers(self, ctx, n: int = 10):
+    async def servers(self, ctx: commands.Context, n: int = 10):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1212,7 +1214,7 @@ class DiscordInfo(commands.Cog):
                 await ctx.send(embed=embed)
 
     @commands.command()
-    async def botvote(self, ctx):
+    async def botvote(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1250,7 +1252,7 @@ class DiscordInfo(commands.Cog):
                 await message.add_reaction("🙏")
 
     @commands.command()
-    async def test(self, ctx):
+    async def test(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
@@ -1268,7 +1270,7 @@ class DiscordInfo(commands.Cog):
                 await ctx.send("Bot is online")
 
     @commands.command()
-    async def support(self, ctx, *, message=None):
+    async def support(self, ctx: commands.Context, *, message=None):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
         )
