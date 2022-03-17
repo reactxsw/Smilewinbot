@@ -52,7 +52,7 @@ class Blackjack(commands.Cog):
                     current = user["wallet"]
                     currency = guild["currency"]
 
-                    if current <= amount:
+                    if current < amount:
                         embed = nextcord.Embed(
                             title="Error",
                             description="จำนวนเงินของคุณไม่พอ",

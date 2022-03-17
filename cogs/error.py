@@ -49,7 +49,6 @@ class Error(commands.Cog):
                 await channel.send(errorlog)
                 await channel.send(error)
 
-            if isinstance(error.original, nextcord.Forbidden):
                 if isinstance(error, commands.CommandNotFound):
                     embed = nextcord.Embed(
                         colour=0x983925, title=f"⚠️ | Command not found"

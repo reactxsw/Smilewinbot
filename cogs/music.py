@@ -1772,6 +1772,7 @@ class Music(commands.Cog):
 
     @commands.has_permissions(manage_channels=True)
     @commands.command(aliases=["setup"])
+    @commands.bot_has_permissions(manage_channels=True)
     async def musicsetup(self, ctx: commands.Context):
         languageserver = await settings.collectionlanguage.find_one(
             {"guild_id": ctx.guild.id}
@@ -1925,7 +1926,7 @@ class Music(commands.Cog):
     async def music_setup_error(
         self, ctx: commands.Context, error: commands.CommandInvokeError
     ):
-        if isinstance(error.original, nextcord.Forbidden):
+        if isinstance(error, commands.BotMissingPermissions):
             embed = nextcord.Embed(
                 colour=0x983925,
                 title=f"⚠️บอทไม่มีสิทธิสร้างห้องเพลง ควรให้สิทธิ์ สร้างห้องหรือ Admin กับบอท",
