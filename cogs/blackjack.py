@@ -48,17 +48,21 @@ class Blackjack(commands.Cog):
                     embed.set_footer(text=f"┗Requested by {ctx.author}")
                     message = await ctx.send(embed=embed)
                     await message.add_reaction("💸")
+                    return
                 else:
                     current = user["wallet"]
                     currency = guild["currency"]
 
-                    if current <= amount:
+                    if current < amount:
                         embed = nextcord.Embed(
                             title="Error",
                             description="จำนวนเงินของคุณไม่พอ",
                             color=0xFED000,
                         )
                         return await ctx.send(embed=embed, delete_after=5)
+            else:
+                embed = nextcord.Embed(title="Error", description=f"ระบบการเงินถูกปิดอยู่ | `{settings.COMMAND_PREFIX}economy on`", color=0xFED000)
+                return await ctx.send(embed=embed, delete_after=5)
 
         # Check if the user already has a game
         game = await settings.collectionblackjack.find_one(
