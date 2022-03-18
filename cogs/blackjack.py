@@ -51,7 +51,6 @@ class Blackjack(commands.Cog):
                     return
                 else:
                     current = user["wallet"]
-                    currency = guild["currency"]
 
                     if current < amount:
                         embed = nextcord.Embed(
@@ -66,7 +65,7 @@ class Blackjack(commands.Cog):
 
         # Check if the user already has a game
         game = await settings.collectionblackjack.find_one(
-            {"player_id": ctx.author.id, "game": "blackjack"}
+            {"guild_id": ctx.guild.id, "player_id": ctx.author.id, "game": "blackjack"}
         )
 
         if game is not None:
@@ -103,7 +102,8 @@ class Blackjack(commands.Cog):
             "dealer_hand": dealer_hand,
             "channel_id": ctx.channel.id,
             "amount": amount,
-            "msg_id": msg.id,
+            "guild_id": ctx.guild.id,
+            "msg_id": msg.id
         }
 
         # Insert data into database
@@ -255,7 +255,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
@@ -289,7 +289,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
@@ -323,7 +323,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
@@ -370,7 +370,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
@@ -404,7 +404,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
@@ -438,7 +438,7 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id}
                         )
                         user = await settings.collectionmoney.find_one(
-                            {"user_id": interaction.user.id}
+                            {"guild_id": interaction.guild.id, "user_id": interaction.user.id}
                         )
                         current = user["wallet"]
                         currency = data["currency"]
