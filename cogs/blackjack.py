@@ -12,7 +12,6 @@ class Blackjack(commands.Cog):
 
     @commands.group(invoke_without_command=True, aliases=["bj"])
     async def blackjack(self, ctx: commands.Context, amount=None):
-
         if amount is None:
             embed = nextcord.Embed(
                 title="Error",
@@ -217,7 +216,8 @@ class Blackjack(commands.Cog):
             await ctx.send(embed=embed, view=stop_blackjackgame_confirming(game))
             
         else:
-            return await ctx.send(f"คุณไม่มีเกมที่เริ่มเล่นไปแล้ว")
+            embed = nextcord.Embed(title="Error", description="คุณไม่มีเกมที่เริ่มเล่นไปแล้ว", color=0xFED000)
+            return await ctx.send(embed=embed)
         
     @blackjack.command()
     async def resume(self, ctx: commands.Context):
