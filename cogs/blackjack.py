@@ -1,3 +1,5 @@
+from cProfile import label
+from locale import currency
 import nextcord
 from nextcord.ext import commands
 import random
@@ -110,7 +112,7 @@ class Blackjack(commands.Cog):
         await settings.collectionblackjack.insert_one(data)
 
     async def embed_generator(
-        self, player_hand, dealer_hand, first_turn=False, state=None, infotext=""
+        self, player_hand, dealer_hand, first_turn=False, state=None, infotext="", amount=None, currency=None
     ):  # state = 1 for win, 2 for lose, 3 for draw
         player_hand_text = ""
         for i in player_hand:
@@ -120,7 +122,10 @@ class Blackjack(commands.Cog):
         for i in dealer_hand:
             dealer_hand_text += f"{i} "
 
-        embed = nextcord.Embed(title="Blackjack", color=0xFED000)
+        if amount is not None and currency is not None:
+            embed = nextcord.Embed(title="Blackjack", description=f"ยอดเดิมพัน {amount}{currency}", color=0xFED000)
+        else:
+            embed = nextcord.Embed(title="Blackjack", color=0xFED000)
         if state is None:
             embed.add_field(
                 name="Your hand",
@@ -201,16 +206,48 @@ class Blackjack(commands.Cog):
     async def stop(self, ctx: commands.Context):
         # Check if the user already has a game
         game = await settings.collectionblackjack.find_one(
-            {"player_id": ctx.author.id, "game": "blackjack"}
+            {"guild_id": ctx.guild.id, "player_id": ctx.author.id, "game": "blackjack"}
         )
-
+        
         if game is not None:
-            await settings.collectionblackjack.delete_one(
-                {"player_id": ctx.author.id, "game": "blackjack"}
+            # Send the message for make user comfirm their request
+            data = await settings.collection.find_one(
+                {"guild_id": ctx.guild.id}
             )
-            await ctx.send(f"Game has stopped!")
+            currency = data["currency"]
+            embed = nextcord.Embed(title="Stop Blackjack Game", description=f"**ถ้าคุณหยุดเกมคุณจะต้องเสียเดิมพัน ทั้งหมด {game['amount']}{currency}**", color=0xFED000)
+            await ctx.send(embed=embed, view=stop_blackjackgame_confirming(game))
+            
         else:
-            return await ctx.send(f"You don't have a game running!")
+            return await ctx.send(f"คุณไม่มีเกมที่เริ่มเล่นไปแล้ว")
+        
+    @blackjack.command()
+    async def resume(self, ctx: commands.Context):
+        #try to find old message from user_id
+        game = await settings.collectionblackjack.find_one({"guild_id": ctx.guild.id, "player_id": ctx.author.id, "game":"blackjack"})
+        if game is None:
+            embed = nextcord.Embed(title="Error", description="คุณยังไม่ได้เริ่มเกม โปรดเริ่มเกมก่อน", color=0xFED000)
+            return await ctx.send(embed=embed)
+        channel = await self.bot.fetch_channel(game['channel_id'])
+        message = await channel.fetch_message(game['msg_id'])
+
+        data = await settings.collection.find_one({"guild_id": ctx.guild.id})
+        currency = data['currency']
+
+        await message.delete()
+        embed = await Blackjack.embed_generator(
+            self, game['player_hand'], game['dealer_hand'], amount= game['amount'], currency=currency
+        )
+        # Send embed
+        msg = await ctx.send(embed=embed, view=Blackjack_Button(self.bot))
+
+        data_for_update = {
+            "channel_id": ctx.channel.id,
+            "msg_id": msg.id
+        }
+        # update data to db
+        await settings.collectionblackjack.update_one({"guild_id": game['guild_id'], "player_id": game['player_id'], "game": "blackjack"}, {"$set": data_for_update})
+        
 
     @blackjack.command()
     async def help(self, ctx: commands.Context):
@@ -224,6 +261,11 @@ class Blackjack(commands.Cog):
             name="Stop",
             value=f"Stop the current game | {settings.COMMAND_PREFIX}blackjack stop",
             inline=False,
+        ),
+        embed.add_field(
+            name="Resume",
+            value=f"Use this command when you cannot find your message in the text channel | {settings.COMMAND_PREFIX}blackjack resume",
+            inline=False
         )
         await ctx.send(embed=embed)
 
@@ -281,7 +323,7 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
 
                     elif state == "Lose":
@@ -315,7 +357,7 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
 
                     elif state == "Draw":
@@ -340,13 +382,15 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
                 else:
-                    embed = await Blackjack.embed_generator(
-                        self, game["player_hand"], game["dealer_hand"]
-                    )
-                    await Blackjack.update_message(self, embed, interaction)
+                    embed = nextcord.Embed(title="Algorithm Problem Detected", description="**โปรดแจ้งผู้พัฒนาโดยด่วน (REACT#1120, DeepKungChannel#6590)**", color=0xFED000)
+                    embed.set_footer(text="**ยอดเงินที่เดิมพันจะไม่ถูกหัก เมื่อคุณเห็นต่างหน้านี้ ยกเลิกการเล่นโดยอัตโนมัติแล้ว")
+
+                    # remove game out of db
+                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "guild_id": interaction.guild.id, "game": "blackjack"})
+                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
 
         elif button.custom_id == "stand":
             game = await settings.collectionblackjack.find_one(
@@ -396,7 +440,7 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
 
                     elif state == "Lose":
@@ -430,7 +474,7 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
 
                     elif state == "Draw":
@@ -455,24 +499,24 @@ class Blackjack(commands.Cog):
                             self, embed, interaction, remove_view=True
                         )
                         await settings.collectionblackjack.delete_one(
-                            {"player_id": interaction.user.id, "game": "blackjack"}
+                            {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
                 else:
-                    embed = await Blackjack.embed_generator(
-                        self, game["player_hand"], game["dealer_hand"]
-                    )
-                    await Blackjack.update_message(self, embed, interaction)
+                    embed = nextcord.Embed(title="Algorithm Problem Detected", description="**โปรดแจ้งผู้พัฒนาโดยด่วน (REACT#1120, DeepKungChannel#6590)**", color=0xFED000)
+                    embed.set_footer(text="**ยอดเงินที่เดิมพันจะไม่ถูกหัก เมื่อคุณเห็นต่างหน้านี้ ยกเลิกการเล่นโดยอัตโนมัติแล้ว")
+
+                    # remove game out of db
+                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "guild_id": interaction.guild.id, "game": "blackjack"})
+                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
 
     # Check win lose in player turn
-    async def check_win_lose_draw(self, player_score, dealer_score):  # check win
-        if (
-            (player_score == 21 and dealer_score < player_score) or dealer_score > 21
-        ) and not (player_score > 21):
+    async def check_win_lose_draw(self, player_score, dealer_score):  
+        # check win
+        if (player_score == 21 or dealer_score < player_score or dealer_score > 21) and not (player_score > 21):
             return "End", "Win"
 
-        if (
-            (dealer_score > player_score and dealer_score == 21) or player_score > 21
-        ) and not (dealer_score > 21):
+        # check lose
+        if (dealer_score > player_score or dealer_score == 21 or player_score > 21 ) and not (dealer_score > 21):
             return "End", "Lose"
 
         # check draw
@@ -536,6 +580,47 @@ class Blackjack_Button(nextcord.ui.View):
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
         await Blackjack.handle_click(self, button, interaction)
+
+class stop_blackjackgame_confirming(nextcord.ui.View):
+    def __init__(self, game):
+        super().__init__(timeout=None)
+        self.game = game
+
+    @nextcord.ui.button(
+        label= "ยืนยัน",
+        style= nextcord.ButtonStyle.primary,
+        custom_id="confirm"
+    )
+    async def confirm_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        if interaction.user.id != self.game['player_id']:
+            await interaction.response.send_message("คุณไม่มีสิทธิ์ใช้งานปุ่มนี้ เฉพาะเจ้าของเกมเท่านั้น", ephemeral=True)
+            return
+
+        data = await settings.collection.find_one({"guild_id": interaction.guild.id})
+        user = await settings.collectionmoney.find_one({"guild_id": interaction.guild.id, "user_id": interaction.user.id})
+        currency = data['currency']
+        current = user['wallet']
+        balance = current - self.game['amount']
+
+        await settings.collectionmoney.update_one({"guild_id": interaction.guild.id, "user_id": interaction.user.id},{"$set": {"wallet": balance}})
+
+        await settings.collectionblackjack.delete_one(
+            {"player_id": interaction.user.id, "game": "blackjack"}
+        )
+        embed = nextcord.Embed(title="Game has stopped!", description=f"คุณเสีย {self.game['amount']}{currency} | คงเหลือ {balance}", color=0xFED000)
+        await interaction.edit(embed=embed, view=None)
+    
+    @nextcord.ui.button(
+        label= "ยกเลิก",
+        style= nextcord.ButtonStyle.secondary,
+        custom_id="cancel"
+    )
+    async def cancel_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        if interaction.user.id != self.game['player_id']:
+            await interaction.response.send_message("คุณไม่มีสิทธิ์ใช้งานปุ่มนี้ เฉพาะเจ้าของเกมเท่านั้น",  ephemeral=True)
+            return
+        
+        await interaction.message.delete()
 
 
 def setup(bot):
