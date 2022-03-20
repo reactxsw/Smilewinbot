@@ -19,7 +19,7 @@ class Blackjack(commands.Cog):
                 description=f"โปรดใส่จำนวนเงินที่จะเดิมพัน | `{settings.COMMAND_PREFIX}blackjack <amount>`",
                 color=0xFED000,
             )
-            return await ctx.send(embed=embed, delete_after=5)
+            return await ctx.send(embed=embed, delete_after=10)
 
         try:
             amount = int(amount)
@@ -29,7 +29,7 @@ class Blackjack(commands.Cog):
                 description="จำนวนเงินต้องเป็นจำนวนเต็มเท่านั้น",
                 color=0xFED000,
             )
-            return await ctx.send(embed=embed, delete_after=5)
+            return await ctx.send(embed=embed, delete_after=10)
 
         # Check status of economy system
         guild = await settings.collection.find_one({"guild_id": ctx.guild.id})
@@ -71,10 +71,10 @@ class Blackjack(commands.Cog):
         if game is not None:
             embed = nextcord.Embed(
                 title="Error",
-                description=f"คุณได้เริ่มเกมไปแล้ว | หากต้องการหยุดเกมที่เล่นอยู่โปรดใช้ {settings.COMMAND_PREFIX}blackjack stop",
+                description=f"คุณได้เริ่มเกมไปแล้ว | หากต้องการเล่นต่อหรือหยุดเกมที่เล่นอยู่โปรดใช้ `{settings.COMMAND_PREFIX}blackjack resume` หรือ `{settings.COMMAND_PREFIX}blackjack stop`",
                 color=0xFED000,
             )
-            return await ctx.send(embed=embed, delete_after=5)
+            return await ctx.send(embed=embed, delete_after=10)
 
         # Initialize variables
         while True:
@@ -89,7 +89,7 @@ class Blackjack(commands.Cog):
 
         # Create the embed
         embed = await Blackjack.embed_generator(
-            self, player_hand, dealer_hand, first_turn=True
+            self, player_hand, dealer_hand, hide_dealer_card=True
         )
         # Send embed
         msg = await ctx.send(embed=embed, view=Blackjack_Button(self.bot))
@@ -110,7 +110,7 @@ class Blackjack(commands.Cog):
         await settings.collectionblackjack.insert_one(data)
 
     async def embed_generator(
-        self, player_hand, dealer_hand, first_turn=False, state=None, infotext="", amount=None, currency=None
+        self, player_hand, dealer_hand, hide_dealer_card=False, state=None, infotext="", amount=None, currency=None
     ):  # state = 1 for win, 2 for lose, 3 for draw
         player_hand_text = ""
         for i in player_hand:
@@ -121,7 +121,7 @@ class Blackjack(commands.Cog):
             dealer_hand_text += f"{i} "
 
         if amount is not None and currency is not None:
-            embed = nextcord.Embed(title="Blackjack", description=f"ยอดเดิมพัน {amount}{currency}", color=0xFED000)
+            embed = nextcord.Embed(title="Blackjack", description=f"เริ่มเล่นต่อจากเกมที่เล่นค้างไว้แล้ว\nยอดเดิมพัน {amount}{currency}", color=0xFED000)
         else:
             embed = nextcord.Embed(title="Blackjack", color=0xFED000)
         if state is None:
@@ -130,7 +130,7 @@ class Blackjack(commands.Cog):
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
             )
 
-            if first_turn:
+            if hide_dealer_card:
                 embed.add_field(
                     name="Dealer's hand",
                     value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
@@ -150,7 +150,7 @@ class Blackjack(commands.Cog):
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
             )
 
-            if first_turn:
+            if hide_dealer_card:
                 embed.add_field(
                     name="Dealer's hand",
                     value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
@@ -170,7 +170,7 @@ class Blackjack(commands.Cog):
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
             )
 
-            if first_turn:
+            if hide_dealer_card:
                 embed.add_field(
                     name="Dealer's hand",
                     value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
@@ -188,7 +188,7 @@ class Blackjack(commands.Cog):
                 value=f"{player_hand_text}\n\n Value: {await get_score(player_hand)}",
             )
 
-            if first_turn:
+            if hide_dealer_card:
                 embed.add_field(
                     name="Dealer's hand",
                     value=f"{dealer_hand[0]} #\n\n Value: {await get_score([dealer_hand[0]])}",
@@ -226,13 +226,18 @@ class Blackjack(commands.Cog):
         if game is None:
             embed = nextcord.Embed(title="Error", description="คุณยังไม่ได้เริ่มเกม โปรดเริ่มเกมก่อน", color=0xFED000)
             return await ctx.send(embed=embed)
-        channel = await self.bot.fetch_channel(game['channel_id'])
-        message = await channel.fetch_message(game['msg_id'])
+        try:
+            channel = await self.bot.fetch_channel(game['channel_id'])
+            message = await channel.fetch_message(game['msg_id'])
+        except:
+            message = None
+
+        if message is not None:
+            await message.delete()
 
         data = await settings.collection.find_one({"guild_id": ctx.guild.id})
         currency = data['currency']
 
-        await message.delete()
         embed = await Blackjack.embed_generator(
             self, game['player_hand'], game['dealer_hand'], amount= game['amount'], currency=currency
         )
@@ -245,24 +250,23 @@ class Blackjack(commands.Cog):
         }
         # update data to db
         await settings.collectionblackjack.update_one({"guild_id": game['guild_id'], "player_id": game['player_id'], "game": "blackjack"}, {"$set": data_for_update})
-        
 
     @blackjack.command()
     async def help(self, ctx: commands.Context):
         embed = nextcord.Embed(title="Blackjack", color=0xFED000)
         embed.add_field(
             name="Blackjack",
-            value=f"Play blackjack with the bot! | {settings.COMMAND_PREFIX}blackjack",
+            value=f"เริ่มเล่นเกม Blackjack | {settings.COMMAND_PREFIX}blackjack",
             inline=False,
         )
         embed.add_field(
             name="Stop",
-            value=f"Stop the current game | {settings.COMMAND_PREFIX}blackjack stop",
+            value=f"หยุดเกมที่เล่นอยู่ หรือ ล้มโต๊ะ | {settings.COMMAND_PREFIX}blackjack stop",
             inline=False,
         ),
         embed.add_field(
             name="Resume",
-            value=f"Use this command when you cannot find your message in the text channel | {settings.COMMAND_PREFIX}blackjack resume",
+            value=f"เล่นต่อ จากเกมที่เล่นค้างไว้ (ใช้คำสั่งนี้เมื่อคุณหาข้อความเกมที่เล่นค้างไว้ไม่เจอ) | {settings.COMMAND_PREFIX}blackjack resume",
             inline=False
         )
         await ctx.send(embed=embed)
@@ -282,12 +286,12 @@ class Blackjack(commands.Cog):
                     {"player_id": game["player_id"]}, {"$set": game}
                 )
 
-                # Check player win lose this turn
+                # Check player win lose this turn or continue
                 # update message
                 player_score = await get_score(game["player_hand"])
                 dealer_score = await get_score(game["dealer_hand"])
                 status, state = await Blackjack.check_win_lose_draw(
-                    self, player_score, dealer_score
+                    self, player_score, dealer_score, hit=True
                 )
                 if status == "End":
                     if state == "Win":
@@ -299,7 +303,7 @@ class Blackjack(commands.Cog):
                         )
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"คุณได้รับ {game['amount']*2}{currency} คงเหลือ {current + game['amount']*2:,}{currency}"
+                        infotext = f"คุณได้รับ {game['amount']}{currency} คงเหลือ {current + game['amount']:,}{currency}"
 
                         # updata user wallet
                         await settings.collectionmoney.update_one(
@@ -307,7 +311,7 @@ class Blackjack(commands.Cog):
                                 "guild_id": interaction.guild.id,
                                 "user_id": interaction.user.id,
                             },
-                            {"$set": {"wallet": current + game["amount"] * 2}},
+                            {"$set": {"wallet": current + game["amount"]}},
                         )
 
                         embed = await Blackjack.embed_generator(
@@ -316,6 +320,7 @@ class Blackjack(commands.Cog):
                             game["dealer_hand"],
                             state=1,
                             infotext=infotext,
+                            hide_dealer_card=True
                         )
                         await Blackjack.update_message(
                             self, embed, interaction, remove_view=True
@@ -350,6 +355,7 @@ class Blackjack(commands.Cog):
                             game["dealer_hand"],
                             state=2,
                             infotext=infotext,
+                            hide_dealer_card=True
                         )
                         await Blackjack.update_message(
                             self, embed, interaction, remove_view=True
@@ -375,6 +381,7 @@ class Blackjack(commands.Cog):
                             game["dealer_hand"],
                             state=3,
                             infotext=infotext,
+                            hide_dealer_card=True
                         )
                         await Blackjack.update_message(
                             self, embed, interaction, remove_view=True
@@ -383,12 +390,13 @@ class Blackjack(commands.Cog):
                             {"guild_id": interaction.guild.id, "player_id": interaction.user.id, "game": "blackjack"}
                         )
                 else:
-                    embed = nextcord.Embed(title="Algorithm Problem Detected", description="**โปรดแจ้งผู้พัฒนาโดยด่วน (REACT#1120, DeepKungChannel#6590)**", color=0xFED000)
-                    embed.set_footer(text="**ยอดเงินที่เดิมพันจะไม่ถูกหัก เมื่อคุณเห็นต่างหน้านี้ ยกเลิกการเล่นโดยอัตโนมัติแล้ว")
-
-                    # remove game out of db
-                    await settings.collectionblackjack.delete_one({"player_id": interaction.user.id, "guild_id": interaction.guild.id, "game": "blackjack"})
-                    await Blackjack.update_message(self, embed, interaction, remove_view=True)
+                    embed = await Blackjack.embed_generator(
+                        self,
+                        game["player_hand"],
+                        game["dealer_hand"],
+                        hide_dealer_card=True
+                    )
+                    await Blackjack.update_message(self, embed, interaction)
 
         elif button.custom_id == "stand":
             game = await settings.collectionblackjack.find_one(
@@ -416,7 +424,7 @@ class Blackjack(commands.Cog):
                         )
                         current = user["wallet"]
                         currency = data["currency"]
-                        infotext = f"คุณได้รับ {game['amount']*2}{currency} คงเหลือ {current + game['amount']*2:,}{currency}"
+                        infotext = f"คุณได้รับ {game['amount']}{currency} คงเหลือ {current + game['amount']:,}{currency}"
 
                         # updata user wallet
                         await settings.collectionmoney.update_one(
@@ -424,7 +432,7 @@ class Blackjack(commands.Cog):
                                 "guild_id": interaction.guild.id,
                                 "user_id": interaction.user.id,
                             },
-                            {"$set": {"wallet": current + game["amount"] * 2}},
+                            {"$set": {"wallet": current + game["amount"]}},
                         )
 
                         embed = await Blackjack.embed_generator(
@@ -508,20 +516,35 @@ class Blackjack(commands.Cog):
                     await Blackjack.update_message(self, embed, interaction, remove_view=True)
 
     # Check win lose in player turn
-    async def check_win_lose_draw(self, player_score, dealer_score):  
-        # check win
-        if (player_score == 21 or dealer_score < player_score or dealer_score > 21) and not (player_score > 21):
-            return "End", "Win"
+    async def check_win_lose_draw(self, player_score, dealer_score, hit=False):
+        
+        # if user select hit
+        if hit:
+            #check win
+            if player_score == 21 and not player_score > 21:
+                return "End", "Win"
 
-        # check lose
-        if (dealer_score > player_score or dealer_score == 21 or player_score > 21 ) and not (dealer_score > 21):
-            return "End", "Lose"
+            # check lose
+            if player_score > 21:
+                return "End", "Lose"
 
-        # check draw
-        if dealer_score == player_score and dealer_score < 21 and player_score < 21:
-            return "End", "Draw"
+            # Continue playing
+            return "Continue", False
+        
+        else:
+            # check win
+            if (player_score == 21 or dealer_score < player_score or dealer_score > 21) and not (player_score > 21):
+                return "End", "Win"
 
-        return "Continue", False
+            # check lose
+            if (dealer_score > player_score or dealer_score == 21 or player_score > 21 ) and not (dealer_score > 21):
+                return "End", "Lose"
+
+            # check draw
+            if dealer_score == player_score and dealer_score < 21 and player_score < 21:
+                return "End", "Draw"
+
+            return "Continue", False
 
     async def computer_dealer_playing(self, game):
         dealer_score = await get_score(game["dealer_hand"])
