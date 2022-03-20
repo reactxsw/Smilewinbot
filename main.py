@@ -121,19 +121,17 @@ def loadcogs():
                 print(e)
                 traceback.print_exc()
 
-
-def unloadcogs():
+def reloadallcogs():
     for filename in os.listdir("cogs"):
         if filename.endswith(".py") and not filename.startswith("_"):
             try:
-                bot.unload_extension(f"cogs.{filename[:-3]}")
-                print(f"Successfully unloaded {filename}")
+                bot.reload_extension(f"cogs.{filename[:-3]}")
+                print(f"Successfully reloaded {filename}")
 
             except Exception as e:
-                print(f"Failed to unload {filename}")
+                print(f"Failed to reloaded {filename}")
                 print(e)
                 traceback.print_exc()
-
 
 @bot.event
 async def on_ready():
@@ -179,15 +177,10 @@ async def print_ascii_art():
         f"                                   ╚══════════════════════════════════════╝\n"
     )
 
-
 @bot.command(aliases=["reload"])
 @commands.is_owner()
 async def reloadcogs(ctx: commands.Context):
-    unloadcogs()
-    await asyncio.sleep(2)
-    loadcogs()
-    await asyncio.sleep(0.2)
-    await print_ascii_art()
+    reloadallcogs()
     print("Reloaded all cogs!")
     await ctx.send("Reloaded all cogs successfully!")
 
@@ -213,5 +206,4 @@ def main():
 
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    main()
