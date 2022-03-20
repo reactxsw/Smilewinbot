@@ -1,5 +1,3 @@
-from cProfile import label
-from locale import currency
 import nextcord
 from nextcord.ext import commands
 import random
