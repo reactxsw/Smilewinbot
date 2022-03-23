@@ -608,13 +608,18 @@ class Music(commands.Cog):
         if not channel:
             channel = getattr(ctx.author.voice, "channel", None)
             if not channel:
-                return await ctx.send(
-                    "You must be in a voice channel in order to use this command!",
-                    delete_after=3,
+                embed = nextcord.Embed(
+                    title= f"``❌`` {ctx.author.mention} คุณต้องอยู่ในห้องเสียงก่อน",
+                    colour = 0x983925
                 )
+                return await ctx.send(embed=embed,delete_after=5)
 
         await ctx.author.voice.channel.connect(cls=pomice.Player)
-        await ctx.send(f"Joined the voice channel `{channel.name}`", delete_after=3)
+        embed = nextcord.Embed(
+                    title= f"``✅`` เข้าร่วมห้องเสียง {ctx.author.voice.channel.mention}",
+                    colour = 0xfed000
+        )
+        await ctx.send(embed=embed,delete_after=5)
 
     @commands.command(aliases=["disconnect", "dc", "disc", "lv"])
     async def leave(self, ctx: commands.Context):
