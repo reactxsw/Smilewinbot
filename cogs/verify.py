@@ -40,12 +40,6 @@ class Verify(commands.Cog):
                 else:
                     introduction_channel = ctx.channel
 
-                if frame == "None":
-                    frame = "☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆ﾟ ゜ﾟ☆"
-
-                else:
-                    frame = frame
-
                 if status == "YES":
                     try:
                         embed = nextcord.Embed(
@@ -135,15 +129,10 @@ class Verify(commands.Cog):
 
                     embed = nextcord.Embed(
                         colour=0x00FFFF,
-                        description=(
-                            f"""```
-{frame}
-ชื่อ : {name}
-อายุ : {age}
-เพศ : {sex}
-{frame}```"""
-                        ),
-                    )
+                        description=(f"สวัสดี {ctx.author}! ยินดีต้อนรับสู่ {ctx.guild}"))
+                    embed.add_field(name = "ชื่อ", value = f"{name}", inlines = True)
+                    embed.add_field(name = "อายุ", value = f"{age}", inlines = True)
+                    embed.add_field(name = "เพศ", value = f"{sex}", inlines = True)
                     embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
                     embed.set_author(
                         name=f"{ctx.author}", icon_url=f"{ctx.author.avatar.url}"
@@ -235,15 +224,10 @@ class Verify(commands.Cog):
 
                             embed = nextcord.Embed(
                                 colour=0x00FFFF,
-                                description=(
-                                    f"""```
-{frame}
-Name : {name}
-Age : {age}
-Sex : {sex}
-{frame}```"""
-                                ),
-                            )
+                                description=(f"Hello there {ctx.author}! Welcome to {ctx.guild}!"))
+                            embed.add_field(name = "์Name", value = f"{name}", inlines = True)
+                            embed.add_field(name = "Age", value = f"{age}", inlines = True)
+                            embed.add_field(name = "Gender", value = f"{sex}", inlines = True)
                             embed.set_thumbnail(url=f"{ctx.author.avatar.url}")
                             embed.set_author(
                                 name=f"{ctx.author}",
@@ -353,7 +337,7 @@ Sex : {sex}
 
                                         embed = nextcord.Embed(
                                             description=f":white_check_mark: คุณได้รับการยืนยันแล้ว",
-                                            colour=0xB9E7A5,
+                                            colour=0x76FF03,
                                         )
                                         embed.set_author(
                                             name=f"{ctx.author.name}",
@@ -515,7 +499,7 @@ Sex : {sex}
                                         await message.delete()
                                         embed = nextcord.Embed(
                                             description=f":white_check_mark: You have been verified",
-                                            colour=0xB9E7A5,
+                                            colour=0x76FF03,
                                         )
                                         embed.set_author(
                                             name=f"{ctx.author.name}",
