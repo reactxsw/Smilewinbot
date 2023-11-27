@@ -1,4 +1,4 @@
-aiohttp==3.7.3
+aiohttp==3.9.0
 asyncpraw==7.3.1
 asyncprawcore==2.2.1
 async-timeout==3.0.1
