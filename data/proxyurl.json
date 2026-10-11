@@ -18,5 +18,8 @@
         "ProxyScrape-Socks5": "https://api.proxyscrape.com/?request=displayproxies&status=alive&proxytype=socks5",
         "TheSpeedX-Socks5": "https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/socks5.txt",
         "ShiftyTR-Socks5": "https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/socks5.txt"
+    },
+    "ALL": {
+        "RCloak-All": "https://rcloak.com/api/proxies/raw?protocol=all"
     }
 }
